@@ -21,10 +21,11 @@ struct sockaddr_in Server;
 int sockfd, len = sizeof(Server);
 char Buffer[MAXBUF];
 
-setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, WiFi_interface, strlen(WiFi_interface));
+
 
 int main(){
     sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, WiFi_interface, strlen(WiFi_interface));
     if (sockfd == -1){
         perror("Failed to create socket");
         exit(0);
