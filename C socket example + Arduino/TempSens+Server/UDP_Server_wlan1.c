@@ -14,8 +14,8 @@
 #define MAXBUF 1024
 #define PORT 8888
 
-const char *LTE_interface = "wwan0"
-const char *WiFi_interface = "wlan1"
+const char *LTE_interface = "wwan0";
+const char *WiFi_interface = "wlan1";
 
 struct sockaddr_in Server;
 int sockfd, len = sizeof(Server);
