@@ -19,19 +19,18 @@ char* format_time(){ //Funktion til at formatere tid: [dd/mm/yy hh:mm:ss]
     sprintf(curr_time, "[%d/%d/%d %d:%d:%d]", timeinfo->tm_mday, timeinfo->tm_mon + 1, timeinfo->tm_year + 1900, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
     return curr_time;
 }
-
+/*
 void* WriteFile(void* arg){ 
     FILE *fp;  
 	char *data = arg;
 
-    fp = fopen("/home/simon/Documents/ParsingOS/TempSens+Server/Data.txt","a+");
-    //fp = fopen("/home/simon/WorkshopFolder/SSFS/TEST_mount/Data.txt","a+");
-    //fp = fopen("/home/simon/WorkshopFolder/WorkshopFolder/FileSys/MountPoint/Data.txt","a");
+    fp = fopen("/home/simon/WorkshopFolder/TempSens+Server/Data.txt","a");
+    //fp = open("/home/simon/WorkshopTestFolder/SSFS/Mounting_point/Data.txt","a");
 
     fprintf(fp,"%s %s C\n", format_time(), data);
     fclose(fp); 
     pthread_exit(NULL); 
-}
+} */
 
 #define MAXBUF 1024
 #define PORT 8888
@@ -68,8 +67,10 @@ int main(){
         int rc = recvfrom(sockfd, Buffer, MAXBUF, 0, (struct sockaddr*)&Server, &len);
         printf("%s\n \n", Buffer);
 
-		pthread_create(&T1, NULL, WriteFile, Buffer); //Opretter en tråd og eksekverer funktionen 'WriteFile' som tager argumentet "Reference til variablen Avg (&Avg)"
-        pthread_join(T1, NULL); //Vent til thread T2 er færdig med at eksekvere funktionen, returner ingenting.
+        
+		//pthread_create(&T1, NULL, WriteFile, Buffer);
+        //pthread_join(T1, NULL);
+        
         
 
     }
