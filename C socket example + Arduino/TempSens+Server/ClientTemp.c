@@ -14,7 +14,7 @@
 //#define MAXBUF 64
 
 int main() {
-  int Port;
+  int Port = 8888;
   const char *IP = "192.168.1.136";
   int MAXBUF;
 
