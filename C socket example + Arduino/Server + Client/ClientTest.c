@@ -6,10 +6,8 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <time.h>
-#include "TempSensorStub.h"
 #include <termios.h>
-#include <unistd.h>
-#include <fcntl.h>
+#include <stdlib.h>
 
 //#define MAXBUF 64
 
@@ -43,4 +41,5 @@ int main() {
     char TestMsg[] = "Hello does this work?";
     sendto(sockfd, TestMsg, sizeof(TestMsg), 0, (struct sockaddr *)&Client, len); //send the data to server
   }
+ exit(0);
 }
