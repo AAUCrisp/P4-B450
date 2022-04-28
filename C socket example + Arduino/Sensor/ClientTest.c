@@ -44,7 +44,7 @@ void* LTE_Socket(void* arg){
   /* Bind to socket */
   int a = bind(sockfd1, (struct sockaddr*)&Client1, sizeof(struct sockaddr));
   if (a == -1) {
-    perror("Failed to bind");
+    perror("Failed to bind: %d" + sockfd1);
   }
 
   char TestMsg1[] = "This is LTE";
@@ -69,7 +69,7 @@ void* WiFi_Socket(void* arg){
   /* Bind to socket */
   int b = bind(sockfd2, (struct sockaddr*)&Client2, sizeof(struct sockaddr));
   if (b == -1) {
-    perror("Failed to bind");
+    perror("Failed to bind socket: %d" + sockfd2);
   }
 
   char TestMsg2[] = "This is WiFi";
