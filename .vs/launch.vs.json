@@ -1,0 +1,15 @@
+{
+  "version": "0.2.1",
+  "defaults": {},
+  "configurations": [
+    {
+      "type": "cppgdb",
+      "name": "Testing-Mikkel-GCC.vcxproj",
+      "project": "Testing-Mikkel-GCC\\Testing-Mikkel-GCC.vcxproj",
+      "projectTarget": "",
+      "comment": "Learn how to configure remote debugging. For more info, see http://aka.ms/vslinuxdebug",
+      "debuggerConfiguration": "gdbserver",
+      "processId": 0
+    }
+  ]
+}
