@@ -39,13 +39,7 @@ void* LTE_Socket(void* arg){
 
   Client1.sin_family = AF_INET;
   Client1.sin_port = htons(PORT);
-  Client1.sin_addr.s_addr = inet_addr(IP1);;
-
-  /* Bind to socket */
-  int a = bind(sockfd1, (struct sockaddr*)&Client1, sizeof(struct sockaddr));
-  if (a == -1) {
-    perror("Failed to bind: LTE_Socket");
-  }
+  Client1.sin_addr.s_addr = inet_addr(IP1);
 
   char TestMsg1[] = "This is LTE";
   sendto(sockfd1, TestMsg1, sizeof(TestMsg1), 0, (struct sockaddr *)&Client1, len1); 
@@ -65,12 +59,6 @@ void* WiFi_Socket(void* arg){
   Client2.sin_family = AF_INET;
   Client2.sin_port = htons(PORT);
   Client2.sin_addr.s_addr = inet_addr(IP2);
-
-  /* Bind to socket */
-  int b = bind(sockfd2, (struct sockaddr*)&Client2, sizeof(struct sockaddr));
-  if (b == -1) {
-    perror("Failed to bind socket: WiFi_Socket");
-  }
 
   char TestMsg2[] = "This is WiFi";
   sendto(sockfd2, TestMsg2, sizeof(TestMsg2), 0, (struct sockaddr *)&Client2, len2); 
