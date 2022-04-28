@@ -46,11 +46,13 @@ void* LTE_Socket(void* arg){
     perror("Failed to bind");
   }
 
-  rc1 = recvfrom(sockfd1, Buffer, MAXBUF, 0, (struct sockaddr*)&Server1, &len1);
-  printf("%s\n \n", Buffer);
+  if (rc1 = recvfrom(sockfd1, Buffer, MAXBUF, 0, (struct sockaddr*)&Server1, &len1)){
+    printf("%s\n \n", Buffer);
+    close(sockfd1);
+    pthread_exit(0);
+    
+  }
 
-  close(sockfd1);
-  pthread_exit(0);
 }
 
 void* WiFi_Socket(void* arg){
@@ -72,11 +74,11 @@ void* WiFi_Socket(void* arg){
   }
 
   
-  rc2 = recvfrom(sockfd2, Buffer, MAXBUF, 0, (struct sockaddr*)&Server2, &len2);
-   printf("%s\n \n", Buffer);
-
-  close(sockfd1);
-  pthread_exit(0);
+  if(rc2 = recvfrom(sockfd2, Buffer, MAXBUF, 0, (struct sockaddr*)&Server2, &len2)){
+    printf("%s\n \n", Buffer);
+    close(sockfd1);
+    pthread_exit(0);
+  }
 }
 
 int main() {

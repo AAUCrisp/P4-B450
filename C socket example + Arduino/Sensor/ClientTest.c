@@ -63,7 +63,7 @@ void* WiFi_Socket(void* arg){
   char TestMsg2[] = "This is WiFi";
   sendto(sockfd2, TestMsg2, sizeof(TestMsg2), 0, (struct sockaddr *)&Client2, len2); 
 
-  close(sockfd1);
+  close(sockfd2);
   pthread_exit(0);
 }
 
