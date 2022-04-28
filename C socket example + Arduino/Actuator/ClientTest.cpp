@@ -20,7 +20,8 @@ const char *WiFi = "wlan0";
 /* Misc */
 char message[MAXBUF];
 struct sockaddr_in Client;
-int sockfd, len = sizeof(Client);
+int sockfd;
+unsigned int len = sizeof(Client);
 
 
 
@@ -28,7 +29,7 @@ int main() {
 
   /* Create socket */
   sockfd = socket(PF_INET, SOCK_DGRAM, 0);
-  setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, "Insert interface", strlen("Insert interface"));
+  setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
 
   if (sockfd == -1) {
     perror("Failed to create socket");
