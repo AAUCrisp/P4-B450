@@ -58,7 +58,7 @@ void* WiFi_Socket(void* arg){
   sockfd2 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
   setsockopt(sockfd2, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
   if (sockfd2 == -1) {
-    perror("Failed to create socket: WiFi_Socket");
+    perror("Failed to create socket");
     exit(0);
   }
 
@@ -69,7 +69,7 @@ void* WiFi_Socket(void* arg){
   /* Bind to socket */
   int b = bind(sockfd2, (struct sockaddr*)&Client2, sizeof(struct sockaddr));
   if (b == -1) {
-    perror("Failed to bind socket: %d" + sockfd2);
+    perror("Failed to bind socket: WiFi_Socket");
   }
 
   char TestMsg2[] = "This is WiFi";
