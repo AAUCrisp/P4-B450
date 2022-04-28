@@ -20,7 +20,7 @@ const char *WiFi = "wlan0";
 /* Misc */
 char message[MAXBUF];
 struct sockaddr_in Client;
-int sockfd, len = sizeof(Client);
+int sockfd1, sockfd2, len = sizeof(Client);
 
 
 

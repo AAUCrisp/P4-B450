@@ -18,7 +18,7 @@ const char *WiFi = "wlan0";
 
 /* Misc */
 struct sockaddr_in Server;
-int sockfd, len = sizeof(Server);
+int sockfd1, sockfd2, len = sizeof(Server);
 char Buffer[MAXBUF];
 int rc1, rc2;
 
