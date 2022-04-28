@@ -13,7 +13,7 @@
 #define PORT 8888
 
 /* Specify LTE / WiFi interface */
-const char *LTE = "wwan0";
+std::string *LTE = "wwan0";
 const char *WiFi = "wlan0";
 
 /* Misc */
@@ -28,7 +28,7 @@ int main() {
 
   /* Create socket */
   sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-  setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
+  setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, LTE.c_str(), LTE.length());
 
   if (sockfd == -1) {
     perror("Failed to create socket");
