@@ -28,7 +28,7 @@ int main() {
 
   /* Create socket */
   sockfd = socket(PF_INET, SOCK_DGRAM, 0);
-  setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, "Insert interface here", strlen("Insert interface here"));
+  setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, "Insert interface", strlen("Insert interface"));
 
   if (sockfd == -1) {
     perror("Failed to create socket");
