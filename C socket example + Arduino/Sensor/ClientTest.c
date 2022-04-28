@@ -44,7 +44,7 @@ void* LTE_Socket(void* arg){
   /* Bind to socket */
   int a = bind(sockfd1, (struct sockaddr*)&Client1, sizeof(struct sockaddr));
   if (a == -1) {
-    perror("Failed to bind: %d" + sockfd1);
+    perror("Failed to bind: LTE_Socket");
   }
 
   char TestMsg1[] = "This is LTE";
@@ -58,7 +58,7 @@ void* WiFi_Socket(void* arg){
   sockfd2 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
   setsockopt(sockfd2, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
   if (sockfd2 == -1) {
-    perror("Failed to create socket");
+    perror("Failed to create socket: WiFi_Socket");
     exit(0);
   }
 
