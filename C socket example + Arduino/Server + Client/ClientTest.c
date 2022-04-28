@@ -45,5 +45,6 @@ int main() {
     char TestMsg[] = "Hello does this work?";
     sendto(sockfd, TestMsg, sizeof(TestMsg), 0, (struct sockaddr *)&Client, len); //send the data to server
   }
-  exit(0);
+  close(sockfd);
+  return 1;
 }
