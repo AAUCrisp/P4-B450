@@ -22,7 +22,8 @@ struct sockaddr_in Server1;
 struct sockaddr_in Server2;
 int sockfd1, sockfd2;
 int len1 = sizeof(Server1), len2 = sizeof(Server2);
-char Buffer[MAXBUF];
+char Buffer1[MAXBUF];
+char Buffer2[MAXBUF];
 int rc1, rc2;
 pthread_t T1, T2;
 
@@ -46,8 +47,8 @@ void* LTE_Socket(void* arg){
     perror("Failed to bind");
   }
 
-  rc1 = recvfrom(sockfd1, Buffer, MAXBUF, 0, (struct sockaddr*)&Server1, &len1);
-    printf("%s\n \n", Buffer);
+  rc1 = recvfrom(sockfd1, Buffer1, MAXBUF, 0, (struct sockaddr*)&Server1, &len1);
+    printf("%s\n \n", Buffer1);
     close(sockfd1);
     pthread_exit(0);
 }
@@ -71,8 +72,8 @@ void* WiFi_Socket(void* arg){
   }
 
   
-  rc2 = recvfrom(sockfd2, Buffer, MAXBUF, 0, (struct sockaddr*)&Server2, &len2);
-  printf("%s\n \n", Buffer);
+  rc2 = recvfrom(sockfd2, Buffer2, MAXBUF, 0, (struct sockaddr*)&Server2, &len2);
+  printf("%s\n \n", Buffer2);
   close(sockfd2);
   pthread_exit(0);
 }
@@ -88,8 +89,10 @@ int main() {
   setsockopt(sockfd2, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
 
   if (sockfd1 == -1) {
-    perror("Failed to create socket");
-    exit(0);
+    perror("Failed to create socket: LTE");
+  }
+  if (sockfd2 == -1) {
+    perror("Failed to create socket: WiFi");
   }
   
   /* Configure settings to communicate with remote UDP server */
@@ -107,13 +110,14 @@ int main() {
   
   int a = bind(sockfd1, (struct sockaddr*)&Server1, sizeof(struct sockaddr));
   int b = bind(sockfd2, (struct sockaddr*)&Server2, sizeof(struct sockaddr));
-  if (a || b == -1) {
-    perror("Failed to bind");
-    close(sockfd1 && sockfd2);
-    exit(0);
+  if (a  == -1) {
+    perror("Failed to bind: LTE");
+  }
+  if (b == -1) {
+    perror("Failed to bind: WiFi");
   }
   
-  printf("Test");
+  printf("Test \n");
 
   /* Main running code */
   while (1){
@@ -126,12 +130,14 @@ int main() {
    // pthread_join(T2, NULL);
 
   
-    rc1 = recvfrom(sockfd1, Buffer, MAXBUF, 0, (struct sockaddr*)&Server1, &len1);
-   /* rc2 = recvfrom(sockfd2, Buffer, MAXBUF, 0, (struct sockaddr*)&Server2, &len2);
-    printf("%s\n \n", Buffer);
-    */
+    rc1 = recvfrom(sockfd1, Buffer1, MAXBUF, 0, (struct sockaddr*)&Server1, &len1);
+    printf("%s\n \n", Buffer1);
+    
+    rc2 = recvfrom(sockfd2, Buffer2, MAXBUF, 0, (struct sockaddr*)&Server2, &len2);
+    printf("%s\n \n", Buffer2);
+    
 
   }
-  //close(sockfd1 && sockfd2);
+  close(sockfd1 && sockfd2);
   return 1;
 }
