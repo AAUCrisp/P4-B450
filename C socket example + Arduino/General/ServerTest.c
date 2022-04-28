@@ -27,7 +27,7 @@ int main() {
 
   /* Create socket */
   sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-  setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, "Insert interface", strlen("Insert interface"));
+  setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
 
   if (sockfd == -1) {
     perror("Failed to create socket");

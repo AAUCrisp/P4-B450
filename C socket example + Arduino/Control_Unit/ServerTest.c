@@ -15,7 +15,7 @@
 
 /* Specify LTE / WiFi interface */
 const char *LTE = "wwan0";
-const char *WiFi = "wlan0";
+const char *WiFi = "wlan1";
 
 /* Misc */
 struct sockaddr_in Server1;
@@ -73,7 +73,7 @@ void* WiFi_Socket(void* arg){
   
   rc2 = recvfrom(sockfd2, Buffer, MAXBUF, 0, (struct sockaddr*)&Server2, &len2);
   printf("%s\n \n", Buffer);
-  close(sockfd1);
+  close(sockfd2);
   pthread_exit(0);
 }
 
@@ -81,52 +81,52 @@ int main() {
 
   
   /* Create socket */
-  /*
+  
   sockfd1 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-  sockfd2 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+ // sockfd2 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
   setsockopt(sockfd1, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
-  setsockopt(sockfd2, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
+ // setsockopt(sockfd2, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
 
-  if (sockfd1 || sockfd2 == -1) {
+  if (sockfd1 == -1) {
     perror("Failed to create socket");
     exit(0);
   }
-  */
+  
   /* Configure settings to communicate with remote UDP server */
-  /*
+  
   Server1.sin_family = AF_INET;
   Server1.sin_port = htons(PORT1);
   Server1.sin_addr.s_addr = INADDR_ANY;
 
-  Server2.sin_family = AF_INET;
+  /*Server2.sin_family = AF_INET;
   Server2.sin_port = htons(PORT2);
   Server2.sin_addr.s_addr = INADDR_ANY;
   */
 
   /* Bind to socket */
-  /*
+  
   int a = bind(sockfd1, (struct sockaddr*)&Server1, sizeof(struct sockaddr));
-  int b = bind(sockfd2, (struct sockaddr*)&Server2, sizeof(struct sockaddr));
-  if (a || b == -1) {
+  //int b = bind(sockfd2, (struct sockaddr*)&Server2, sizeof(struct sockaddr));
+  if (a  == -1) {
     perror("Failed to bind");
     close(sockfd1 && sockfd2);
     exit(0);
   }
-  */
+  
 
   /* Main running code */
   while (1){
     puts("Emergency exit: CTRL+C");
     printf("Waiting for data...\n");
 
-    pthread_create(&T1, NULL, LTE_Socket, NULL);
-    pthread_join(T1, NULL);
-    pthread_create(&T2, NULL, WiFi_Socket, NULL);
-    pthread_join(T2, NULL);
+    //pthread_create(&T1, NULL, LTE_Socket, NULL);
+    //pthread_join(T1, NULL);
+   // pthread_create(&T2, NULL, WiFi_Socket, NULL);
+   // pthread_join(T2, NULL);
 
-  /*
+  
     rc1 = recvfrom(sockfd1, Buffer, MAXBUF, 0, (struct sockaddr*)&Server1, &len1);
-    rc2 = recvfrom(sockfd2, Buffer, MAXBUF, 0, (struct sockaddr*)&Server2, &len2);
+   /* rc2 = recvfrom(sockfd2, Buffer, MAXBUF, 0, (struct sockaddr*)&Server2, &len2);
     printf("%s\n \n", Buffer);
     */
 
