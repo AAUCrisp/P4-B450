@@ -37,7 +37,7 @@ int main() {
 
   /* configure settings to communicate with remote UDP server */
   Client.sin_family = AF_INET;
-  Client.sin_port = htons(Port);
+  Client.sin_port = htons(PORT);
   Client.sin_addr.s_addr = inet_addr(IP);
 
   /* Main running code */
