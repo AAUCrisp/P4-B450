@@ -6,7 +6,6 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <time.h>
-#include <termios.h>
 #include <stdlib.h>
 
 //#define MAXBUF 64
@@ -14,23 +13,22 @@
 
 int main() {
   int Port = 8888;
-  const char *IP = "192.168.1.136";
+  const char *IP = ""; // IP address of server
   int MAXBUF;
 
   char message[MAXBUF];
   struct sockaddr_in Client;
   int sockfd, len = sizeof(Client);
 
-  const char *LTE_interface = "wwan0";
-  const char *WiFi_interface = "wlan0";
+  const char *LTE = "wwan0";
+  const char *WiFi = "wlan0";
 
   sockfd = socket(PF_INET, SOCK_DGRAM, 0); // create a UDP socket
-  setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, WiFi_interface, strlen(WiFi_interface));
+  setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi)); // Change last two parameters for either LTE / WiFi
+  
   if (sockfd == -1) {
-    if (sockfd == -1) { //hvorfor er der dobbelt if  sockfd == -1 ??
       perror("Failed to create socket");
       exit(0);
-    }
   }
 
   /* configure settings to communicate with remote UDP server */
