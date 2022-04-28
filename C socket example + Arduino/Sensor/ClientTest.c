@@ -25,7 +25,13 @@ struct sockaddr_in Client2;
 int sockfd1, sockfd2;
 int len1 = sizeof(Client1), len2 = sizeof(Client2);
 
+void* LTE_Socket(void*){
 
+}
+
+void* WiFi_Socket(void*){
+  
+}
 
 int main() {
 

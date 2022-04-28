@@ -1,5 +1,5 @@
-ServerStart: ServerTest.cpp
-	gcc -pthread ServerTest.cpp -o ServerStart
+ServerStart: ServerTest.c
+	gcc -pthread ServerTest.c -o ServerStart
 	touch ServerStart
 
 clean:

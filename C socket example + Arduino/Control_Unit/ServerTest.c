@@ -10,19 +10,28 @@
 
 /* Define buffer and PORT number */
 #define MAXBUF 1024
-#define PORT 8888
+#define PORT1 8888
+#define PORT2 8887
 
 /* Specify LTE / WiFi interface */
 const char *LTE = "wwan0";
 const char *WiFi = "wlan0";
 
 /* Misc */
-struct sockaddr_in Server;
-int sockfd1, sockfd2, len = sizeof(Server);
+struct sockaddr_in Server1, sockaddr_in Server2;
+int sockfd1, sockfd2;
+int len1 = sizeof(Server1), len2 = sizeof(Server2);
 char Buffer[MAXBUF];
 int rc1, rc2;
 
+void* LTE_Socket(void*){
 
+  pthread_exit(0);
+}
+
+void* WiFi_Socket(void*){
+  pthread_exit(0);
+}
 
 int main() {
 
@@ -38,13 +47,17 @@ int main() {
   }
 
   /* Configure settings to communicate with remote UDP server */
-  Server.sin_family = AF_INET;
-  Server.sin_port = htons(PORT);
-  Server.sin_addr.s_addr = INADDR_ANY;
+  Server1.sin_family = AF_INET;
+  Server1.sin_port = htons(PORT1);
+  Server1.sin_addr.s_addr = INADDR_ANY;
+
+  Server2.sin_family = AF_INET;
+  Server2.sin_port = htons(PORT2);
+  Server2.sin_addr.s_addr = INADDR_ANY;
 
   /* Bind to socket */
-  int a = bind(sockfd1, (struct sockaddr*)&Server, sizeof(struct sockaddr));
-  int b = bind(sockfd2, (struct sockaddr*)&Server, sizeof(struct sockaddr));
+  int a = bind(sockfd1, (struct sockaddr*)&Server1, sizeof(struct sockaddr));
+  int b = bind(sockfd2, (struct sockaddr*)&Server2, sizeof(struct sockaddr));
   if (a || b == -1) {
     perror("Failed to bind");
     close(sockfd1 && sockfd2);
@@ -57,8 +70,8 @@ int main() {
     puts("Emergency exit: CTRL+C");
     printf("Waiting for data...\n");
 
-    rc1 = recvfrom(sockfd1, Buffer, MAXBUF, 0, (struct sockaddr*)&Server, &len);
-    rc2 = recvfrom(sockfd2, Buffer, MAXBUF, 0, (struct sockaddr*)&Server, &len);
+    rc1 = recvfrom(sockfd1, Buffer, MAXBUF, 0, (struct sockaddr*)&Server1, &len1);
+    rc2 = recvfrom(sockfd2, Buffer, MAXBUF, 0, (struct sockaddr*)&Server2, &len2);
     printf("%s\n \n", Buffer);
 
   }
