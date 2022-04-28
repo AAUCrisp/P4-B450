@@ -14,7 +14,7 @@
 
 /* Specify LTE / WiFi interface */
 const char *LTE = "wwan0";
-const char *WiFi = "wlan1";
+const char *WiFi = "wlan0";
 
 /* Misc */
 struct sockaddr_in Server;
@@ -23,40 +23,40 @@ char Buffer[MAXBUF];
 
 
 
-int main(){
-	
-	/* Create socket */
-    sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
-	
-    if (sockfd == -1){
-        perror("Failed to create socket");
-        exit(0);
-    }
+int main() {
 
-	/* Configure settings to communicate with remote UDP server */
-    Server.sin_family = AF_INET;
-    Server.sin_port = htons(PORT);
-    Server.sin_addr.s_addr = INADDR_ANY;
+  /* Create socket */
+  sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+  setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, "Insert interface", strlen("Insert interface"));
 
-	/* Bind to socket */
-    int b = bind(sockfd, (struct sockaddr*)&Server, sizeof(struct sockaddr));
-    if(b == -1){
-        perror("Failed to bind");
-        close(sockfd);
-        exit(0);
-    }
+  if (sockfd == -1) {
+    perror("Failed to create socket");
+    exit(0);
+  }
 
-	/* Main running code */
-    while(1)
-	{
-		puts("Emergency exit: CTRL+C");
-		printf("Waiting for data...\n");
+  /* Configure settings to communicate with remote UDP server */
+  Server.sin_family = AF_INET;
+  Server.sin_port = htons(PORT);
+  Server.sin_addr.s_addr = INADDR_ANY;
 
-        int rc = recvfrom(sockfd, Buffer, MAXBUF, 0, (struct sockaddr*)&Server, &len);
-        printf("%s\n \n", Buffer);
-
-    }
+  /* Bind to socket */
+  int b = bind(sockfd, (struct sockaddr*)&Server, sizeof(struct sockaddr));
+  if (b == -1) {
+    perror("Failed to bind");
     close(sockfd);
-    return 0;
+    exit(0);
+  }
+
+  /* Main running code */
+  while (1)
+  {
+    puts("Emergency exit: CTRL+C");
+    printf("Waiting for data...\n");
+
+    int rc = recvfrom(sockfd, Buffer, MAXBUF, 0, (struct sockaddr*)&Server, &len);
+    printf("%s\n \n", Buffer);
+
+  }
+  close(sockfd);
+  return 0;
 }
