@@ -20,16 +20,19 @@ const char *WiFi = "wlan0";
 struct sockaddr_in Server;
 int sockfd, len = sizeof(Server);
 char Buffer[MAXBUF];
+int rc1, rc2;
 
 
 
 int main() {
 
   /* Create socket */
-  sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-  setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
+  sockfd1 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+  sockfd2 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+  setsockopt(sockfd1, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
+  setsockopt(sockfd2, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
 
-  if (sockfd == -1) {
+  if (sockfd1 || sockfd2 == -1) {
     perror("Failed to create socket");
     exit(0);
   }
@@ -40,8 +43,9 @@ int main() {
   Server.sin_addr.s_addr = INADDR_ANY;
 
   /* Bind to socket */
-  int b = bind(sockfd, (struct sockaddr*)&Server, sizeof(struct sockaddr));
-  if (b == -1) {
+  int a = bind(sockfd1, (struct sockaddr*)&Server, sizeof(struct sockaddr));
+  int b = bind(sockfd2, (struct sockaddr*)&Server, sizeof(struct sockaddr));
+  if (a || b == -1) {
     perror("Failed to bind");
     close(sockfd);
     exit(0);
@@ -53,7 +57,8 @@ int main() {
     puts("Emergency exit: CTRL+C");
     printf("Waiting for data...\n");
 
-    int rc = recvfrom(sockfd, Buffer, MAXBUF, 0, (struct sockaddr*)&Server, &len);
+    rc1 = recvfrom(sockfd1, Buffer, MAXBUF, 0, (struct sockaddr*)&Server, &len);
+    rc2 = recvfrom(sockfd2, Buffer, MAXBUF, 0, (struct sockaddr*)&Server, &len);
     printf("%s\n \n", Buffer);
 
   }
