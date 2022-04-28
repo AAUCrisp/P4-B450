@@ -1,22 +1,22 @@
-#include <stdio.h>	
-#include <stdlib.h> 
-#include <string.h> 
+#include <stdio.h>
+#include <string.h>
 #include <sys/socket.h>
-#include <sys/types.h>
+#include <netinet/in.h>
 #include <arpa/inet.h>
-#include <netinet/in.h> 
+#include <unistd.h>
 #include <pthread.h>
 #include <time.h>
-#include <termios.h>
-#include <unistd.h>
-#include <fcntl.h>
+#include <stdlib.h>
 
+/* Define buffer and PORT number */
 #define MAXBUF 1024
 #define PORT 8888
 
-const char *LTE_interface = "wwan0";
-const char *WiFi_interface = "wlan1";
+/* Specify LTE / WiFi interface */
+const char *LTE = "wwan0";
+const char *WiFi = "wlan1";
 
+/* Misc */
 struct sockaddr_in Server;
 int sockfd, len = sizeof(Server);
 char Buffer[MAXBUF];
@@ -24,17 +24,22 @@ char Buffer[MAXBUF];
 
 
 int main(){
+	
+	/* Create socket */
     sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, WiFi_interface, strlen(WiFi_interface));
+    setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
+	
     if (sockfd == -1){
         perror("Failed to create socket");
         exit(0);
     }
 
+	/* Configure settings to communicate with remote UDP server */
     Server.sin_family = AF_INET;
     Server.sin_port = htons(PORT);
     Server.sin_addr.s_addr = INADDR_ANY;
 
+	/* Bind to socket */
     int b = bind(sockfd, (struct sockaddr*)&Server, sizeof(struct sockaddr));
     if(b == -1){
         perror("Failed to bind");
@@ -42,6 +47,7 @@ int main(){
         exit(0);
     }
 
+	/* Main running code */
     while(1)
 	{
 		puts("Emergency exit: CTRL+C");
