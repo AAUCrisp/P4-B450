@@ -27,10 +27,12 @@ int sockfd, len = sizeof(Client);
 int main() {
 
   /* Create socket */
-  sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-  setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
+  sockfd1 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+  sockfd2 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+  setsockopt(sockfd1, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
+  setsockopt(sockfd2, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
 
-  if (sockfd == -1) {
+  if (sockfd1 || sockfd2 == -1) {
     perror("Failed to create socket");
     exit(0);
   }
@@ -42,8 +44,10 @@ int main() {
 
   /* Main running code */
   while (1) {
-    char TestMsg[] = "Hello does this work?";
-    sendto(sockfd, TestMsg, sizeof(TestMsg), 0, (struct sockaddr *)&Client, len); //send the data to server
+    char TestMsg1[] = "This is LTE";
+    char TestMsg2[] = "This is WiFi";
+    sendto(sockfd1, TestMsg1, sizeof(TestMsg1), 0, (struct sockaddr *)&Client, len); //send the data to server
+    sendto(sockfd2, TestMsg2, sizeof(TestMsg2), 0, (struct sockaddr *)&Client, len); //send the data to server
   }
   close(sockfd);
   return 1;
