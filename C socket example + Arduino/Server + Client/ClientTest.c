@@ -27,7 +27,7 @@ int main() {
   sockfd = socket(PF_INET, SOCK_DGRAM, 0); // create a UDP socket
   setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, WiFi_interface, strlen(WiFi_interface));
   if (sockfd == -1) {
-    if (sockfd == -1) {
+    if (sockfd == -1) { //hvorfor er der dobbelt if  sockfd == -1 ??
       perror("Failed to create socket");
       exit(0);
     }
