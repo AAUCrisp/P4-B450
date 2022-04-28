@@ -47,7 +47,7 @@ int main() {
   int b = bind(sockfd2, (struct sockaddr*)&Server, sizeof(struct sockaddr));
   if (a || b == -1) {
     perror("Failed to bind");
-    close(sockfd);
+    close(sockfd1 && sockfd2);
     exit(0);
   }
 
@@ -62,6 +62,6 @@ int main() {
     printf("%s\n \n", Buffer);
 
   }
-  close(sockfd);
+  close(sockfd1 && sockfd2);
   return 1;
 }

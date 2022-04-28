@@ -1,5 +1,5 @@
-ClientStart: ClientTest.cpp
-	gcc -pthread -lconfig ClientTest.cpp -o ClientStart
+ClientStart: ClientTest.c
+	gcc -pthread -lconfig ClientTest.c -o ClientStart
 	touch ClientStart
 
 clean:
