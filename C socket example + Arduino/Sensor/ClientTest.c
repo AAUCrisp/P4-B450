@@ -19,10 +19,10 @@ const char *LTE = "wwan0";
 const char *WiFi = "wlan0";
 
 /* Misc */
-struct sockaddr_in Server1;
-struct sockaddr_in Server2;
+struct sockaddr_in Client1;
+struct sockaddr_in Client2;
 int sockfd1, sockfd2;
-int len1 = sizeof(Server1), len2 = sizeof(Server2);
+int len1 = sizeof(Client1), len2 = sizeof(Client2);
 char Buffer[MAXBUF];
 int rc1, rc2;
 pthread_t T1, T2;
@@ -37,12 +37,12 @@ void* LTE_Socket(void* arg){
     exit(0);
   }
 
-  Server1.sin_family = AF_INET;
-  Server1.sin_port = htons(PORT1);
-  Server1.sin_addr.s_addr = inet_addr(IP1);;
+  Client1.sin_family = AF_INET;
+  Client1.sin_port = htons(PORT);
+  Client1.sin_addr.s_addr = inet_addr(IP1);;
 
   /* Bind to socket */
-  int a = bind(sockfd1, (struct sockaddr*)&Server1, sizeof(struct sockaddr));
+  int a = bind(sockfd1, (struct sockaddr*)&Client1, sizeof(struct sockaddr));
   if (a == -1) {
     perror("Failed to bind");
   }
@@ -62,12 +62,12 @@ void* WiFi_Socket(void* arg){
     exit(0);
   }
 
-  Server2.sin_family = AF_INET;
-  Server2.sin_port = htons(PORT2);
-  Server2.sin_addr.s_addr = inet_addr(IP2);;
+  Client2.sin_family = AF_INET;
+  Client2.sin_port = htons(PORT);
+  Client2.sin_addr.s_addr = inet_addr(IP2);
 
   /* Bind to socket */
-  int b = bind(sockfd2, (struct sockaddr*)&Server2, sizeof(struct sockaddr));
+  int b = bind(sockfd2, (struct sockaddr*)&Client2, sizeof(struct sockaddr));
   if (b == -1) {
     perror("Failed to bind");
   }
@@ -109,7 +109,7 @@ int main() {
 
     puts("Emergency exit: CTRL+C");
     printf("Sending data...\n");
-    
+
     pthread_create(&T1, NULL, LTE_Socket, NULL);
     pthread_join(T1, NULL);
     pthread_create(&T2, NULL, WiFi_Socket, NULL);
