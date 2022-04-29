@@ -1,11 +1,11 @@
 import numpy as np
 import time as time
 
-x = 100                   # Size of matrix/array in first dimention
-y = 100                   # Size of matrix/array in second dimention
+x_steps = [5, 10, 100]          # Array N-size
+y_steps = [5, 10, 100]          # Array M-size
+iterations = 10         # The amount of times the whole thing runs
 min_value = -100          # Minimum value in each matrix entrance
 max_value = 100           # Maximum value in each matrix entrance
-iterations = 10         # The amount of times the whole thing runs
 
 
 
@@ -141,23 +141,35 @@ def AlgorithmMSP_1D(a: list[int], m: int):
     return maxA, start, end     # Return the highest combination sum, and it's start and end Y-coordinate
 
 
-combined_start_time = time.time()       # Start timer for the combined runtime
 
-for i in range(iterations):
-    array = np.random.randint(min_value, max_value + 1, size = (x, y))      # Creating our two-dimentional array to search through
+"""-----------------------------
+   ---  CODE RUNNING AREA ---
+-----------------------------"""
+average_runtime = []
+for i in range(len(x_steps)):       # For each matrix size/step option
+    combined_start_time = time.time()       # Start timer for the combined runtime
 
-    start_time = time.time()        # Start time, to see computation time
-    print(array)                    # Print given array for troubleshooting purposes
+    for j in range(iterations):     # Run each step of matrix-size for the set amount of iterations
+        
+        array = np.random.randint(min_value, max_value + 1, size = (x_steps[i], y_steps[i]))      # Creating our two-dimentional array to search through
 
-    max_sum, x_start, x_end, y_start, y_end = AlgorithmMSP_Sequential(array, x, y)      # Calling the main function
+        start_time = time.time()        # Start time, to see computation time
+        print(array)                    # Print given array for troubleshooting purposes
 
-    print("Start: X=" + str(x_start) + ":Y=" + str(y_start))        # Print starting coordinates for max value
-    print("End: X=" + str(x_end) + ":Y=" + str(y_end))          # Print ending coordinates for max value
-    print("Max sum: " + str(max_sum[0]))        # Print max value from currently generated array
-    end_time = time.time()          # End time, to see computation time
+        max_sum, x_start, x_end, y_start, y_end = AlgorithmMSP_Sequential(array, x_steps[i], y_steps[i])      # Calling the main function
 
-    print("Runtime: " + str(end_time - start_time) + " seconds")     # Print out the computation time
+        print("Start: X=" + str(x_start) + ":Y=" + str(y_start))        # Print starting coordinates for max value
+        print("End: X=" + str(x_end) + ":Y=" + str(y_end))          # Print ending coordinates for max value
+        print("Max sum: " + str(max_sum[0]))        # Print max value from currently generated array
+        end_time = time.time()          # End time, to see computation time
 
-combined_end_time = time.time()         # Stop timer for the combined runtime
-averate_runtime = (combined_end_time - combined_start_time)/iterations      # Calculate averate runtime
-print("\nAverate Runtime: " + str(averate_runtime) + " seconds")     # Print out the averate computation time
+        print("Runtime: " + str(end_time - start_time) + " seconds")     # Print out the computation time
+
+    combined_end_time = time.time()         # Stop timer for the combined runtime for current matrix size
+    # print("Step is: " + str(i+1))         # For troubleshooting purposes
+    average_runtime.append((combined_end_time - combined_start_time)/iterations)
+    print("\nAverage Runtime for a " + str(x_steps[i]) + "x" + str(y_steps[i]) + " Matrix:" + str(average_runtime[i]) + " seconds \n_______________________________")     # Print out the averate computation time for current matrix size
+
+print("\n")
+for i in range(len(x_steps)):       # Print out all matrix size averages for comparison
+    print("Average Runtime for a " + str(x_steps[i]) + "x" + str(y_steps[i]) + " Matrix: " + str(average_runtime[i]) + " seconds")     # Print out the averate computation time
