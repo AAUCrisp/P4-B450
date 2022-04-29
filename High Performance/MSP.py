@@ -1,9 +1,9 @@
 import numpy as np
 import time as time
 
-x_steps = [5, 10, 100]          # Array N-size
-y_steps = [5, 10, 100]          # Array M-size
-iterations = 10         # The amount of times the whole thing runs
+x_steps = [300]          # Array N-size
+y_steps = [300]          # Array M-size
+iterations = 2         # The amount of times the whole thing runs
 min_value = -100          # Minimum value in each matrix entrance
 max_value = 100           # Maximum value in each matrix entrance
 
@@ -146,17 +146,21 @@ def AlgorithmMSP_1D(a: list[int], m: int):
    ---  CODE RUNNING AREA ---
 -----------------------------"""
 average_runtime = []
+array = []
+for i in range(len(x_steps)):       # For each matrix size/step option
+    array.append(np.random.randint(min_value, max_value + 1, size = (x_steps[i], y_steps[i])))      # Creating our two-dimentional array to search through
+
+
 for i in range(len(x_steps)):       # For each matrix size/step option
     combined_start_time = time.time()       # Start timer for the combined runtime
 
     for j in range(iterations):     # Run each step of matrix-size for the set amount of iterations
         
-        array = np.random.randint(min_value, max_value + 1, size = (x_steps[i], y_steps[i]))      # Creating our two-dimentional array to search through
 
         start_time = time.time()        # Start time, to see computation time
         print(array)                    # Print given array for troubleshooting purposes
 
-        max_sum, x_start, x_end, y_start, y_end = AlgorithmMSP_Sequential(array, x_steps[i], y_steps[i])      # Calling the main function
+        max_sum, x_start, x_end, y_start, y_end = AlgorithmMSP_Sequential(array[i], x_steps[i], y_steps[i])      # Calling the main function
 
         print("Start: X=" + str(x_start) + ":Y=" + str(y_start))        # Print starting coordinates for max value
         print("End: X=" + str(x_end) + ":Y=" + str(y_end))          # Print ending coordinates for max value
