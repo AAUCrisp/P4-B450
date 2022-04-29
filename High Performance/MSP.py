@@ -1,10 +1,11 @@
 import numpy as np
 import time as time
 
-x = 5                   # Size of matrix/array in first dimention
-y = 5                   # Size of matrix/array in second dimention
+x = 100                   # Size of matrix/array in first dimention
+y = 100                   # Size of matrix/array in second dimention
 min_value = -100        # Minimum value in each matrix entrance
 max_value = 100         # Maximum value in each matrix entrance
+iterations = 10
 
 
 
@@ -140,17 +141,22 @@ def AlgorithmMSP_1D(a: list[int], m: int):
     return maxA, start, end     # Return the highest combination sum, and it's start and end Y-coordinate
 
 
+combined_start_time = time.time()
 
-array = np.random.randint(min_value, max_value + 1, size = (x, y))      # Creating our two-dimentional array to search through
+for i in range(iterations):
+    array = np.random.randint(min_value, max_value + 1, size = (x, y))      # Creating our two-dimentional array to search through
 
-start_time = time.time()        # Start time, to see computation time
-print(array)                    # Print given array for troubleshooting purposes
+    start_time = time.time()        # Start time, to see computation time
+    print(array)                    # Print given array for troubleshooting purposes
 
-max_sum, x_start, x_end, y_start, y_end = AlgorithmMSP_Sequential(array, x, y)      # Calling the main function
+    max_sum, x_start, x_end, y_start, y_end = AlgorithmMSP_Sequential(array, x, y)      # Calling the main function
 
-print("Start: X=" + str(x_start) + ":Y=" + str(y_start))        # Print starting coordinates for max value
-print("End: X=" + str(x_end) + ":Y=" + str(y_end))          # Print ending coordinates for max value
-print("Max sum: " + str(max_sum[0]))        # Print max value from currently generated array
-end_time = time.time()          # End time, to see computation time
+    print("Start: X=" + str(x_start) + ":Y=" + str(y_start))        # Print starting coordinates for max value
+    print("End: X=" + str(x_end) + ":Y=" + str(y_end))          # Print ending coordinates for max value
+    print("Max sum: " + str(max_sum[0]))        # Print max value from currently generated array
+    end_time = time.time()          # End time, to see computation time
 
-print("Runtime: " + str(end_time - start_time) + " seconds")     # Print out the computation time
+    print("Runtime: " + str(end_time - start_time) + " seconds")     # Print out the computation time
+
+combined_end_time = time.time()
+print("Averate Runtime: " + str((combined_end_time - combined_start_time)/iterations) + " seconds")     # Print out the computation time
