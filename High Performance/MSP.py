@@ -1,8 +1,8 @@
 import numpy as np
 import time as time
 
-x = 1000                   # Size of matrix/array in first dimention
-y = 1000                   # Size of matrix/array in second dimention
+x = 5                   # Size of matrix/array in first dimention
+y = 5                   # Size of matrix/array in second dimention
 min_value = -100        # Minimum value in each matrix entrance
 max_value = 100         # Maximum value in each matrix entrance
 
@@ -153,4 +153,4 @@ print("End: X=" + str(x_end) + ":Y=" + str(y_end))          # Print ending coord
 print("Max sum: " + str(max_sum[0]))        # Print max value from currently generated array
 end_time = time.time()          # End time, to see computation time
 
-print("Runtime: " + str(end_time - start_time) + " ms")     # Print out the computation time
+print("Runtime: " + str(end_time - start_time) + " seconds")     # Print out the computation time
