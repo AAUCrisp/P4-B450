@@ -3,9 +3,9 @@ import time as time
 
 x = 100                   # Size of matrix/array in first dimention
 y = 100                   # Size of matrix/array in second dimention
-min_value = -100        # Minimum value in each matrix entrance
-max_value = 100         # Maximum value in each matrix entrance
-iterations = 10
+min_value = -100          # Minimum value in each matrix entrance
+max_value = 100           # Maximum value in each matrix entrance
+iterations = 10         # The amount of times the whole thing runs
 
 
 
@@ -141,7 +141,7 @@ def AlgorithmMSP_1D(a: list[int], m: int):
     return maxA, start, end     # Return the highest combination sum, and it's start and end Y-coordinate
 
 
-combined_start_time = time.time()
+combined_start_time = time.time()       # Start timer for the combined runtime
 
 for i in range(iterations):
     array = np.random.randint(min_value, max_value + 1, size = (x, y))      # Creating our two-dimentional array to search through
@@ -158,5 +158,6 @@ for i in range(iterations):
 
     print("Runtime: " + str(end_time - start_time) + " seconds")     # Print out the computation time
 
-combined_end_time = time.time()
-print("Averate Runtime: " + str((combined_end_time - combined_start_time)/iterations) + " seconds")     # Print out the computation time
+combined_end_time = time.time()         # Stop timer for the combined runtime
+averate_runtime = (combined_end_time - combined_start_time)/iterations      # Calculate averate runtime
+print("\nAverate Runtime: " + str(averate_runtime) + " seconds")     # Print out the averate computation time
