@@ -1,10 +1,75 @@
 import numpy as np
 import time as time
 
-x = 5                   # Size of matrix/array in first dimention
-y = 5                   # Size of matrix/array in second dimention
+x = 1000                   # Size of matrix/array in first dimention
+y = 1000                   # Size of matrix/array in second dimention
 min_value = -100        # Minimum value in each matrix entrance
 max_value = 100         # Maximum value in each matrix entrance
+
+
+
+def AlgorithmMSP_Sequential(A: list[int], N: int, M: int):
+    """
+    MSP Sequential
+    =====
+    Function to find the max-value combination of an twodimentional array
+
+    Parameter documentation
+    ----
+    >>> A = array, `Two-dimentional array`
+    >>> N = int, `X-axis size of array`
+    >>> M = int, `Y-axis size of array`
+
+    `Returns maximum possible value-sum from a section of the array & the selection coordinates`
+    >>> Max Sum = int
+    >>> X-axis start position = int
+    >>> X-axis end position = int
+    >>> Y-axis start position = int
+    >>> Y-axis end position = int
+    """
+    maxA = -np.inf      # Setup a variable to keep currently found max value.
+    startN = 0          # Setup a variable to keep track of and return X-axis starting point of result
+    endN = 0            # Setup a variable to keep track of and return X-axis end point of result
+    startM = 0          # Setup a variable to keep track of and return Y-axis starting point of result
+    endM = 0            # Setup a variable to keep track of and return Y-axis end point of result
+
+    for i in range(N):      # For each column in the array
+        """
+        This loop is the main loop, looping over each column in the matrix.
+        Used for moving the starting column for each iteration
+
+        This loop concurrently removes the "earlier" column, to check for better combinations further into the matrix.
+        I.E. 1st loop it takes from 1 column to the end, 2nd loop it's from second column, and so forth...
+        """
+        # print("I is: " + str(i))      # Troubleshooting Print
+        temp = np.zeros([M,1])      # Creates empty array the size of the Y-axis
+
+        for k in range(i,N):    # From current column to the last
+            """
+            This loop adds another column to the compared combination for each iteration, from the current starting column (considering i)
+            """
+            # print("K is: " + str(k))      # Troubleshooting Print
+
+            for j in range(M):      # For every row in the array
+                """
+                This loop adds each row of the current column, to the combined sum of earlier combined columns...
+                First iteration in temp will be on the 1st column, Second iteration is 1st to 2nd column combined, Third iteration 1st to 3rd column, and so forth.
+                """
+                temp[j] = temp[j]+A[j,k]        # Adds the summarised value up till the current index 
+                # print(temp[j])
+
+            pSum, temp_start, temp_end = AlgorithmMSP_1D(temp, M)       # Checks the currently selected row/column combination for it's max value
+            if pSum >= maxA:            # If the newly found Max-sum is larger than the currently largest
+                maxA = pSum                 # Replace currently largest with the newly found Max-value
+                startN = i+1                # Update the X-axis starting coordinate
+                endN = k+1                  # Update the X-axis ending coordinate
+                startM = temp_start+1       # Update the Y-axis starting coordinate
+                endM = temp_end+1          # Update the Y-axis ending coordinate
+
+        # print("New Starting Point")
+    return maxA, startN, endN, startM, endM         # Return the ultimate highest combination sum, and it's start and end coordinates
+
+
 
 
 def AlgorithmMSP_1D(a: list[int], m: int):
@@ -74,63 +139,6 @@ def AlgorithmMSP_1D(a: list[int], m: int):
     # print(maxA)
     return maxA, start, end     # Return the highest combination sum, and it's start and end Y-coordinate
 
-
-def AlgorithmMSP_Sequential(A: list[int], N: int, M: int):
-    """
-    MSP Sequential
-    =====
-    Function to find the max-value combination of an twodimentional array
-
-    Parameter documentation
-    ----
-    >>> A = array, `Two-dimentional array`
-    >>> N = int, `X-axis size of array`
-    >>> M = int, `Y-axis size of array`
-
-    `Returns maximum possible value-sum from a section of the array & the selection coordinates`
-    >>> Max Sum = int
-    >>> X-axis start position = int
-    >>> X-axis end position = int
-    >>> Y-axis start position = int
-    >>> Y-axis end position = int
-    """
-    maxA = -np.inf      # Setup a variable to keep currently found max value.
-    startN = 0          # Setup a variable to keep track of and return X-axis starting point of result
-    endN = 0            # Setup a variable to keep track of and return X-axis end point of result
-    startM = 0          # Setup a variable to keep track of and return Y-axis starting point of result
-    endM = 0            # Setup a variable to keep track of and return Y-axis end point of result
-
-    for i in range(N):      # For each column in the array
-        """
-        This loop is the main loop, looping over each row in the matrix.
-        """
-        # print("I is: " + str(i))      # Troubleshooting Print
-        temp = np.zeros([M,1])      # Creates empty array the size of the Y-axis
-
-        for k in range(i,N):    # From current column to the last
-            """
-            This loop concurrently removes the "earlier" column, to check for better combinations further into the matrix.
-            I.E. 1st loop it takes from 1 column to the end, 2nd loop it's from second column, and so forth...
-            """
-            # print("K is: " + str(k))      # Troubleshooting Print
-
-            for j in range(M):      # For every row in the array
-                """
-                This loop adds the current row, to the combined sum of earlier combined rows...
-                First entry i temp will be on the 1st row, Second entry is 1st to 2nd row combined, Third entry 1st to 3rd row, and so forth.
-                """
-                temp[j] = temp[j]+A[j,k]        # Adds the summarised value up till the current index 
-
-            pSum, temp_start, temp_end = AlgorithmMSP_1D(temp, M)       # Checks the currently selected row/column combination for it's max value
-            if pSum >= maxA:            # If the newly found Max-sum is larger than the currently largest
-                maxA = pSum                 # Replace currently largest with the newly found Max-value
-                startN = i+1                # Update the X-axis starting coordinate
-                endN = k+1                  # Update the X-axis ending coordinate
-                startM = temp_start+1       # Update the Y-axis starting coordinate
-                end_M = temp_end+1          # Update the Y-axis ending coordinate
-
-        # print("New Starting Point")
-    return maxA, startN, endN, startM, endM         # Return the ultimate highest combination sum, and it's start and end coordinates
 
 
 array = np.random.randint(min_value, max_value + 1, size = (x, y))      # Creating our two-dimentional array to search through
