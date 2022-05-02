@@ -22,29 +22,30 @@ char message[MAXBUF];
 struct sockaddr_in Client;
 int sockfd, len = sizeof(Client);
 
+int main()
+{
 
+	/* Create socket */
+	sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+	setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
 
-int main() {
+	if (sockfd == -1)
+	{
+		perror("Failed to create socket");
+		exit(0);
+	}
 
-  /* Create socket */
-  sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-  setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
+	/* configure settings to communicate with remote UDP server */
+	Client.sin_family = AF_INET;
+	Client.sin_port = htons(PORT);
+	Client.sin_addr.s_addr = inet_addr(IP);
 
-  if (sockfd == -1) {
-    perror("Failed to create socket");
-    exit(0);
-  }
-
-  /* configure settings to communicate with remote UDP server */
-  Client.sin_family = AF_INET;
-  Client.sin_port = htons(PORT);
-  Client.sin_addr.s_addr = inet_addr(IP);
-
-  /* Main running code */
-  while (1) {
-    char TestMsg[] = "Hello does this work?";
-    sendto(sockfd, TestMsg, sizeof(TestMsg), 0, (struct sockaddr *)&Client, len); //send the data to server
-  }
-  close(sockfd);
-  return 1;
+	/* Main running code */
+	while (1)
+	{
+		char TestMsg[] = "Hello does this work?";
+		sendto(sockfd, TestMsg, sizeof(TestMsg), 0, (struct sockaddr *)&Client, len); // send the data to server
+	}
+	close(sockfd);
+	return 1;
 }
