@@ -132,9 +132,9 @@ int main() {
   
     rc1 = recvfrom(sockfd1, Buffer1, MAXBUF, 0, (struct sockaddr*)&Server1, &len1);
     printf("%s\n \n", Buffer1);
-    
-    rc2 = recvfrom(sockfd2, Buffer2, MAXBUF, 0, (struct sockaddr*)&Server2, &len2);
-    printf("%s\n \n", Buffer2);
+        
+    //rc2 = recvfrom(sockfd2, Buffer2, MAXBUF, 0, (struct sockaddr*)&Server2, &len2);
+    //printf("%s\n \n", Buffer2);
     
 
   }

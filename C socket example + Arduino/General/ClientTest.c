@@ -11,7 +11,7 @@
 /* Define buffer size, PORT number and server IP */
 #define MAXBUF 64
 #define PORT 8888
-#define IP "Insert IP here"
+#define IP "10.20.0.10"
 
 /* Specify LTE / WiFi interface */
 const char *LTE = "wwan0";
@@ -28,7 +28,7 @@ int main() {
 
   /* Create socket */
   sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-  setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, "Insert interface", strlen("Insert interface"));
+  setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
 
   if (sockfd == -1) {
     perror("Failed to create socket");

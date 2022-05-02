@@ -11,12 +11,13 @@
 /* Define buffer size, PORT number and server IP */
 #define MAXBUF 64
 #define PORT 8888
-#define IP1 "10.20.0.16"
-#define IP2 "192.168.1.136"
+#define PORT2 8887
+#define IP1 "10.20.0.10"
+#define IP2 "192.168.1.160"
 
 /* Specify LTE / WiFi interface */
 const char *LTE = "wwan0";
-const char *WiFi = "wlan0";
+const char *WiFi = "wlan1";
 
 /* Misc */
 char message[MAXBUF];
@@ -35,7 +36,7 @@ int main() {
   setsockopt(sockfd1, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
   setsockopt(sockfd2, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
 
-  if (sockfd1 || sockfd2 == -1) {
+  if (sockfd1  == -1) {
     perror("Failed to create socket");
     exit(0);
   }
@@ -46,7 +47,7 @@ int main() {
   Client1.sin_addr.s_addr = inet_addr(IP1);
 
   Client2.sin_family = AF_INET;
-  Client2.sin_port = htons(PORT);
+  Client2.sin_port = htons(PORT2);
   Client2.sin_addr.s_addr = inet_addr(IP2);
 
   /* Main running code */
