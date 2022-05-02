@@ -5,7 +5,7 @@ ClientStart: ClientTest.c
 	touch ClientStart
 
 ServerStart: ServerTest.c
-	gcc -pthead -lconfig ServerTest.c -o ServerStart
+	gcc -pthread -lconfig ServerTest.c -o ServerStart
 	touch ServerStart
 
 clean:
