@@ -8,14 +8,14 @@ LTE: 10.20.0.16
 Eth: 192.168.1.185  
 
 ## Sensor:
-WiFi: 192.168.1.160
-LTE: 10.20.0.10
-Eth: 192.168.1.119
+WiFi: 192.168.1.160  
+LTE: 10.20.0.10  
+Eth: 192.168.1.119  
 
 ## Actuator:
-WiFi: 192.168.1.143
-LTE: 10.20.0.13
-Eth: 192.168.1.117
+WiFi: 192.168.1.143  
+LTE: 10.20.0.13  
+Eth: 192.168.1.117  
 
 ## Reminders:
 __**Git:**__ sudo apt-get install git
@@ -25,3 +25,4 @@ __**Git:**__ sudo apt-get install git
     - git add -A
     - git commit
     - git push
+
