@@ -41,9 +41,9 @@ void Create_Bind_Socket_LTE() {
   }
   
   /* Configure settings to communicate with remote UDP server */
-  Server1.sin_family = AF_INET;
-  Server1.sin_port = htons(PORT1);
-  Server1.sin_addr.s_addr = INADDR_ANY;
+  ServerLTE.sin_family = AF_INET;
+  ServerLTE.sin_port = htons(PORT1);
+  ServerLTE.sin_addr.s_addr = INADDR_ANY;
 
   /* Bind to socket */
   bindLTE = bind(sockLTE, (struct sockaddr*)&ServerLTE, sizeof(struct sockaddr));
@@ -53,9 +53,9 @@ void Create_Bind_Socket_LTE() {
   }
 }
 
-void Receive_Data_LTE(){
+void (*) Receive_Data_LTE(){
   rc_LTE = recvfrom(sockLTE, SensorBuffer, SENSBUF, 0, (struct sockaddr*)&ServerLTE, &lenLTE);
-    printf("%s\n \n", SensorBuffer);
+  printf("%s\n \n", SensorBuffer);
 }
 
 void Create_Bind_Socket_WiFi() {
@@ -68,9 +68,9 @@ void Create_Bind_Socket_WiFi() {
   }
   
   /* Configure settings to communicate with remote UDP server */
-  Server2.sin_family = AF_INET;
-  Server2.sin_port = htons(PORT2);
-  Server2.sin_addr.s_addr = INADDR_ANY;
+  ServerWiFi.sin_family = AF_INET;
+  ServerWiFi.sin_port = htons(PORT2);
+  ServerWiFi.sin_addr.s_addr = INADDR_ANY;
 
   /* Bind to socket */
   bindWiFi = bind(sockWiFi, (struct sockaddr*)&ServerWiFi, sizeof(struct sockaddr));
@@ -80,7 +80,7 @@ void Create_Bind_Socket_WiFi() {
   }  
 }
 
-void Receive_Data_WiFi(){
+void (*) Receive_Data_WiFi(){
   rc_WiFi = recvfrom(sockWiFi, ActuatorBuffer, ACTBUF, 0, (struct sockaddr*)&ServerWiFi, &lenWiFi);
     printf("%s\n \n", ActuatorBuffer);
 }
