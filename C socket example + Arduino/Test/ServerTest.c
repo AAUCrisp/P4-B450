@@ -55,7 +55,7 @@ void Create_Bind_Socket_LTE()
 	}
 }
 
-void(*) Receive_Data_LTE()
+void *Receive_Data_LTE(void *arg)
 {
 	rc_LTE = recvfrom(sockLTE, SensorBuffer, SENSBUF, 0, (struct sockaddr *)&ServerLTE, &lenLTE);
 	printf("%s\n \n", SensorBuffer);
@@ -86,7 +86,7 @@ void Create_Bind_Socket_WiFi()
 	}
 }
 
-void(*) Receive_Data_WiFi()
+void *Receive_Data_WiFi(void *arg)
 {
 	rc_WiFi = recvfrom(sockWiFi, ActuatorBuffer, ACTBUF, 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
 	printf("%s\n \n", ActuatorBuffer);
@@ -113,55 +113,3 @@ int main()
 	close(sockLTE && sockWiFi);
 	return 1;
 }
-
-/*
-void* LTE_Socket(void* arg){
-  sockfd1 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-  setsockopt(sockfd1, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
-  if (sockfd1 == -1) {
-	perror("Failed to create socket");
-	exit(0);
-  }
-
-  Server1.sin_family = AF_INET;
-  Server1.sin_port = htons(PORT1);
-  Server1.sin_addr.s_addr = INADDR_ANY;
-*/
-/* Bind to socket */
-/*
-  int a = bind(sockfd1, (struct sockaddr*)&Server1, sizeof(struct sockaddr));
-  if (a == -1) {
-	perror("Failed to bind");
-  }
-
-  rc1 = recvfrom(sockfd1, Buffer1, MAXBUF, 0, (struct sockaddr*)&Server1, &len1);
-	printf("%s\n \n", Buffer1);
-	close(sockfd1);
-	pthread_exit(0);
-}*/
-/*
-void* WiFi_Socket(void* arg){
-  sockfd2 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-  setsockopt(sockfd2, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
-  if (sockfd2 == -1) {
-	perror("Failed to create socket");
-	exit(0);
-  }
-
-  Server2.sin_family = AF_INET;
-  Server2.sin_port = htons(PORT2);
-  Server2.sin_addr.s_addr = INADDR_ANY;
-*/
-/* Bind to socket */
-/*
-  int b = bind(sockfd2, (struct sockaddr*)&Server2, sizeof(struct sockaddr));
-  if (b == -1) {
-	perror("Failed to bind");
-  }
-
-
-  rc2 = recvfrom(sockfd2, Buffer2, MAXBUF, 0, (struct sockaddr*)&Server2, &len2);
-  printf("%s\n \n", Buffer2);
-  close(sockfd2);
-  pthread_exit(0);
-}*/
