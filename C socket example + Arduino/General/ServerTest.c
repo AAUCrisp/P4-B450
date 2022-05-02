@@ -21,42 +21,42 @@ struct sockaddr_in Server;
 int sockfd, len = sizeof(Server);
 char Buffer[MAXBUF];
 
+int main()
+{
 
+	/* Create socket */
+	sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+	setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
 
-int main() {
+	if (sockfd == -1)
+	{
+		perror("Failed to create socket");
+		exit(0);
+	}
 
-  /* Create socket */
-  sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-  setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
+	/* Configure settings to communicate with remote UDP server */
+	Server.sin_family = AF_INET;
+	Server.sin_port = htons(PORT);
+	Server.sin_addr.s_addr = INADDR_ANY;
 
-  if (sockfd == -1) {
-    perror("Failed to create socket");
-    exit(0);
-  }
+	/* Bind to socket */
+	int b = bind(sockfd, (struct sockaddr *)&Server, sizeof(struct sockaddr));
+	if (b == -1)
+	{
+		perror("Failed to bind");
+		close(sockfd);
+		exit(0);
+	}
 
-  /* Configure settings to communicate with remote UDP server */
-  Server.sin_family = AF_INET;
-  Server.sin_port = htons(PORT);
-  Server.sin_addr.s_addr = INADDR_ANY;
+	/* Main running code */
+	while (1)
+	{
+		puts("Emergency exit: CTRL+C");
+		printf("Waiting for data...\n");
 
-  /* Bind to socket */
-  int b = bind(sockfd, (struct sockaddr*)&Server, sizeof(struct sockaddr));
-  if (b == -1) {
-    perror("Failed to bind");
-    close(sockfd);
-    exit(0);
-  }
-
-  /* Main running code */
-  while (1)
-  {
-    puts("Emergency exit: CTRL+C");
-    printf("Waiting for data...\n");
-
-    int rc = recvfrom(sockfd, Buffer, MAXBUF, 0, (struct sockaddr*)&Server, &len);
-    printf("%s\n \n", Buffer);
-
-  }
-  close(sockfd);
-  return 1;
+		int rc = recvfrom(sockfd, Buffer, MAXBUF, 0, (struct sockaddr *)&Server, &len);
+		printf("%s\n \n", Buffer);
+	}
+	close(sockfd);
+	return 1;
 }
