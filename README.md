@@ -3,7 +3,7 @@ P4 Project
 
 
 ## Control Unit:
-WiFi: 192.168.1.131  
+WiFi: 192.168.1.136  
 LTE: 10.20.0.16  
 Eth: 192.168.1.185  
 

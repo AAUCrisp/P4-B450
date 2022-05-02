@@ -24,6 +24,7 @@ int sockfd1, sockfd2;
 int len1 = sizeof(Server1);
 int len2 = sizeof(Server2);
 char Buffer1[MAXBUF];
+
 int rc1, rc2;
 pthread_t T1, T2;
 
