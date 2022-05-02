@@ -22,6 +22,7 @@ Git: sudo apt-get install git
       git clone https://github.com/AAUCrisp/P4-B450.git
       git add -A
       git commit
+      git push
       git pull
 Make: sudo apt-get install make
 lconfig: sudo apt-get install libconfig++
