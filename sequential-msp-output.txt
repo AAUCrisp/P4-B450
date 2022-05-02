@@ -1,0 +1,18 @@
+Testing for N = 10:
+
+  Iteration 0: took 0.0009984970092773438 seconds
+
+Average time for 10 runs: 0.0009984970092773438 seconds
+
+Testing for N = 100:
+
+  Iteration 0: took 0.38210201263427734 seconds
+
+Average time for 10 runs: 0.38210201263427734 seconds
+
+Testing for N = 1000:
+
+  Iteration 0: took 388.15097308158875 seconds
+
+Average time for 10 runs: 388.15097308158875 seconds
+
