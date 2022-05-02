@@ -24,6 +24,3 @@ Git: sudo apt-get install git
       git commit
       git push
       git pull
-Make: sudo apt-get install make
-lconfig: sudo apt-get install libconfig++
-GCC: sudo apt-get install gcc
