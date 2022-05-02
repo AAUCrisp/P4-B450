@@ -55,7 +55,7 @@ void Create_Bind_Socket_LTE()
 	}
 }
 
-void *Receive_Data_LTE(void *arg)
+void *Receive_Data_LTE()
 {
 	rc_LTE = recvfrom(sockLTE, SensorBuffer, SENSBUF, 0, (struct sockaddr *)&ServerLTE, &lenLTE);
 	printf("%s\n \n", SensorBuffer);
@@ -86,7 +86,7 @@ void Create_Bind_Socket_WiFi()
 	}
 }
 
-void *Receive_Data_WiFi(void *arg)
+void *Receive_Data_WiFi()
 {
 	rc_WiFi = recvfrom(sockWiFi, ActuatorBuffer, ACTBUF, 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
 	printf("%s\n \n", ActuatorBuffer);
@@ -101,17 +101,16 @@ int main()
 	/* Main running code */
 	while (1)
 	{
-<<<<<<< HEAD
-=======
-		printf("Waiting for data...\n");
->>>>>>> a7e907a402de6ddab2bfa26c95be67eaa2fcf4ee
-		/* Creating threads running receive data functions */
-		pthread_create(&T1, NULL, Receive_Data_LTE, NULL);
-		pthread_create(&T2, NULL, Receive_Data_WiFi, NULL);
 
-		// pthread_join(T1, NULL);
-		// pthread_join(T2, NULL);
-	}
+		/* Creating threads running receive data functions */
+		//pthread_create(&T1, NULL, Receive_Data_LTE, NULL);
+		//pthread_create(&T2, NULL, Receive_Data_WiFi, NULL);
+
+		//pthread_join(T1, NULL);
+		//pthread_join(T2, NULL);
+		Receive_Data_LTE();
+		Receive_Data_WiFi();
+		}
 	close(sockLTE && sockWiFi);
 	return 1;
 }
