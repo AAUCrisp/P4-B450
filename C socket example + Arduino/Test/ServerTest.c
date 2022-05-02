@@ -101,7 +101,6 @@ int main()
 	/* Main running code */
 	while (1)
 	{
-		puts("Emergency exit: CTRL+C");
 		printf("Waiting for data...\n");
 		/* Creating threads running receive data functions */
 		pthread_create(&T1, NULL, Receive_Data_LTE, NULL);
