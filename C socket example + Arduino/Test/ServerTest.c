@@ -101,6 +101,10 @@ int main()
 	/* Main running code */
 	while (1)
 	{
+<<<<<<< HEAD
+=======
+		printf("Waiting for data...\n");
+>>>>>>> a7e907a402de6ddab2bfa26c95be67eaa2fcf4ee
 		/* Creating threads running receive data functions */
 		pthread_create(&T1, NULL, Receive_Data_LTE, NULL);
 		pthread_create(&T2, NULL, Receive_Data_WiFi, NULL);
