@@ -18,9 +18,10 @@ LTE: 10.20.0.13
 Eth: 192.168.1.117
 
 ## Reminders:
-Git: sudo apt-get install git
-      git clone https://github.com/AAUCrisp/P4-B450.git
-      git add -A
-      git commit
-      git push
-      git pull
+__**Git:**__ sudo apt-get install git
+    - git clone https://github.com/AAUCrisp/P4-B450.git
+    - git pull
+    
+    - git add -A
+    - git commit
+    - git push
