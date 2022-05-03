@@ -53,6 +53,9 @@ void Create_Bind_Socket_LTE()
 	{
 		perror("Failed to bind: LTE");
 	}
+	else {
+		printf("LTE bind was successful! \n");
+	}
 }
 
 void *Receive_Data_LTE()
@@ -84,6 +87,10 @@ void Create_Bind_Socket_WiFi()
 	{
 		perror("Failed to bind: WiFi");
 	}
+	else{
+		printf("WiFi bind was successful! \n");
+	}
+
 }
 
 void *Receive_Data_WiFi()
@@ -101,6 +108,8 @@ int main()
 	/* Main running code */
 	while (1)
 	{
+		//Create_Bind_Socket_LTE();
+		//Create_Bind_Socket_WiFi();
 
 		/* Creating threads running receive data functions */
 		//pthread_create(&T1, NULL, Receive_Data_LTE, NULL);
