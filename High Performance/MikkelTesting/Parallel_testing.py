@@ -2,7 +2,7 @@ import numpy as np
 import time as time
 import concurrent.futures
 
-size = 1000
+size = 10000
 min_value = -100        # Minimum value in each matrix entrance
 max_value = 100         # Maximum value in each matrix entrance
 max_sum = -np.inf
@@ -14,25 +14,25 @@ def matrix_Generator(N):
     res = [list(np.random.randint(min_value,max_value+1,N)) for i in range(N)] # using list comprehension - matrix creation of n * n
       
     #print("The created matrix of N * N: \n")     # print result
-    column = ''
-    divider = ''
-    for x in range(N):
-        if x == 0:
-            column = '       {:4d}'.format(x)
-            divider = '     ------'
-        else:
-            column = column+'{:4d}'.format(x)
-            divider = divider+'----'
+    #column = ''
+    #divider = ''
+    #for x in range(N):
+    #    if x == 0:
+    #        column = '       {:4d}'.format(x)
+    #        divider = '     ------'
+    #    else:
+    #        column = column+'{:4d}'.format(x)
+    #        divider = divider+'----'
     #print(column)
     #print(divider)
 
-    for x in range(len(res)):
-        row = ''
-        for y in range(len(res[x])):
-            if y == 0:
-                row = row+'{:4d} | {:4d}'.format(x, res[x][y])
-            else:
-                row = row+'{:4d}'.format(res[x][y])
+    #for x in range(len(res)):
+    #    row = ''
+    #    for y in range(len(res[x])):
+    #        if y == 0:
+    #            row = row+'{:4d} | {:4d}'.format(x, res[x][y])
+    #        else:
+    #            row = row+'{:4d}'.format(res[x][y])
         #print(row)
     #print("")
     return res
