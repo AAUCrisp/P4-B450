@@ -149,9 +149,10 @@ int main()
 		//   usleep(100);
 		// Receive_Data_LTE();
 		// Receive_Data_WiFi();
+		sleep(1);
 		count++;
 		printf("Count: %d\n", count);
-		if (count == 10)
+		if (count == 50)
 		{
 			break;
 		}
