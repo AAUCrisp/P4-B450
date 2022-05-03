@@ -38,9 +38,9 @@ def matrix_Generator(N):
     return res
 
 
-def AlgorithmMSP(i):
+def AlgorithmMSP(A, i):
     global size
-    global array
+    
     """
     MSP Sequential
     Function to find the max-value combination of an twodimentional array
@@ -56,13 +56,13 @@ def AlgorithmMSP(i):
     tempResult = [None] * 6
 
 
-    #print(f'Iteration {i} has started')
+    print(f'Iteration {i} has started')
     # print("i is: " + str(i))      # Troubleshooting Print
     temp = [0] * size      # Creates empty array the size of the Y-axis
 
     for k in range(i,size):    # From current column to the last
         for j in range(size):      # For every row in the array
-            temp[j] += array[j][k]        # Adds the summarised value up till the current index
+            temp[j] += A[j][k]        # Adds the summarised value up till the current index
 
         pSum = AlgorithmMSP_1D(temp, start, end, size)       # Checks the currently selected row/column combination for it's max value
             
@@ -130,11 +130,12 @@ if __name__=='__main__':
 
     start_time = time.time()        # Start time, to see computation time
 
-    with concurrent.futures.ThreadPoolExecutor() as executor:
-        rest = executor.map(AlgorithmMSP, counter)      # Calling the main function
-        for f in rest:
-            print(f)
-            results.append(f)
+    with concurrent.futures.ProcessPoolExecutor() as executor:
+        rest = [executor.submit(AlgorithmMSP, array, i) for i in counter]      # Calling the main function
+
+        for f in concurrent.futures.as_completed(rest):
+            print(f.result())
+            results.append(f.result())
 
 
     for i in range (size):
