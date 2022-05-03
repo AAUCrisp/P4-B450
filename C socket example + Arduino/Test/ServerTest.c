@@ -147,7 +147,7 @@ int main()
 		//  usleep(100);
 		Receive_Data_LTE();
 		Receive_Data_WiFi();
-		if (sscanf("%c", &stopshit))
+		if (scanf("%c", &stopshit))
 		{
 			break;
 		}
