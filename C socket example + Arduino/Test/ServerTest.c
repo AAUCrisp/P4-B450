@@ -103,6 +103,7 @@ void Create_Bind_Socket_WiFi()
 void *Receive_Data_LTE()
 {
 	rc_LTE = recvfrom(sockLTE, SensorBuffer, SENSBUF, 0, (struct sockaddr *)&ServerLTE, &lenLTE);
+	printf("LTE-Thread id = %d\n", pthread_self();
 	if (rc_LTE == -1)
 	{
 		perror("Failed to receive LTE msg");
@@ -117,6 +118,7 @@ void *Receive_Data_LTE()
 void *Receive_Data_WiFi()
 {
 	rc_WiFi = recvfrom(sockWiFi, ActuatorBuffer, ACTBUF, 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
+	printf("WiFi-Thread id = %d\n", pthread_self();
 	if (rc_WiFi == -1)
 	{
 		perror("Failed to receive WiFi msg");
