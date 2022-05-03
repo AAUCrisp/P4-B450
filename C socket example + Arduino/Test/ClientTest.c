@@ -10,7 +10,7 @@
 
 /* Define buffer size, PORT number and server IP */
 #define MAXBUF 64
-#define PORT 8888
+#define PORT1 8888
 #define PORT2 8887
 #define IP1 "10.20.0.16"
 #define IP2 "192.168.1.136"
@@ -21,58 +21,134 @@ const char *WiFi = "wlan0";
 
 /* Misc */
 char message[MAXBUF];
-struct sockaddr_in Client1;
-struct sockaddr_in Client2;
-int sockfd1, sockfd2;
-int len1 = sizeof(Client1), len2 = sizeof(Client2);
+struct sockaddr_in ClientLTE;
+struct sockaddr_in ClientWiFi;
+int sockLTE, sockWiFi;
+int lenLTE = sizeof(ClientLTE);
+int lenWiFi = sizeof(ClientWiFi);
+int rc_LTE, rc_WiFi;
+pthread_t T1, T2, T3, T4;
 
-int main()
+/* Message to send */
+char TestMsg1[] = "This is LTE";
+char TestMsg2[] = "This is WiFi";
+
+/* Global signal variable*/
+char Temp[MAXBUF];
+int GSV;
+
+void Create_Socket_LTE()
 {
-
 	/* Create socket */
 	sockfd1 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-	sockfd2 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-	setsockopt(sockfd1, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
-	setsockopt(sockfd2, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
+	setsockopt(sockLTE, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
 
-	if (sockfd1 == -1)
+	if (sockLTE == -1)
 	{
-		perror("Failed to create socket");
+		perror("Failed to create socket: LTE");
 		exit(0);
+	}
+	else
+	{
+		printf("LTE socket was created successfully\n");
 	}
 
 	/* configure settings to communicate with remote UDP server */
-	Client1.sin_family = AF_INET;
-	Client1.sin_port = htons(PORT);
-	Client1.sin_addr.s_addr = inet_addr(IP1);
+	ClientLTE.sin_family = AF_INET;
+	ClientLTE.sin_port = htons(PORT1);
+	ClientLTE.sin_addr.s_addr = inet_addr(IP1);
+}
 
-	Client2.sin_family = AF_INET;
-	Client2.sin_port = htons(PORT2);
-	Client2.sin_addr.s_addr = inet_addr(IP2);
+void Create_Socket_WiFi()
+{
+	/* Create socket */
+	sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+	setsockopt(sockWiFi, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
+
+	if (sockWiFi == -1)
+	{
+		perror("Failed to create socket: WiFi");
+		exit(0);
+	}
+	else
+	{
+		printf("WiFi socket was successful! \n");
+	}
+
+	/* configure settings to communicate with remote UDP server */
+	ClientWiFi.sin_family = AF_INET;
+	ClientWiFi.sin_port = htons(PORT2);
+	ClientWiFi.sin_addr.s_addr = inet_addr(IP2);
+}
+
+void *Receive_Data_LTE()
+{
+	rc_LTE = recvfrom(sockLTE, Temp, MAXBUF, 0, (struct sockaddr *)&ClientLTE, &lenLTE);
+	printf("LTE-Thread id = %ld\n", pthread_self());
+	if (rc_LTE == -1)
+	{
+		perror("Failed to receive LTE msg");
+	}
+	else
+	{
+		printf("%s\n", Temp);
+		pthread_exit(NULL);
+	}
+}
+
+void *Receive_Data_WiFi()
+{
+	rc_WiFi = recvfrom(sockWiFi, Temp, MAXBUF, 0, (struct sockaddr *)&ClientWiFi, &lenWiFi);
+	printf("WiFi-Thread id = %ld\n", pthread_self());
+	if (rc_WiFi == -1)
+	{
+		perror("Failed to receive WiFi msg");
+	}
+	else
+	{
+		printf("%s\n", Temp);
+		pthread_exit(NULL);
+	}
+}
+
+void *Send_Data_LTE(void* arg){
+	int test1 = sendto(sockfd1, arg, sizeof(arg), 0, (struct sockaddr *)&Client1, len1); // send the data to server
+	if (test1 == sizeof(TestMsg1))
+	{
+		printf("TestMsg1 was successfully sent!\n");
+	}
+}
+
+void *Send_Data_WiFi(void *arg) {
+	int test2 = sendto(sockfd2, arg, sizeof(arg), 0, (struct sockaddr *)&Client2, len2); // send the data to server
+	if (test2 == sizeof(TestMsg2))
+	{
+		printf("TestMsg2 was successfully sent!\n");
+	}
+}
+
+int main()
+{
+	Create_Socket_LTE();
+	Create_Socket_WiFi();
 
 	/* Main running code */
 	int count = 0;
 	while (1)
 	{
-		char TestMsg1[] = "This is LTE";
-		char TestMsg2[] = "This is WiFi";
-		int test1 = sendto(sockfd1, TestMsg1, sizeof(TestMsg1), 0, (struct sockaddr *)&Client1, len1); // send the data to server
-		if (test1 == sizeof(TestMsg1)){
-			printf("TestMsg1 was successfully sent!\n");
-		}
-		int test2 = sendto(sockfd2, TestMsg2, sizeof(TestMsg2), 0, (struct sockaddr *)&Client2, len2); // send the data to server
-		if (test2 == sizeof(TestMsg2)){
-			printf("TestMsg2 was successfully sent!\n");
-		}
+		pthread_create(&T1, NULL, Receive_Data_LTE, NULL);
+		pthread_create(&T2, NULL, Receive_Data_WiFi, NULL);
+		pthread_create(&T3, NULL, Send_Data_LTE, &TestMsg1);
+		pthread_create(&T4, NULL, Send_Data_WiFi, &TestMsg2);
+
 		count++;
 		printf("Count is: %d\n", count);
 		sleep(1);
-		if(count == 10){
-		close(sockfd1);
-		close(sockfd2);
-		exit(0);
+		if (count == 10)
+		{
+			break;
 		}
 	}
-	close(sockfd1 && sockfd2);
-	return 1;
+	close(sockLTE && sockWiFi);
+	exit(0);
 }

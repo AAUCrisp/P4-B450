@@ -30,6 +30,9 @@ char ActuatorBuffer[ACTBUF];
 int rc_LTE, rc_WiFi;
 pthread_t T1, T2;
 
+/* Global signal variable*/
+int GSV;
+
 void Create_Bind_Socket_LTE()
 {
 	/* Create socket */
