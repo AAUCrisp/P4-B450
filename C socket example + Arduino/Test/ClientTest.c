@@ -12,12 +12,12 @@
 #define MAXBUF 64
 #define PORT 8888
 #define PORT2 8887
-#define IP1 "10.20.0.10"
-#define IP2 "192.168.1.160"
+#define IP1 "10.20.0.16"
+#define IP2 "192.168.1.131"
 
 /* Specify LTE / WiFi interface */
 const char *LTE = "wwan0";
-const char *WiFi = "wlan1";
+const char *WiFi = "wlan0";
 
 /* Misc */
 char message[MAXBUF];
@@ -25,6 +25,7 @@ struct sockaddr_in Client1;
 struct sockaddr_in Client2;
 int sockfd1, sockfd2;
 int len1 = sizeof(Client1), len2 = sizeof(Client2);
+int f, g;
 
 int main()
 {
@@ -32,15 +33,21 @@ int main()
 	/* Create socket */
 	sockfd1 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 	sockfd2 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-	setsockopt(sockfd1, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
-	setsockopt(sockfd2, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
+	LTE = malloc(sizeof(LTE));
+	WiFi = malloc(sizeof(WiFi)); 
+	f = setsockopt(sockfd1, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
+	g = setsockopt(sockfd2, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
 
 	if (sockfd1 == -1)
 	{
 		perror("Failed to create socket");
 		exit(0);
 	}
-
+	if (f == -1 || g == -1 )
+	{
+		perror(3);
+		exit(0);
+	}
 	/* configure settings to communicate with remote UDP server */
 	Client1.sin_family = AF_INET;
 	Client1.sin_port = htons(PORT);
