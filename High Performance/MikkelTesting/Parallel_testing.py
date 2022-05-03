@@ -2,40 +2,10 @@ import numpy as np
 import time as time
 import concurrent.futures
 
-size = 10000
+size = 1000
 min_value = -100        # Minimum value in each matrix entrance
 max_value = 100         # Maximum value in each matrix entrance
 max_sum = -np.inf
-counter = [i for i in range (size)]
-
-def matrix_Generator(N):      
-    print("The dimension : " + str(N))     # printing dimension
-      
-    res = [list(np.random.randint(min_value,max_value+1,N)) for i in range(N)] # using list comprehension - matrix creation of n * n
-      
-    #print("The created matrix of N * N: \n")     # print result
-    #column = ''
-    #divider = ''
-    #for x in range(N):
-    #    if x == 0:
-    #        column = '       {:4d}'.format(x)
-    #        divider = '     ------'
-    #    else:
-    #        column = column+'{:4d}'.format(x)
-    #        divider = divider+'----'
-    #print(column)
-    #print(divider)
-
-    #for x in range(len(res)):
-    #    row = ''
-    #    for y in range(len(res[x])):
-    #        if y == 0:
-    #            row = row+'{:4d} | {:4d}'.format(x, res[x][y])
-    #        else:
-    #            row = row+'{:4d}'.format(res[x][y])
-        #print(row)
-    #print("")
-    return res
 
 
 def AlgorithmMSP(A, i):
@@ -55,14 +25,13 @@ def AlgorithmMSP(A, i):
     temp = [None] * size
     tempResult = [None] * 6
 
-
-    print(f'Iteration {i} has started')
+    #print(f'Iteration {i} has started')
     # print("i is: " + str(i))      # Troubleshooting Print
     temp = [0] * size      # Creates empty array the size of the Y-axis
 
     for k in range(i,size):    # From current column to the last
         for j in range(size):      # For every row in the array
-            temp[j] += A[j][k]        # Adds the summarised value up till the current index
+            temp[j] += A[j,k]        # Adds the summarised value up till the current index
 
         pSum = AlgorithmMSP_1D(temp, start, end, size)       # Checks the currently selected row/column combination for it's max value
             
@@ -80,6 +49,7 @@ def AlgorithmMSP(A, i):
     tempResult[3]=startM
     tempResult[4]=endM
     tempResult[5]=i
+    #print(f'Iteration {i} finished')
     return tempResult         # Return the ultimate highest combination sum, and its start and end coordinates
 
 
@@ -124,17 +94,17 @@ def AlgorithmMSP_1D(a, start, end, m):
 
 
 if __name__=='__main__':
-    array = matrix_Generator(size)
+    array = np.random.randint(min_value, max_value, (size,size))
     results = []
     #print(results)
-
+    print(f'Array of size {size}x{size}')     # printing dimension
     start_time = time.time()        # Start time, to see computation time
-
-    with concurrent.futures.ProcessPoolExecutor() as executor:
-        rest = [executor.submit(AlgorithmMSP, array, i) for i in counter]      # Calling the main function
+    
+    with concurrent.futures.ProcessPoolExecutor(max_workers=8) as executor:
+        rest = [executor.submit(AlgorithmMSP, array, i) for i in range (size)]      # Calling the main function
 
         for f in concurrent.futures.as_completed(rest):
-            print(f.result())
+            print(f'{f.result()} | At time: {time.time()-start_time}')
             results.append(f.result())
 
 
@@ -150,4 +120,4 @@ if __name__=='__main__':
     print("Start: X=" + str(x_start) + ":Y=" + str(y_start))        # Print starting coordinates for max value
     print("End: X=" + str(x_end) + ":Y=" + str(y_end))          # Print ending coordinates for max value
     print("Max sum: " + str(max_sum))        # Print max value from currently generated array
-    print("Runtime: " + str(end_time - start_time) + " ms")     # Print out the computation time
+    print("Runtime: " + str(end_time - start_time) + " seconds")     # Print out the computation time
