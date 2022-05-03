@@ -116,7 +116,7 @@ void *Send_Data_LTE(void *arg)
 	int test1 = sendto(sockLTE, arg, sizeof(arg), 0, (struct sockaddr *)&ClientLTE, lenLTE); // send the data to server
 	if (test1 == sizeof(arg))
 	{
-		printf("%p was successfully sent!\n", arg);
+		printf("%p was successfully sent!\n", &arg);
 	}
 }
 
@@ -125,7 +125,7 @@ void *Send_Data_WiFi(void *arg)
 	int test2 = sendto(sockWiFi, arg, sizeof(arg), 0, (struct sockaddr *)&ClientWiFi, lenWiFi); // send the data to server
 	if (test2 == sizeof(arg))
 	{
-		printf("%p was successfully sent!\n", arg);
+		printf("%p was successfully sent!\n", &arg);
 	}
 }
 
