@@ -1,31 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#include <pthread.h>
-#include <time.h>
-#include <stdlib.h>
-
-/* Define buffer size, PORT number and server IP */
-#define MAXBUF 64
-#define PORT 8888
-#define IP1 "10.20.0.16"
-#define IP2 "192.168.1.136"
-
-/* Specify LTE / WiFi interface */
-const char *LTE = "wwan0";
-const char *WiFi = "wlan0";
-
-/* Misc */
-struct sockaddr_in Client1;
-struct sockaddr_in Client2;
-int sockfd1, sockfd2;
-int len1 = sizeof(Client1), len2 = sizeof(Client2);
-char Buffer[MAXBUF];
-int rc1, rc2;
-pthread_t T1, T2;
+#include "Data.h"
 
 void *LTE_Socket(void *arg)
 {
@@ -41,7 +14,8 @@ void *LTE_Socket(void *arg)
 	Client1.sin_port = htons(PORT);
 	Client1.sin_addr.s_addr = inet_addr(IP1);
 
-	char TestMsg1[] = "This is LTE";
+	//char TestMsg1[] = "This is LTE";
+	int TestMsg1 = Generate_Data();
 	sendto(sockfd1, TestMsg1, sizeof(TestMsg1), 0, (struct sockaddr *)&Client1, len1);
 
 	close(sockfd1);
@@ -62,11 +36,17 @@ void *WiFi_Socket(void *arg)
 	Client2.sin_port = htons(PORT);
 	Client2.sin_addr.s_addr = inet_addr(IP2);
 
-	char TestMsg2[] = "This is WiFi";
+	int TestMsg2 = Generate_Data();
+	//"This is WiFi";
 	sendto(sockfd2, TestMsg2, sizeof(TestMsg2), 0, (struct sockaddr *)&Client2, len2);
 
 	close(sockfd2);
 	pthread_exit(0);
+}
+
+int Generate_Data(){
+	int data = rand();
+	return data;
 }
 
 int main()
