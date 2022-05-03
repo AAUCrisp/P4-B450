@@ -39,6 +39,11 @@ void Create_Bind_Socket_LTE()
 	if (sockLTE == -1)
 	{
 		perror("Failed to create socket: LTE");
+		exit(0);
+	}
+	else
+	{
+		printf("LTE socket was created successfully\n");
 	}
 
 	/* Configure settings to communicate with remote UDP server */
@@ -52,16 +57,12 @@ void Create_Bind_Socket_LTE()
 	if (bindLTE == -1)
 	{
 		perror("Failed to bind: LTE");
+		exit(0);
 	}
-	else {
+	else
+	{
 		printf("LTE bind was successful! \n");
 	}
-}
-
-void *Receive_Data_LTE()
-{
-	rc_LTE = recvfrom(sockLTE, SensorBuffer, SENSBUF, 0, (struct sockaddr *)&ServerLTE, &lenLTE);
-	printf("%s\n \n", SensorBuffer);
 }
 
 void Create_Bind_Socket_WiFi()
@@ -73,6 +74,11 @@ void Create_Bind_Socket_WiFi()
 	if (sockWiFi == -1)
 	{
 		perror("Failed to create socket: WiFi");
+		exit(0);
+	}
+	else
+	{
+		printf("WiFi socket was successful! \n");
 	}
 
 	/* Configure settings to communicate with remote UDP server */
@@ -86,17 +92,26 @@ void Create_Bind_Socket_WiFi()
 	if (bindWiFi == -1)
 	{
 		perror("Failed to bind: WiFi");
+		exit(0);
 	}
-	else{
+	else
+	{
 		printf("WiFi bind was successful! \n");
 	}
+}
 
+void *Receive_Data_LTE()
+{
+	rc_LTE = recvfrom(sockLTE, SensorBuffer, SENSBUF, 0, (struct sockaddr *)&ServerLTE, &lenLTE);
+	printf("%s\n \n", SensorBuffer);
+	pthread_exit(0);
 }
 
 void *Receive_Data_WiFi()
 {
 	rc_WiFi = recvfrom(sockWiFi, ActuatorBuffer, ACTBUF, 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
 	printf("%s\n \n", ActuatorBuffer);
+	pthread_exit(0);
 }
 
 int main()
@@ -108,18 +123,15 @@ int main()
 	/* Main running code */
 	while (1)
 	{
-		//Create_Bind_Socket_LTE();
-		//Create_Bind_Socket_WiFi();
-
 		/* Creating threads running receive data functions */
-		//pthread_create(&T1, NULL, Receive_Data_LTE, NULL);
-		//pthread_create(&T2, NULL, Receive_Data_WiFi, NULL);
-
-		//pthread_join(T1, NULL);
-		//pthread_join(T2, NULL);
-		Receive_Data_LTE();
-		Receive_Data_WiFi();
-		}
+		pthread_create(&T1, NULL, Receive_Data_LTE, NULL);
+		pthread_create(&T2, NULL, Receive_Data_WiFi, NULL);
+		usleep(100);
+		// pthread_join(T1, NULL);
+		// pthread_join(T2, NULL);
+		// Receive_Data_LTE();
+		// Receive_Data_WiFi();
+	}
 	close(sockLTE && sockWiFi);
 	return 1;
 }
