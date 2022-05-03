@@ -7,7 +7,7 @@
 #include <pthread.h>
 #include <time.h>
 #include <stdlib.h>
-
+//hej
 /* Define buffer size, PORT number and server IP */
 #define MAXBUF 64
 #define PORT 8888
