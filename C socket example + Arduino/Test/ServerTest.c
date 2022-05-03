@@ -146,9 +146,6 @@ int main()
 		/* Creating threads running receive data functions */
 		pthread_create(&T1, NULL, Receive_Data_LTE, NULL);
 		pthread_create(&T2, NULL, Receive_Data_WiFi, NULL);
-		// pthread_join(T1, NULL);
-		// pthread_join(T2, NULL);
-		//   usleep(100);
 		// Receive_Data_LTE();
 		// Receive_Data_WiFi();
 		sleep(1);
