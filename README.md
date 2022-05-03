@@ -18,6 +18,8 @@ LTE: 10.20.0.13
 Eth: 192.168.1.117  
 
 ## Reminders:
+<ins>**Server must not be started with sudo:   "./[ServerName]"**</ins>  
+<ins>**Client must be started with sudo:       "sudo ./[ClientName]"**</ins>  
 <ins>**Git:**</ins>
     - `sudo apt-get install git`        Install Git on your machine    
     - `git clone https://github.com/AAUCrisp/P4-B450.git`       To get the repository to your computer  
