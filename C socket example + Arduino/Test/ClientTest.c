@@ -9,7 +9,7 @@
 #include <stdlib.h>
 
 /* Define buffer size, PORT number and server IP */
-#define MAXBUF 64
+#define MAXBUF 1024
 #define PORT1 8888
 #define PORT2 8887
 #define IP1 "10.20.0.16"
