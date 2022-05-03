@@ -9,8 +9,8 @@
 #include <stdlib.h>
 
 /* Define buffer and PORT number */
-#define SENSBUF 1024
-#define ACTBUF 1024
+#define SENSBUF 4000
+#define ACTBUF 4000
 #define PORT1 8888
 #define PORT2 8887
 
