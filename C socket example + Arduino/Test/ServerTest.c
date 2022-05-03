@@ -110,6 +110,7 @@ void *Receive_Data_LTE()
 	else
 	{
 		printf("%s\n", SensorBuffer);
+		pthread_exit(NULL);
 	}
 }
 
@@ -123,6 +124,7 @@ void *Receive_Data_WiFi()
 	else
 	{
 		printf("%s\n", ActuatorBuffer);
+		pthread_exit(NULL);
 	}
 }
 
@@ -135,8 +137,10 @@ int main()
 	Create_Bind_Socket_WiFi();
 	int count = 0;
 	printf("\n");
+
 	/* Main running code */
-	while(1){
+	while (1)
+	{
 		/* Creating threads running receive data functions */
 		// pthread_create(&T1, NULL, Receive_Data_LTE, NULL);
 		// pthread_create(&T2, NULL, Receive_Data_WiFi, NULL);
@@ -147,8 +151,9 @@ int main()
 		Receive_Data_WiFi();
 		count++;
 		printf("Count: %d\n", count);
-		if(count == 10){
-		break;
+		if (count == 10)
+		{
+			break;
 		}
 	}
 	close(sockLTE && sockWiFi);
