@@ -113,19 +113,19 @@ void *Receive_Data_WiFi()
 
 void *Send_Data_LTE(void *arg)
 {
-	int test1 = sendto(sockLTE, arg, sizeof(arg), 0, (struct sockaddr *)&Client1, len1); // send the data to server
+	int test1 = sendto(sockLTE, arg, sizeof(arg), 0, (struct sockaddr *)&ClientLTE, lenLTE); // send the data to server
 	if (test1 == sizeof(arg))
 	{
-		printf("%s was successfully sent!\n", arg);
+		printf("%c was successfully sent!\n", arg);
 	}
 }
 
 void *Send_Data_WiFi(void *arg)
 {
-	int test2 = sendto(sockWiFi, arg, sizeof(arg), 0, (struct sockaddr *)&Client2, len2); // send the data to server
+	int test2 = sendto(sockWiFi, arg, sizeof(arg), 0, (struct sockaddr *)&ClientWiFi, lenWiFi); // send the data to server
 	if (test2 == sizeof(arg))
 	{
-		printf("%s was successfully sent!\n", arg);
+		printf("%c was successfully sent!\n", arg);
 	}
 }
 
