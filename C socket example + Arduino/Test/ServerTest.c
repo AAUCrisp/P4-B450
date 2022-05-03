@@ -103,32 +103,36 @@ void Create_Bind_Socket_WiFi()
 void *Receive_Data_LTE()
 {
 	rc_LTE = recvfrom(sockLTE, SensorBuffer, SENSBUF, 0, (struct sockaddr *)&ServerLTE, &lenLTE);
-	//printf("%s\n", SensorBuffer);
-	if (rc_LTE){
-	printf("%s\n \n", SensorBuffer);
+	if (rc_LTE == -1)
+	{
+		perror("Failed to receive LTE msg");
 	}
 	else
 	{
-		perror("Failed to receive LTE msg");
+		printf("%s\n \n", SensorBuffer);
 	}
 }
 
 void *Receive_Data_WiFi()
 {
 	rc_WiFi = recvfrom(sockWiFi, ActuatorBuffer, ACTBUF, 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
-	if (rc_WiFi == -1){
-	printf("%s\n \n", ActuatorBuffer);
+	if (rc_WiFi == -1)
+	{
+		perror("Failed to receive WiFi msg");
 	}
 	else
 	{
-		perror("Failed to receive WiFi msg");
+		printf("%s\n \n", ActuatorBuffer);
 	}
 }
 
 /* No need to run sudo when running server*/
+#define STOP 1024
+
 int main()
 {
 	/* Binding sockets to LTE/WiFi */
+	char stopshit[STOP];
 	Create_Bind_Socket_LTE();
 	Create_Bind_Socket_WiFi();
 
@@ -136,17 +140,18 @@ int main()
 	while (1)
 	{
 		/* Creating threads running receive data functions */
-		//pthread_create(&T1, NULL, Receive_Data_LTE, NULL);
-		//pthread_create(&T2, NULL, Receive_Data_WiFi, NULL);
-		// pthread_join(T1, NULL);
-		// pthread_join(T2, NULL);
-		// usleep(100);
+		// pthread_create(&T1, NULL, Receive_Data_LTE, NULL);
+		// pthread_create(&T2, NULL, Receive_Data_WiFi, NULL);
+		//  pthread_join(T1, NULL);
+		//  pthread_join(T2, NULL);
+		//  usleep(100);
 		Receive_Data_LTE();
 		Receive_Data_WiFi();
-		close(sockLTE && sockWiFi);
-		return 0;
-
+		if (sscanf("%c", &stopshit))
+		{
+			break;
+		}
 	}
 	close(sockLTE && sockWiFi);
-	return 1;
+	return 0;
 }
