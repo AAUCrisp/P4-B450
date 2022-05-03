@@ -109,7 +109,7 @@ void *Receive_Data_LTE()
 	}
 	else
 	{
-		printf("%s\n \n", SensorBuffer);
+		printf("%s\n", SensorBuffer);
 	}
 }
 
@@ -122,23 +122,21 @@ void *Receive_Data_WiFi()
 	}
 	else
 	{
-		printf("%s\n \n", ActuatorBuffer);
+		printf("%s\n", ActuatorBuffer);
 	}
 }
 
 /* No need to run sudo when running server*/
-#define STOP 1024
-
 int main()
 {
+
 	/* Binding sockets to LTE/WiFi */
-	char stopshit[STOP];
 	Create_Bind_Socket_LTE();
 	Create_Bind_Socket_WiFi();
-
+	int count = 0;
+	printf("\n");
 	/* Main running code */
-	while (1)
-	{
+	while(1){
 		/* Creating threads running receive data functions */
 		// pthread_create(&T1, NULL, Receive_Data_LTE, NULL);
 		// pthread_create(&T2, NULL, Receive_Data_WiFi, NULL);
@@ -147,11 +145,12 @@ int main()
 		//  usleep(100);
 		Receive_Data_LTE();
 		Receive_Data_WiFi();
-		if (scanf("%c", &stopshit))
-		{
-			break;
+		count++;
+		printf("Count: %d\n", count);
+		if(count == 10){
+		break;
 		}
 	}
 	close(sockLTE && sockWiFi);
-	return 0;
+	exit(0);
 }
