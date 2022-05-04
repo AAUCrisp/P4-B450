@@ -8,7 +8,7 @@
 #include <time.h>
 #include <stdlib.h>
 
-/* Define buffer size, PORT number and server IP */ 
+/* Define buffer size, PORT number and server IP */
 #define MAXBUF
 #define PORT
 #define IP_LTE
@@ -26,14 +26,15 @@ int sockWiFi, lenWiFi = sizeof(ClientWiFi);
 int rc_LTE, rc_WiFi;
 pthread_t T1, T2;
 
-
-void Create_Sockets(int PORT, const char* IP1, const char* IP2){
+void Create_Sockets(uint32_t PORT, const char *IP1, const char *IP2)
+{
     sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     setsockopt(sockLTE, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
     setsockopt(sockWiFi, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
 
-    if (sockLTE == -1){
+    if (sockLTE == -1)
+    {
         perror("Failed to create sockLTE");
         exit(0);
     }
@@ -79,7 +80,7 @@ int main()
 
     /* Create sockets */
     Create_Sockets(PORT, IP_LTE, IP_WiFi);
-    
+
     /* Main running code */
     while (1)
     {
@@ -94,7 +95,7 @@ int main()
 }
 
 /*
-// Create socket 
+// Create socket
 sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 sockfd2 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
@@ -106,7 +107,7 @@ if (sockfd == -1)
     exit(0);
 }
 
-// configure settings to communicate with remote UDP server 
+// configure settings to communicate with remote UDP server
 Client.sin_family = AF_INET;
 Client.sin_port = htons(PORT);
 Client.sin_addr.s_addr = inet_addr(IP);
