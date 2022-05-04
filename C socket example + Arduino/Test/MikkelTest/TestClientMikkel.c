@@ -16,6 +16,7 @@
 
 //SETUP SOCKET
 const char *LTE = "wwan0";
+const char *WiFi = "wlan0";
 struct sockaddr_in ClientLTE;
 struct sockaddr_in ClientWiFi;
 int sockLTE;
