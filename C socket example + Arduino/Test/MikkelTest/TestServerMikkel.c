@@ -9,7 +9,7 @@
 #include <stdlib.h>
 
 /* Define buffer and PORT number */
-#define MAXBUF 1024
+#define MAXBUF 8162
 #define PORT1 8888
 #define PORT2 8887
 
