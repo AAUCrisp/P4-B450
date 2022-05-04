@@ -1,7 +1,9 @@
+from glob import glob
 import numpy as np
 import time as time
+from multiprocessing import Process, Value
 
-size = 100
+size = 10
 min_value = -100        # Minimum value in each matrix entrance
 max_value = 100         # Maximum value in each matrix entrance
 
@@ -44,6 +46,7 @@ def AlgorithmMSP_Sequential(A):
     Parameter documentation
     """
     maxA = -np.inf      # Setup a variable to keep currently found max value.
+    # maxA = Value('f', -np.inf)
     startN, endN, startM, endM = None, None, None, None          # Setup a variable to keep track of and return X-axis starting point of result
     pSum = 0
     start = [0]
@@ -59,8 +62,13 @@ def AlgorithmMSP_Sequential(A):
             for j in range(size):      # For every row in the array
                 temp[j] += A[j][k]        # Adds the summarised value up till the current index
 
-            pSum = AlgorithmMSP_1D(temp, start, end, size)       # Checks the currently selected row/column combination for it's max value
-            
+            # print(maxA.value)
+            # pSum = AlgorithmMSP_1D(temp, start, end, size)       # Checks the currently selected row/column combination for it's max value
+            pSum = Process(target=AlgorithmMSP_1D, args=(temp, start, end, size, maxA))       # Checks the currently selected row/column combination for it's max value
+            pSum.start()
+            pSum.join()
+            # print(pSum)
+
             if pSum >= maxA:            # If the newly found Max-sum is larger than the currently largest
                 maxA = pSum                 # Replace currently largest with the newly found Max-value
                 startN = i                # Update the X-axis starting coordinate
@@ -74,7 +82,7 @@ def AlgorithmMSP_Sequential(A):
 
 
 
-def AlgorithmMSP_1D(a, start, end, m):
+def AlgorithmMSP_1D(a, start, end, m, maxSeen):
     """
     MSP Sequential One-dimantional Assist
     =====
@@ -88,6 +96,8 @@ def AlgorithmMSP_1D(a, start, end, m):
     i = None
     # print(a)        # Troubleshooting Print
     # print("Række: 1 - " + str(pSum[0]))       # Troubleshooting Print
+    # print(maxSeen.value)
+
     for i in range(m):        # For each row in the given array, except the first
         """
         This loop adds the current row, to the combined sum of earlier combined rows...
@@ -106,6 +116,9 @@ def AlgorithmMSP_1D(a, start, end, m):
 
     # print("pSum: " + str(pSum))         # Troubleshooting Print
     # print(maxA)
+    # if pSum >= maxSeen.value:
+    #     maxSeen.value = pSum
+
     return maxA     # Return the highest combination sum, and it's start and end Y-coordinate
 
 
