@@ -14,7 +14,7 @@
 #define PORT2 8887
 
 /* Specify LTE / WiFi interface */
-const char *LTE = "wlp2s0";
+const char *LTE = "wwan0";
 
 /* Misc */
 struct sockaddr_in Server;

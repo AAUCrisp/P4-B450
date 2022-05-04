@@ -13,7 +13,7 @@
 
 
 //SETUP SOCKET
-const char *LTE = "wlp2s0";
+const char *LTE = "wwan0";
 struct sockaddr_in Client;
 int sockfd1;
 int len = sizeof(Client);
@@ -22,14 +22,6 @@ int len = sizeof(Client);
 int data = 0;
 int converted_data = 0;
 
-
-void delay(int milli_seconds)
-{
-    // Storing start time
-    clock_t start_time = clock();
-    // looping till required time is not achieved
-    while (clock() < (start_time + milli_seconds));
-}
 
 int generate(int Min, int Max){
   int number = (rand() % ((Max+1) - Min)) + Min;
@@ -52,7 +44,7 @@ int main() {
 
     sendto(sockfd1, &converted_data, sizeof(converted_data), 0, (struct sockaddr *)&Client, len);
 
-    delay(2000);
+    sleep(2);
   }
   close(sockfd1);
   return 1;
