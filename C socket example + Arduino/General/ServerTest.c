@@ -44,7 +44,7 @@ int main()
 	sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 	sockfd2 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 	setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
-	setsockopt(sockfd2, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE))
+	setsockopt(sockfd2, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
 
 		if (sockfd == -1)
 	{
