@@ -47,11 +47,11 @@ void Create_Bind_Sockets(uint PORT_LTE, uint PORT_WiFI)
 
     /* Configure settings to communicate with remote UDP server */
     ServerLTE.sin_family = AF_INET;
-    ServerLTE.sin_port = htons(PORT1);
+    ServerLTE.sin_port = htons(PORT_LTE);
     ServerLTE.sin_addr.s_addr = INADDR_ANY;
 
     ServerWiFi.sin_family = AF_INET;
-    ServerWiFi.sin_port = htons(SO_REUSEPORT);
+    ServerWiFi.sin_port = htons(PORT_WiFi);
     ServerWiFi.sin_addr.s_addr = INADDR_ANY;
 
     /* Bind to socket */

@@ -88,7 +88,7 @@ int main()
         pthread_create(&T1, NULL, sendshit1String, NULL);
         pthread_create(&T2, NULL, sendshit2String, NULL);
         pthread_join(T1, NULL);
-	pthread_join(T2, NULL);
+	    pthread_join(T2, NULL);
     }
     close(sockLTE && sockWiFi);
     return 1;
