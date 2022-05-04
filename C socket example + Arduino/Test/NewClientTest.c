@@ -10,7 +10,7 @@
 
 /* Define buffer size, PORT number and server IP */
 #define MAXBUF
-#define PORT
+#define PORT2
 #define IP_LTE
 #define IP_WiFi
 
@@ -74,7 +74,7 @@ void *sendshit2String()
 int main()
 {
     /* Initialize variables */
-    PORT 6000;
+    PORT2 6000;
     IP_LTE "10.20.0.16";
     IP_WiFi "192.168.1.131";
 
