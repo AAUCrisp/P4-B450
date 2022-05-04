@@ -73,7 +73,9 @@ int main()
 	{
 		sleep(1);
 		pthread_create(&T1, NULL, sendshit, NULL);
+		pthread_join(T1, NULL);
 		pthread_create(&T2, NULL, sendshit2, NULL);
+		pthread_join(T2, NULL);
 	}
 	close(sockfd);
 	return 1;
