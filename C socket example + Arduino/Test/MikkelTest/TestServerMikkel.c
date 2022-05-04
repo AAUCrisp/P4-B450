@@ -139,9 +139,9 @@ int main() {
     pthread_create(&T1, NULL, Receive_Data_LTE, NULL);
     pthread_create(&T2, NULL, Receive_Data_WiFi, NULL);
     pthread_join(T1, NULL);
-    free(T1);
+    //free(T1);
     pthread_join(T2, NULL);
-    free(T2);
+    //free(T2);
     sleep(1);
     count++;
 		printf("Count: %d\n", count);
