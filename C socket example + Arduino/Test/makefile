@@ -1,13 +1,13 @@
-all: ClientStart ServerStart
+all: NewClientStart ServerStart
 
-ClientStart: ClientTest.c
-	gcc -pthread -lconfig ClientTest.c -o ClientStart
-	touch ClientStart
+NewClientStart: NewClientTest.c
+	gcc -pthread -lconfig NewClientTest.c -o NewClientStart
+	touch NewClientStart
 
 ServerStart: ServerTest.c
 	gcc -pthread -lconfig ServerTest.c -o ServerStart
 	touch ServerStart
 
 clean:
-	rm -f ClientStart ServerStart
+	rm -f NewClientStart ServerStart
 	@echo "clean completed!"
