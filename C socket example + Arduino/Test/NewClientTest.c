@@ -26,7 +26,7 @@ int sockWiFi, lenWiFi = sizeof(ClientWiFi);
 int rc_LTE, rc_WiFi;
 pthread_t T1, T2;
 
-void Create_Sockets(uint16_t PORT, const char *IP1, const char *IP2)
+void Create_Sockets(uint16_t PORT1, const char *IP1, const char *IP2)
 {
     sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -45,11 +45,11 @@ void Create_Sockets(uint16_t PORT, const char *IP1, const char *IP2)
     }
 
     ClientLTE.sin_family = AF_INET;
-    ClientLTE.sin_port = htons(PORT);
+    ClientLTE.sin_port = htons(PORT1);
     ClientLTE.sin_addr.s_addr = inet_addr(IP1);
 
     ClientWiFi.sin_family = AF_INET;
-    ClientWiFi.sin_port = htons(PORT);
+    ClientWiFi.sin_port = htons(PORT1);
     ClientWiFi.sin_addr.s_addr = inet_addr(IP2);
 }
 
