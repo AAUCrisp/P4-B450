@@ -91,28 +91,5 @@ int main()
 	    pthread_join(T2, NULL);
     }
     close(sockLTE && sockWiFi);
-    return 1;
-}
-
-/*
-// Create socket
-sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-sockfd2 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
-setsockopt(sockfd2, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
-
-if (sockfd == -1)
-{
-    perror("Failed to create socket");
     exit(0);
 }
-
-// configure settings to communicate with remote UDP server
-Client.sin_family = AF_INET;
-Client.sin_port = htons(PORT);
-Client.sin_addr.s_addr = inet_addr(IP);
-
-Client2.sin_family = AF_INET;
-Client2.sin_port = htons(PORT);
-Client2.sin_addr.s_addr = inet_addr(IP2);
-*/

@@ -67,6 +67,7 @@ void Create_Bind_Sockets(uint PORT_LTE, uint PORT_WiFi)
         perror("Failed to bind WiFi socket");
         exit(0);
     }
+    printf("Bind succesful\n");
 }
 
 void *receiveshit()
