@@ -47,7 +47,7 @@ int main()
 	setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
 	setsockopt(sockfd2, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
 
-		if (sockfd == -1)
+	if (sockfd == -1)
 	{
 		perror("Failed to create socket");
 		exit(0);
@@ -80,9 +80,9 @@ int main()
 		// printf("Waiting for data...\n");
 		sleep(1);
 		pthread_create(&T1, NULL, receiveshit, NULL);
-		pthread_join(T1, NULL);
+		// pthread_join(T1, NULL);
 		pthread_create(&T1, NULL, receiveshit2, NULL);
-		pthread_join(T2, NULL);
+		// pthread_join(T2, NULL);
 		/*int rc = recvfrom(sockfd, Buffer, MAXBUF, 0, (struct sockaddr *)&Server, &len);
 		printf("%s\n \n", Buffer);*/
 	}
