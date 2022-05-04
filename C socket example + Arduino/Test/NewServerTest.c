@@ -11,7 +11,7 @@
 /* Define buffer and PORT number */
 #define MAXBUF 64
 char Buffer[MAXBUF];
-uint PORT;
+uint PORT1, PORT2;
 
 /* Specify LTE / WiFi interface */
 const char *LTE = "wwan0";
@@ -26,7 +26,7 @@ int bindLTE, bindWiFi;
 int rc_LTE, rc_WiFi;
 pthread_t T1, T2;
 
-void Create_Bind_Sockets(uint PORT)
+void Create_Bind_Sockets(uint PORT_LTE, uint PORT_WiFI)
 {
     /* Create socket */
     sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -47,11 +47,11 @@ void Create_Bind_Sockets(uint PORT)
 
     /* Configure settings to communicate with remote UDP server */
     ServerLTE.sin_family = AF_INET;
-    ServerLTE.sin_port = htons(PORT);
+    ServerLTE.sin_port = htons(PORT1);
     ServerLTE.sin_addr.s_addr = INADDR_ANY;
 
     ServerWiFi.sin_family = AF_INET;
-    ServerWiFi.sin_port = htons(PORT);
+    ServerWiFi.sin_port = htons(SO_REUSEPORT);
     ServerWiFi.sin_addr.s_addr = INADDR_ANY;
 
     /* Bind to socket */
@@ -89,10 +89,11 @@ void *receiveshit2()
 int main()
 {
     /* Initialize variables */
-    PORT = 6000;
+    PORT1 = 9123;
+    PORT2 = 9124;
 
     /* Create sockets */
-    Create_Bind_Sockets(PORT);
+    Create_Bind_Sockets(PORT1, PORT2);
 
     while (1)
     {
