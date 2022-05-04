@@ -117,7 +117,7 @@ int main() {
 
     sleep(2);
   }
-  close(sockfd1);
+  close(sockLTE && sockWiFi);
   return 1;
 
 
