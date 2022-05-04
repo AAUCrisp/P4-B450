@@ -16,7 +16,7 @@
 
 /* Specify LTE / WiFi interface */
 const char *LTE = "wwan0";
-const char *WiFi = "wlan0";
+const char *WiFi = "lo";
 
 /* Misc */
 struct sockaddr_in ServerLTE;
@@ -122,6 +122,7 @@ void *Receive_Data_LTE()
 void *Receive_Data_WiFi()
 {
 	rc_WiFi = recvfrom(sockWiFi, ActuatorBuffer, ACTBUF, 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
+	printf("%s\n", ActuatorBuffer);
 	//printf("WiFi-Thread id = %ld\n", pthread_self());
 	if (rc_WiFi == -1)
 	{
@@ -129,7 +130,7 @@ void *Receive_Data_WiFi()
 	}
 	else
 	{
-		printf("%s\n", ActuatorBuffer);
+		//printf("%s\n", ActuatorBuffer);
 		//sleep(1);
 		//pthread_exit(NULL);
 	}
@@ -153,8 +154,10 @@ int main()
 		//pthread_create(&T2, NULL, Receive_Data_WiFi, NULL);
 		//pthread_join(T1, NULL);
 		//pthread_join(T2, NULL);
-		Receive_Data_LTE();
-		Receive_Data_WiFi();
+		//Receive_Data_LTE();
+		//Receive_Data_WiFi();
+		rc_WiFi = recvfrom(sockWiFi, ActuatorBuffer, sizeof(ActuatorBuffer), 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
+		printf("%s\n", ActuatorBuffer);
 		sleep(1);
 		count++;
 		printf("Count: %d\n", count);

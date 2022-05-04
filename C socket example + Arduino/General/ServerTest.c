@@ -10,23 +10,29 @@
 
 /* Define buffer and PORT number */
 #define MAXBUF 1024
-#define PORT 8888
+#define PORT 6000
 
 /* Specify LTE / WiFi interface */
 const char *LTE = "wwan0";
-const char *WiFi = "wlan0";
+const char *WiFi = "lo";
 
 /* Misc */
 struct sockaddr_in Server;
 int sockfd, len = sizeof(Server);
 char Buffer[MAXBUF];
 
+void* receiveshit(){
+	int rc = recvfrom(sockfd, Buffer, MAXBUF, 0, (struct sockaddr *)&Server, &len);
+	printf("WiFi-Thread id = %ld\n", pthread_self());
+	printf("%s\n \n", Buffer);
+}
+
 int main()
 {
 
 	/* Create socket */
 	sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-	setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
+	setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
 
 	if (sockfd == -1)
 	{
@@ -49,13 +55,16 @@ int main()
 	}
 
 	/* Main running code */
+	pthread_t T1;
 	while (1)
 	{
-		puts("Emergency exit: CTRL+C");
-		printf("Waiting for data...\n");
+		//puts("Emergency exit: CTRL+C");
+		//printf("Waiting for data...\n");
+		sleep(1);
+		pthread_create(&T1, NULL, receiveshit, NULL);
 
-		int rc = recvfrom(sockfd, Buffer, MAXBUF, 0, (struct sockaddr *)&Server, &len);
-		printf("%s\n \n", Buffer);
+		/*int rc = recvfrom(sockfd, Buffer, MAXBUF, 0, (struct sockaddr *)&Server, &len);
+		printf("%s\n \n", Buffer);*/
 	}
 	close(sockfd);
 	return 1;
