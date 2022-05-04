@@ -23,8 +23,8 @@ int sockLTE, sockWiFi;
 int bindLTE, bindWiFi;
 int lenLTE = sizeof(ServerLTE);
 int lenWiFi = sizeof(ServerWiFi);
-char SensorBuffer[];
-char ActuatorBuffer[];
+char SensorBuffer;
+char ActuatorBuffer;
 int rc_LTE, rc_WiFi;
 pthread_t T1, T2;
 
