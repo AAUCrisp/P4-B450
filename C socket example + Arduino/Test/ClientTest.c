@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
+//#include <sys/socket.h>
+//#include <netinet/in.h>
+//#include <arpa/inet.h>
 #include <unistd.h>
 #include <pthread.h>
 #include <time.h>
@@ -30,12 +30,25 @@ int rc_LTE, rc_WiFi;
 pthread_t T1, T2, T3, T4;
 
 /* Message to send */
-char TestMsg1[] = "This is LTE";
-char TestMsg2[] = "This is WiFi";
+// char TestMsg1[] = "This is LTE";
+// char TestMsg2[] = "This is WiFi";
 
 /* Global signal variable*/
 char Temp[MAXBUF];
 int GSV;
+
+/*char *Timestamp()
+{
+	// Timestamp format : [hh:mm:ss dd/mm/yy]
+	char curr_time[1];
+	time_t rawtime;
+	struct tm *timeinfo;
+	time(&rawtime);
+	timeinfo = localtime(&rawtime);
+	sprintf(curr_time, "[%d:%d:%d %d/%d/%d]", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, timeinfo->tm_mday, timeinfo->tm_mon + 1, timeinfo->tm_year + 1900);
+
+	return curr_time;
+}*/
 
 void Create_Socket_LTE()
 {
@@ -116,7 +129,7 @@ void *Send_Data_LTE(void *arg)
 	int test1 = sendto(sockLTE, arg, sizeof(arg), 0, (struct sockaddr *)&ClientLTE, lenLTE); // send the data to server
 	if (test1 == sizeof(arg))
 	{
-		printf("Message was successfully sent via LTE!\n");
+		printf("Message was successfully sent via LTE at: %s\n", Timestamp());
 	}
 	else
 	{
@@ -129,7 +142,7 @@ void *Send_Data_WiFi(void *arg)
 	int test2 = sendto(sockWiFi, arg, sizeof(arg), 0, (struct sockaddr *)&ClientWiFi, lenWiFi); // send the data to server
 	if (test2 == sizeof(arg))
 	{
-		printf("Message was successfully sent via WiFi!\n");
+		printf("Message was successfully sent via WiFi at: %s\n", Timestamp());
 	}
 	else
 	{
@@ -139,8 +152,13 @@ void *Send_Data_WiFi(void *arg)
 
 int main()
 {
+	/* Create sockets*/
 	Create_Socket_LTE();
 	Create_Socket_WiFi();
+
+	/* Message to send */
+	char TestMsg1[] = "This is LTE";
+	char TestMsg2[] = "This is WiFi";
 
 	/* Main running code */
 	int count = 0;
