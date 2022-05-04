@@ -79,7 +79,7 @@ int main()
     IP_WiFi "192.168.1.131";
 
     /* Create sockets */
-    Create_Sockets(PORT, IP_LTE, IP_WiFi);
+    Create_Sockets(PORT2, IP_LTE, IP_WiFi);
 
     /* Main running code */
     while (1)
