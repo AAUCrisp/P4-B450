@@ -2,7 +2,7 @@ import numpy as np
 import time as time
 import concurrent.futures
 
-size = 1000
+size = 10000
 min_value = -100        # Minimum value in each matrix entrance
 max_value = 100         # Maximum value in each matrix entrance
 max_sum = -np.inf
@@ -25,7 +25,7 @@ def AlgorithmMSP(A, i):
     temp = [None] * size
     tempResult = [None] * 6
 
-    #print(f'Iteration {i} has started')
+    print(f'Iteration {i} has started')
     # print("i is: " + str(i))      # Troubleshooting Print
     temp = [0] * size      # Creates empty array the size of the Y-axis
 
@@ -104,7 +104,7 @@ if __name__=='__main__':
         rest = [executor.submit(AlgorithmMSP, array, i) for i in range (size)]      # Calling the main function
 
         for f in concurrent.futures.as_completed(rest):
-            print(f'{f.result()} | At time: {time.time()-start_time}')
+            print(f'{f.result()} | [MAXSUM] [START X] [END X] [START Y] [END Y] [ITERATION] | Finished at time: {time.time()-start_time}')
             results.append(f.result())
 
 
