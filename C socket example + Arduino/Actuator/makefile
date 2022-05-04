@@ -1,5 +1,5 @@
-ServerStart: Actuator_Server.cpp 
-	g++ -pthread -lconfig Actuator_Server.cpp -o ServerStart
+ServerStart: main.cpp 
+	g++ -pthread -lconfig main.cpp -o ServerStart
 	touch ServerStart
 
 clean:
