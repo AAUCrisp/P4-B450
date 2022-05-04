@@ -19,7 +19,6 @@ const char *LTE = "wwan0";
 const char *WiFi = "wlan0";
 
 /* Misc */
-char message[MAXBUF];
 struct sockaddr_in ClientLTE;
 struct sockaddr_in ClientWiFi;
 int sockLTE, lenLTE = sizeof(ClientLTE);
@@ -28,7 +27,7 @@ int rc_LTE, rc_WiFi;
 pthread_t T1, T2;
 
 
-void Create_Sockets(PORT, const char* IP1, const char* IP2){
+void Create_Sockets(int PORT, const char* IP1, const char* IP2){
     sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     setsockopt(sockLTE, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
@@ -75,8 +74,8 @@ int main()
 {
     /* Initialize variables */
     PORT 6000;
-    IP_LTE "10.20.0.16"
-    IP_WiFi "192.168.1.131"
+    IP_LTE "10.20.0.16";
+    IP_WiFi "192.168.1.131";
 
     /* Create sockets */
     Create_Sockets(PORT, IP_LTE, IP_WiFi);
