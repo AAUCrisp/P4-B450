@@ -12,12 +12,12 @@
 #define MAXBUF 4000
 #define PORT1 6000
 #define PORT2 6001
-#define IP1 "10.20.0.16"
-#define IP2 "192.168.1.131"
+#define IP1 "127.0.0.1"
+#define IP2 "127.0.0.1"
 
 /* Specify LTE / WiFi interface */
 const char *LTE = "wwan0";
-const char *WiFi = "wlan0";
+const char *WiFi = "lo";
 
 /* Misc */
 char message[MAXBUF];
@@ -174,12 +174,13 @@ int main()
 	int count = 0;
 	while (1)
 	{
-		pthread_create(&T1, NULL, Receive_Data_LTE, NULL);
+		//pthread_create(&T1, NULL, Receive_Data_LTE, NULL);
 		pthread_create(&T2, NULL, Receive_Data_WiFi, NULL);
-		pthread_create(&T3, NULL, Send_Data_LTE, &newMsg1);
+		//pthread_create(&T3, NULL, Send_Data_LTE, &newMsg1);
 		//pthread_join(T3, NULL);
-		pthread_create(&T4, NULL, Send_Data_WiFi, &newMsg2);
+		//pthread_create(&T4, NULL, Send_Data_WiFi, &newMsg2);
 		//pthread_join(T4, NULL);
+		int test2 = sendto(sockWiFi, newMsg2, sizeof(MAXBUF), 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
 
 		count++;
 		printf("Count is: %d\n", count);

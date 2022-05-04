@@ -10,24 +10,32 @@
 
 /* Define buffer size, PORT number and server IP */
 #define MAXBUF 64
-#define PORT 8888
-#define IP "10.20.0.10"
+#define PORT 6000
+#define IP "127.0.0.1"
 
 /* Specify LTE / WiFi interface */
 const char *LTE = "wwan0";
-const char *WiFi = "wlan0";
+const char *WiFi = "lo";
 
 /* Misc */
 char message[MAXBUF];
 struct sockaddr_in Client;
 int sockfd, len = sizeof(Client);
 
+void* sendshit(){
+	char TestMsg[] = "Hello does this work? I am testing if it is actually sending this shit to the server via threads";
+	printf("%s\n", TestMsg);
+	sendto(sockfd, TestMsg, sizeof(TestMsg), 0, (struct sockaddr *)&Client, len); // send the data to server
+	printf("WiFi-Thread id = %ld\n", pthread_self());
+	pthread_exit(NULL);
+}
+
 int main()
 {
 
 	/* Create socket */
 	sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-	setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
+	setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
 
 	if (sockfd == -1)
 	{
@@ -41,10 +49,12 @@ int main()
 	Client.sin_addr.s_addr = inet_addr(IP);
 
 	/* Main running code */
+	pthread_t T1;
 	while (1)
 	{
-		char TestMsg[] = "Hello does this work?";
-		sendto(sockfd, TestMsg, sizeof(TestMsg), 0, (struct sockaddr *)&Client, len); // send the data to server
+		sleep(1);
+		pthread_create(&T1, NULL, sendshit, NULL);
+		
 	}
 	close(sockfd);
 	return 1;

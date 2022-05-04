@@ -15,6 +15,7 @@
 
 /* Specify LTE / WiFi interface */
 const char *LTE = "wwan0";
+const char *WiFi = "wlan1";
 
 /* Misc */
 struct sockaddr_in ServerLTE;
@@ -23,14 +24,14 @@ int sockLTE, sockWiFi;
 int bindLTE, bindWiFi;
 int lenLTE = sizeof(ServerLTE);
 int lenWiFi = sizeof(ServerWiFi);
-char SensorBuffer[];
-char ActuatorBuffer[];
+char SensorBuffer[MAXBUF];
+char ActuatorBuffer[MAXBUF];
 int rc_LTE, rc_WiFi;
 pthread_t T1, T2;
 
 void *Receive_Data_LTE()
 {
-	rc_LTE = recvfrom(sockLTE, SensorBuffer, sizeof(SensorBuffer), 0, (struct sockaddr *)&ServerLTE, &lenLTE);
+	rc_LTE = recvfrom(sockLTE, SensorBuffer, MAXBUF, 0, (struct sockaddr *)&ServerLTE, &lenLTE);
 	printf("LTE-Thread id = %ld\n", pthread_self());
 	if (rc_LTE == -1)
 	{
@@ -46,7 +47,7 @@ void *Receive_Data_LTE()
 
 void *Receive_Data_WiFi()
 {
-	rc_WiFi = recvfrom(sockWiFi, ActuatorBuffer, sizeof(ActuatorBuffer), 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
+	rc_WiFi = recvfrom(sockWiFi, ActuatorBuffer, MAXBUF, 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
 	printf("WiFi-Thread id = %ld\n", pthread_self());
 	if (rc_WiFi == -1)
 	{
@@ -132,15 +133,17 @@ void Create_Bind_Socket_WiFi()
 int main() {
   Create_Bind_Socket_LTE();
   Create_Bind_Socket_WiFi();
+
+  int count = 0;
   /* Main running code */
   while (1){
 
     pthread_create(&T1, NULL, Receive_Data_LTE, NULL);
     pthread_create(&T2, NULL, Receive_Data_WiFi, NULL);
     pthread_join(T1, NULL);
-    free(T1);
+    //free(T1);
     pthread_join(T2, NULL);
-    free(T2);
+    //free(T2);
     sleep(1);
     count++;
 		printf("Count: %d\n", count);

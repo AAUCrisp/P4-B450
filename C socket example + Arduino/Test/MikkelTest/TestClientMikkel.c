@@ -16,6 +16,7 @@
 
 //SETUP SOCKET
 const char *LTE = "wwan0";
+const char *WiFi = "wlan0";
 struct sockaddr_in ClientLTE;
 struct sockaddr_in ClientWiFi;
 int sockLTE;
@@ -109,15 +110,15 @@ int main() {
 
     pthread_create(&T3, NULL, Send_Data_LTE, &TestMsg1);
 		pthread_join(T3, NULL);
-    free(T3);
+    //free(T3);
 		pthread_create(&T4, NULL, Send_Data_WiFi, &TestMsg2);
 		pthread_join(T4, NULL);
-    free(T4);
+    //free(T4);
 
 
     sleep(2);
   }
-  close(sockfd1);
+  close(sockLTE && sockWiFi);
   return 1;
 
 
