@@ -9,8 +9,7 @@
 #include <stdlib.h>
 
 /* Define buffer size, PORT number and server IP */
-#define MAXBUF
-uint PORT;
+uint PORT1, PORT2;
 const char *IP_LTE;
 const char *IP_WiFi;
 
@@ -26,7 +25,7 @@ int sockWiFi, lenWiFi = sizeof(ClientWiFi);
 int rc_LTE, rc_WiFi;
 pthread_t T1, T2;
 
-void Create_Sockets(uint PORT1, const char *IP1, const char *IP2)
+void Create_Sockets(uint PORT_LTE, uint PORT_WiFi, const char *IP1, const char *IP2)
 {
     sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -45,11 +44,11 @@ void Create_Sockets(uint PORT1, const char *IP1, const char *IP2)
     }
 
     ClientLTE.sin_family = AF_INET;
-    ClientLTE.sin_port = htons(PORT1);
+    ClientLTE.sin_port = htons(PORT_LTE);
     ClientLTE.sin_addr.s_addr = inet_addr(IP1);
 
     ClientWiFi.sin_family = AF_INET;
-    ClientWiFi.sin_port = htons(PORT1);
+    ClientWiFi.sin_port = htons(PORT_WiFi);
     ClientWiFi.sin_addr.s_addr = inet_addr(IP2);
 }
 
@@ -64,7 +63,7 @@ void *sendshit1String()
 
 void *sendshit2String()
 {
-    char TestMsg2[] = "Client says hello via LTE";
+    char TestMsg2[] = "Client says hello via LTE!";
     printf("%s\n", TestMsg2);
     sendto(sockWiFi, TestMsg2, sizeof(TestMsg2), 0, (struct sockaddr *)&ClientWiFi, lenWiFi); // send the data to server
     printf("WiFi-Thread id = %ld\n", pthread_self());
@@ -75,20 +74,21 @@ void *sendshit2String()
 int main()
 {
     /* Initialize variables */
-    PORT = 6000;
+    PORT1 = 9123;
+    PORT2 = 9124;
     IP_LTE = "10.20.0.16";
     IP_WiFi = "192.168.1.131";
 
     /* Create sockets */
-    Create_Sockets(PORT, IP_LTE, IP_WiFi);
+    Create_Sockets(PORT1, PORT2, IP_LTE, IP_WiFi);
 
     while (1)
     {
         sleep(1);
         pthread_create(&T1, NULL, sendshit1String, NULL);
-        pthread_join(T1, NULL);
         pthread_create(&T2, NULL, sendshit2String, NULL);
-        pthread_join(T2, NULL);
+        pthread_join(T1, NULL);
+	pthread_join(T2, NULL);
     }
     close(sockLTE && sockWiFi);
     return 1;
