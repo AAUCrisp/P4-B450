@@ -129,7 +129,7 @@ void *Send_Data_LTE(void *arg)
 	int test1 = sendto(sockLTE, arg, sizeof(arg), 0, (struct sockaddr *)&ClientLTE, lenLTE); // send the data to server
 	if (test1 == sizeof(arg))
 	{
-		printf("Message was successfully sent via LTE at: %s\n", Timestamp());
+		printf("Message was successfully sent via LTE\n");
 	}
 	else
 	{
@@ -142,7 +142,7 @@ void *Send_Data_WiFi(void *arg)
 	int test2 = sendto(sockWiFi, arg, sizeof(arg), 0, (struct sockaddr *)&ClientWiFi, lenWiFi); // send the data to server
 	if (test2 == sizeof(arg))
 	{
-		printf("Message was successfully sent via WiFi at: %s\n", Timestamp());
+		printf("Message was successfully sent via WiFi\n");
 	}
 	else
 	{
@@ -167,7 +167,9 @@ int main()
 		pthread_create(&T1, NULL, Receive_Data_LTE, NULL);
 		pthread_create(&T2, NULL, Receive_Data_WiFi, NULL);
 		pthread_create(&T3, NULL, Send_Data_LTE, &TestMsg1);
+		pthread_join(T3, NULL);
 		pthread_create(&T4, NULL, Send_Data_WiFi, &TestMsg2);
+		pthread_join(T4, NULL);
 
 		count++;
 		printf("Count is: %d\n", count);
