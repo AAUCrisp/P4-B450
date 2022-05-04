@@ -1,9 +1,11 @@
-#include <Actuator_header.h>
+#include "Actuator_header.h"
+struct sockaddr_in Client1;
+struct sockaddr_in Client2;
+int sockfd1, sockfd2;
+int len1 = sizeof(Client1), len2 = sizeof(Client2);
+int f,g;
 
-int main()
-{
-
-	/* Create socket */
+/* Create socket */
 	sockfd1 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 	sockfd2 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 	f = setsockopt(sockfd1, SOL_SOCKET, SO_BINDTODEVICE, LTE, str.length());
@@ -37,19 +39,3 @@ int main()
 	Client2.sin_family = AF_INET;
 	Client2.sin_port = htons(PORT2);
 	Client2.sin_addr.s_addr = inet_addr(IP2);
-
-	/* Main running code */
-	while (1)
-	{
-		//char TestMsg1[] = "This is LTE";
-		//char TestMsg2[] = "This is WiFi";
-		//sendto(sockfd1, TestMsg1, sizeof(TestMsg1), 0, (struct sockaddr *)&Client1, len1); // send the data to server
-		//sendto(sockfd2, TestMsg2, sizeof(TestMsg2), 0, (struct sockaddr *)&Client2, len2); // send the data to server
-
-
-
-
-	}
-	close(sockfd1 && sockfd2);
-	return 1;
-}
