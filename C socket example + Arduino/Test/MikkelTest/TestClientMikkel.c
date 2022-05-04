@@ -101,7 +101,6 @@ int main() {
 
   char TestMsg1[] = "This is LTE something test write this shit";
 	char TestMsg2[] = "This is WiFi something test write this shit";
-  printf(sizeof(TestMsg1));
 
 
 
