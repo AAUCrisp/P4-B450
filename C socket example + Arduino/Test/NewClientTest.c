@@ -8,11 +8,11 @@
 #include <time.h>
 #include <stdlib.h>
 
-/* Define buffer size, PORT number and server IP */
+/* Define buffer size, PORT number and server IP */ 
 #define MAXBUF
-#define PORT2
-#define IP_LTE
-#define IP_WiFi
+uint16_t PORT
+const char* IP_LTE
+const char* IP_WiFi
 
 /* Specify LTE / WiFi interface */
 const char *LTE = "wwan0";
@@ -74,12 +74,12 @@ void *sendshit2String()
 int main()
 {
     /* Initialize variables */
-    PORT2 6000;
-    IP_LTE "10.20.0.16";
-    IP_WiFi "192.168.1.131";
+    PORT = 6000;
+    IP_LTE = "10.20.0.16";
+    IP_WiFi = "192.168.1.131";
 
     /* Create sockets */
-    Create_Sockets(PORT2 6000, IP_LTE, IP_WiFi);
+    Create_Sockets(PORT, IP_LTE, IP_WiFi);
 
     /* Main running code */
     while (1)
