@@ -114,7 +114,8 @@ void *Receive_Data_LTE()
 	else
 	{
 		printf("%s\n", SensorBuffer);
-		pthread_exit(NULL);
+		//sleep(1);
+		//pthread_exit(NULL);
 	}
 }
 
@@ -129,7 +130,8 @@ void *Receive_Data_WiFi()
 	else
 	{
 		printf("%s\n", ActuatorBuffer);
-		pthread_exit(NULL);
+		//sleep(1);
+		//pthread_exit(NULL);
 	}
 }
 
@@ -147,10 +149,12 @@ int main()
 	while (1)
 	{
 		/* Creating threads running receive data functions */
-		pthread_create(&T1, NULL, Receive_Data_LTE, NULL);
-		pthread_create(&T2, NULL, Receive_Data_WiFi, NULL);
-		// Receive_Data_LTE();
-		// Receive_Data_WiFi();
+		//pthread_create(&T1, NULL, Receive_Data_LTE, NULL);
+		//pthread_create(&T2, NULL, Receive_Data_WiFi, NULL);
+		//pthread_join(T1, NULL);
+		//pthread_join(T2, NULL);
+		Receive_Data_LTE();
+		Receive_Data_WiFi();
 		sleep(1);
 		count++;
 		printf("Count: %d\n", count);
