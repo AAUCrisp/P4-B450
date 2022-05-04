@@ -10,49 +10,38 @@
 
 /* Define buffer and PORT number */
 #define MAXBUF 64
-#define PORT 6000
-#define PORT2 6001
+char Buffer[MAXBUF];
+uint PORT
 
 /* Specify LTE / WiFi interface */
 const char *LTE = "wwan0";
 const char *WiFi = "wlan0";
 
 /* Misc */
-struct sockaddr_in Server;
-struct sockaddr_in Server2;
-int sockfd, len = sizeof(Server);
-int sockfd2, len2 = sizeof(Server2);
-char Buffer[MAXBUF];
-char Buffer2[MAXBUF];
+struct sockaddr_in ServerLTE;
+struct sockaddr_in ServerWiFi;
+int sockLTE, lenLTE = sizeof(ServerLTE);
+int sockWiFi, lenWiFi = sizeof(ServerWiFi);
+int bindLTE, bindWiFi;
+int rc_LTE, rc_WiFi;
+pthread_t T1, T2;
 
-void *receiveshit()
-{
-    int rc = recvfrom(sockfd, Buffer, MAXBUF, 0, (struct sockaddr *)&Server, &len);
-    printf("WiFi-Thread id = %ld\n", pthread_self());
-    printf("%s\n \n", Buffer);
-    // pthread_exit(NULL);
-}
 
-void *receiveshit2()
-{
-    int rc2 = recvfrom(sockfd2, Buffer2, MAXBUF, 0, (struct sockaddr *)&Server2, &len2);
-    printf("LTE-Thread id = %ld\n", pthread_self());
-    printf("%s\n \n", Buffer2);
-    // pthread_exit(NULL);
-}
-
-int main()
-{
-
+void Create_Bind_Sockets(uint PORT){
     /* Create socket */
-    sockfd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    sockfd2 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    setsockopt(sockfd, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
-    setsockopt(sockfd2, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
+    sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    setsockopt(sockLTE, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
+    setsockopt(sockWiFi, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
 
-    if (sockfd == -1)
+    if (sockLTE == -1)
     {
-        perror("Failed to create socket");
+        perror("Failed to create sockLTE");
+        exit(0);
+    }
+    if (sockWiFi == -1)
+    {
+        perror("Failed to create sockLTE");
         exit(0);
     }
 
@@ -62,33 +51,57 @@ int main()
     Server.sin_addr.s_addr = INADDR_ANY;
 
     Server2.sin_family = AF_INET;
-    Server2.sin_port = htons(PORT2);
+    Server2.sin_port = htons(PORT);
     Server2.sin_addr.s_addr = INADDR_ANY;
 
     /* Bind to socket */
-    int b = bind(sockfd, (struct sockaddr *)&Server, sizeof(struct sockaddr));
-    int b2 = bind(sockfd2, (struct sockaddr *)&Server2, sizeof(struct sockaddr));
-    if (b == -1)
+    bindLTE = bind(sockLTE, (struct sockaddr *)&ServerLTE, sizeof(struct sockaddr));
+    bindWiFi = bind(sockWiFi, (struct sockaddr *)&ServerWiFi, sizeof(struct sockaddr));
+    if (bindLTE == -1)
     {
-        perror("Failed to bind");
-        close(sockfd);
+        perror("Failed to bind LTE socket");
         exit(0);
     }
+    if (bindWiFi == -1)
+    {
+        perror("Failed to bind WiFi socket");
+        exit(0);
+    }
+}
 
-    /* Main running code */
-    pthread_t T1, T2;
+void *receiveshit()
+{
+    rc_LTE = recvfrom(sockLTE, Buffer, MAXBUF, 0, (struct sockaddr *)&ServerLTE, &lenLTE);
+    printf("WiFi-Thread id = %ld\n", pthread_self());
+    printf("%s\n \n", Buffer);
+    pthread_exit(NULL);
+}
+
+void *receiveshit2()
+{
+    rc_WiFi = recvfrom(sockWiFi, Buffer, MAXBUF, 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
+    printf("LTE-Thread id = %ld\n", pthread_self());
+    printf("%s\n \n", Buffer);
+    pthread_exit(NULL);
+}
+
+/* Main running code */
+int main()
+{
+    /* Initialize variables */
+    PORT = 6000;
+
+    /* Create sockets */
+    Create_Bind_Sockets(PORT);
+    
     while (1)
     {
-        // puts("Emergency exit: CTRL+C");
-        // printf("Waiting for data...\n");
-        sleep(1);
         pthread_create(&T1, NULL, receiveshit, NULL);
-        pthread_create(&T1, NULL, receiveshit2, NULL);
+        pthread_create(&T2, NULL, receiveshit2, NULL); 
         // pthread_join(T1, NULL);
         // pthread_join(T2, NULL);
-        /*int rc = recvfrom(sockfd, Buffer, MAXBUF, 0, (struct sockaddr *)&Server, &len);
-        printf("%s\n \n", Buffer);*/
     }
-    close(sockfd);
-    return 1;
+
+    close(sockLTE && sockWiFi);
+    exit(0);
 }

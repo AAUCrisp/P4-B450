@@ -10,7 +10,7 @@
 
 /* Define buffer size, PORT number and server IP */
 #define MAXBUF
-uint16_t PORT;
+uint PORT;
 const char *IP_LTE;
 const char *IP_WiFi;
 
@@ -26,7 +26,7 @@ int sockWiFi, lenWiFi = sizeof(ClientWiFi);
 int rc_LTE, rc_WiFi;
 pthread_t T1, T2;
 
-void Create_Sockets(uint16_t PORT1, const char *IP1, const char *IP2)
+void Create_Sockets(uint PORT1, const char *IP1, const char *IP2)
 {
     sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -71,6 +71,7 @@ void *sendshit2String()
     pthread_exit(NULL);
 }
 
+/* Main running code */
 int main()
 {
     /* Initialize variables */
@@ -81,7 +82,6 @@ int main()
     /* Create sockets */
     Create_Sockets(PORT, IP_LTE, IP_WiFi);
 
-    /* Main running code */
     while (1)
     {
         sleep(1);
