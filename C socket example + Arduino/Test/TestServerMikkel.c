@@ -14,7 +14,7 @@
 #define PORT2 8887
 
 /* Specify LTE / WiFi interface */
-const char *LTE = "wwan0";
+const char *LTE = "wlp2s0";
 
 /* Misc */
 struct sockaddr_in Server;
@@ -22,6 +22,7 @@ int sockfd1;
 int len = sizeof(Server);
 int rc;
 int Buffer;
+
 
 
 void Create_Bind_Socket_LTE() {
@@ -56,6 +57,7 @@ int main() {
     printf("Waiting for data...\n");
 
     rc = recvfrom(sockfd1, &Buffer, sizeof(Buffer), 0, (struct sockaddr *)&Server, &len);
+
     fprintf(stdout, "Sensor data: %d\n \n", ntohl(Buffer));
 
   }

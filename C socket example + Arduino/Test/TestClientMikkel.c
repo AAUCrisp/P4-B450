@@ -9,29 +9,26 @@
 #include <stdlib.h>
 
 #define PORT 8888
-#define IP "10.20.0.16"
+#define IP "192.168.1.45"
 
 
 //SETUP SOCKET
-const char *LTE = "wwan0";
+const char *LTE = "wlp2s0";
 struct sockaddr_in Client;
 int sockfd1;
 int len = sizeof(Client);
 
 
-
-int data = NULL;
-int converted_data = NULL;
+int data = 0;
+int converted_data = 0;
 
 
 void delay(int milli_seconds)
 {
-
     // Storing start time
     clock_t start_time = clock();
-
     // looping till required time is not achieved
-    while (clock() < start_time + milli_seconds);
+    while (clock() < (start_time + milli_seconds));
 }
 
 int generate(int Min, int Max){
