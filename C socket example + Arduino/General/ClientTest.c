@@ -36,9 +36,9 @@ void *sendshit()
 
 void *sendshit2()
 {
-	char TestMsg[] = "Client says hello via LTE";
-	printf("%s\n", TestMsg);
-	sendto(sockfd, TestMsg, sizeof(TestMsg), 0, (struct sockaddr *)&Client, len); // send the data to server
+	char TestMsg2[] = "Client says hello via LTE";
+	printf("%s\n", TestMsg2);
+	sendto(sockfd2, TestMsg2, sizeof(TestMsg2), 0, (struct sockaddr *)&Client2, len2); // send the data to server
 	printf("WiFi-Thread id = %ld\n", pthread_self());
 	pthread_exit(NULL);
 }

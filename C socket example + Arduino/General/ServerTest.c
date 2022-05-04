@@ -22,6 +22,7 @@ struct sockaddr_in Server2;
 int sockfd, len = sizeof(Server);
 int sockfd2, len2 = sizeof(Server2);
 char Buffer[MAXBUF];
+char Buffer2[MAXBUF];
 
 void *receiveshit()
 {
@@ -32,9 +33,9 @@ void *receiveshit()
 
 void *receiveshit2()
 {
-	int rc = recvfrom(sockfd, Buffer, MAXBUF, 0, (struct sockaddr *)&Server, &len);
+	int rc2 = recvfrom(sockfd2, Buffer2, MAXBUF, 0, (struct sockaddr *)&Server2, &len2);
 	printf("LTE-Thread id = %ld\n", pthread_self());
-	printf("%s\n \n", Buffer);
+	printf("%s\n \n", Buffer2);
 }
 
 int main()
@@ -79,8 +80,9 @@ int main()
 		// printf("Waiting for data...\n");
 		sleep(1);
 		pthread_create(&T1, NULL, receiveshit, NULL);
+		pthread_join(T1, NULL);
 		pthread_create(&T1, NULL, receiveshit2, NULL);
-
+		pthread_join(T2, NULL);
 		/*int rc = recvfrom(sockfd, Buffer, MAXBUF, 0, (struct sockaddr *)&Server, &len);
 		printf("%s\n \n", Buffer);*/
 	}
