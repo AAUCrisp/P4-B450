@@ -9,6 +9,7 @@
 #include <stdlib.h>
 
 /* Define buffer and PORT number */
+#define MAXBUF 1024
 #define PORT1 8888
 #define PORT2 8887
 
@@ -23,14 +24,14 @@ int sockLTE, sockWiFi;
 int bindLTE, bindWiFi;
 int lenLTE = sizeof(ServerLTE);
 int lenWiFi = sizeof(ServerWiFi);
-char SensorBuffer;
-char ActuatorBuffer;
+char SensorBuffer[MAXBUF];
+char ActuatorBuffer[MAXBUF];
 int rc_LTE, rc_WiFi;
 pthread_t T1, T2;
 
 void *Receive_Data_LTE()
 {
-	rc_LTE = recvfrom(sockLTE, SensorBuffer, sizeof(SensorBuffer), 0, (struct sockaddr *)&ServerLTE, &lenLTE);
+	rc_LTE = recvfrom(sockLTE, SensorBuffer, MAXBUF, 0, (struct sockaddr *)&ServerLTE, &lenLTE);
 	printf("LTE-Thread id = %ld\n", pthread_self());
 	if (rc_LTE == -1)
 	{
@@ -46,7 +47,7 @@ void *Receive_Data_LTE()
 
 void *Receive_Data_WiFi()
 {
-	rc_WiFi = recvfrom(sockWiFi, ActuatorBuffer, sizeof(ActuatorBuffer), 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
+	rc_WiFi = recvfrom(sockWiFi, ActuatorBuffer, MAXBUF, 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
 	printf("WiFi-Thread id = %ld\n", pthread_self());
 	if (rc_WiFi == -1)
 	{
