@@ -1,4 +1,4 @@
-all: NewClientStart ServerStart
+all: NewClientStart NewServerStart
 
 NewClientStart: NewClientTest.c
 	gcc -pthread -lconfig NewClientTest.c -o NewClientStart
