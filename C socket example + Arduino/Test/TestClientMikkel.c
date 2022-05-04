@@ -9,7 +9,7 @@
 #include <stdlib.h>
 
 #define PORT 8888
-#define IP "10.20.0.16"
+#define IP "192.168.1.45"
 
 
 //SETUP SOCKET
@@ -19,20 +19,9 @@ int sockfd1;
 int len = sizeof(Client);
 
 
+int data = 0;
+int converted_data = 0;
 
-int data = NULL;
-int converted_data = NULL;
-
-
-void delay(int milli_seconds)
-{
-
-    // Storing start time
-    clock_t start_time = clock();
-
-    // looping till required time is not achieved
-    while (clock() < start_time + milli_seconds);
-}
 
 int generate(int Min, int Max){
   int number = (rand() % ((Max+1) - Min)) + Min;
@@ -53,9 +42,9 @@ int main() {
     data = generate(1, 25000000);
     converted_data = htonl(data);
 
-    write(sockfd1, &converted_data, sizeof(converted_data), 0, (struct sockaddr *)&Client, len);
+    sendto(sockfd1, &converted_data, sizeof(converted_data), 0, (struct sockaddr *)&Client, len);
 
-    delay(2000);
+    sleep(2);
   }
   close(sockfd1);
   return 1;
