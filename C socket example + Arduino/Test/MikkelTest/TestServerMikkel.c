@@ -133,6 +133,8 @@ void Create_Bind_Socket_WiFi()
 int main() {
   Create_Bind_Socket_LTE();
   Create_Bind_Socket_WiFi();
+
+  int count = 0;
   /* Main running code */
   while (1){
 
