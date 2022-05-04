@@ -26,7 +26,7 @@ int sockWiFi, lenWiFi = sizeof(ClientWiFi);
 int rc_LTE, rc_WiFi;
 pthread_t T1, T2;
 
-void Create_Sockets(uint32_t PORT, const char *IP1, const char *IP2)
+void Create_Sockets(uint16_t PORT, const char *IP1, const char *IP2)
 {
     sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
