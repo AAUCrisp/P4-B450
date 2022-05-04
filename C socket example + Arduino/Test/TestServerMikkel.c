@@ -21,6 +21,7 @@ struct sockaddr_in Server;
 int sockfd1;
 int len = sizeof(Server);
 int rc;
+int Buffer;
 
 
 void Create_Bind_Socket_LTE() {
@@ -33,12 +34,12 @@ void Create_Bind_Socket_LTE() {
   }
 
   /* Configure settings to communicate with remote UDP server */
-  Server1.sin_family = AF_INET;
-  Server1.sin_port = htons(PORT1);
-  Server1.sin_addr.s_addr = INADDR_ANY;
+  Server.sin_family = AF_INET;
+  Server.sin_port = htons(PORT1);
+  Server.sin_addr.s_addr = INADDR_ANY;
 
   /* Bind to socket */
-  int a = bind(sockfd1, (struct sockaddr*)&Server, sizeof(struct sockaddr));
+  int a = bind(sockfd1, (struct sockaddr *)&Server, sizeof(struct sockaddr));
 
   if (a  == -1) {
     perror("Failed to bind: LTE");
@@ -54,8 +55,8 @@ int main() {
     puts("Emergency exit: CTRL+C");
     printf("Waiting for data...\n");
 
-    rc = recvfrom(sockfd1, &Buffer, sizeof(Buffer), 0, (struct sockaddr*)&Server, &len);
-    printf("Sensor data: %d\n \n", ntohl(Buffer);
+    rc = recvfrom(sockfd1, &Buffer, sizeof(Buffer), 0, (struct sockaddr *)&Server, &len);
+    fprintf(stdout, "Sensor data: %d\n \n", ntohl(Buffer));
 
   }
   close(sockfd1);

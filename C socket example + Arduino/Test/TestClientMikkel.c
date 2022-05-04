@@ -53,7 +53,7 @@ int main() {
     data = generate(1, 25000000);
     converted_data = htonl(data);
 
-    write(sockfd1, &converted_data, sizeof(converted_data), 0, (struct sockaddr *)&Client, len);
+    sendto(sockfd1, &converted_data, sizeof(converted_data), 0, (struct sockaddr *)&Client, len);
 
     delay(2000);
   }
