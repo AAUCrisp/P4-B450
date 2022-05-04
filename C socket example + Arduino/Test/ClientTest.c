@@ -9,11 +9,11 @@
 #include <stdlib.h>
 
 /* Define buffer size, PORT number and server IP */
-#define MAXBUF 1024
-#define PORT1 8888
-#define PORT2 8887
+#define MAXBUF 4000
+#define PORT1 6000
+#define PORT2 6001
 #define IP1 "10.20.0.16"
-#define IP2 "192.168.1.136"
+#define IP2 "192.168.1.131"
 
 /* Specify LTE / WiFi interface */
 const char *LTE = "wwan0";
@@ -157,8 +157,8 @@ int main()
 	Create_Socket_WiFi();
 
 	/* Message to send */
-	char TestMsg1[] = "This is LTE";
-	char TestMsg2[] = "This is WiFi";
+	char TestMsg1[] = "This is LTE something test write this shit";
+	char TestMsg2[] = "This is WiFi something test write this shit";
 
 	/* Main running code */
 	int count = 0;
