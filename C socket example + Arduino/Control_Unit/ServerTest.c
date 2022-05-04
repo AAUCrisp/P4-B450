@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <string.h>
 #include <sys/socket.h>
@@ -10,8 +11,8 @@
 
 /* Define buffer and PORT number */
 #define MAXBUF 1024
-#define PORT1 8888
-#define PORT2 8887
+#define PORT1 8878
+#define PORT2 8877
 
 /* Specify LTE / WiFi interface */
 const char *LTE = "wwan0";

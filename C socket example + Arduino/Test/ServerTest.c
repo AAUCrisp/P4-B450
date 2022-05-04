@@ -11,8 +11,8 @@
 /* Define buffer and PORT number */
 #define SENSBUF 4000
 #define ACTBUF 4000
-#define PORT1 8888
-#define PORT2 8887
+#define PORT1 6000
+#define PORT2 6001
 
 /* Specify LTE / WiFi interface */
 const char *LTE = "wwan0";
