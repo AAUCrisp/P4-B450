@@ -28,7 +28,7 @@ int rc_LTE, rc_WiFi;
 pthread_t T1, T2;
 
 
-void Create_Sockets(int PORT, char IP1, char IP2){
+void Create_Sockets(int PORT, char IP1, const char* IP2){
     sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     setsockopt(sockLTE, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
@@ -57,7 +57,7 @@ void *sendshit1String()
 {
     char TestMsg[] = "Client says hello via WiFi!";
     printf("%s\n", TestMsg);
-    sendto(sockfd, TestMsg, sizeof(TestMsg), 0, (struct sockaddr *)&Client, len); // send the data to server
+    sendto(sockLTE, TestMsg, sizeof(TestMsg), 0, (struct sockaddr *)&ClientLTE, lenLTE); // send the data to server
     printf("WiFi-Thread id = %ld\n", pthread_self());
     pthread_exit(NULL);
 }
@@ -66,7 +66,7 @@ void *sendshit2String()
 {
     char TestMsg2[] = "Client says hello via LTE";
     printf("%s\n", TestMsg2);
-    sendto(sockfd2, TestMsg2, sizeof(TestMsg2), 0, (struct sockaddr *)&Client2, len2); // send the data to server
+    sendto(sockWiFi, TestMsg2, sizeof(TestMsg2), 0, (struct sockaddr *)&ClientWiFi, lenWiFi); // send the data to server
     printf("WiFi-Thread id = %ld\n", pthread_self());
     pthread_exit(NULL);
 }
