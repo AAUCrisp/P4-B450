@@ -126,7 +126,8 @@ void *Receive_Data_WiFi()
 
 void *Send_Data_LTE(void *arg)
 {
-	int test1 = sendto(sockLTE, arg, sizeof(arg), 0, (struct sockaddr *)&ClientLTE, lenLTE); // send the data to server
+	printf("%p\n", arg);
+	int test1 = sendto(sockLTE, arg, sizeof(MAXBUF), 0, (struct sockaddr *)&ClientLTE, lenLTE); // send the data to server
 	if (test1 == sizeof(arg))
 	{
 		printf("Message was successfully sent via LTE\n");
@@ -139,7 +140,8 @@ void *Send_Data_LTE(void *arg)
 
 void *Send_Data_WiFi(void *arg)
 {
-	int test2 = sendto(sockWiFi, arg, sizeof(arg), 0, (struct sockaddr *)&ClientWiFi, lenWiFi); // send the data to server
+	printf("%p\n", arg);
+	int test2 = sendto(sockWiFi, arg, sizeof(MAXBUF), 0, (struct sockaddr *)&ClientWiFi, lenWiFi); // send the data to server
 	if (test2 == sizeof(arg))
 	{
 		printf("Message was successfully sent via WiFi\n");
@@ -159,17 +161,21 @@ int main()
 	/* Message to send */
 	char TestMsg1[] = "This is LTE something test write this shit";
 	char TestMsg2[] = "This is WiFi something test write this shit";
-
+	char newMsg1[] = "DOES THIS WORK LTE?";
+	char newMsg2[] = "DOES THIS WORK WiFi?";
+	
+	printf("%s\n", newMsg1);
+	printf("%s\n", newMsg2);
 	/* Main running code */
 	int count = 0;
 	while (1)
 	{
 		pthread_create(&T1, NULL, Receive_Data_LTE, NULL);
 		pthread_create(&T2, NULL, Receive_Data_WiFi, NULL);
-		pthread_create(&T3, NULL, Send_Data_LTE, &TestMsg1);
-		pthread_join(T3, NULL);
-		pthread_create(&T4, NULL, Send_Data_WiFi, &TestMsg2);
-		pthread_join(T4, NULL);
+		pthread_create(&T3, NULL, Send_Data_LTE, &newMsg1);
+		//pthread_join(T3, NULL);
+		pthread_create(&T4, NULL, Send_Data_WiFi, &newMsg2);
+		//pthread_join(T4, NULL);
 
 		count++;
 		printf("Count is: %d\n", count);
