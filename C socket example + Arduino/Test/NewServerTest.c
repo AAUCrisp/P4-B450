@@ -11,7 +11,7 @@
 /* Define buffer and PORT number */
 #define MAXBUF 64
 char Buffer[MAXBUF];
-uint PORT
+uint PORT;
 
 /* Specify LTE / WiFi interface */
 const char *LTE = "wwan0";
@@ -26,8 +26,8 @@ int bindLTE, bindWiFi;
 int rc_LTE, rc_WiFi;
 pthread_t T1, T2;
 
-
-void Create_Bind_Sockets(uint PORT){
+void Create_Bind_Sockets(uint PORT)
+{
     /* Create socket */
     sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -46,13 +46,13 @@ void Create_Bind_Sockets(uint PORT){
     }
 
     /* Configure settings to communicate with remote UDP server */
-    Server.sin_family = AF_INET;
-    Server.sin_port = htons(PORT);
-    Server.sin_addr.s_addr = INADDR_ANY;
+    ServerLTE.sin_family = AF_INET;
+    ServerLTE.sin_port = htons(PORT);
+    ServerLTE.sin_addr.s_addr = INADDR_ANY;
 
-    Server2.sin_family = AF_INET;
-    Server2.sin_port = htons(PORT);
-    Server2.sin_addr.s_addr = INADDR_ANY;
+    ServerWiFi.sin_family = AF_INET;
+    ServerWiFi.sin_port = htons(PORT);
+    ServerWiFi.sin_addr.s_addr = INADDR_ANY;
 
     /* Bind to socket */
     bindLTE = bind(sockLTE, (struct sockaddr *)&ServerLTE, sizeof(struct sockaddr));
@@ -93,11 +93,11 @@ int main()
 
     /* Create sockets */
     Create_Bind_Sockets(PORT);
-    
+
     while (1)
     {
         pthread_create(&T1, NULL, receiveshit, NULL);
-        pthread_create(&T2, NULL, receiveshit2, NULL); 
+        pthread_create(&T2, NULL, receiveshit2, NULL);
         // pthread_join(T1, NULL);
         // pthread_join(T2, NULL);
     }
