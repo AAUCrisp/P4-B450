@@ -12,8 +12,8 @@
 #define MAXBUF 64
 #define PORT 8888
 #define PORT2 8887
-#define IP1 "10.20.0.16"
-#define IP2 "192.168.1.131"
+#define IP1 "10.20.0.13"
+#define IP2 "192.168.1.143"
 
 /* Specify LTE / WiFi interface */
 const char *LTE = "wwan0";
