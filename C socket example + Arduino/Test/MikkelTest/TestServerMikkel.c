@@ -9,7 +9,6 @@
 #include <stdlib.h>
 
 /* Define buffer and PORT number */
-#define MAXBUF 8162
 #define PORT1 8888
 #define PORT2 8887
 
@@ -24,8 +23,8 @@ int sockLTE, sockWiFi;
 int bindLTE, bindWiFi;
 int lenLTE = sizeof(ServerLTE);
 int lenWiFi = sizeof(ServerWiFi);
-char SensorBuffer[MAXBUF];
-char ActuatorBuffer[MAXBUF];
+char SensorBuffer[];
+char ActuatorBuffer[];
 int rc_LTE, rc_WiFi;
 pthread_t T1, T2;
 
