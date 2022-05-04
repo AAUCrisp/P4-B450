@@ -8,11 +8,11 @@
 #include <time.h>
 #include <stdlib.h>
 
-/* Define buffer size, PORT number and server IP */ 
+/* Define buffer size, PORT number and server IP */
 #define MAXBUF
-uint16_t PORT
-const char* IP_LTE
-const char* IP_WiFi
+uint16_t PORT;
+const char *IP_LTE;
+const char *IP_WiFi;
 
 /* Specify LTE / WiFi interface */
 const char *LTE = "wwan0";
