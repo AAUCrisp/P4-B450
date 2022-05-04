@@ -26,7 +26,7 @@ int bindLTE, bindWiFi;
 int rc_LTE, rc_WiFi;
 pthread_t T1, T2;
 
-void Create_Bind_Sockets(uint PORT_LTE, uint PORT_WiFI)
+void Create_Bind_Sockets(uint PORT_LTE, uint PORT_WiFi)
 {
     /* Create socket */
     sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
