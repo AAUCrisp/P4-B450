@@ -2,25 +2,19 @@
 
 int main()
 {
-   socket_configuration();
+   i = socket_configuration();
+   if (i =! 0){
+	   perror("failed to execute socket_configurations function");
+	   exit(0);
+   }
 
 
 	/* Main running code */
 	while (1)
 	{
 
-		//char TestMsg1[] = "This is LTE";
-		//char TestMsg2[] = "This is WiFi";
-		//sendto(sockfd1, TestMsg1, sizeof(TestMsg1), 0, (struct sockaddr *)&Client1, len1); // send the data to server
-		//sendto(sockfd2, TestMsg2, sizeof(TestMsg2), 0, (struct sockaddr *)&Client2, len2); // send the data to server
-
-        rc_LTE = recvfrom(sockLTE, ActuatorBuffer, MAXBUF, 0, (struct sockaddr*)&Server_LTE, &(lenLTE));
-
-        rc_WiFi = recvfrom(sockWiFi, ActuatorBuffer, MAXBUF, 0,(struct sockaddr*)&Server_WiFi, &(lenWiFi));
-
-
-    
-
+        std::thread T1(receive_LTE);
+		std::thread T2(receive_WiFi);
 
 	}
 	close(sockLTE && sockWiFi);

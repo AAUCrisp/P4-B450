@@ -1,5 +1,5 @@
-ServerStart: main.cpp 
-	g++ -pthread -lconfig main.cpp -o ServerStart
+ServerStart: Main.cpp 
+	g++ -pthread -lconfig Main.cpp -o ServerStart
 	touch ServerStart
 
 clean:

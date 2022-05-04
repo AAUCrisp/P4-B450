@@ -8,6 +8,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <string>
+#include <thread>
 
 /* Define buffer size, PORT number and server IP */
 #define MAXBUF 1024
@@ -39,6 +40,8 @@ unsigned int lenWiFi = sizeof(Server_WiFi), lenLTE = sizeof(Server_LTE);
 int f,g,i;
 char ActuatorBuffer[MAXBUF];
 int rc_LTE, rc_WiFi;
+pthread_t T1,T2;
+
 
 int socket_configuration() {
        /* configure settings to communicate with remote UDP server */
@@ -86,4 +89,16 @@ int socket_configuration() {
 
 }
 
+int receive_LTE(){
+    rc_LTE = recvfrom(sockLTE, ActuatorBuffer, MAXBUF, 0, (struct sockaddr*)&Server_LTE, &(lenLTE));
+    std::string msg = "Alley oop form kyrie";
+    printf("%s\n",msg);
+    return 0;
+}
 
+int receive_WiFi() {
+    rc_WiFi = recvfrom(sockWiFi, ActuatorBuffer, MAXBUF, 0,(struct sockaddr*)&Server_WiFi, &(lenWiFi));
+    std::string msg2 = "Lebron Jammed it in";
+    printf("%s\n", msg2);
+    return 0;
+}
