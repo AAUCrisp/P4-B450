@@ -14,14 +14,15 @@
 
 /* Specify LTE / WiFi interface */
 const char *LTE = "wwan0";
-const char *WiFi = "lo";
+const char *WiFi = "wlan0";
 
 /* Misc */
 struct sockaddr_in Server;
 int sockfd, len = sizeof(Server);
 char Buffer[MAXBUF];
 
-void* receiveshit(){
+void *receiveshit()
+{
 	int rc = recvfrom(sockfd, Buffer, MAXBUF, 0, (struct sockaddr *)&Server, &len);
 	printf("WiFi-Thread id = %ld\n", pthread_self());
 	printf("%s\n \n", Buffer);
@@ -58,8 +59,8 @@ int main()
 	pthread_t T1;
 	while (1)
 	{
-		//puts("Emergency exit: CTRL+C");
-		//printf("Waiting for data...\n");
+		// puts("Emergency exit: CTRL+C");
+		// printf("Waiting for data...\n");
 		sleep(1);
 		pthread_create(&T1, NULL, receiveshit, NULL);
 

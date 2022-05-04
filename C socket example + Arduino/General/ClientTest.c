@@ -11,18 +11,20 @@
 /* Define buffer size, PORT number and server IP */
 #define MAXBUF 64
 #define PORT 6000
-#define IP "127.0.0.1"
+#define IP "192.168.1.131"
+#define IP2 "10.20.0.16"
 
 /* Specify LTE / WiFi interface */
 const char *LTE = "wwan0";
-const char *WiFi = "lo";
+const char *WiFi = "wlan0";
 
 /* Misc */
 char message[MAXBUF];
 struct sockaddr_in Client;
 int sockfd, len = sizeof(Client);
 
-void* sendshit(){
+void *sendshit()
+{
 	char TestMsg[] = "Hello does this work? I am testing if it is actually sending this shit to the server via threads";
 	printf("%s\n", TestMsg);
 	sendto(sockfd, TestMsg, sizeof(TestMsg), 0, (struct sockaddr *)&Client, len); // send the data to server
@@ -54,7 +56,6 @@ int main()
 	{
 		sleep(1);
 		pthread_create(&T1, NULL, sendshit, NULL);
-		
 	}
 	close(sockfd);
 	return 1;
