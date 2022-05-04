@@ -1,7 +1,7 @@
-ClientStart: ClientTest.cpp 
-	g++ -pthread -lconfig ClientTest.cpp -o ClientStart
-	touch ClientStart
+ServerStart: Actuator_Server.cpp 
+	g++ -pthread -lconfig Actuator_Server.cpp -o ServerStart
+	touch ServerStart
 
 clean:
-	rm -f ClientStart
+	rm -f ServerStart
 	@echo "clean completed!"

@@ -10,7 +10,7 @@
 #include <string>
 
 /* Define buffer size, PORT number and server IP */
-#define MAXBUF 64
+#define MAXBUF 1024
 #define PORT 8888
 #define PORT2 8887
 #define IP1 "10.20.0.16"
@@ -23,12 +23,19 @@ const char *WiFi = "wlan0";
 std::string str(LTE);
 std::string str2(WiFi);
 
-
+std::string LTE_interface = "wwan0";
+std::string WiFi_interface = "wlan0";
 
 /* Misc */
 char message[MAXBUF];
-struct sockaddr_in Client1;
-struct sockaddr_in Client2;
-int sockfd1, sockfd2;
-int len1 = sizeof(Client1), len2 = sizeof(Client2);
+struct sockaddr_in Server_WiFi;
+struct sockaddr_in Server_LTE;
+int sockLTE, sockWiFi;
+int bindLTE, bindWiFi;
+unsigned int lenWiFi = sizeof(Server_WiFi), lenLTE = sizeof(Server_LTE);
 int f,g;
+char ActuatorBuffer[MAXBUF];
+int rc_LTE, rc_WiFi;
+
+
+
