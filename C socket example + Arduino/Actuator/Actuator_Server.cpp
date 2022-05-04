@@ -1,4 +1,4 @@
-#include <soc_conf.cpp>
+#include "soc_conf.cpp"
 
 int main()
 {
