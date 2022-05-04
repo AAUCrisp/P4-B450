@@ -13,12 +13,12 @@
 #define MAXBUF 64
 #define PORT 8888
 #define PORT2 8887
-#define IP1 "10.20.0.10"
-#define IP2 "192.168.1.160"
+#define IP1 "10.20.0.16"
+#define IP2 "192.168.1.136"
 
 /* Specify LTE / WiFi interface */
 const char *LTE = "wwan0";
-const char *WiFi = "wlan1";
+const char *WiFi = "wlan0";
 
 std::string str(LTE);
 std::string str2(WiFi);
@@ -30,6 +30,7 @@ struct sockaddr_in Client1;
 struct sockaddr_in Client2;
 int sockfd1, sockfd2;
 int len1 = sizeof(Client1), len2 = sizeof(Client2);
+int f,g;
 
 int main()
 {
@@ -37,12 +38,27 @@ int main()
 	/* Create socket */
 	sockfd1 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 	sockfd2 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-	setsockopt(sockfd1, SOL_SOCKET, SO_BINDTODEVICE, LTE, str.length());
-	setsockopt(sockfd2, SOL_SOCKET, SO_BINDTODEVICE, WiFi, str2.length());
+	f = setsockopt(sockfd1, SOL_SOCKET, SO_BINDTODEVICE, LTE, str.length());
+	g = setsockopt(sockfd2, SOL_SOCKET, SO_BINDTODEVICE, WiFi, str2.length());
 
 	if (sockfd1 == -1)
 	{
 		perror("Failed to create socket");
+		exit(0);
+	}
+
+	if (f == -1) 
+	{
+		perror("Error with LTE...the error is");
+		return(-1);
+		exit(0);
+	} 
+
+	if (g == -1)
+
+	{
+		perror("Error with WiFi... the error is");
+		return(-1);
 		exit(0);
 	}
 
