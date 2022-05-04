@@ -126,9 +126,10 @@ void *Receive_Data_WiFi()
 
 void *Send_Data_LTE(void *arg)
 {
-	printf("%p\n", arg);
-	int test1 = sendto(sockLTE, arg, sizeof(MAXBUF), 0, (struct sockaddr *)&ClientLTE, lenLTE); // send the data to server
-	if (test1 == sizeof(arg))
+	char *text1 = arg;
+	printf("%s\n", text1);
+	int test1 = sendto(sockLTE, text1, sizeof(MAXBUF), 0, (struct sockaddr *)&ClientLTE, lenLTE); // send the data to server
+	if (test1)
 	{
 		printf("Message was successfully sent via LTE\n");
 	}
@@ -140,9 +141,12 @@ void *Send_Data_LTE(void *arg)
 
 void *Send_Data_WiFi(void *arg)
 {
-	printf("%p\n", arg);
-	int test2 = sendto(sockWiFi, arg, sizeof(MAXBUF), 0, (struct sockaddr *)&ClientWiFi, lenWiFi); // send the data to server
-	if (test2 == sizeof(arg))
+	char *text2 = arg;
+	printf("%s\n", text2);
+	char text3[] = "Fucked up shit";
+	printf("%s\n", text3);
+	int test2 = sendto(sockWiFi, text3, sizeof(MAXBUF), 0, (struct sockaddr *)&ClientWiFi, lenWiFi); // send the data to server
+	if (test2)
 	{
 		printf("Message was successfully sent via WiFi\n");
 	}
@@ -161,11 +165,11 @@ int main()
 	/* Message to send */
 	char TestMsg1[] = "This is LTE something test write this shit";
 	char TestMsg2[] = "This is WiFi something test write this shit";
-	char newMsg1[] = "DOES THIS WORK LTE?";
-	char newMsg2[] = "DOES THIS WORK WiFi?";
+	char newMsg1[] = "LTE DOES THIS WORK LTE?";
+	char newMsg2[] = "WiFi DOES THIS WORK WiFi?";
 	
-	printf("%s\n", newMsg1);
-	printf("%s\n", newMsg2);
+	//printf("%s\n", newMsg1);
+	//printf("%s\n", newMsg2);
 	/* Main running code */
 	int count = 0;
 	while (1)
