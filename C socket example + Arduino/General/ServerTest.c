@@ -9,8 +9,9 @@
 #include <stdlib.h>
 
 /* Define buffer and PORT number */
-#define MAXBUF 1024
+#define MAXBUF 64
 #define PORT 6000
+#define PORT2 6001
 
 /* Specify LTE / WiFi interface */
 const char *LTE = "wwan0";
@@ -29,6 +30,7 @@ void *receiveshit()
 	int rc = recvfrom(sockfd, Buffer, MAXBUF, 0, (struct sockaddr *)&Server, &len);
 	printf("WiFi-Thread id = %ld\n", pthread_self());
 	printf("%s\n \n", Buffer);
+	//pthread_exit(NULL);
 }
 
 void *receiveshit2()
@@ -36,6 +38,7 @@ void *receiveshit2()
 	int rc2 = recvfrom(sockfd2, Buffer2, MAXBUF, 0, (struct sockaddr *)&Server2, &len2);
 	printf("LTE-Thread id = %ld\n", pthread_self());
 	printf("%s\n \n", Buffer2);
+	//pthread_exit(NULL);
 }
 
 int main()
@@ -59,7 +62,7 @@ int main()
 	Server.sin_addr.s_addr = INADDR_ANY;
 
 	Server2.sin_family = AF_INET;
-	Server2.sin_port = htons(PORT);
+	Server2.sin_port = htons(PORT2);
 	Server2.sin_addr.s_addr = INADDR_ANY;
 
 	/* Bind to socket */
@@ -80,9 +83,9 @@ int main()
 		// printf("Waiting for data...\n");
 		sleep(1);
 		pthread_create(&T1, NULL, receiveshit, NULL);
-		// pthread_join(T1, NULL);
 		pthread_create(&T1, NULL, receiveshit2, NULL);
-		// pthread_join(T2, NULL);
+		//pthread_join(T1, NULL);
+		//pthread_join(T2, NULL);
 		/*int rc = recvfrom(sockfd, Buffer, MAXBUF, 0, (struct sockaddr *)&Server, &len);
 		printf("%s\n \n", Buffer);*/
 	}
