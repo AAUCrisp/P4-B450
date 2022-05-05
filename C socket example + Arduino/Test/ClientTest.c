@@ -13,6 +13,7 @@
 uint PORT_LTE, PORT_WiFi;
 const char *IP_LTE;
 const char *IP_WiFi;
+char curr_time[BUFFER];
 
 /* Specify LTE / WiFi interface */
 const char *LTE;
@@ -25,7 +26,7 @@ int sockLTE, lenLTE = sizeof(ClientLTE);
 int sockWiFi, lenWiFi = sizeof(ClientWiFi);
 int rc_LTE, rc_WiFi;
 pthread_t T1, T2;
-char curr_time[BUFFER];
+
 
 void Create_Sockets(uint PORT_LTE, uint PORT_WiFi, const char *IP1, const char *IP2)
 {
@@ -62,7 +63,7 @@ void *sendshit1String(void *msg1)
     char *newTextLTE = msg1;
     snprintf(TimestampLTE, BUFFER, "%s%s", curr_time, newTextLTE);
     sendto(sockLTE, TimestampLTE, BUFFER, 0, (struct sockaddr *)&ClientLTE, lenLTE);
-    printf("LTE-Thread id = %ld\n %s\n", pthread_self(), TimestampLTE);
+    printf("LTE-Thread id = %ld\n %s\n\n", pthread_self(), TimestampLTE);
 
     pthread_exit(NULL);
 }
@@ -73,7 +74,7 @@ void *sendshit2String(void *msg2)
     char *newTextWiFi = msg2;
     snprintf(TimestampWiFi, BUFFER, "%s%s", curr_time, newTextWiFi);
     sendto(sockWiFi, TimestampWiFi, BUFFER, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
-    printf("WiFi-Thread id = %ld\n %s\n", pthread_self(), TimestampWiFi);
+    printf("WiFi-Thread id = %ld\n %s\n\n", pthread_self(), TimestampWiFi);
 
     pthread_exit(NULL);
 }
@@ -88,6 +89,14 @@ char *Timestamp()
     sprintf(curr_time, "[%d:%d:%d %d/%d/%d]", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, timeinfo->tm_mday, timeinfo->tm_mon + 1, timeinfo->tm_year + 1900);
 
     return curr_time;
+}
+
+void Update_GSV(){
+    /*
+    1. Receive message/GSV from Control Unit.
+    2. Update local GSV.
+    3. Notify to send via LTE/WiFi.
+    */
 }
 
 /* Main running code */

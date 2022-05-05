@@ -9,9 +9,10 @@
 #include <stdlib.h>
 
 /* Define buffer and PORT number */
-#define MAXBUF 64
-char Buffer[MAXBUF];
+#define BUFFER 128
+char Message[BUFFER];
 uint PORT_LTE, PORT_WiFi;
+char curr_time[BUFFER];
 
 /* Specify LTE / WiFi interface */
 const char *LTE;
@@ -72,18 +73,41 @@ void Create_Bind_Sockets(uint PORT_LTE, uint PORT_WiFi)
 
 void *receiveshit()
 {
-    rc_LTE = recvfrom(sockLTE, Buffer, MAXBUF, 0, (struct sockaddr *)&ServerLTE, &lenLTE);
+    rc_LTE = recvfrom(sockLTE, Message, BUFFER, 0, (struct sockaddr *)&ServerLTE, &lenLTE);
     printf("LTE-Thread id = %ld\n", pthread_self());
-    printf("%s\n \n", Buffer);
+    printf("%s\n \n", Message);
+    printf("Message from LTE received at: %s\n\n", curr_time);
     pthread_exit(NULL);
 }
 
 void *receiveshit2()
 {
-    rc_WiFi = recvfrom(sockWiFi, Buffer, MAXBUF, 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
+    rc_WiFi = recvfrom(sockWiFi, Message, BUFFER, 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
     printf("WiFi-Thread id = %ld\n", pthread_self());
-    printf("%s\n \n", Buffer);
+    printf("%s\n \n", Message);
+    printf("Message from WiFi received at: %s\n\n", curr_time);
     pthread_exit(NULL);
+}
+
+char *Timestamp()
+{
+    /* Timestamp format : [hh:mm:ss dd/mm/yy] */
+    time_t rawtime;
+    struct tm *timeinfo;
+    time(&rawtime);
+    timeinfo = localtime(&rawtime);
+    sprintf(curr_time, "[%d:%d:%d %d/%d/%d]", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, timeinfo->tm_mday, timeinfo->tm_mon + 1, timeinfo->tm_year + 1900);
+
+    return curr_time;
+}
+
+void Check_RSSI_Value(){
+    /* 
+    1. Check RSSI value from LTE/WiFi.
+    2. If LTE/WiFi is better than the other.
+    3. Update Global Signal Variable (GSV).
+    4. Send GSV to client via the better signal. 
+    */
 }
 
 /* Main running code */
@@ -100,6 +124,7 @@ int main()
 
     while (1)
     {
+        Timestamp();
         pthread_create(&T1, NULL, receiveshit, NULL);
         pthread_create(&T2, NULL, receiveshit2, NULL);
         // pthread_join(T1, NULL);
