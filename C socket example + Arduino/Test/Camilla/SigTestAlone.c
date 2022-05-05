@@ -15,11 +15,11 @@ int main() {
     FILE* pipe_WiFi = popen("iwconfig wlan1 | grep -i --color quality", "r");
     if (pipe){
         char Buffer[128];
+        char RSSI[10]= {0};
         while(!feof(pipe_WiFi)){
             if(fgets(Buffer,128,pipe_WiFi) !=NULL){
-                fseek(f,33,SEEK_SET);
-                char RSSI[10]= {0};
-                fread(RSSI,33,4,f);
+                fseek(pipe_WiFi,33,SEEK_SET);
+                fread(RSSI,33,4,pipe_WiFi);
             }
         }
         pclose(pipe_WiFi);
@@ -32,11 +32,11 @@ int main() {
     FILE* pipe_LTE = popen("mmcli -m 0 --signal-get", "r");
     if (pipe_LTE){
         char Buffer[128];
+        char RSRP[10] = {0};
         while(!feof(pipe_LTE)){
             if(fgets(Buffer,128,pipe_LTE) !=NULL){
-                fseek(f,20,SEEK_SET);
-                char RSRP[10] = {0};
-                fread(RSRP,20,55,f);
+                fseek(pipe_LTE,20,SEEK_SET);
+                fread(RSRP,20,55,pipe_LTE);
             }
         }
         pclose(pipe_LTE);
@@ -47,4 +47,5 @@ int main() {
     
 
 }
+
 
