@@ -15,24 +15,23 @@ int main() {
     if (pipe){
         char Buffer[128];
         while(!feof(pipe)){
-            if(fgets(Buffer1,128,pipe) !=NULL){}
-        }
-        pclose(pipe);
-        Buffer[strlen(Buffer1)-1] = '\0';
-        printf("%s",Buffer);
-    }
-
-    FILE* pipe = popen("iwconfig wwan0 | grep -i --color quality", "r");
-    if (pipe){
-        char Buffer[128];
-        while(!feof(pipe)){
             if(fgets(Buffer,128,pipe) !=NULL){}
         }
         pclose(pipe);
+        Buffer[strlen(Buffer)-1] = '\0';
+        printf("%s",Buffer);
+    }
+
+    FILE* pipe1 = popen("iwconfig wwan0 | grep -i --color quality", "r");
+    if (pipe1){
+        char Buffer[128];
+        while(!feof(pipe1)){
+            if(fgets(Buffer,128,pipe) !=NULL){}
+        }
+        pclose(pipe1);
         Buffer[strlen(Buffer1)-1] = '\0';
         printf("%s",Buffer);
     }
     
 
 }
-
