@@ -28,15 +28,6 @@ int bindLTE, bindWiFi;
 int rc_LTE, rc_WiFi;
 pthread_t T1, T2;
 
-/* RSSI ? */
-struct iw_quality
-{
-    __u8 qual;
-    __u8 level;
-    __u8 noise;
-    __u8 updated;
-}
-
 /* Function to bind sockets */
 void
 Create_Bind_Sockets(uint PORT_LTE, uint PORT_WiFi)
