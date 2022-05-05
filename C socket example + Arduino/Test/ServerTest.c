@@ -131,6 +131,7 @@ void Check_RSSI_Value()
     4. Notify client & send GSV to client via the better signal.
     */
 
+   /*
     if (RSSI == x)
     {
         update GSV = 1;
@@ -147,7 +148,7 @@ void Check_RSSI_Value()
     else
     {
         sendto(sockWiFi, GSV, BUFFER, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
-    }
+    }*/
 }
 
 /* Main running code */
