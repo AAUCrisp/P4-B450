@@ -31,7 +31,7 @@ pthread_t T1, T2;
 /* RSSI ? */
 struct iw_quality
 {
-    __u8 quality;
+    __u8 qual;
     __u8 level;
     __u8 noise;
     __u8 updated;
