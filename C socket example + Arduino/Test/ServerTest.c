@@ -93,7 +93,7 @@ int main()
     PORT_LTE = 9123;
     PORT_WiFi = 9124;
     LTE = "wwan0";
-    WiFi = "wlan1";
+    WiFi = "wlan0";
 
     /* Create sockets */
     Create_Bind_Sockets(PORT_LTE, PORT_WiFi);
