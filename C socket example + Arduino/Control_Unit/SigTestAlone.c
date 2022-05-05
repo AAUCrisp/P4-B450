@@ -15,12 +15,8 @@ int main() {
     /*
     char Buffer[50];
     int 50;
-
-
-
     int i = system(iwconfig $_[0]grep Signal| cut -d"=" -f3|cut -d " " -f1);
     int ii = popen(iwconfig $_[0]grep Signal| cut -d"=" -f3|cut -d " " -f1);
-
     if (fgets (Buffer, 50, ii)!=NULL){
         puts(Buffer);
         printf("Something happend...");
@@ -35,8 +31,9 @@ int main() {
         }
         pclose(pipe);
         Buffer1[strlen(Buffer1)-1] = '\0';
+        Printf("%s",Buffer1);
     }
+    Printf("%s",Buffer1);
 
 }
-
 
