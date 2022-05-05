@@ -8,13 +8,13 @@
 #include <time.h>
 #include <stdlib.h>
 
-/* Define buffer and PORT number */
+/* Define buffers & PORT number */
 #define BUFFER 128
 char Message[BUFFER];
 uint PORT_LTE, PORT_WiFi;
 char curr_time[BUFFER];
 
-/* Specify LTE / WiFi interface */
+/* Specify LTE & WiFi interface */
 const char *LTE;
 const char *WiFi;
 
@@ -27,14 +27,18 @@ int bindLTE, bindWiFi;
 int rc_LTE, rc_WiFi;
 pthread_t T1, T2;
 
+/* Function to bind sockets */
 void Create_Bind_Sockets(uint PORT_LTE, uint PORT_WiFi)
 {
     /* Create socket */
     sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+
+    /* Setting up socket options & specifying interface*/
     setsockopt(sockLTE, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
     setsockopt(sockWiFi, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
 
+    /* Error checking */
     if (sockLTE == -1)
     {
         perror("Failed to create sockLTE");
@@ -46,7 +50,7 @@ void Create_Bind_Sockets(uint PORT_LTE, uint PORT_WiFi)
         exit(0);
     }
 
-    /* Configure settings to communicate with remote UDP server */
+    /* Configure settings to communicate with remote UDP client */
     ServerLTE.sin_family = AF_INET;
     ServerLTE.sin_port = htons(PORT_LTE);
     ServerLTE.sin_addr.s_addr = INADDR_ANY;
@@ -58,6 +62,8 @@ void Create_Bind_Sockets(uint PORT_LTE, uint PORT_WiFi)
     /* Bind to socket */
     bindLTE = bind(sockLTE, (struct sockaddr *)&ServerLTE, sizeof(struct sockaddr));
     bindWiFi = bind(sockWiFi, (struct sockaddr *)&ServerWiFi, sizeof(struct sockaddr));
+
+    /* Error checking */
     if (bindLTE == -1)
     {
         perror("Failed to bind LTE socket");
@@ -68,9 +74,10 @@ void Create_Bind_Sockets(uint PORT_LTE, uint PORT_WiFi)
         perror("Failed to bind WiFi socket");
         exit(0);
     }
-    printf("Bind succesful\n");
+    printf("Bind was succesful!\n");
 }
 
+/* Function to receive LTE packets */
 void *receiveshit()
 {
     rc_LTE = recvfrom(sockLTE, Message, BUFFER, 0, (struct sockaddr *)&ServerLTE, &lenLTE);
@@ -80,6 +87,7 @@ void *receiveshit()
     pthread_exit(NULL);
 }
 
+/* Function to receive WiFi packets */
 void *receiveshit2()
 {
     rc_WiFi = recvfrom(sockWiFi, Message, BUFFER, 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
@@ -89,6 +97,7 @@ void *receiveshit2()
     pthread_exit(NULL);
 }
 
+/* Function to timestamp packets */
 char *Timestamp()
 {
     /* Timestamp format : [hh:mm:ss dd/mm/yy] */
@@ -101,12 +110,14 @@ char *Timestamp()
     return curr_time;
 }
 
-void Check_RSSI_Value(){
-    /* 
+/* Function to check RSSI value */
+void Check_RSSI_Value()
+{
+    /*
     1. Check RSSI value from LTE/WiFi.
     2. If LTE/WiFi is better than the other.
     3. Update Global Signal Variable (GSV).
-    4. Send GSV to client via the better signal. 
+    4. Send GSV to client via the better signal.
     */
 }
 
@@ -127,8 +138,11 @@ int main()
         Timestamp();
         pthread_create(&T1, NULL, receiveshit, NULL);
         pthread_create(&T2, NULL, receiveshit2, NULL);
-        // pthread_join(T1, NULL);
-        // pthread_join(T2, NULL);
+
+        if (pthread_create == 1)
+        {
+            break;
+        }
     }
 
     close(sockLTE && sockWiFi);

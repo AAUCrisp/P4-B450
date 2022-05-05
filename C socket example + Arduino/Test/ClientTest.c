@@ -27,7 +27,6 @@ int sockWiFi, lenWiFi = sizeof(ClientWiFi);
 int rc_LTE, rc_WiFi;
 pthread_t T1, T2;
 
-
 void Create_Sockets(uint PORT_LTE, uint PORT_WiFi, const char *IP1, const char *IP2)
 {
     /* Defining sockets & specifying protocol */
@@ -91,7 +90,8 @@ char *Timestamp()
     return curr_time;
 }
 
-void Update_GSV(){
+void Update_GSV()
+{
     /*
     1. Receive message/GSV from Control Unit.
     2. Update local GSV.
@@ -119,13 +119,19 @@ int main()
 
     while (1)
     {
-        sleep(1);
+        // sleep(1);
         Timestamp();
         pthread_create(&T1, NULL, sendshit1String, TestMsg);
         pthread_create(&T2, NULL, sendshit2String, TestMsg2);
         pthread_join(T1, NULL);
         pthread_join(T2, NULL);
+
+        if (pthread_create || pthread_join == 1)
+        {
+            break;
+        }
     }
+
     close(sockLTE && sockWiFi);
     exit(0);
 }
