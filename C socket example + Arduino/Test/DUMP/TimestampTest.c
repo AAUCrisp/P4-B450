@@ -27,12 +27,10 @@ int main(){
     //format_time();
     //printf("shit works?: %s\n", format_time());
 
-    format_time();
+    //format_time();
 
-    char testMsg[] = "Hello this is message!";
+    //char testMsg[] = "Hello this is message!";
     //char testMsg2[] = "2Hello this is message!";
-    strcat(curr_time, testMsg);
-    printf("%s\n", curr_time);
-
-    
+    //strcat(curr_time, testMsg);
+    //printf("%s\n", curr_time);
 }
