@@ -11,7 +11,7 @@
 /* Define buffer and PORT number */
 #define MAXBUF 64
 char Buffer[MAXBUF];
-uint PORT1, PORT2;
+uint PORT_LTE, PORT_WiFi;
 
 /* Specify LTE / WiFi interface */
 const char *LTE = "wwan0";

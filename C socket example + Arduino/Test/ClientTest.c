@@ -10,7 +10,7 @@
 
 /* Define buffer size, PORT number and server IP */
 #define BUFFER 128
-uint PORT1, PORT2;
+uint PORT_LTE, PORT_WiFi;
 const char *IP_LTE;
 const char *IP_WiFi;
 
@@ -94,7 +94,7 @@ char *Timestamp()
 int main()
 {
     /* Initialize variables */
-    PORT_TE = 9123;
+    PORT_LTE = 9123;
     PORT_WiFi = 9124;
     IP_LTE = "10.20.0.16";
     IP_WiFi = "192.168.1.131";
