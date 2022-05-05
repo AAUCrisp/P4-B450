@@ -14,8 +14,8 @@ char Buffer[MAXBUF];
 uint PORT_LTE, PORT_WiFi;
 
 /* Specify LTE / WiFi interface */
-const char *LTE = "wwan0";
-const char *WiFi = "wlan0";
+const char *LTE;
+const char *WiFi;
 
 /* Misc */
 struct sockaddr_in ServerLTE;
@@ -89,9 +89,11 @@ void *receiveshit2()
 /* Main running code */
 int main()
 {
-    /* Initialize variables */
+    /* Initialize PORT & INTERFACE*/
     PORT_LTE = 9123;
     PORT_WiFi = 9124;
+    LTE = "wwan0";
+    WiFi = "wlan1";
 
     /* Create sockets */
     Create_Bind_Sockets(PORT_LTE, PORT_WiFi);

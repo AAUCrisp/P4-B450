@@ -15,8 +15,8 @@ const char *IP_LTE;
 const char *IP_WiFi;
 
 /* Specify LTE / WiFi interface */
-const char *LTE = "wwan0";
-const char *WiFi = "wlan0";
+const char *LTE;
+const char *WiFi;
 
 /* Misc */
 struct sockaddr_in ClientLTE;
@@ -62,7 +62,7 @@ void *sendshit1String(void *msg1)
     char *newTextLTE = msg1;
     snprintf(TimestampLTE, BUFFER, "%s%s", curr_time, newTextLTE);
     sendto(sockLTE, TimestampLTE, BUFFER, 0, (struct sockaddr *)&ClientLTE, lenLTE);
-    printf("WiFi-Thread id = %ld\n %s\n", pthread_self(), TimestampLTE);
+    printf("LTE-Thread id = %ld\n %s\n", pthread_self(), TimestampLTE);
 
     pthread_exit(NULL);
 }
@@ -93,11 +93,13 @@ char *Timestamp()
 /* Main running code */
 int main()
 {
-    /* Initialize variables */
+    /* Initialize PORT, IP & INTERFACE*/
     PORT_LTE = 9123;
     PORT_WiFi = 9124;
     IP_LTE = "10.20.0.16";
     IP_WiFi = "192.168.1.131";
+    LTE = "wwan0";
+    WiFi = "wlan0";
 
     /* Create sockets */
     Create_Sockets(PORT_LTE, PORT_WiFi, IP_LTE, IP_WiFi);
