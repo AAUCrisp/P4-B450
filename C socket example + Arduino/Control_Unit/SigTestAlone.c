@@ -33,7 +33,7 @@ int main() {
         Buffer1[strlen(Buffer1)-1] = '\0';
         printf("%s",Buffer1);
     }
-    printf("%s",Buffer1);
+    //printf("%s",Buffer1);
 
 }
 
