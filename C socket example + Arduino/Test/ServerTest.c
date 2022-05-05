@@ -139,10 +139,6 @@ int main()
         pthread_create(&T1, NULL, receiveshit, NULL);
         pthread_create(&T2, NULL, receiveshit2, NULL);
 
-        if (pthread_create == 1)
-        {
-            break;
-        }
     }
 
     close(sockLTE && sockWiFi);

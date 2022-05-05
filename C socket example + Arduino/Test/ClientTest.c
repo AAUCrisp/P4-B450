@@ -125,11 +125,7 @@ int main()
         pthread_create(&T2, NULL, sendshit2String, TestMsg2);
         pthread_join(T1, NULL);
         pthread_join(T2, NULL);
-
-        if (pthread_create || pthread_join == 1)
-        {
-            break;
-        }
+        
     }
 
     close(sockLTE && sockWiFi);
