@@ -153,8 +153,8 @@ int main()
 
     /* Create sockets */
     Create_Bind_Sockets(PORT_LTE, PORT_WiFi);
-    int8_t result;
-    printf("Transmit power: %d ", result->stats.qual.level);
+    
+    printf("Transmit power: %d ", stats.qual.level);
 
     while (1)
     {
