@@ -90,11 +90,11 @@ void *receiveshit2()
 int main()
 {
     /* Initialize variables */
-    PORT1 = 9123;
-    PORT2 = 9124;
+    PORT_LTE = 9123;
+    PORT_WiFi = 9124;
 
     /* Create sockets */
-    Create_Bind_Sockets(PORT1, PORT2);
+    Create_Bind_Sockets(PORT_LTE, PORT_WiFi);
 
     while (1)
     {

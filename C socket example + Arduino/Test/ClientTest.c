@@ -9,7 +9,7 @@
 #include <stdlib.h>
 
 /* Define buffer size, PORT number and server IP */
-const int BUFFER;
+#define BUFFER 128
 uint PORT1, PORT2;
 const char *IP_LTE;
 const char *IP_WiFi;
@@ -56,33 +56,25 @@ void Create_Sockets(uint PORT_LTE, uint PORT_WiFi, const char *IP1, const char *
     ClientWiFi.sin_addr.s_addr = inet_addr(IP2);
 }
 
-void *sendshit1String()
+void *sendshit1String(void *msg1)
 {
-<<<<<<< HEAD
-    char TestMsg[] = "Client says hello via LTE!sdfsdgsgsdfgsdf";
-=======
-    // char TestMsg[] = "Client says hello via LTE!";
->>>>>>> 69b17debb704a9eee6b57bb06438134d156d4b19
-    printf("%s\n", TestMsg);
-    sendto(sockLTE, TestMsg, sizeof(TestMsg), 0, (struct sockaddr *)&ClientLTE, lenLTE);
-    printf("LTE-Thread id = %ld\n", pthread_self());
+    char TimestampLTE[BUFFER];
+    char *newTextLTE = msg1;
+    snprintf(TimestampLTE, BUFFER, "%s%s", curr_time, newTextLTE);
+    sendto(sockLTE, TimestampLTE, BUFFER, 0, (struct sockaddr *)&ClientLTE, lenLTE);
+    printf("WiFi-Thread id = %ld\n %s\n", pthread_self(), TimestampLTE);
+
     pthread_exit(NULL);
 }
 
-void *sendshit2String(char msg)
+void *sendshit2String(void *msg2)
 {
-<<<<<<< HEAD
-    char TestMsg2[] = "Client says hello via WiFi!kljkijgdiosdj";
-    printf("%s\n", TestMsg2);
-    sendto(sockWiFi, TestMsg2, sizeof(TestMsg2), 0, (struct sockaddr *)&ClientWiFi, lenWiFi); // send the data to server
-=======
-    // char TestMsg2[] = "Client says hello via WiFi!";
-    strcat(curr_time, msg);
-    printf("%s\n", msg);
-    printf("%s\n", curr_time);
-    sendto(sockWiFi, curr_time, sizeof(curr_time), 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
->>>>>>> 69b17debb704a9eee6b57bb06438134d156d4b19
-    printf("WiFi-Thread id = %ld\n", pthread_self());
+    char TimestampWiFi[BUFFER];
+    char *newTextWiFi = msg2;
+    snprintf(TimestampWiFi, BUFFER, "%s%s", curr_time, newTextWiFi);
+    sendto(sockWiFi, TimestampWiFi, BUFFER, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
+    printf("WiFi-Thread id = %ld\n %s\n", pthread_self(), TimestampWiFi);
+
     pthread_exit(NULL);
 }
 
@@ -102,18 +94,13 @@ char *Timestamp()
 int main()
 {
     /* Initialize variables */
-    PORT1 = 9123;
-    PORT2 = 9124;
+    PORT_TE = 9123;
+    PORT_WiFi = 9124;
     IP_LTE = "10.20.0.16";
-<<<<<<< HEAD
-    IP_WiFi = "192.168.1.136";
-=======
     IP_WiFi = "192.168.1.131";
-    BUFFER = 128;
->>>>>>> 69b17debb704a9eee6b57bb06438134d156d4b19
 
     /* Create sockets */
-    Create_Sockets(PORT1, PORT2, IP_LTE, IP_WiFi);
+    Create_Sockets(PORT_LTE, PORT_WiFi, IP_LTE, IP_WiFi);
 
     /* Messages to send */
     char TestMsg[] = "Client says hello via LTE!";
@@ -122,7 +109,8 @@ int main()
     while (1)
     {
         sleep(1);
-        pthread_create(&T1, NULL, sendshit1String, NULL);
+        Timestamp();
+        pthread_create(&T1, NULL, sendshit1String, TestMsg);
         pthread_create(&T2, NULL, sendshit2String, TestMsg2);
         pthread_join(T1, NULL);
         pthread_join(T2, NULL);
