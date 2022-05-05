@@ -75,7 +75,7 @@ void *receiveshit()
 {
     rc_LTE = recvfrom(sockLTE, Message, BUFFER, 0, (struct sockaddr *)&ServerLTE, &lenLTE);
     printf("LTE-Thread id = %ld\n", pthread_self());
-    printf("%s\n \n", Message);
+    printf("%s\n", Message);
     printf("Message from LTE received at: %s\n\n", curr_time);
     pthread_exit(NULL);
 }
@@ -84,7 +84,7 @@ void *receiveshit2()
 {
     rc_WiFi = recvfrom(sockWiFi, Message, BUFFER, 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
     printf("WiFi-Thread id = %ld\n", pthread_self());
-    printf("%s\n \n", Message);
+    printf("%s\n", Message);
     printf("Message from WiFi received at: %s\n\n", curr_time);
     pthread_exit(NULL);
 }
