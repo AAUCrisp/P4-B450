@@ -58,7 +58,11 @@ void Create_Sockets(uint PORT_LTE, uint PORT_WiFi, const char *IP1, const char *
 
 void *sendshit1String()
 {
+<<<<<<< HEAD
+    char TestMsg[] = "Client says hello via LTE!sdfsdgsgsdfgsdf";
+=======
     // char TestMsg[] = "Client says hello via LTE!";
+>>>>>>> 69b17debb704a9eee6b57bb06438134d156d4b19
     printf("%s\n", TestMsg);
     sendto(sockLTE, TestMsg, sizeof(TestMsg), 0, (struct sockaddr *)&ClientLTE, lenLTE);
     printf("LTE-Thread id = %ld\n", pthread_self());
@@ -67,11 +71,17 @@ void *sendshit1String()
 
 void *sendshit2String(char msg)
 {
+<<<<<<< HEAD
+    char TestMsg2[] = "Client says hello via WiFi!kljkijgdiosdj";
+    printf("%s\n", TestMsg2);
+    sendto(sockWiFi, TestMsg2, sizeof(TestMsg2), 0, (struct sockaddr *)&ClientWiFi, lenWiFi); // send the data to server
+=======
     // char TestMsg2[] = "Client says hello via WiFi!";
     strcat(curr_time, msg);
     printf("%s\n", msg);
     printf("%s\n", curr_time);
     sendto(sockWiFi, curr_time, sizeof(curr_time), 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
+>>>>>>> 69b17debb704a9eee6b57bb06438134d156d4b19
     printf("WiFi-Thread id = %ld\n", pthread_self());
     pthread_exit(NULL);
 }
@@ -95,8 +105,12 @@ int main()
     PORT1 = 9123;
     PORT2 = 9124;
     IP_LTE = "10.20.0.16";
+<<<<<<< HEAD
+    IP_WiFi = "192.168.1.136";
+=======
     IP_WiFi = "192.168.1.131";
     BUFFER = 128;
+>>>>>>> 69b17debb704a9eee6b57bb06438134d156d4b19
 
     /* Create sockets */
     Create_Sockets(PORT1, PORT2, IP_LTE, IP_WiFi);

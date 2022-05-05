@@ -11,25 +11,25 @@
 
 int main() {
 
-    FILE* pipe = popen("iwconfig wlan1 | grep -i --color quality", "r");
+    FILE* pipe_WiFi = popen("iwconfig wlan1 | grep -i --color quality", "r");
     if (pipe){
         char Buffer[128];
-        while(!feof(pipe)){
+        while(!feof(pipe_WiFi)){
             if(fgets(Buffer,128,pipe) !=NULL){}
         }
-        pclose(pipe);
+        pclose(pipe_WiFi);
         Buffer[strlen(Buffer)-1] = '\0';
         printf("%s",Buffer);
     }
 
-    FILE* pipe1 = popen("iwconfig wwan0 | grep -i --color quality", "r");
+    FILE* pipe_LTE = popen("mmcli -m 0 --signal-get", "r");
     if (pipe1){
         char Buffer[128];
-        while(!feof(pipe1)){
+        while(!feof(pipe_LTE)){
             if(fgets(Buffer,128,pipe) !=NULL){}
         }
-        pclose(pipe1);
-        Buffer[strlen(Buffer1)-1] = '\0';
+        pclose(pipe_LTE);
+        Buffer[strlen(Buffer)-1] = '\0';
         printf("%s",Buffer);
     }
     
