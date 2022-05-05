@@ -27,7 +27,7 @@ int main() {
     }
     */
 
-    FILE* pipe = popen(iwconfig wlan1 | grep -i --color quality, "r");
+    FILE* pipe = popen("iwconfig wlan1 | grep -i --color quality", "r");
     if (pipe){
         char Buffer1[128];
         while(!feof(pipe)){
