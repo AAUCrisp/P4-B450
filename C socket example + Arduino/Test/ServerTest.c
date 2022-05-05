@@ -8,7 +8,6 @@
 #include <time.h>
 #include <stdlib.h>
 #include <linux/wireless.h>
-#include <wireless.h>
 
 /* Define buffers & PORT number */
 #define BUFFER 128
