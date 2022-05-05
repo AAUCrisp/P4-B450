@@ -16,12 +16,10 @@ int main() {
     if (pipe){
         char Buffer[128];
         while(!feof(pipe_WiFi)){
-            if(fgets(Buffer,128,pipe) !=NULL){
+            if(fgets(Buffer,128,pipe_WiFi) !=NULL){
                 fseek(f,33,SEEK_SET);
-                char RSSI[10];
-                memset(RSSI,33,4,f);
+                char RSSI[10]= {0};
                 fread(RSSI,33,4,f);
-
             }
         }
         pclose(pipe_WiFi);
@@ -32,13 +30,12 @@ int main() {
     }
     //Get RSRP value from LTE 
     FILE* pipe_LTE = popen("mmcli -m 0 --signal-get", "r");
-    if (pipe1){
+    if (pipe_LTE){
         char Buffer[128];
         while(!feof(pipe_LTE)){
-            if(fgets(Buffer,128,pipe) !=NULL){
+            if(fgets(Buffer,128,pipe_LTE) !=NULL){
                 fseek(f,20,SEEK_SET);
-                char RSRP[10];
-                memset(RSRP,20,55,f);
+                char RSRP[10] = {0};
                 fread(RSRP,20,55,f);
             }
         }
