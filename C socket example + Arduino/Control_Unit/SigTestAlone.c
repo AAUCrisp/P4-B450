@@ -29,7 +29,7 @@ int main() {
             if(fgets(Buffer,128,pipe) !=NULL){}
         }
         pclose(pipe1);
-        Buffer[strlen(Buffer1)-1] = '\0';
+        Buffer[strlen(Buffer)-1] = '\0';
         printf("%s",Buffer);
     }
     
