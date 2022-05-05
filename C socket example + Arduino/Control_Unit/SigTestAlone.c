@@ -31,9 +31,9 @@ int main() {
         }
         pclose(pipe);
         Buffer1[strlen(Buffer1)-1] = '\0';
-        Printf("%s",Buffer1);
+        printf("%s",Buffer1);
     }
-    Printf("%s",Buffer1);
+    printf("%s",Buffer1);
 
 }
 
