@@ -28,8 +28,7 @@ int rc_LTE, rc_WiFi;
 pthread_t T1, T2;
 
 /* Function to bind sockets */
-void
-Create_Bind_Sockets(uint PORT_LTE, uint PORT_WiFi)
+void Create_Bind_Sockets(uint PORT_LTE, uint PORT_WiFi)
 {
     /* Create socket */
     sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -121,24 +120,24 @@ void Check_RSSI_Value()
     4. Notify client & send GSV to client via the better signal.
     */
 
-   /*
-    if (RSSI == x)
-    {
-        update GSV = 1;
-    }
-    else
-    {
-        update GSV = 2;
-    }
+    /*
+     if (RSSI == x)
+     {
+         update GSV = 1;
+     }
+     else
+     {
+         update GSV = 2;
+     }
 
-    if (GSV == 1)
-    {
-        sendto(sockLTE, GSV, BUFFER, 0, (struct sockaddr *)&ClientLTE, lenLTE);
-    }
-    else
-    {
-        sendto(sockWiFi, GSV, BUFFER, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
-    }*/
+     if (GSV == 1)
+     {
+         sendto(sockLTE, GSV, BUFFER, 0, (struct sockaddr *)&ClientLTE, lenLTE);
+     }
+     else
+     {
+         sendto(sockWiFi, GSV, BUFFER, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
+     }*/
 }
 
 /* Main running code */

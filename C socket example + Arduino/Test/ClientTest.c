@@ -119,13 +119,12 @@ int main()
 
     while (1)
     {
-        // sleep(1);
+        usleep(1000);
         Timestamp();
         pthread_create(&T1, NULL, sendshit1String, TestMsg);
         pthread_create(&T2, NULL, sendshit2String, TestMsg2);
         pthread_join(T1, NULL);
         pthread_join(T2, NULL);
-        
     }
 
     close(sockLTE && sockWiFi);
