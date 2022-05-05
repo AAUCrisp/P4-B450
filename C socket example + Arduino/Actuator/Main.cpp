@@ -3,11 +3,11 @@
 int main()
 {
    socket_configuration();
-   /*if (i =! -1){
+   if (i =! -1){
 	   perror("failed to execute socket_configurations function");
 	   exit(0);
    }
-   */
+   
 
 
 	/* Main running code */
@@ -16,6 +16,9 @@ int main()
 
         std::thread T1(receive_LTE);
 		std::thread T2(receive_WiFi);
+
+		T1.join();
+		T2.join();
 
 	}
 	close(sockLTE && sockWiFi);

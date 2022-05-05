@@ -18,16 +18,16 @@
 #define IP2 "192.168.1.143"
 
 /* Specify LTE / WiFi interface */
-const char *LTE = "wwan0";
-const char *WiFi = "wlan0";
+//const char *LTE = "wwan0";
+//const char *WiFi = "wlan0";
 
 //std::string str(LTE);
 //std::string str2(WiFi);
 
-//std::string LTE_interface = "wwan0";
-//const char *LTE = LTE_interface.c_str();
-//std::string WiFi_interface = "wlan0";
-//const char *WiFi = WiFi_interface.c_str();
+std::string LTE_interface = "wwan0";
+const void *LTE = LTE_interface.c_str();
+std::string WiFi_interface = "wlan0";
+const void *WiFi = WiFi_interface.c_str();
 
 
 /* Misc */
@@ -44,20 +44,20 @@ pthread_t T1,T2;
 
 
 int socket_configuration() {
-       /* configure settings to communicate with remote UDP server */
+    /* Create socket and bind them to Interface*/
+	sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+	sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+	f = setsockopt(sockLTE, SOL_SOCKET, SO_BINDTODEVICE, LTE, LTE_interface.length());
+	g = setsockopt(sockWiFi, SOL_SOCKET, SO_BINDTODEVICE, WiFi, WiFi_interface.length());   
+	
+	
+	/* configure settings to communicate with remote UDP server */
 	Server_LTE.sin_family = AF_INET;
 	Server_LTE.sin_port = htons(PORT);
 	Server_LTE.sin_addr.s_addr = inet_addr(IP1);
 	Server_WiFi.sin_family = AF_INET;
 	Server_WiFi.sin_port = htons(PORT2);
 	Server_WiFi.sin_addr.s_addr = inet_addr(IP2);
-
-
-	/* Create socket and bind them to Interface*/
-	sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-	sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-	f = setsockopt(sockLTE, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
-	g = setsockopt(sockWiFi, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
 
       /* Error Handling of socket creation, and interface binding*/
 	if (sockLTE == -1)
