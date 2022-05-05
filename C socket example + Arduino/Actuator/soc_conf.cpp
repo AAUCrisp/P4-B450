@@ -1,5 +1,5 @@
 #include <stdio.h>
-//#include <string.h>
+#include <string.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -84,8 +84,6 @@ int socket_configuration() {
 	
     bindLTE = bind(sockLTE, (struct sockaddr *)&Server_LTE, sizeof(struct sockaddr));
     bindWiFi = bind(sockWiFi, (struct sockaddr *)&Server_WiFi, sizeof(struct sockaddr));
-    
-    return 0;
 
 }
 

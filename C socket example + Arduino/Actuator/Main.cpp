@@ -2,11 +2,12 @@
 
 int main()
 {
-   i = socket_configuration();
-   if (i =! 0){
+   socket_configuration();
+   /*if (i =! -1){
 	   perror("failed to execute socket_configurations function");
 	   exit(0);
    }
+   */
 
 
 	/* Main running code */
