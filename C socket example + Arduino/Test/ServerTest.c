@@ -7,7 +7,6 @@
 #include <pthread.h>
 #include <time.h>
 #include <stdlib.h>
-#include <linux/wireless.h>
 
 /* Define buffers & PORT number */
 #define BUFFER 128
@@ -153,8 +152,6 @@ int main()
 
     /* Create sockets */
     Create_Bind_Sockets(PORT_LTE, PORT_WiFi);
-    
-    printf("Transmit power: %d ", stats.qual.level);
 
     while (1)
     {
