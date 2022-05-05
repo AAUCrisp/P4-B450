@@ -8,26 +8,26 @@
 #include <time.h>
 #include <stdlib.h>
 #include <string>
-#include <thread>
+
 
 /* Define buffer size, PORT number and server IP */
 #define MAXBUF 1024
-#define PORT 8888
-#define PORT2 8887
+#define PORT 9123
+#define PORT2 9125
 #define IP1 "10.20.0.13"
 #define IP2 "192.168.1.143"
 
 /* Specify LTE / WiFi interface */
-//const char *LTE = "wwan0";
-//const char *WiFi = "wlan0";
+const char *LTE = "wwan0";
+const char *WiFi = "wlan0";
 
 //std::string str(LTE);
 //std::string str2(WiFi);
 
-std::string LTE_interface = "wwan0";
-const void *LTE = LTE_interface.c_str();
-std::string WiFi_interface = "wlan0";
-const void *WiFi = WiFi_interface.c_str();
+//std::string LTE_interface = "wwan0";
+//const char *LTE = LTE_interface.c_str();
+//std::string WiFi_interface = "wlan0";
+//const char *WiFi = WiFi_interface.c_str();
 
 
 /* Misc */
@@ -37,18 +37,20 @@ struct sockaddr_in Server_LTE;
 int sockLTE, sockWiFi;
 int bindLTE, bindWiFi;
 unsigned int lenWiFi = sizeof(Server_WiFi), lenLTE = sizeof(Server_LTE);
-int f,g,i;
-char ActuatorBuffer[MAXBUF];
+int f,g,i, h,j;
+char ActuatorBufferLTE[MAXBUF], ActuatorBufferWiFi[MAXBUF];
 int rc_LTE, rc_WiFi;
+void *receive_LTE(void *);
+void *receive_WiFi(void *);
 pthread_t T1,T2;
 
 
-int socket_configuration() {
+void socket_configuration() {
     /* Create socket and bind them to Interface*/
 	sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 	sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-	f = setsockopt(sockLTE, SOL_SOCKET, SO_BINDTODEVICE, LTE, LTE_interface.length());
-	g = setsockopt(sockWiFi, SOL_SOCKET, SO_BINDTODEVICE, WiFi, WiFi_interface.length());   
+	f = setsockopt(sockLTE, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
+	g = setsockopt(sockWiFi, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));   
 	
 	
 	/* configure settings to communicate with remote UDP server */
@@ -69,7 +71,6 @@ int socket_configuration() {
 	if (f == -1) 
 	{
 		perror("Error with LTE...the error is");
-		return(-1);
 		exit(0);
 	} 
 
@@ -77,26 +78,19 @@ int socket_configuration() {
 
 	{
 		perror("Error with WiFi... the error is");
-		return(-1);
 		exit(0);
 	}
 
 	
     bindLTE = bind(sockLTE, (struct sockaddr *)&Server_LTE, sizeof(struct sockaddr));
     bindWiFi = bind(sockWiFi, (struct sockaddr *)&Server_WiFi, sizeof(struct sockaddr));
-
+	if (bindLTE == -1) {
+		perror("Error with binding LTE");
+		exit(0);
+	}
+	if (bindWiFi == -1) {
+		perror("error with binding WiFi socket");
+		exit(0);
+	}
 }
 
-int receive_LTE(){
-    rc_LTE = recvfrom(sockLTE, ActuatorBuffer, MAXBUF, 0, (struct sockaddr*)&Server_LTE, &(lenLTE));
-    std::string msg = "Alley oop form kyrie";
-    printf("%s\n",msg);
-    return 0;
-}
-
-int receive_WiFi() {
-    rc_WiFi = recvfrom(sockWiFi, ActuatorBuffer, MAXBUF, 0,(struct sockaddr*)&Server_WiFi, &(lenWiFi));
-    std::string msg2 = "Lebron Jammed it in";
-    printf("%s\n", msg2);
-    return 0;
-}
