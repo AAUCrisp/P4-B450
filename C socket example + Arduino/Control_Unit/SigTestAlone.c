@@ -27,7 +27,7 @@ int main() {
     }
     */
 
-    FILE* pipe = popen(iwconfig $_[0]grep Signal| cut -d"=" -f3|cut -d " " -f1, "r");
+    FILE* pipe = popen(iwconfig wlan1 | grep -i --color quality, "r");
     if (pipe){
         char Buffer1[128];
         while(!feof(pipe)){
