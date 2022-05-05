@@ -54,7 +54,7 @@ void Create_Sockets(uint PORT_LTE, uint PORT_WiFi, const char *IP1, const char *
 
 void *sendshit1String()
 {
-    char TestMsg[] = "Client says hello via LTE!";
+    char TestMsg[] = "Client says hello via LTE!sdfsdgsgsdfgsdf";
     printf("%s\n", TestMsg);
     sendto(sockLTE, TestMsg, sizeof(TestMsg), 0, (struct sockaddr *)&ClientLTE, lenLTE); // send the data to server
     printf("LTE-Thread id = %ld\n", pthread_self());
@@ -63,7 +63,7 @@ void *sendshit1String()
 
 void *sendshit2String()
 {
-    char TestMsg2[] = "Client says hello via WiFi!";
+    char TestMsg2[] = "Client says hello via WiFi!kljkijgdiosdj";
     printf("%s\n", TestMsg2);
     sendto(sockWiFi, TestMsg2, sizeof(TestMsg2), 0, (struct sockaddr *)&ClientWiFi, lenWiFi); // send the data to server
     printf("WiFi-Thread id = %ld\n", pthread_self());
@@ -77,7 +77,7 @@ int main()
     PORT1 = 9123;
     PORT2 = 9124;
     IP_LTE = "10.20.0.16";
-    IP_WiFi = "192.168.1.131";
+    IP_WiFi = "192.168.1.136";
 
     /* Create sockets */
     Create_Sockets(PORT1, PORT2, IP_LTE, IP_WiFi);
