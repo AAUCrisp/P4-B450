@@ -7,6 +7,8 @@
 #include <pthread.h>
 #include <time.h>
 #include <stdlib.h>
+#include <linux/wireless.h>
+#include <wireless.h>
 
 /* Define buffers & PORT number */
 #define BUFFER 128
@@ -27,8 +29,18 @@ int bindLTE, bindWiFi;
 int rc_LTE, rc_WiFi;
 pthread_t T1, T2;
 
+/* RSSI ? */
+struct iw_quality
+{
+    __u8 quality;
+    __u8 level;
+    __u8 noise;
+    __u8 updated;
+}
+
 /* Function to bind sockets */
-void Create_Bind_Sockets(uint PORT_LTE, uint PORT_WiFi)
+void
+Create_Bind_Sockets(uint PORT_LTE, uint PORT_WiFi)
 {
     /* Create socket */
     sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -117,8 +129,26 @@ void Check_RSSI_Value()
     1. Check RSSI value from LTE/WiFi.
     2. If LTE/WiFi is better than the other.
     3. Update Global Signal Variable (GSV).
-    4. Send GSV to client via the better signal.
+    4. Notify client & send GSV to client via the better signal.
     */
+
+    if (RSSI == x)
+    {
+        update GSV = 1;
+    }
+    else
+    {
+        update GSV = 2;
+    }
+
+    if (GSV == 1)
+    {
+        sendto(sockLTE, GSV, BUFFER, 0, (struct sockaddr *)&ClientLTE, lenLTE);
+    }
+    else
+    {
+        sendto(sockWiFi, GSV, BUFFER, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
+    }
 }
 
 /* Main running code */
@@ -132,13 +162,13 @@ int main()
 
     /* Create sockets */
     Create_Bind_Sockets(PORT_LTE, PORT_WiFi);
+    printf("Transmit power: %d ", (int8_t)result->stats.qual.level);
 
     while (1)
     {
         Timestamp();
         pthread_create(&T1, NULL, receiveshit, NULL);
         pthread_create(&T2, NULL, receiveshit2, NULL);
-
     }
 
     close(sockLTE && sockWiFi);
