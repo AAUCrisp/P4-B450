@@ -1,7 +1,6 @@
 import numpy as np
 import time as time
 
-from sympy import N
 
 x_steps = [100]          # Array N-size
 y_steps = [100]          # Array M-size

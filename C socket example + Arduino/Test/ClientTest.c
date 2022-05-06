@@ -24,8 +24,13 @@ struct sockaddr_in ClientLTE;
 struct sockaddr_in ClientWiFi;
 int sockLTE, lenLTE = sizeof(ClientLTE);
 int sockWiFi, lenWiFi = sizeof(ClientWiFi);
-int rc_LTE, rc_WiFi;
+int RX_LTE, RX_WiFi;
+int TX_LTE, TX_WiFi;
 pthread_t T1, T2;
+
+/* Global Signal Variable & RSSI*/
+int GSV;
+
 
 void Create_Sockets(uint PORT_LTE, uint PORT_WiFi, const char *IP1, const char *IP2)
 {
@@ -61,9 +66,9 @@ void *sendshit1String(void *msg1)
     char TimestampLTE[BUFFER];
     char *newTextLTE = msg1;
     snprintf(TimestampLTE, BUFFER, "%s%s", curr_time, newTextLTE);
-    sendto(sockLTE, TimestampLTE, BUFFER, 0, (struct sockaddr *)&ClientLTE, lenLTE);
-    printf("LTE-Thread id = %ld\n %s\n\n", pthread_self(), TimestampLTE);
-
+    TX_LTE = sendto(sockLTE, TimestampLTE, BUFFER, 0, (struct sockaddr *)&ClientLTE, lenLTE);
+    printf("LTE-Thread id = %ld", pthread_self());
+    printf("%s\n\n", TimestampLTE);
     pthread_exit(NULL);
 }
 
@@ -72,8 +77,9 @@ void *sendshit2String(void *msg2)
     char TimestampWiFi[BUFFER];
     char *newTextWiFi = msg2;
     snprintf(TimestampWiFi, BUFFER, "%s%s", curr_time, newTextWiFi);
-    sendto(sockWiFi, TimestampWiFi, BUFFER, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
-    printf("WiFi-Thread id = %ld\n %s\n\n", pthread_self(), TimestampWiFi);
+    TX_WiFi = sendto(sockWiFi, TimestampWiFi, BUFFER, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
+    printf("WiFi-Thread id = %ld", pthread_self());
+    printf("%s\n\n", TimestampWiFi);
 
     pthread_exit(NULL);
 }
@@ -97,36 +103,52 @@ void Update_GSV()
     2. Update local GSV.
     3. Notify to send via LTE/WiFi.
     */
-}
-
-/* Main running code */
-int main()
-{
-    /* Initialize PORT, IP & INTERFACE*/
-    PORT_LTE = 9123;
-    PORT_WiFi = 9124;
-    IP_LTE = "10.20.0.16";
-    IP_WiFi = "192.168.1.136";
-    LTE = "wwan0";
-    WiFi = "wlan0";
-
-    /* Create sockets */
-    Create_Sockets(PORT_LTE, PORT_WiFi, IP_LTE, IP_WiFi);
-
-    /* Messages to send */
-    char TestMsg[] = "Client says hello via LTE!";
-    char TestMsg2[] = "Client says hello via WiFi!";
-
-    while (1)
+    if (recvfrom(sockLTE, &GSV, sizeof(GSV), 0, (struct sockaddr *)&ServerLTE, &lenLTE))
     {
-        usleep(1000);
-        Timestamp();
-        pthread_create(&T1, NULL, sendshit1String, TestMsg);
-        pthread_create(&T2, NULL, sendshit2String, TestMsg2);
-        pthread_join(T1, NULL);
-        pthread_join(T2, NULL);
+        printf("LTE-Thread id = %ld\n", pthread_self());
+        printf("%s\n", Message);
+        printf("Message from LTE received at: %s\n\n", curr_time);
     }
 
-    close(sockLTE && sockWiFi);
-    exit(0);
-}
+    if (recvfrom(sockWiFi, &GSV, sizeof(GSV), 0, (struct sockaddr *)&ServerWiFi, &lenWiFi))
+    {
+        printf("WiFi-Thread id = %ld\n", pthread_self());
+        printf("%s\n", Message);
+        printf("Message from WiFi received at: %s\n\n", curr_time);
+    }
+
+    /* Main running code */
+    int main()
+    {
+        /* Initialize PORT, IP & INTERFACE*/
+        PORT_LTE = 9123;
+        PORT_WiFi = 9124;
+        IP_LTE = "10.20.0.16";
+        IP_WiFi = "192.168.1.136";
+        LTE = "wwan0";
+        WiFi = "wlan0";
+
+        /* Create sockets */
+        Create_Sockets(PORT_LTE, PORT_WiFi, IP_LTE, IP_WiFi);
+
+        /* Messages to send */
+        char TestMsg[] = "Client says hello via LTE!";
+        char TestMsg2[] = "Client says hello via WiFi!";
+
+        while (1)
+        {
+            usleep(1000);
+            Timestamp();
+            if (GSV = 1){
+                pthread_create(&T1, NULL, sendshit1String, TestMsg);
+                pthread_join(T1, NULL);
+            }
+            if(GSV = 2){
+                pthread_create(&T2, NULL, sendshit2String, TestMsg2);
+                pthread_join(T2, NULL);
+            }
+        }
+
+        close(sockLTE && sockWiFi);
+        exit(0);
+    }

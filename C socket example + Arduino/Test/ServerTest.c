@@ -24,8 +24,13 @@ struct sockaddr_in ServerWiFi;
 int sockLTE, lenLTE = sizeof(ServerLTE);
 int sockWiFi, lenWiFi = sizeof(ServerWiFi);
 int bindLTE, bindWiFi;
-int rc_LTE, rc_WiFi;
+int RX_LTE, RX_WiFi;
+int TX_LTE, TX_WiFi;
 pthread_t T1, T2;
+
+/* Global Signal Variable & RSSI*/
+int GSV;
+int RSSI = 1;
 
 /* Function to bind sockets */
 void Create_Bind_Sockets(uint PORT_LTE, uint PORT_WiFi)
@@ -78,9 +83,9 @@ void Create_Bind_Sockets(uint PORT_LTE, uint PORT_WiFi)
 }
 
 /* Function to receive LTE packets */
-void *receiveshit()
+void *receiveshit1()
 {
-    rc_LTE = recvfrom(sockLTE, Message, BUFFER, 0, (struct sockaddr *)&ServerLTE, &lenLTE);
+    RX_LTE = recvfrom(sockLTE, Message, BUFFER, 0, (struct sockaddr *)&ServerLTE, &lenLTE);
     printf("LTE-Thread id = %ld\n", pthread_self());
     printf("%s\n", Message);
     printf("Message from LTE received at: %s\n\n", curr_time);
@@ -90,10 +95,30 @@ void *receiveshit()
 /* Function to receive WiFi packets */
 void *receiveshit2()
 {
-    rc_WiFi = recvfrom(sockWiFi, Message, BUFFER, 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
+    RX_WiFi = recvfrom(sockWiFi, Message, BUFFER, 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
     printf("WiFi-Thread id = %ld\n", pthread_self());
     printf("%s\n", Message);
     printf("Message from WiFi received at: %s\n\n", curr_time);
+    pthread_exit(NULL);
+}
+
+/* Function to transmit LTE packets */
+void *transmitshit1()
+{
+    TX_LTE = sendto(sockLTE, GSV, BUFFER, 0, (struct sockaddr *)&ClientLTE, lenLTE);
+    printf("WiFi-Thread id = %ld\n", pthread_self());
+    printf("%s\n", Message);
+    printf("Message from WiFi transmitted at: %s\n\n", curr_time);
+    pthread_exit(NULL);
+}
+
+/* Function to transmit WiFi packets */
+void *transmitshit2()
+{
+    TX_WiFi = sendto(sockWiFi, GSV, BUFFER, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
+    printf("WiFi-Thread id = %ld\n", pthread_self());
+    printf("%s\n", Message);
+    printf("Message from WiFi transmitted at: %s\n\n", curr_time);
     pthread_exit(NULL);
 }
 
@@ -120,25 +145,29 @@ void Check_RSSI_Value()
     4. Notify client & send GSV to client via the better signal.
     */
 
-    /*
-     if (RSSI == x)
+    
+     if (RSSI == 1)
      {
          update GSV = 1;
-     }
-     else
-     {
-         update GSV = 2;
-     }
-
-     if (GSV == 1)
-     {
          sendto(sockLTE, GSV, BUFFER, 0, (struct sockaddr *)&ClientLTE, lenLTE);
      }
-     else
+     if (RSSI == 2)
      {
+         update GSV = 2;
          sendto(sockWiFi, GSV, BUFFER, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
-     }*/
+     }
 }
+
+void Process_Data(){
+    /*
+    1. Receive data from client.
+    2. Process data from client.
+    3. Create a command based on data.
+    4. Send command to client.
+    */
+}
+
+
 
 /* Main running code */
 int main()
@@ -155,7 +184,7 @@ int main()
     while (1)
     {
         Timestamp();
-        pthread_create(&T1, NULL, receiveshit, NULL);
+        pthread_create(&T1, NULL, receiveshit1, NULL);
         pthread_create(&T2, NULL, receiveshit2, NULL);
     }
 
