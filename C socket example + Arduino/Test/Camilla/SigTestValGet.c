@@ -14,21 +14,22 @@ int main() {
     //Get RSSI value from WiFi
     FILE* pipe_WiFi = popen("iwconfig wlan1 | grep -i --color quality", "r");
     if (pipe){
-        char BufferWiFi[128];
-        char RSSI[20]= {0};
+        char BufferWiFi[64];
+        //char RSSI[60]= {0};
         while(!feof(pipe_WiFi)){
-            if(fgets(BufferWiFi,128,pipe_WiFi) !=NULL){
-                fseek(pipe_WiFi,0,SEEK_SET);
-                fread(RSSI,0,4,pipe_WiFi);
+            if(fgets(BufferWiFi,64,pipe_WiFi) !=NULL){
+                //fseek(pipe_WiFi,0,SEEK_SET);
+                //fread(RSSI,0,4,pipe_WiFi);
             }
         }
         pclose(pipe_WiFi);
         BufferWiFi[strlen(BufferWiFi)-1] = '\0';
-        printf(sizeof(BufferWiFi));
         printf("%s\n",BufferWiFi);
         
-        RSSI[strlen(RSSI)-1] = '\0';
-        printf("%s\n",RSSI);
+
+        
+        //RSSI[strlen(RSSI)-1] = '\0';
+        //printf("%s\n",RSSI);
 
     }
     /*
