@@ -11,25 +11,15 @@
 #include <errno.h>
 #include <sys/wait.h>
 
-
-
-int main()
-{
-    pid_t child_pid;
-    child_pid = fork();
+int main(){
     
-
-    if(child_pid == 0){
-    printf("PID of parent_pid: %d\n", getppid());
-    printf("PID of child_pid: %d\n", getpid());
-    char *args[] = {"HelloWorld","c"};
-    execv("./HelloWorld&", args);
+    printf("PID of HelloWorld.c: %d\n", getpid());
     int count;
-    
+
     while (1){
+        sleep(1);
         count++;
-        printf("Main program/parent process: %d\n", count);
+        printf("Hello world! %d\n", count);
     }
     //exit(0);
-    }
 }
