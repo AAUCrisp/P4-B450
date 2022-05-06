@@ -1,17 +1,15 @@
 import numpy as np
 import time as time
-import concurrent.futures
 from numba import jit, njit
 
 
-size = 10000
+size = 1000
 min_value = -100        # Minimum value in each matrix entrance
 max_value = 100         # Maximum value in each matrix entrance
-max_sum = -np.inf
 
-@njit(nogil=True)
-def AlgorithmMSP(A, i, size):
-    
+@njit
+def AlgorithmMSP_Sequential(A, size):
+    size
     """
     MSP Sequential
     Function to find the max-value combination of an twodimentional array
@@ -23,39 +21,32 @@ def AlgorithmMSP(A, i, size):
     pSum = 0
     start = [0]
     end = [0]
-    temp = [0] * size
-    tempResult = [0] * 6
+    temp = [None] * size
 
-    #print(f'Iteration {i} has started')
-    # print("i is: " + str(i))      # Troubleshooting Print
-    temp = [0] * size      # Creates empty array the size of the Y-axis
 
-    for k in range(i,size):    # From current column to the last
-        for j in range(size):      # For every row in the array
-            temp[j] += A[j,k]        # Adds the summarised value up till the current index
+    for i in range(size):      # For each column in the array
+        temp = [0] * size      # Creates empty array the size of the Y-axis
+        print(f'Iteration #{i}')
+        for k in range(i,size):    # From current column to the last
+            #print(f'i is: {i} | k is: {k}')      # Troubleshooting Print
+            for j in range(size):      # For every row in the array
+                temp[j] += A[j,k]        # Adds the summarised value up till the current index
 
-        pSum = AlgorithmMSP_1D(temp, start, end, size)       # Checks the currently selected row/column combination for it's max value
+            pSum = AlgorithmMSP_1D(temp, start, end, size)       # Checks the currently selected row/column combination for it's max value
             
-        if pSum >= maxA:            # If the newly found Max-sum is larger than the currently largest
-            maxA = pSum                 # Replace currently largest with the newly found Max-value
-            startN = i                # Update the X-axis starting coordinate
-            endN = k                  # Update the X-axis ending coordinate
-            startM = start[0]       # Update the Y-axis starting coordinate
-            endM = end[0]          # Update the Y-axis ending coordinate
+            if pSum >= maxA:            # If the newly found Max-sum is larger than the currently largest
+                maxA = pSum                 # Replace currently largest with the newly found Max-value
+                startN = i                # Update the X-axis starting coordinate
+                endN = k                  # Update the X-axis ending coordinate
+                startM = start[0]       # Update the Y-axis starting coordinate
+                endM = end[0]          # Update the Y-axis ending coordinate
 
         #print("New Starting Point")
-    tempResult[0]=maxA
-    tempResult[1]=startN
-    tempResult[2]=endN
-    tempResult[3]=startM
-    tempResult[4]=endM
-    tempResult[5]=i
-    #print(f'Iteration {i} finished')
-    return tempResult         # Return the ultimate highest combination sum, and its start and end coordinates
+    return maxA, startN, endN, startM, endM         # Return the ultimate highest combination sum, and it's start and end coordinates
 
 
 
-@njit(nogil=True)
+@njit
 def AlgorithmMSP_1D(a, start, end, m):
     """
     MSP Sequential One-dimantional Assist
@@ -92,32 +83,15 @@ def AlgorithmMSP_1D(a, start, end, m):
 
 
 
-
-
 if __name__=='__main__':
-    #arrayInit = np.random.randint(min_value, max_value, (10, 10))
+    arrayInit = np.random.randint(min_value, max_value, (10,10))
     array = np.random.randint(min_value, max_value, (size,size))
-    results = []
-    #print(results)
-    print(f'Array of size {size}x{size}')     # printing dimension
+    max_sum, x_start, x_end, y_start, y_end = AlgorithmMSP_Sequential(arrayInit, 10)  #Initialize numba with a small array
     start_time = time.time()        # Start time, to see computation time
-    with concurrent.futures.ThreadPoolExecutor() as executor:
-        rest = [executor.submit(AlgorithmMSP, array, i, size) for i in range (size)]      # Calling the main function
-
-        for f in concurrent.futures.as_completed(rest):
-            print(f'{f.result()}')
-            results.append(f.result())
-
-    for i in range (size):
-        if results[i][0] > max_sum:
-            max_sum = results[i][0]
-            x_start = results[i][1]
-            x_end = results[i][2]
-            y_start = results[i][3]
-            y_end = results[i][4]
-
+    max_sum, x_start, x_end, y_start, y_end = AlgorithmMSP_Sequential(array, size)      # Calling the main function
     end_time = time.time()          # End time, to see computation time
     print("Start: X=" + str(x_start) + ":Y=" + str(y_start))        # Print starting coordinates for max value
     print("End: X=" + str(x_end) + ":Y=" + str(y_end))          # Print ending coordinates for max value
     print("Max sum: " + str(max_sum))        # Print max value from currently generated array
-    print("Runtime: " + str(end_time - start_time) + " seconds")     # Print out the computation time
+
+    print("Runtime: " + str(end_time - start_time) + "seconds")     # Print out the computation time
