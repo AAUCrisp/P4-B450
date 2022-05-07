@@ -4,7 +4,7 @@ ProcessStart: ProcessCreationTest.c
 	gcc -pthread -lconfig ProcessCreationTest.c -o ProcessStart
 	touch ProcessStart
 
-HelloWOrld: HelloWorld.c
+HelloWorld: HelloWorld.c
 	gcc -pthread -lconfig HelloWorld.c -o HelloWorld
 	touch HelloWorld
 
