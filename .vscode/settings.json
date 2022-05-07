@@ -6,6 +6,7 @@
         "stdio.h": "c",
         "mman.h": "c",
         "pthread.h": "c",
-        "typeinfo": "c"
+        "typeinfo": "c",
+        "string_view": "c"
     }
 }

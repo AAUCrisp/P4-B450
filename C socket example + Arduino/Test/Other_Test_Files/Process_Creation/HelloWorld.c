@@ -28,6 +28,11 @@ int main() {
     count = atoi(msg);
     printf("String message from parent process: %s\n", (char*)msg);
     printf("String converted to int: %d\n", count);
+
+    int a = 1;
+    int b = 2;
+    int sum = a + b + count;
+    printf("Sum of a+b+count: %d+%d+%d = %d\n", a, b, count, sum);
     shm_unlink(name);
 
     /*while (1) {
