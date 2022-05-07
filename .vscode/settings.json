@@ -4,6 +4,8 @@
         "in.h": "c",
         "system_error": "cpp",
         "stdio.h": "c",
-        "mman.h": "c"
+        "mman.h": "c",
+        "pthread.h": "c",
+        "typeinfo": "c"
     }
 }

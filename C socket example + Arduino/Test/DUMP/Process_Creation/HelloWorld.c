@@ -1,13 +1,16 @@
 #include <arpa/inet.h>
 #include <errno.h>
+#include <fcntl.h>
 #include <netinet/in.h>
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/ipc.h>  //IPC thing
-#include <sys/shm.h>  //IPC thing
+#include <sys/mman.h>
+#include <sys/shm.h>  //SHM thing
 #include <sys/socket.h>
+#include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <time.h>
@@ -18,12 +21,16 @@
 int main() {
     printf("PID of HelloWorld.c: %d\n", getpid());
     int count;
-    const int buffer = 32;
+    const int buffer = 64;
     const char* name = "shm0";
-    shm_read(buffer, name);
-    printf("%s", (char*)shm_read);
+    const char* msg;
+    msg = shm_read(buffer, name);
+    count = atoi(msg);
+    printf("String message from parent process: %s\n", (char*)msg);
+    printf("String converted to int: %d\n", count);
+    shm_unlink(name);
 
-    while (1) {
+    /*while (1) {
         sleep(1);
         count++;
         printf("Hello world! %d\n", count);
@@ -32,6 +39,6 @@ int main() {
         if (count == 4) {
             break;
         }
-    }
+    }*/
     exit(0);
 }

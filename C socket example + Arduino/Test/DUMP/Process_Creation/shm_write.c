@@ -25,30 +25,22 @@ void shm_write(const char* message, const int SIZE, const char* name) {
 
     /* create the shared memory object */
     shm_fd = shm_open(name, O_CREAT | O_RDWR, 0666);
-    printf("This is shm_fd: %d\n", shm_fd);
 
     /* configure the size of the shared memory object */
     ftruncate(shm_fd, SIZE);
-    printf("This is shm_fd ftruncated: %d\n", shm_fd);
+
     /* memory map the shared memory object */
     ptr = mmap(0, SIZE, PROT_WRITE, MAP_SHARED, shm_fd, 0);
 
     /* write to the shared memory object */
-    sprintf(ptr, "%s", message);
-    printf("This is ptr: %p\n", ptr);
-    printf("This is ptr char*: %s\n", (char*)ptr);
-    ptr += strlen(message);
-    printf("This is ptr new: %p\n", ptr);
-    printf("This is ptr char*2: %s\n", (char*)ptr);
-    sprintf(ptr, "%s", message);
-    printf("This is ptr before concatenate: %p\n", ptr);
-    // printf("This is ptr char*3: %s\n", (char*)ptr);
-    // ptr += strlen(message_1);
-    printf("This is ptr concatenated: %p\n", ptr);
-    // printf("This is ptr char*4: %s\n", (char*)ptr);
 
-    printf("This is size of shared memory buffer: %d\n", SIZE);
-    printf("This is shared memory object name: %s\n", name);
+    sprintf(ptr, "%s", message);
+    // printf("This is ptr: %p\n", ptr);
+    // printf("This is ptr char*: %s\n", (char*)ptr);
+    //ptr += strlen(message);
+    ptr += sizeof(message);
 
-    return 0;
+    // printf("This is shm_fd: %d\n", shm_fd);
+    // printf("This is size of shared memory buffer: %d\n", SIZE);
+    // printf("This is shared memory object name: %s\n", name);
 }
