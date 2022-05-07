@@ -1,12 +1,12 @@
+#include <arpa/inet.h>
+#include <netinet/in.h>
+#include <pthread.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <unistd.h>
-#include <pthread.h>
 #include <time.h>
-#include <stdlib.h>
+#include <unistd.h>
 
 /* Define buffers & PORT number */
 #define BUFFER 128
@@ -33,8 +33,7 @@ int GSV;
 int RSSI = 1;
 
 /* Function to bind sockets */
-void Create_Bind_Sockets(uint PORT_LTE, uint PORT_WiFi)
-{
+void Create_Bind_Sockets(uint PORT_LTE, uint PORT_WiFi) {
     /* Create socket */
     sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -44,13 +43,11 @@ void Create_Bind_Sockets(uint PORT_LTE, uint PORT_WiFi)
     setsockopt(sockWiFi, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
 
     /* Error checking */
-    if (sockLTE == -1)
-    {
+    if (sockLTE == -1) {
         perror("Failed to create sockLTE");
         exit(0);
     }
-    if (sockWiFi == -1)
-    {
+    if (sockWiFi == -1) {
         perror("Failed to create sockLTE");
         exit(0);
     }
@@ -69,13 +66,11 @@ void Create_Bind_Sockets(uint PORT_LTE, uint PORT_WiFi)
     bindWiFi = bind(sockWiFi, (struct sockaddr *)&ServerWiFi, sizeof(struct sockaddr));
 
     /* Error checking */
-    if (bindLTE == -1)
-    {
+    if (bindLTE == -1) {
         perror("Failed to bind LTE socket");
         exit(0);
     }
-    if (bindWiFi == -1)
-    {
+    if (bindWiFi == -1) {
         perror("Failed to bind WiFi socket");
         exit(0);
     }
@@ -83,8 +78,7 @@ void Create_Bind_Sockets(uint PORT_LTE, uint PORT_WiFi)
 }
 
 /* Function to receive LTE packets */
-void *receiveshit1()
-{
+void *receiveshit1() {
     RX_LTE = recvfrom(sockLTE, Message, BUFFER, 0, (struct sockaddr *)&ServerLTE, &lenLTE);
     printf("LTE-Thread id = %ld\n", pthread_self());
     printf("%s\n", Message);
@@ -93,8 +87,7 @@ void *receiveshit1()
 }
 
 /* Function to receive WiFi packets */
-void *receiveshit2()
-{
+void *receiveshit2() {
     RX_WiFi = recvfrom(sockWiFi, Message, BUFFER, 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
     printf("WiFi-Thread id = %ld\n", pthread_self());
     printf("%s\n", Message);
@@ -103,8 +96,7 @@ void *receiveshit2()
 }
 
 /* Function to transmit LTE packets */
-void *transmitshit1()
-{
+void *transmitshit1() {
     TX_LTE = sendto(sockLTE, GSV, BUFFER, 0, (struct sockaddr *)&ClientLTE, lenLTE);
     printf("WiFi-Thread id = %ld\n", pthread_self());
     printf("%s\n", Message);
@@ -113,8 +105,7 @@ void *transmitshit1()
 }
 
 /* Function to transmit WiFi packets */
-void *transmitshit2()
-{
+void *transmitshit2() {
     TX_WiFi = sendto(sockWiFi, GSV, BUFFER, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
     printf("WiFi-Thread id = %ld\n", pthread_self());
     printf("%s\n", Message);
@@ -123,8 +114,7 @@ void *transmitshit2()
 }
 
 /* Function to timestamp packets */
-char *Timestamp()
-{
+char *Timestamp() {
     /* Timestamp format : [hh:mm:ss dd/mm/yy] */
     time_t rawtime;
     struct tm *timeinfo;
@@ -136,8 +126,7 @@ char *Timestamp()
 }
 
 /* Function to check RSSI value */
-void Check_RSSI_Value()
-{
+void Check_RSSI_Value() {
     /*
     1. Check RSSI value from LTE/WiFi.
     2. If LTE/WiFi is better than the other.
@@ -145,20 +134,17 @@ void Check_RSSI_Value()
     4. Notify client & send GSV to client via the better signal.
     */
 
-    
-     if (RSSI == 1)
-     {
-         update GSV = 1;
-         sendto(sockLTE, GSV, BUFFER, 0, (struct sockaddr *)&ClientLTE, lenLTE);
-     }
-     if (RSSI == 2)
-     {
-         update GSV = 2;
-         sendto(sockWiFi, GSV, BUFFER, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
-     }
+    if (RSSI == 1) {
+        update GSV = 1;
+        sendto(sockLTE, GSV, BUFFER, 0, (struct sockaddr *)&ClientLTE, lenLTE);
+    }
+    if (RSSI == 2) {
+        update GSV = 2;
+        sendto(sockWiFi, GSV, BUFFER, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
+    }
 }
 
-void Process_Data(){
+void Process_Data() {
     /*
     1. Receive data from client.
     2. Process data from client.
@@ -167,11 +153,8 @@ void Process_Data(){
     */
 }
 
-
-
 /* Main running code */
-int main()
-{
+int main() {
     /* Initialize PORT & INTERFACE*/
     PORT_LTE = 9123;
     PORT_WiFi = 9124;
@@ -181,8 +164,7 @@ int main()
     /* Create sockets */
     Create_Bind_Sockets(PORT_LTE, PORT_WiFi);
 
-    while (1)
-    {
+    while (1) {
         Timestamp();
         pthread_create(&T1, NULL, receiveshit1, NULL);
         pthread_create(&T2, NULL, receiveshit2, NULL);

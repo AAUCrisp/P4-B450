@@ -26,8 +26,12 @@ int main() {
             sleep(1);
             count++;
             printf("Main program/parent process: %d\n", count);
+            printf("PID of parent_pid: %d\n", getppid());
+            printf("PID of child_pid: %d\n", getpid());
             if (count == 20) {
                 break;
+            } else{
+            // do something
             }
         }
         exit(0);
