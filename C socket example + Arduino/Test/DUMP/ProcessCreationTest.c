@@ -19,7 +19,7 @@ int main() {
         printf("PID of parent_pid: %d\n", getppid());
         printf("PID of child_pid: %d\n", getpid());
         char *args[] = {"HelloWorld", "c"};
-        execv("./HelloWorld&", args);
+        execv("./HelloWorld", args);
         int count;
 
         while (1) {
@@ -28,12 +28,11 @@ int main() {
             printf("Main program/parent process: %d\n", count);
             printf("PID of parent_pid: %d\n", getppid());
             printf("PID of child_pid: %d\n", getpid());
-            if (count == 20) {
+            if (count == 50) {
                 break;
-            } else{
-            // do something
             }
         }
         exit(0);
     }
+    exit(0);
 }

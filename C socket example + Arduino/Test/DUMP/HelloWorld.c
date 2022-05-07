@@ -21,13 +21,9 @@ int main() {
         printf("Hello world! %d\n", count);
         printf("PID of parent_pid: %d\n", getppid());
         printf("PID of child_pid: %d\n", getpid());
-        if (count == 15) {
-            break;
-        }
-        if (count == 15) {
+        if (count == 49) {
             break;
         }
     }
-}
 exit(0);
 }
