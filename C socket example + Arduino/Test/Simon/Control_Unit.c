@@ -25,9 +25,11 @@ int main() {
     uint PORT_WiFi = 9124;
     const char* LTE = "wwan0";
     const char* WiFi = "wlan0";
+    int sockLTE;
+    int sockWiFi;
 
     /* Create sockets */
-    Create_Bind_Sockets(PORT_LTE, PORT_WiFi, LTE, WiFi);
+    Create_Bind_Sockets(sockLTE, sockWiFi, PORT_LTE, PORT_WiFi, LTE, WiFi);
 
     while (1) {
         Timestamp();
