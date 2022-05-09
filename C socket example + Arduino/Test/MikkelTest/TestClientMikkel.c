@@ -19,8 +19,6 @@ int sockfd1;
 int len = sizeof(Client);
 
 
-int data = 0;
-int converted_data = 0;
 
 
 int generate(int Min, int Max){
@@ -39,12 +37,14 @@ int main() {
   Client.sin_addr.s_addr = inet_addr(IP);
 
   while(1){
-    data = generate(1, 25000000);
-    converted_data = htonl(data);
+      int data = 0;
+      int converted_data = 0;
+      data = generate(1, 25000000);
+      converted_data = htonl(data);
 
-    sendto(sockfd1, &converted_data, sizeof(converted_data), 0, (struct sockaddr *)&Client, len);
+      sendto(sockfd1, &converted_data, sizeof(converted_data), 0, (struct sockaddr *)&Client, len);
 
-    sleep(2);
+      sleep(2);
   }
   close(sockfd1);
   return 1;
