@@ -24,7 +24,7 @@ int main() {
     uint PORT_LTE = 9123;
     uint PORT_WiFi = 9124;
     const char* LTE = "wwan0";
-    const char* WiFi = "wlan0";
+    const char* WiFi = "lo";
 
     /* Misc */
     int sockLTE;
@@ -40,8 +40,8 @@ int main() {
     while (1) {
         Timestamp();
         pthread_create(&T1, NULL, receiveLTE, NULL);
-        pthread_create(&T2, NULL, receiveWiFi, NULL);
         pthread_join(T1, (void**)&msg);
+        pthread_create(&T2, NULL, receiveWiFi, NULL);
         pthread_join(T2, (void**)&msg);
         printf("%s\n", msg);
     }

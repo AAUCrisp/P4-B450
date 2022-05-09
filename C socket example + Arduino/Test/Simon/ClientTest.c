@@ -94,7 +94,7 @@ void Update_GSV() {
     1. Receive message/GSV from Control Unit.
     2. Update local GSV.
     3. Notify to send via LTE/WiFi.
-    
+
     if (recvfrom(sockLTE, &GSV, sizeof(GSV), 0, (struct sockaddr *)&ServerLTE, &lenLTE)) {
         printf("LTE-Thread id = %ld\n", pthread_self());
         printf("%s\n", Message);
@@ -107,36 +107,32 @@ void Update_GSV() {
         printf("Message from WiFi received at: %s\n\n", curr_time);
     }*/
 
-    /* Main running code */
-    int main() {
-        /* Initialize PORT, IP & INTERFACE*/
-        PORT_LTE = 9123;
-        PORT_WiFi = 9124;
-        IP_LTE = "10.20.0.16";
-        IP_WiFi = "192.168.1.136";
-        LTE = "wwan0";
-        WiFi = "wlan0";
+/* Main running code */
+int main() {
+    /* Initialize PORT, IP & INTERFACE*/
+    PORT_LTE = 9123;
+    PORT_WiFi = 9124;
+    IP_LTE = "10.20.0.16";
+    IP_WiFi = "127.0.0.1";
+    LTE = "wwan0";
+    WiFi = "lo";
 
-        /* Create sockets */
-        Create_Sockets(PORT_LTE, PORT_WiFi, IP_LTE, IP_WiFi);
+    /* Create sockets */
+    Create_Sockets(PORT_LTE, PORT_WiFi, IP_LTE, IP_WiFi);
 
-        /* Messages to send */
-        char TestMsg[] = "Client says hello via LTE!";
-        char TestMsg2[] = "Client says hello via WiFi!";
+    /* Messages to send */
+    char TestMsg[] = "Client says hello via LTE!";
+    char TestMsg2[] = "Client says hello via WiFi!";
 
-        while (1) {
-            usleep(1000);
-            Timestamp();
-            if (GSV = 1) {
-                pthread_create(&T1, NULL, sendshit1String, TestMsg);
-                pthread_join(T1, NULL);
-            }
-            if (GSV = 2) {
-                pthread_create(&T2, NULL, sendshit2String, TestMsg2);
-                pthread_join(T2, NULL);
-            }
-        }
-
-        close(sockLTE && sockWiFi);
-        exit(0);
+    while (1) {
+        usleep(1000);
+        Timestamp();
+        pthread_create(&T1, NULL, sendshit1String, TestMsg);
+        pthread_join(T1, NULL);
+        pthread_create(&T2, NULL, sendshit2String, TestMsg2);
+        pthread_join(T2, NULL);
     }
+
+    close(sockLTE && sockWiFi);
+    exit(0);
+}
