@@ -15,20 +15,19 @@
 #include <sys/wait.h>
 #include <time.h>
 #include <unistd.h>
+
 #include "Sockets_TX_RX.h"
-
-
 
 /* Main running code */
 int main() {
     /* Initialize PORT & INTERFACE*/
-    PORT_LTE = 9123;
-    PORT_WiFi = 9124;
-    LTE = "wwan0";
-    WiFi = "wlan0";
+    uint PORT_LTE = 9123;
+    uint PORT_WiFi = 9124;
+    const char* LTE = "wwan0";
+    const char* WiFi = "wlan0";
 
     /* Create sockets */
-    Create_Bind_Sockets(PORT_LTE, PORT_WiFi);
+    Create_Bind_Sockets(PORT_LTE, PORT_WiFi, LTE, WiFi);
 
     while (1) {
         Timestamp();

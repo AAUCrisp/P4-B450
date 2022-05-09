@@ -23,8 +23,8 @@
 char curr_time[128];
 
 /* Specify LTE & WiFi interface */
-const char *LTE;
-const char *WiFi;
+//const char *LTE = "wwan0";
+//const char *WiFi = "wlan0";
 
 /* Misc */
 struct sockaddr_in ServerLTE;
@@ -41,7 +41,7 @@ int GSV;
 int RSSI = 1;
 
 /* Function to bind sockets */
-void Create_Bind_Sockets(uint PORT_LTE, uint PORT_WiFi) {
+void Create_Bind_Sockets(uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
     /* Create socket */
     sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
