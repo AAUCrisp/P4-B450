@@ -111,9 +111,9 @@ void *receiveWiFi() {
 }
 
 /* Function to transmit GSV via LTE */
-void *transmitLTE(int data, size_t buffer) {
+void *transmitLTE(int data) {
     GSV = htonl(data);
-    TX_LTE = sendto(sockLTE, GSV, buffer, 0, (struct sockaddr *)&ServerLTE, lenLTE);
+    TX_LTE = sendto(sockLTE, GSV, BUFFER, 0, (struct sockaddr *)&ServerLTE, lenLTE);
     printf("WiFi-Thread id = %ld\n", pthread_self());
     printf("%d\n", GSV);
     printf("Message from WiFi transmitted at: %s\n\n", curr_time);
@@ -121,9 +121,9 @@ void *transmitLTE(int data, size_t buffer) {
 }
 
 /* Function to transmit GSV via WiFi */
-void *transmitWiFi(int data, size_t buffer) {
+void *transmitWiFi(int data) {
     GSV = htonl(data);
-    TX_WiFi = sendto(sockWiFi, GSV, buffer, 0, (struct sockaddr *)&ServerWiFi, lenWiFi);
+    TX_WiFi = sendto(sockWiFi, GSV, BUFFER, 0, (struct sockaddr *)&ServerWiFi, lenWiFi);
     printf("WiFi-Thread id = %ld\n", pthread_self());
     printf("%d\n", GSV);
     printf("Message from WiFi transmitted at: %s\n\n", curr_time);
