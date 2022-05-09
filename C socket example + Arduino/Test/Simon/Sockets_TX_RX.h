@@ -8,10 +8,10 @@
 void Create_Bind_Sockets(int sockLTE, int sockWiFi, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi);
 
 /* Function to receive LTE packets */
-void *receiveLTE();
+void *receiveLTE(void* sockLTE);
 
 /* Function to receive WiFi packets */
-void *receiveWiFi();
+void *receiveWiFi(void* sockWiFi);
 
 /* Function to transmit LTE packets */
 void *transmitLTE(int data);

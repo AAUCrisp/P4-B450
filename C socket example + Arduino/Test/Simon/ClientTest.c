@@ -115,7 +115,7 @@ int main() {
     IP_LTE = "10.20.0.16";
     IP_WiFi = "127.0.0.1";
     LTE = "wwan0";
-    WiFi = "lo";
+    WiFi = "enp0s3";
 
     /* Create sockets */
     Create_Sockets(PORT_LTE, PORT_WiFi, IP_LTE, IP_WiFi);
