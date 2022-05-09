@@ -46,7 +46,7 @@ int main() {
     printf("sockLTE control_unit: %d\n", sockets.sockLTE);
     printf("sockWiFi control_unit: %d\n", sockets.sockWiFi);
 
-        while (1) {
+    while (1) {
         Timestamp();
         RSSI_VAL();
         RSRP_VAL();
