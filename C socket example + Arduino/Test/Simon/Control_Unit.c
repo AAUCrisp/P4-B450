@@ -48,8 +48,8 @@ int main() {
 
         while (1) {
         Timestamp();
-        printf("RSSI: %d\n", RSSI_VAL());
-        printf("RSRP: %d\n", RSRP_VAL());
+        RSSI_VAL();
+        RSRP_VAL();
         pthread_create(&T1, NULL, receiveLTE, (void*)&sockets);
         pthread_join(T1, (void**)&msg);
         pthread_create(&T2, NULL, receiveWiFi, (void*)&sockets);
