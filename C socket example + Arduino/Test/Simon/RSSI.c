@@ -10,7 +10,7 @@
 
 int RSSI_VAL() {
     // Get RSSI value from WiFi
-    FILE* pipe_WiFi = popen("iwconfig wlan1 | grep -i --color quality", "r");
+    FILE* pipe_WiFi = popen("iwconfig wlan0 | grep -i --color quality", "r");
     if (pipe) {
         char BufferWiFi[64];
         int signalWiFi;
