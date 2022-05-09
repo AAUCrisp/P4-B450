@@ -17,9 +17,9 @@
 #include <unistd.h>
 
 /* Define buffers & PORT number */
-size_t BUFFER;
-char Message[BUFFER];
-uint PORT_LTE, PORT_WiFi;
+//size_t BUFFER;
+//char Message[BUFFER];
+//uint PORT_LTE, PORT_WiFi;
 char curr_time[BUFFER];
 
 /* Specify LTE & WiFi interface */
