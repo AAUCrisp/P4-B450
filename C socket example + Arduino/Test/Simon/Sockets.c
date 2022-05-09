@@ -87,7 +87,7 @@ void Create_Bind_Sockets(uint PORT_LTE, uint PORT_WiFi) {
 
 /* Function to receive LTE packets */
 void *receiveLTE(char message, size_t buffer) {
-    message[buffer];
+    //message[buffer];
     RX_LTE = recvfrom(sockLTE, message, buffer, 0, (struct sockaddr *)&ServerLTE, &lenLTE);
     printf("LTE-Thread id = %ld\n", pthread_self());
     printf("%s\n", message);
@@ -97,7 +97,7 @@ void *receiveLTE(char message, size_t buffer) {
 
 /* Function to receive WiFi packets */
 void *receiveWiFi(char message, size_t buffer) {
-    message[buffer];
+    //message[buffer];
     RX_WiFi = recvfrom(sockWiFi, message, buffer, 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
     printf("WiFi-Thread id = %ld\n", pthread_self());
     printf("%s\n", message);
