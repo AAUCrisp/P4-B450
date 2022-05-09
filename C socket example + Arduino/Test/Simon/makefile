@@ -10,7 +10,9 @@ ServerStart: Control_Unit.c SocketFuncs.o
 
 SocketFuncs.o: Sockets.c Sockets_TX_RX.h
 	gcc -c Sockets.c
+	touch Sockets.c
 
 clean:
 	rm -f ClientStart ServerStart
+	rm *.o
 	@echo "clean completed!"
