@@ -46,13 +46,14 @@ int main() {
     printf("sockLTE control_unit: %d\n", sockets.sockLTE);
     printf("sockWiFi control_unit: %d\n", sockets.sockWiFi);
 
-    int test = RSSI_VAL();
-    printf("RSSI: %d\n", test);
+    
 
     while (1) {
         Timestamp();
-        // pthread_create(&T1, NULL, receiveLTE, (void*)&sockets);
-        // pthread_join(T1, (void**)&msg);
+        int test = RSSI_VAL();
+        printf("RSSI: %d\n", test);
+        pthread_create(&T1, NULL, receiveLTE, (void*)&sockets);
+        pthread_join(T1, (void**)&msg);
         pthread_create(&T2, NULL, receiveWiFi, (void*)&sockets);
         pthread_join(T2, (void**)&msg);
         printf("%s\n", msg);
