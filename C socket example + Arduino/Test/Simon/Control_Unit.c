@@ -32,9 +32,7 @@ int main() {
     pthread_t T1, T2;
 
     /* Struct for message & buffer size */
-    struct args{
-        char msg[] = ""
-    }
+    char* msg;
 
     /* Create sockets */
     Create_Bind_Sockets(sockLTE, sockWiFi, PORT_LTE, PORT_WiFi, LTE, WiFi);
@@ -43,6 +41,9 @@ int main() {
         Timestamp();
         pthread_create(&T1, NULL, receiveLTE, NULL);
         pthread_create(&T2, NULL, receiveWiFi, NULL);
+        pthread_join(T1, (void**)&msg);
+        pthread_join(T2, (void**)&msg);
+        printf("%s\n", msg);
     }
 
     close(sockLTE && sockWiFi);
