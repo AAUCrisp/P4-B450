@@ -20,7 +20,7 @@
 // size_t BUFFER;
 // char Message[BUFFER];
 // uint PORT_LTE, PORT_WiFi;
-// char curr_time[BUFFER];
+char curr_time[128];
 
 /* Specify LTE & WiFi interface */
 const char *LTE;
@@ -107,7 +107,6 @@ void *receiveWiFi(char message[], size_t buffer) {
 
 /* Function to transmit LTE packets */
 void *transmitLTE(char message[], size_t buffer) {
-   // message[buffer];
     GSV = atoi(message);
     //TX_LTE = sendto(sockLTE, GSV, buffer, 0, (struct sockaddr *)&ClientLTE, lenLTE);
     printf("WiFi-Thread id = %ld\n", pthread_self());
@@ -118,7 +117,6 @@ void *transmitLTE(char message[], size_t buffer) {
 
 /* Function to transmit WiFi packets */
 void *transmitWiFi(int GSV, size_t buffer) {
-    message[buffer];
     GSV = atoi(message);
     //TX_WiFi = sendto(sockWiFi, GSV, buffer, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
     printf("WiFi-Thread id = %ld\n", pthread_self());
@@ -128,6 +126,7 @@ void *transmitWiFi(int GSV, size_t buffer) {
 }
 
 /* Function to timestamp packets */
+
 char *Timestamp() {
     /* Timestamp format : [hh:mm:ss dd/mm/yy] */
     time_t rawtime;
