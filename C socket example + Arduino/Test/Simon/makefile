@@ -1,11 +1,11 @@
 all: ClientStart ServerStart
 
 ClientStart: ClientTest.c
-	gcc -pthread -lconfig ClientTest.c -o ClientStart
+	gcc -pthread ClientTest.c -o ClientStart
 	touch ClientStart
 
 ServerStart: Control_Unit.c Sockets.o
-	gcc -pthread -lconfig Control_Unit.c Sockets.o -o ServerStart
+	gcc -pthread Control_Unit.c Sockets.o -o ServerStart
 	touch ServerStart
 
 Sockets.o: Sockets.c Sockets_TX_RX.h

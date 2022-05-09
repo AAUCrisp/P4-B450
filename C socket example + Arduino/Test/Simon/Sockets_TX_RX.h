@@ -3,7 +3,7 @@
 
 /* Function declarations here: */
 
-struct Sockets {
+struct sockets {
         int sockLTE;
         int sockWiFi;
         struct sockaddr_in ServerLTE;
@@ -11,7 +11,7 @@ struct Sockets {
     };
 
 /* Function to bind sockets */
-void Create_Bind_Sockets(int *sockLTE, int *sockWiFi, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi);
+void Create_Bind_Sockets(struct sockets* Sockets, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi);
 
 /* Function to receive LTE packets */
 void *receiveLTE(void* sockLTE);

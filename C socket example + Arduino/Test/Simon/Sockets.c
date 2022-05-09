@@ -39,40 +39,47 @@ pthread_t T1, T2;
 int GSV;
 int RSSI = 1;
 
+struct sockets {
+    int sockLTE;
+    int sockWiFi;
+    struct sockaddr_in ServerLTE;
+    struct sockaddr_in ServerWiFi;
+};
+
 /* Function to bind sockets */
-void Create_Bind_Sockets(struct Sockets *sockets, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
-    printf("Test: %d\n", sockets->sockLTE);
+void Create_Bind_Sockets(struct sockets* Sockets, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
+    
     
     /* Create socket */
-    sockets->sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    sockets->sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-
+    Sockets->sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    Sockets->sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    printf("Test: %d\n", Sockets->sockLTE);
     /* Setting up socket options & specifying interface */
-    setsockopt(*sockets.sockLTE, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
-    setsockopt(*sockets.sockWiFi, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
+    setsockopt(Sockets->sockLTE, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
+    setsockopt(Sockets->sockWiFi, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
 
     /* Error checking */
-    if (*sockets.sockLTE == -1) {
+    if (Sockets->sockLTE == -1) {
         perror("Failed to create sockLTE");
         exit(0);
     }
-    if (*sockets.sockWiFi == -1) {
+    if (Sockets->sockWiFi == -1) {
         perror("Failed to create sockLTE");
         exit(0);
     }
 
     /* Configure settings to communicate with remote UDP client */
-    *sockets.ServerLTE.sin_family = AF_INET;
-    *sockets.ServerLTE.sin_port = htons(PORT_LTE);
-    *sockets.ServerLTE.sin_addr.s_addr = INADDR_ANY;
+    Sockets->ServerLTE.sin_family = AF_INET;
+    Sockets->ServerLTE.sin_port = htons(PORT_LTE);
+    Sockets->ServerLTE.sin_addr.s_addr = INADDR_ANY;
 
-    *sockets.ServerWiFi.sin_family = AF_INET;
-    *sockets.ServerWiFi.sin_port = htons(PORT_WiFi);
-    *sockets.ServerWiFi.sin_addr.s_addr = INADDR_ANY;
+    Sockets->ServerWiFi.sin_family = AF_INET;
+    Sockets->ServerWiFi.sin_port = htons(PORT_WiFi);
+    Sockets->ServerWiFi.sin_addr.s_addr = INADDR_ANY;
 
     /* Bind to socket */
-    bindLTE = bind(*sockets.sockLTE, (struct sockaddr *)&ServerLTE, sizeof(struct sockaddr));
-    bindWiFi = bind(*sockets.sockWiFi, (struct sockaddr *)&ServerWiFi, sizeof(struct sockaddr));
+    bindLTE = bind(Sockets->sockLTE, (struct sockaddr *)&Sockets->ServerLTE, sizeof(struct sockaddr));
+    bindWiFi = bind(Sockets->sockWiFi, (struct sockaddr *)&Sockets->ServerWiFi, sizeof(struct sockaddr));
 
     /* Error checking */
     if (bindLTE == -1) {
@@ -87,35 +94,37 @@ void Create_Bind_Sockets(struct Sockets *sockets, uint PORT_LTE, uint PORT_WiFi,
 }
 
 /* Function to receive LTE packets */
-void *receiveLTE(void *sockLTE) {
-    int test = *((int *)sockLTE);
+void *receiveLTE(void* socket) {
+    struct sockets *sockettest = (struct sockets*)socket;
     // printf("Socket LTE ID: %d\n", test);
-    RX_LTE = recvfrom(test, message, BUFFER, 0, (struct sockaddr *)&ServerLTE, &lenLTE);
+    RX_LTE = recvfrom(sockettest->sockLTE, message, BUFFER, 0, (struct sockaddr *)&sockettest->ServerLTE, sizeof(sockettest->ServerLTE));
     printf("LTE-Thread id = %ld\n", pthread_self());
     printf("%s\n", message);
     printf("Message from LTE received at: %s\n\n", curr_time);
     // pthread_exit(NULL);
     receive = malloc(sizeof(receive));
     receive = message;
-    return (void *)receive;
+    return (void *)receive;;
 }
 
 /* Function to receive WiFi packets */
-void *receiveWiFi(void *sockWiFi) {
-    int test = *((int *)sockWiFi);
-    // printf("Socket WiFi ID: %d\n", test);
-    RX_WiFi = recvfrom(test, message, BUFFER, 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
+void *receiveWiFi(void* socket) {
+    printf("Hello");
+    struct sockets *sockettest = (struct sockets*)socket;
+    //printf("Socket WiFi ID: %d\n", test);
+    printf("WiFi socket from thread: %d\n", sockettest->sockWiFi);
+    RX_WiFi = recvfrom(sockettest->sockWiFi, message, BUFFER, 0, (struct sockaddr *)&sockettest->ServerWiFi, sizeof(sockettest->ServerWiFi));
     printf("WiFi-Thread id = %ld\n", pthread_self());
     printf("%s\n", message);
     printf("Message from WiFi received at: %s\n\n", curr_time);
     // pthread_exit(NULL);
     receive = malloc(sizeof(receive));
     receive = message;
-    return (void *)receive;
+    return (void *)receive;;
 }
-
-/* Function to transmit GSV via LTE */
-void *transmitLTE(int data, int sockLTE) {
+/*
+//Function to transmit GSV via LTE
+void *transmitLTE(int data, void *sockLTE) {
     GSV = htonl(data);
     TX_LTE = sendto(sockLTE, &GSV, BUFFER, 0, (struct sockaddr *)&ServerLTE, lenLTE);
     printf("WiFi-Thread id = %ld\n", pthread_self());
@@ -124,7 +133,7 @@ void *transmitLTE(int data, int sockLTE) {
     pthread_exit(NULL);
 }
 
-/* Function to transmit GSV via WiFi */
+//Function to transmit GSV via WiFi 
 void *transmitWiFi(int data, int sockWiFi) {
     GSV = htonl(data);
     TX_WiFi = sendto(sockWiFi, &GSV, BUFFER, 0, (struct sockaddr *)&ServerWiFi, lenWiFi);
@@ -133,7 +142,7 @@ void *transmitWiFi(int data, int sockWiFi) {
     printf("Message from WiFi transmitted at: %s\n\n", curr_time);
     pthread_exit(NULL);
 }
-
+*/
 /* Function to timestamp packets */
 char *Timestamp() {
     /* Timestamp format : [hh:mm:ss dd/mm/yy] */
