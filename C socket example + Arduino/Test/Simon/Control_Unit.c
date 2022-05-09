@@ -27,24 +27,38 @@ int main() {
     const char* WiFi = "wlp2s0";
 
     /* Misc */
-    
+
     struct Sockets {
         int sockLTE;
         int sockWiFi;
         struct sockaddr_in ServerLTE;
         struct sockaddr_in ServerWiFi;
     };
-    
-    pthread_t T1, T2;
+
+    void Create_Bind_Sockets(struct Sockets *test, uint PORT_LTE, uint PORT_WiFi, const char* LTE, const char* WiFi);
+
+    pthread_t T1;
+    pthread_t T2;
 
     /* Struct for message & buffer size */
     char* msg;
 
     /* Create sockets */
+<<<<<<< HEAD
     struct Sockets sockets;
     Create_Bind_Sockets(&sockets, PORT_LTE, PORT_WiFi, LTE, WiFi);
     printf("sockLTE control_unit: %d\n", sockets.sockLTE);
     printf("sockWiFi control_unit: %d\n", sockets.sockWiFi);
+=======
+    struct Sockets test;
+    test.sockLTE;
+    test.sockWiFi;
+    test.ServerLTE;
+    test.ServerWiFi;
+    Create_Bind_Sockets(&test, PORT_LTE, PORT_WiFi, LTE, WiFi);
+    printf("sockLTE control_unit: %d\n", sockLTE);
+    printf("sockWiFi control_unit: %d\n", sockWiFi);
+>>>>>>> 54008f68394b28b9575a4b8a12d1ccf16203821c
 
     while (1) {
         Timestamp();
