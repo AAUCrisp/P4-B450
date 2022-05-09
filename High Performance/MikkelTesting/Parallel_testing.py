@@ -2,7 +2,7 @@ import numpy as np
 import time as time
 import concurrent.futures
 
-size = 10000
+size = 1000
 min_value = -100        # Minimum value in each matrix entrance
 max_value = 100         # Maximum value in each matrix entrance
 max_sum = -np.inf
@@ -25,7 +25,7 @@ def AlgorithmMSP(A, i):
     temp = [None] * size
     tempResult = [None] * 6
 
-    print(f'Iteration {i} has started')
+    #print(f'Iteration {i} has started')
     # print("i is: " + str(i))      # Troubleshooting Print
     temp = [0] * size      # Creates empty array the size of the Y-axis
 
@@ -95,7 +95,7 @@ if __name__ == '__main__':
     print(f'Array of size {size}x{size}')     # printing dimension
     start_time = time.time()        # Start time, to see computation time
 
-    with concurrent.futures.ProcessPoolExecutor(max_workers=8) as executor:
+    with concurrent.futures.ProcessPoolExecutor() as executor:
         rest = [executor.submit(AlgorithmMSP, array, i) for i in range(size)]      # Calling the main function
 
         for f in concurrent.futures.as_completed(rest):
