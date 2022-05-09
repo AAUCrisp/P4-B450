@@ -19,7 +19,7 @@
 /* Define buffers & PORT number */
 #define BUFFER 1024
 char message[BUFFER];
-char *receive[BUFFER];
+char *receive;
 // uint PORT_LTE, PORT_WiFi;
 char curr_time[128];
 
