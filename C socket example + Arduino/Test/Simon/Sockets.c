@@ -94,7 +94,7 @@ void *receiveLTE() {
     printf("Message from LTE received at: %s\n\n", curr_time);
     //pthread_exit(NULL);
     receive = malloc(sizeof(receive));
-    *receive = message;
+    receive = message;
     return (void *)receive;
 }
 
@@ -106,7 +106,7 @@ void *receiveWiFi() {
     printf("Message from WiFi received at: %s\n\n", curr_time);
     //pthread_exit(NULL);
     receive = malloc(sizeof(receive));
-    *receive = message;
+    receive = message;
     return (void *)receive;
 }
 
