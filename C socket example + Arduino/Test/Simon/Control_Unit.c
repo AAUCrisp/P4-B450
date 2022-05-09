@@ -32,7 +32,7 @@ int main() {
     pthread_t T1, T2;
 
     /* Struct for message & buffer size */
-    char* msg;
+    char* msg; 
 
     /* Create sockets */
     Create_Bind_Sockets(sockLTE, sockWiFi, PORT_LTE, PORT_WiFi, LTE, WiFi);
