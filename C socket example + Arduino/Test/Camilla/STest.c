@@ -13,7 +13,7 @@
     char ifname[IFNAMSIZ];
     char essid[IW_ESSID_MAX_SIZE+1];
     struct iwreq wrq;
-    struct iw_statistics *iwstats;
+    struct iw_statistics iwstats;
     int sock;
 
 
@@ -54,16 +54,16 @@
 
       memset(&iwstats, 0, sizeof(iwstats));
 
-      wrq.u.data.pointer = (caddr_t) &iwstats;
-      wrq.u.data.length = sizeof(&iwstats);
+      wrq.u.data.pointer = &iwstats;
+      wrq.u.data.length = sizeof(struct iw_statistics);
       wrq.u.data.flags = 1;
 
-      // ERROR HERE...
       if (ioctl(sock, SIOCGIWSTATS, &wrq) == -1) {
         perror("Can't open socket to obtain iwstats");
         return(-1);
       }
 
+      printf("Signal level is %d\n", iwstats.qual.updated);
       return(0);
     }
 
