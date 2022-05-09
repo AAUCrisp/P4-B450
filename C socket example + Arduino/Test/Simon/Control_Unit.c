@@ -46,7 +46,7 @@ int main() {
     printf("sockLTE control_unit: %d\n", sockets.sockLTE);
     printf("sockWiFi control_unit: %d\n", sockets.sockWiFi);
 
-    int test = RSSI();
+    int test = RSSI_VAL();
     printf("RSSI: %d\n", test);
 
     while (1) {

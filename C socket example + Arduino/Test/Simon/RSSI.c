@@ -8,7 +8,7 @@
 #include <time.h>
 #include <unistd.h>
 
-int RSSI() {
+int RSSI_VAL() {
     // Get RSSI value from WiFi
     FILE* pipe_WiFi = popen("iwconfig wlan1 | grep -i --color quality", "r");
     if (pipe) {
@@ -27,7 +27,7 @@ int RSSI() {
     }
 }
 
-int RSRP() {
+int RSRP_VAL() {
     // Get RSRP value from LTE
     FILE* pipe_LTE = popen("mmcli -m 0 --signal-get | grep -i rsrp", "r");
     if (pipe_LTE) {

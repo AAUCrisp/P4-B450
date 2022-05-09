@@ -29,9 +29,9 @@ void *transmitWiFi(int data);
 char *Timestamp();
 
 /* Function to get RSSI */
-int RSSI();
+int RSSI_VAL();
 
 /* Function to get RSRP */
-int RSRP();
+int RSRP_VAL();
 
 #endif
