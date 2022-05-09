@@ -1,22 +1,31 @@
-#include <stdio.h>
-#include <string.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
 #include <arpa/inet.h>
-#include <unistd.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <netinet/in.h>
 #include <pthread.h>
-#include <time.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <sys/ipc.h>  //IPC thing
+#include <sys/mman.h>
+#include <sys/shm.h>  //SHM thing
+#include <sys/socket.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <time.h>
+#include <unistd.h>
 
 /* Define buffers & PORT number */
-#define BUFFER 128
-char Message[BUFFER];
-uint PORT_LTE, PORT_WiFi;
-char curr_time[BUFFER];
+#define BUFFER 1024
+char message[BUFFER];
+char *receive;
+// uint PORT_LTE, PORT_WiFi;
+char curr_time[128];
 
 /* Specify LTE & WiFi interface */
-const char *LTE;
-const char *WiFi;
+//const char *LTE = "wwan0";
+//const char *WiFi = "wlan0";
 
 /* Misc */
 struct sockaddr_in ServerLTE;
@@ -24,28 +33,30 @@ struct sockaddr_in ServerWiFi;
 int sockLTE, lenLTE = sizeof(ServerLTE);
 int sockWiFi, lenWiFi = sizeof(ServerWiFi);
 int bindLTE, bindWiFi;
-int rc_LTE, rc_WiFi;
+int RX_LTE, RX_WiFi;
+int TX_LTE, TX_WiFi;
 pthread_t T1, T2;
 
+/* Global Signal Variable & RSSI */
+int GSV;
+int RSSI = 1;
+
 /* Function to bind sockets */
-void Create_Bind_Sockets(uint PORT_LTE, uint PORT_WiFi)
-{
+void Create_Bind_Sockets(int sockLTE, int sockWiFi, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
     /* Create socket */
     sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
-    /* Setting up socket options & specifying interface*/
+    /* Setting up socket options & specifying interface */
     setsockopt(sockLTE, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
     setsockopt(sockWiFi, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
 
     /* Error checking */
-    if (sockLTE == -1)
-    {
+    if (sockLTE == -1) {
         perror("Failed to create sockLTE");
         exit(0);
     }
-    if (sockWiFi == -1)
-    {
+    if (sockWiFi == -1) {
         perror("Failed to create sockLTE");
         exit(0);
     }
@@ -64,13 +75,11 @@ void Create_Bind_Sockets(uint PORT_LTE, uint PORT_WiFi)
     bindWiFi = bind(sockWiFi, (struct sockaddr *)&ServerWiFi, sizeof(struct sockaddr));
 
     /* Error checking */
-    if (bindLTE == -1)
-    {
+    if (bindLTE == -1) {
         perror("Failed to bind LTE socket");
         exit(0);
     }
-    if (bindWiFi == -1)
-    {
+    if (bindWiFi == -1) {
         perror("Failed to bind WiFi socket");
         exit(0);
     }
@@ -78,28 +87,51 @@ void Create_Bind_Sockets(uint PORT_LTE, uint PORT_WiFi)
 }
 
 /* Function to receive LTE packets */
-void *receiveshit()
-{
-    rc_LTE = recvfrom(sockLTE, Message, BUFFER, 0, (struct sockaddr *)&ServerLTE, &lenLTE);
+void *receiveLTE() {
+    RX_LTE = recvfrom(sockLTE, message, BUFFER, 0, (struct sockaddr *)&ServerLTE, &lenLTE);
     printf("LTE-Thread id = %ld\n", pthread_self());
-    printf("%s\n", Message);
+    printf("%s\n", message);
     printf("Message from LTE received at: %s\n\n", curr_time);
-    pthread_exit(NULL);
+    //pthread_exit(NULL);
+    receive = malloc(sizeof(receive));
+    receive = message;
+    return (void *)receive;
 }
 
 /* Function to receive WiFi packets */
-void *receiveshit2()
-{
-    rc_WiFi = recvfrom(sockWiFi, Message, BUFFER, 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
+void *receiveWiFi() {
+    RX_WiFi = recvfrom(sockWiFi, message, BUFFER, 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
     printf("WiFi-Thread id = %ld\n", pthread_self());
-    printf("%s\n", Message);
+    printf("%s\n", message);
     printf("Message from WiFi received at: %s\n\n", curr_time);
+    //pthread_exit(NULL);
+    receive = malloc(sizeof(receive));
+    receive = message;
+    return (void *)receive;
+}
+
+/* Function to transmit GSV via LTE */
+void *transmitLTE(int data) {
+    GSV = htonl(data);
+    TX_LTE = sendto(sockLTE, &GSV, BUFFER, 0, (struct sockaddr *)&ServerLTE, lenLTE);
+    printf("WiFi-Thread id = %ld\n", pthread_self());
+    printf("%d\n", GSV);
+    printf("Message from WiFi transmitted at: %s\n\n", curr_time);
+    pthread_exit(NULL);
+}
+
+/* Function to transmit GSV via WiFi */
+void *transmitWiFi(int data) {
+    GSV = htonl(data);
+    TX_WiFi = sendto(sockWiFi, &GSV, BUFFER, 0, (struct sockaddr *)&ServerWiFi, lenWiFi);
+    printf("WiFi-Thread id = %ld\n", pthread_self());
+    printf("%d\n", GSV);
+    printf("Message from WiFi transmitted at: %s\n\n", curr_time);
     pthread_exit(NULL);
 }
 
 /* Function to timestamp packets */
-char *Timestamp()
-{
+char *Timestamp() {
     /* Timestamp format : [hh:mm:ss dd/mm/yy] */
     time_t rawtime;
     struct tm *timeinfo;
@@ -108,57 +140,4 @@ char *Timestamp()
     sprintf(curr_time, "[%d:%d:%d %d/%d/%d]", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, timeinfo->tm_mday, timeinfo->tm_mon + 1, timeinfo->tm_year + 1900);
 
     return curr_time;
-}
-
-/* Function to check RSSI value */
-void Check_RSSI_Value()
-{
-    /*
-    1. Check RSSI value from LTE/WiFi.
-    2. If LTE/WiFi is better than the other.
-    3. Update Global Signal Variable (GSV).
-    4. Notify client & send GSV to client via the better signal.
-    */
-
-    /*
-     if (RSSI == x)
-     {
-         update GSV = 1;
-     }
-     else
-     {
-         update GSV = 2;
-     }
-
-     if (GSV == 1)
-     {
-         sendto(sockLTE, GSV, BUFFER, 0, (struct sockaddr *)&ClientLTE, lenLTE);
-     }
-     else
-     {
-         sendto(sockWiFi, GSV, BUFFER, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
-     }*/
-}
-
-/* Main running code */
-int main()
-{
-    /* Initialize PORT & INTERFACE*/
-    PORT_LTE = 9123;
-    PORT_WiFi = 9124;
-    LTE = "wwan0";
-    WiFi = "wlan0";
-
-    /* Create sockets */
-    Create_Bind_Sockets(PORT_LTE, PORT_WiFi);
-
-    while (1)
-    {
-        Timestamp();
-        pthread_create(&T1, NULL, receiveshit, NULL);
-        pthread_create(&T2, NULL, receiveshit2, NULL);
-    }
-
-    close(sockLTE && sockWiFi);
-    exit(0);
 }

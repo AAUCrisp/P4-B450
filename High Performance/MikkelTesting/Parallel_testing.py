@@ -1,16 +1,17 @@
 import numpy as np
 import time as time
 import concurrent.futures
+from numba import jit, njit
+
 
 size = 1000
 min_value = -100        # Minimum value in each matrix entrance
 max_value = 100         # Maximum value in each matrix entrance
 max_sum = -np.inf
 
-
-def AlgorithmMSP(A, i):
-    global size
-
+@njit(nogil=True)
+def AlgorithmMSP(A, i, size):
+    
     """
     MSP Sequential
     Function to find the max-value combination of an twodimentional array
@@ -22,19 +23,19 @@ def AlgorithmMSP(A, i):
     pSum = 0
     start = [0]
     end = [0]
-    temp = [None] * size
-    tempResult = [None] * 6
+    temp = [0] * size
+    tempResult = [0] * 6
 
     #print(f'Iteration {i} has started')
     # print("i is: " + str(i))      # Troubleshooting Print
     temp = [0] * size      # Creates empty array the size of the Y-axis
 
-    for k in range(i, size):    # From current column to the last
+    for k in range(i,size):    # From current column to the last
         for j in range(size):      # For every row in the array
-            temp[j] += A[j, k]        # Adds the summarised value up till the current index
+            temp[j] += A[j,k]        # Adds the summarised value up till the current index
 
         pSum = AlgorithmMSP_1D(temp, start, end, size)       # Checks the currently selected row/column combination for it's max value
-
+            
         if pSum >= maxA:            # If the newly found Max-sum is larger than the currently largest
             maxA = pSum                 # Replace currently largest with the newly found Max-value
             startN = i                # Update the X-axis starting coordinate
@@ -42,17 +43,19 @@ def AlgorithmMSP(A, i):
             startM = start[0]       # Update the Y-axis starting coordinate
             endM = end[0]          # Update the Y-axis ending coordinate
 
-            # print("New Starting Point")
-    tempResult[0] = maxA
-    tempResult[1] = startN
-    tempResult[2] = endN
-    tempResult[3] = startM
-    tempResult[4] = endM
-    tempResult[5] = i
-    # print(f'Iteration {i} finished')
+        #print("New Starting Point")
+    tempResult[0]=maxA
+    tempResult[1]=startN
+    tempResult[2]=endN
+    tempResult[3]=startM
+    tempResult[4]=endM
+    tempResult[5]=i
+    #print(f'Iteration {i} finished')
     return tempResult         # Return the ultimate highest combination sum, and its start and end coordinates
 
 
+
+@njit(nogil=True)
 def AlgorithmMSP_1D(a, start, end, m):
     """
     MSP Sequential One-dimantional Assist
@@ -74,8 +77,8 @@ def AlgorithmMSP_1D(a, start, end, m):
         """
         pSum += a[i]
 
-        if pSum < 0:
-            pSum = 0
+        if pSum < 0:           
+            pSum = 0            
             temp_start = i+1
 
         elif pSum > maxA:
@@ -88,21 +91,30 @@ def AlgorithmMSP_1D(a, start, end, m):
     return maxA     # Return the highest combination sum, and it's start and end Y-coordinate
 
 
-if __name__ == '__main__':
-    array = np.random.randint(min_value, max_value, (size, size))
+
+
+
+if __name__=='__main__':
+    #arrayInit = np.random.randint(min_value, max_value, (10, 10))
+    array = np.random.randint(min_value, max_value, (size,size))
     results = []
-    # print(results)
+    #print(results)
     print(f'Array of size {size}x{size}')     # printing dimension
     start_time = time.time()        # Start time, to see computation time
+<<<<<<< HEAD
 
     with concurrent.futures.ProcessPoolExecutor() as executor:
         rest = [executor.submit(AlgorithmMSP, array, i) for i in range(size)]      # Calling the main function
+=======
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        rest = [executor.submit(AlgorithmMSP, array, i, size) for i in range (size)]      # Calling the main function
+>>>>>>> 831eb223cafd297e78b995d7511bf3093dbe15c3
 
         for f in concurrent.futures.as_completed(rest):
-            print(f'{f.result()} | [MAXSUM] [START X] [END X] [START Y] [END Y] [ITERATION] | Finished at time: {time.time()-start_time}')
+            print(f'{f.result()}')
             results.append(f.result())
 
-    for i in range(size):
+    for i in range (size):
         if results[i][0] > max_sum:
             max_sum = results[i][0]
             x_start = results[i][1]
