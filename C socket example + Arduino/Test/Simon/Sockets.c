@@ -92,18 +92,18 @@ void *receiveLTE() {
     printf("%s\n", message);
     printf("Message from LTE received at: %s\n\n", curr_time);
     //pthread_exit(NULL);
-    message = (char*)malloc(strlen(message));
+    *message = (char*)malloc(strlen(message));
     return (void*) message;
 }
 
 /* Function to receive WiFi packets */
 void *receiveWiFi() {
-    RX_WiFi = recvfrom(sockWiFi, message, buffer, 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
+    RX_WiFi = recvfrom(sockWiFi, message, BUFFER, 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
     printf("WiFi-Thread id = %ld\n", pthread_self());
     printf("%s\n", message);
     printf("Message from WiFi received at: %s\n\n", curr_time);
     //pthread_exit(NULL);
-    message = (char *)malloc(strlen(message));
+    *message = (char *)malloc(strlen(message));
     return (void *)message;
 }
 
