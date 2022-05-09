@@ -4,9 +4,12 @@ ClientStart: ClientTest.c
 	gcc -pthread -lconfig ClientTest.c -o ClientStart
 	touch ClientStart
 
-ServerStart: ServerTest.c
-	gcc -pthread -lconfig ServerTest.c -o ServerStart
+ServerStart: Control_Unit.c SocketFuncs.o
+	gcc -pthread -lconfig Control_Unit.c SocketFuncs.o -o ServerStart
 	touch ServerStart
+
+SocketFuncs.o: Sockets.c Sockets_TX_RX.h
+	gcc -c Sockets.c
 
 clean:
 	rm -f ClientStart ServerStart
