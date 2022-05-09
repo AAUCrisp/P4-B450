@@ -24,7 +24,7 @@ int main() {
     uint PORT_LTE = 9123;
     uint PORT_WiFi = 9124;
     const char* LTE = "wwan0";
-    const char* WiFi = "enp0s3";
+    const char* WiFi = "wlan1";
 
     /* Misc */
     
