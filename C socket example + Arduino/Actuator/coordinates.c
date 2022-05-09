@@ -1,28 +1,37 @@
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "coordinates.h"
 
-#define buffer 1024
-
-char string_coordinates[] = "499:2";
-int x_coordinate, y_coordinate;
-char tempx[buffer], tempy[buffer];
-int bytes_read;
-int x, y;
-
-int parse_coordinates(char msg[]) 
+struct Coordinate parse_coordinates(char msg[buffer]) 
 {
-    bytes_read = sscanf(msg,"%[^:]:%s:%s", tempx, tempy);
-    x_coordinate = atoi(tempx);
-    y_coordinate = atoi(tempy);
-    //printf ("X coordinate is:%d \n", x_coordinate);
-    //printf ("y coordinate is: %d \n", y_coordinate);
-    return x_coordinate, y_coordinate;
+    
+    bytes_read = sscanf(msg,"%[^:]:%s:%s", C.tempx, C.tempy);
+    
+    C.current_x_coordinate = atoi(C.tempx);
+    
+    C.current_y_coordinate = atoi(C.tempy);
+    //C.last_y_coordinate = 5;
+    //C.last_x_coordinate = 5;
+
+    if (C.last_x_coordinate > -1 || C.last_y_coordinate > -1 ) {
+        C.movement_x = C.current_x_coordinate - C.last_x_coordinate;
+        C.movement_y = C.current_y_coordinate - C.last_y_coordinate;
+    }
+   sprintf(C.tempx_feedback, "%d", C.movement_x);
+   sprintf(C.tempy_feedback, "%d", C.movement_y);
+   strcat(C.feedback, C.tempx_feedback);
+   strcat(C.feedback, ":");
+   strcat(C.feedback,C.tempy_feedback);
+   C.last_x_coordinate = C.current_x_coordinate;
+   C.last_y_coordinate = C.current_y_coordinate; 
+
+    return C;
 }
 
-int main() {
+int main() 
+{
+   struct Coordinate result;
 
-   x, y = parse_coordinates(string_coordinates);
-    printf ("X coordinate is:%d \n", x);
-    printf ("y coordinate is: %d \n", y);
+   result = parse_coordinates(string_coordinates);
+   
+   printf("the robot has moved this much on the x and y-axis: %s \n", result.feedback);
+
 }
