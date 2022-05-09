@@ -49,7 +49,6 @@ struct sockets {
 /* Function to bind sockets */
 void Create_Bind_Sockets(struct sockets* Sockets, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
     
-    
     /* Create socket */
     Sockets->sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     Sockets->sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -96,7 +95,6 @@ void Create_Bind_Sockets(struct sockets* Sockets, uint PORT_LTE, uint PORT_WiFi,
 /* Function to receive LTE packets */
 void *receiveLTE(void* socket) {
     struct sockets *sockettest = (struct sockets*)socket;
-    // printf("Socket LTE ID: %d\n", test);
     RX_LTE = recvfrom(sockettest->sockLTE, message, BUFFER, 0, (struct sockaddr *)&sockettest->ServerLTE, sizeof(sockettest->ServerLTE));
     printf("LTE-Thread id = %ld\n", pthread_self());
     printf("%s\n", message);
@@ -109,10 +107,7 @@ void *receiveLTE(void* socket) {
 
 /* Function to receive WiFi packets */
 void *receiveWiFi(void* socket) {
-    printf("Hello");
     struct sockets *sockettest = (struct sockets*)socket;
-    //printf("Socket WiFi ID: %d\n", test);
-    printf("WiFi socket from thread: %d\n", sockettest->sockWiFi);
     RX_WiFi = recvfrom(sockettest->sockWiFi, message, BUFFER, 0, (struct sockaddr *)&sockettest->ServerWiFi, sizeof(sockettest->ServerWiFi));
     printf("WiFi-Thread id = %ld\n", pthread_self());
     printf("%s\n", message);

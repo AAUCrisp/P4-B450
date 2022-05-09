@@ -3,7 +3,7 @@
 
 /* Function declarations here: */
 
-struct sockets {
+/*struct sockets {
         int sockLTE;
         int sockWiFi;
         struct sockaddr_in ServerLTE;
@@ -27,5 +27,11 @@ void *transmitWiFi(int data);
 
 /* Function to timestamp packets */
 char *Timestamp();
+
+/* Function to get RSSI */
+int RSSI();
+
+/* Function to get RSRP */
+int RSRP();
 
 #endif

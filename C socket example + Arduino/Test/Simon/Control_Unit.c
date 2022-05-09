@@ -24,7 +24,7 @@ int main() {
     uint PORT_LTE = 9123;
     uint PORT_WiFi = 9124;
     const char* LTE = "wwan0";
-    const char* WiFi = "wlp2s0";
+    const char* WiFi = "enp0s3";
 
     /* Misc */
     
@@ -45,6 +45,8 @@ int main() {
     Create_Bind_Sockets(&sockets, PORT_LTE, PORT_WiFi, LTE, WiFi);
     printf("sockLTE control_unit: %d\n", sockets.sockLTE);
     printf("sockWiFi control_unit: %d\n", sockets.sockWiFi);
+    
+    printf("RSSI: %d\n", RSSI());
 
     while (1) {
         Timestamp();
@@ -52,7 +54,7 @@ int main() {
         //pthread_join(T1, (void**)&msg);
         pthread_create(&T2, NULL, receiveWiFi, (void*)&sockets);
         pthread_join(T2, (void**)&msg);
-        // printf("%s\n", msg);
+        printf("%s\n", msg);
         sleep(1);
     }
 
