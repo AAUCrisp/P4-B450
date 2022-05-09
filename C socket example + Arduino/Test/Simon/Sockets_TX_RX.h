@@ -5,19 +5,19 @@
 
 
 /* Function to bind sockets */
-void Create_Bind_Sockets(uint PORT_LTE, uint PORT_WiFi);
+void Create_Bind_Sockets(int sockLTE, int sockWiFi, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi);
 
 /* Function to receive LTE packets */
-void *receiveLTE(char message, size_t buffer);
+void *receiveLTE();
 
 /* Function to receive WiFi packets */
-void *receiveWiFi(char message, size_t buffer);
+void *receiveWiFi();
 
 /* Function to transmit LTE packets */
-void *transmitLTE(char message, size_t buffer);
+void *transmitLTE(int data);
 
 /* Function to transmit WiFi packets */
-void *transmitWiFi(int GSV, size_t buffer);
+void *transmitWiFi(int data);
 
 /* Function to timestamp packets */
 char *Timestamp();
