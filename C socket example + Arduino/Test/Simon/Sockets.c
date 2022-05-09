@@ -86,7 +86,7 @@ void Create_Bind_Sockets(uint PORT_LTE, uint PORT_WiFi) {
 }
 
 /* Function to receive LTE packets */
-void *receiveLTE(char message, size_t buffer) {
+void *receiveLTE(char message[], size_t buffer) {
     //message[buffer];
     RX_LTE = recvfrom(sockLTE, message, buffer, 0, (struct sockaddr *)&ServerLTE, &lenLTE);
     printf("LTE-Thread id = %ld\n", pthread_self());
@@ -96,7 +96,7 @@ void *receiveLTE(char message, size_t buffer) {
 }
 
 /* Function to receive WiFi packets */
-void *receiveWiFi(char message, size_t buffer) {
+void *receiveWiFi(char message[], size_t buffer) {
     //message[buffer];
     RX_WiFi = recvfrom(sockWiFi, message, buffer, 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
     printf("WiFi-Thread id = %ld\n", pthread_self());
@@ -106,10 +106,10 @@ void *receiveWiFi(char message, size_t buffer) {
 }
 
 /* Function to transmit LTE packets */
-void *transmitLTE(char message, size_t buffer) {
-    message[buffer];
+void *transmitLTE(char message[], size_t buffer) {
+   // message[buffer];
     GSV = atoi(message);
-    TX_LTE = sendto(sockLTE, GSV, buffer, 0, (struct sockaddr *)&ClientLTE, lenLTE);
+    //TX_LTE = sendto(sockLTE, GSV, buffer, 0, (struct sockaddr *)&ClientLTE, lenLTE);
     printf("WiFi-Thread id = %ld\n", pthread_self());
     printf("%d\n", GSV);
     printf("Message from WiFi transmitted at: %s\n\n", curr_time);
@@ -120,7 +120,7 @@ void *transmitLTE(char message, size_t buffer) {
 void *transmitWiFi(int GSV, size_t buffer) {
     message[buffer];
     GSV = atoi(message);
-    TX_WiFi = sendto(sockWiFi, GSV, buffer, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
+    //TX_WiFi = sendto(sockWiFi, GSV, buffer, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
     printf("WiFi-Thread id = %ld\n", pthread_self());
     printf("%d\n", GSV);
     printf("Message from WiFi transmitted at: %s\n\n", curr_time);
