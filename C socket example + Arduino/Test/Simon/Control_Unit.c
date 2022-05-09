@@ -25,16 +25,24 @@ int main() {
     uint PORT_WiFi = 9124;
     const char* LTE = "wwan0";
     const char* WiFi = "wlan0";
+
+    /* Misc */
     int sockLTE;
     int sockWiFi;
+    pthread_t T1, T2;
+
+    /* Struct for message & buffer size */
+    struct args{
+        char msg[] = ""
+    }
 
     /* Create sockets */
     Create_Bind_Sockets(sockLTE, sockWiFi, PORT_LTE, PORT_WiFi, LTE, WiFi);
 
     while (1) {
         Timestamp();
-        pthread_create(&T1, NULL, receiveshit1, NULL);
-        pthread_create(&T2, NULL, receiveshit2, NULL);
+        pthread_create(&T1, NULL, receiveLTE, NULL);
+        pthread_create(&T2, NULL, receiveWiFi, NULL);
     }
 
     close(sockLTE && sockWiFi);
