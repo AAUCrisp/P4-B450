@@ -3,6 +3,12 @@
 
 /* Function declarations here: */
 
+struct Sockets {
+        int sockLTE;
+        int sockWiFi;
+        struct sockaddr_in ServerLTE;
+        struct sockaddr_in ServerWiFi;
+    };
 
 /* Function to bind sockets */
 void Create_Bind_Sockets(int *sockLTE, int *sockWiFi, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi);
