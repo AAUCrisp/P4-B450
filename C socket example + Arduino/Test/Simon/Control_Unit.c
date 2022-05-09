@@ -32,20 +32,20 @@ int main() {
     pthread_t T1, T2;
 
     /* Struct for message & buffer size */
-    char* msg; 
+    char* msg;
 
     /* Create sockets */
     Create_Bind_Sockets(&sockLTE, &sockWiFi, PORT_LTE, PORT_WiFi, LTE, WiFi);
     printf("sockLTE: %d\n", sockLTE);
     printf("sockWiFi: %d\n", sockWiFi);
-    
+
     while (1) {
         Timestamp();
-        //pthread_create(&T1, NULL, receiveLTE, NULL);
-        //pthread_join(T1, (void**)&msg);
+        // pthread_create(&T1, NULL, receiveLTE, NULL);
+        // pthread_join(T1, (void**)&msg);
         pthread_create(&T2, NULL, receiveWiFi, (void*)&sockWiFi);
-        //pthread_join(T2, (void**)&msg);
-        //printf("%s\n", msg);
+        // pthread_join(T2, (void**)&msg);
+        // printf("%s\n", msg);
         sleep(1);
     }
 

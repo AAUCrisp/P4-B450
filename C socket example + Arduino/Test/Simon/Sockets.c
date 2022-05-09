@@ -44,22 +44,22 @@ int RSSI = 1;
 /* Function to bind sockets */
 void Create_Bind_Sockets(int *sockLTE, int *sockWiFi, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
     /* Create socket */
-    sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    *sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    *sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
-    printf("SockLTE: %d\n", sockLTE);
-    printf("SockWiFi: %d\n", sockWiFi);
+    printf("SockLTE: %d\n", *sockLTE);
+    printf("SockWiFi: %d\n", *sockWiFi);
 
     /* Setting up socket options & specifying interface */
-    setsockopt(sockLTE, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
-    setsockopt(sockWiFi, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
+    setsockopt(*sockLTE, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
+    setsockopt(*sockWiFi, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
 
     /* Error checking */
-    if (sockLTE == -1) {
+    if (*sockLTE == -1) {
         perror("Failed to create sockLTE");
         exit(0);
     }
-    if (sockWiFi == -1) {
+    if (*sockWiFi == -1) {
         perror("Failed to create sockLTE");
         exit(0);
     }
@@ -74,8 +74,8 @@ void Create_Bind_Sockets(int *sockLTE, int *sockWiFi, uint PORT_LTE, uint PORT_W
     ServerWiFi.sin_addr.s_addr = INADDR_ANY;
 
     /* Bind to socket */
-    bindLTE = bind(sockLTE, (struct sockaddr *)&ServerLTE, sizeof(struct sockaddr));
-    bindWiFi = bind(sockWiFi, (struct sockaddr *)&ServerWiFi, sizeof(struct sockaddr));
+    bindLTE = bind(*sockLTE, (struct sockaddr *)&ServerLTE, sizeof(struct sockaddr));
+    bindWiFi = bind(*sockWiFi, (struct sockaddr *)&ServerWiFi, sizeof(struct sockaddr));
 
     /* Error checking */
     if (bindLTE == -1) {
@@ -87,8 +87,6 @@ void Create_Bind_Sockets(int *sockLTE, int *sockWiFi, uint PORT_LTE, uint PORT_W
         exit(0);
     }
     printf("Bind was succesful!\n");
-
-
 }
 
 /* Function to receive LTE packets */
@@ -106,7 +104,7 @@ void *receiveLTE(void *sockLTE) {
 
 /* Function to receive WiFi packets */
 void *receiveWiFi(void *sockWiFi) {
-    int test = *((int*)sockWiFi);
+    int test = *((int *)sockWiFi);
     printf("Socket: %d\n", test);
     RX_WiFi = recvfrom(test, message, BUFFER, 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
     printf("WiFi-Thread id = %ld\n", pthread_self());
