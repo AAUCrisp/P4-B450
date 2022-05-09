@@ -27,21 +27,28 @@ int main() {
     const char* WiFi = "enp0s3";
 
     /* Misc */
-    
+
     struct Sockets {
         int sockLTE;
         int sockWiFi;
         struct sockaddr_in ServerLTE;
         struct sockaddr_in ServerWiFi;
     };
-    
-    pthread_t T1, T2;
+
+    void Create_Bind_Sockets(struct Sockets *test, uint PORT_LTE, uint PORT_WiFi, const char* LTE, const char* WiFi);
+
+    pthread_t T1;
+    pthread_t T2;
 
     /* Struct for message & buffer size */
     char* msg;
 
     /* Create sockets */
     struct Sockets test;
+    test.sockLTE;
+    test.sockWiFi;
+    test.ServerLTE;
+    test.ServerWiFi;
     Create_Bind_Sockets(&test, PORT_LTE, PORT_WiFi, LTE, WiFi);
     printf("sockLTE control_unit: %d\n", sockLTE);
     printf("sockWiFi control_unit: %d\n", sockWiFi);

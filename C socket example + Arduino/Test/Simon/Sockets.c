@@ -40,12 +40,13 @@ int GSV;
 int RSSI = 1;
 
 /* Function to bind sockets */
-void Create_Bind_Sockets(struct Sockets *sockets, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
-    printf("Test: %d\n", sockets->sockLTE);
+void Create_Bind_Sockets(struct Sockets *test, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
+    printf("Test: %d\n", test->sockLTE);
+    
     
     /* Create socket */
-    sockets->sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    sockets->sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    sockets.sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    sockets.sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
     /* Setting up socket options & specifying interface */
     setsockopt(*sockets.sockLTE, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
