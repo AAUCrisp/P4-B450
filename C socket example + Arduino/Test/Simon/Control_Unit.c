@@ -35,8 +35,10 @@ int main() {
     char* msg; 
 
     /* Create sockets */
-    Create_Bind_Sockets(sockLTE, sockWiFi, PORT_LTE, PORT_WiFi, LTE, WiFi);
-
+    Create_Bind_Sockets(&sockLTE, &sockWiFi, PORT_LTE, PORT_WiFi, LTE, WiFi);
+    printf("sockLTE: %d\n", sockLTE);
+    printf("sockWiFi: %d\n", sockWiFi);
+    
     while (1) {
         Timestamp();
         //pthread_create(&T1, NULL, receiveLTE, NULL);
