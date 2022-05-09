@@ -24,26 +24,36 @@ int main() {
     uint PORT_LTE = 9123;
     uint PORT_WiFi = 9124;
     const char* LTE = "wwan0";
-    const char* WiFi = "lo";
+    const char* WiFi = "enp0s3";
 
     /* Misc */
-    int sockLTE;
-    int sockWiFi;
+    
+    struct Sockets {
+        int sockLTE;
+        int sockWiFi;
+        struct sockaddr_in ServerLTE;
+        struct sockaddr_in ServerWiFi;
+    };
+    
     pthread_t T1, T2;
 
     /* Struct for message & buffer size */
-    char* msg; 
+    char* msg;
 
     /* Create sockets */
-    Create_Bind_Sockets(sockLTE, sockWiFi, PORT_LTE, PORT_WiFi, LTE, WiFi);
+    struct Sockets test;
+    Create_Bind_Sockets(&test, PORT_LTE, PORT_WiFi, LTE, WiFi);
+    printf("sockLTE control_unit: %d\n", sockLTE);
+    printf("sockWiFi control_unit: %d\n", sockWiFi);
 
     while (1) {
         Timestamp();
-        pthread_create(&T1, NULL, receiveLTE, NULL);
+        pthread_create(&T1, NULL, receiveLTE, (void*)&sockLTE);
         pthread_join(T1, (void**)&msg);
-        pthread_create(&T2, NULL, receiveWiFi, NULL);
+        pthread_create(&T2, NULL, receiveWiFi, (void*)&sockWiFi);
         pthread_join(T2, (void**)&msg);
-        printf("%s\n", msg);
+        // printf("%s\n", msg);
+        sleep(1);
     }
 
     close(sockLTE && sockWiFi);
