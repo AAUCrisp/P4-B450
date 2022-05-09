@@ -19,6 +19,7 @@
 /* Define buffers & PORT number */
 #define BUFFER 1024
 char message[BUFFER];
+char *receive[BUFFER];
 // uint PORT_LTE, PORT_WiFi;
 char curr_time[128];
 
@@ -92,8 +93,9 @@ void *receiveLTE() {
     printf("%s\n", message);
     printf("Message from LTE received at: %s\n\n", curr_time);
     //pthread_exit(NULL);
-    *message = (char*)malloc(strlen(message));
-    return (void*) message;
+    receive = (char *)malloc(strlen(receive));
+    *receive = message;
+    return (void *)receive;
 }
 
 /* Function to receive WiFi packets */
@@ -103,8 +105,9 @@ void *receiveWiFi() {
     printf("%s\n", message);
     printf("Message from WiFi received at: %s\n\n", curr_time);
     //pthread_exit(NULL);
-    *message = (char *)malloc(strlen(message));
-    return (void *)message;
+    receive = (char *)malloc(strlen(receive));
+    *receive = message;
+    return (void *)receive;
 }
 
 /* Function to transmit GSV via LTE */
