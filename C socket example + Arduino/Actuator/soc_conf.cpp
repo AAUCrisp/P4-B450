@@ -70,14 +70,14 @@ void socket_configuration() {
 
 	if (f == -1) 
 	{
-		perror("Error with LTE...the error is");
+		perror("Error with binding socket to LTE interface...the error is");
 		exit(0);
 	} 
 
 	if (g == -1)
 
 	{
-		perror("Error with WiFi... the error is");
+		perror("Error with WiFi binding socket to WiFi interface... the error is");
 		exit(0);
 	}
 

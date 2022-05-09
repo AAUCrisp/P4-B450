@@ -4,7 +4,7 @@ import concurrent.futures
 from numba import jit, njit
 
 
-size = 10000
+size = 1000
 min_value = -100        # Minimum value in each matrix entrance
 max_value = 100         # Maximum value in each matrix entrance
 max_sum = -np.inf
@@ -101,8 +101,14 @@ if __name__=='__main__':
     #print(results)
     print(f'Array of size {size}x{size}')     # printing dimension
     start_time = time.time()        # Start time, to see computation time
+<<<<<<< HEAD
+
+    with concurrent.futures.ProcessPoolExecutor() as executor:
+        rest = [executor.submit(AlgorithmMSP, array, i) for i in range(size)]      # Calling the main function
+=======
     with concurrent.futures.ThreadPoolExecutor() as executor:
         rest = [executor.submit(AlgorithmMSP, array, i, size) for i in range (size)]      # Calling the main function
+>>>>>>> 831eb223cafd297e78b995d7511bf3093dbe15c3
 
         for f in concurrent.futures.as_completed(rest):
             print(f'{f.result()}')

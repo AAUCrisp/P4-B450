@@ -1,0 +1,40 @@
+import numpy as np
+
+intermediate_pSums = []
+
+def AlgorithmMSP_1d(a,n):
+    min_pSum = 0
+    pSum = [0]
+    max = -np.inf
+    for i in range (1,n):
+        pSum.append(pSum[i-1])
+    
+    for i in range(1,n):
+        maxA = max(maxA,pSum[i] - min_pSum)
+        min_pSum = min(min_pSum, pSum[i])
+    return maxA
+
+def AlgorithmMSP_Multidimensional(A,N,M):
+    maxA = -np.inf
+
+    for i in range(N) do in parallel:
+        temp = np.zeros([M,1])
+
+        for k in range(i,N):
+
+            for j in range(M):
+                temp[j] = temp[j] + A[j,k]
+            pSum,n,m = AlgorithmMSP_1d(temp,M)
+            if pSum > maxA:
+                maxA = pSum
+            intermediate_pSums[k] = maxA
+    return intermediate_pSums
+
+def FindLargestElement(intermediate_pSums):
+    maxA = -np.inf
+    for i in range (N):
+        if intermediate_pSums[i] > maxA:
+            intermediate_pSums[i] = maxA
+    
+    return maxA
+

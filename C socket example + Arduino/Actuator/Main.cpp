@@ -43,7 +43,7 @@ printf("FED LORT 1");
 	//	receive_LTE();
 		printf("FED LORT\n\n");
 		//LORT();
-	pthread_create(&T1, NULL, receive_LTE, NULL);
+		pthread_create(&T1, NULL, receive_LTE, NULL);
         pthread_create(&T2, NULL, receive_WiFi, NULL);
        // pthread_join(T1, NULL);
        // pthread_join(T2, NULL);
