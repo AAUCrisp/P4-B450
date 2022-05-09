@@ -9,10 +9,12 @@ HelloWorld: HelloWorld.c shm_read.o
 	touch HelloWorld
 
 shm_write.o: shm_write.c shm_write_read.h
-	gcc -c shm_write.c 
+	gcc -c shm_write.c
+	touch shm_write.c 
 
 shm_read.o: shm_read.c shm_write_read.h
 	gcc -c shm_read.c 
+	touch shm_read.c 
 
 clean:
 	rm -f ProcessStart HelloWorld
