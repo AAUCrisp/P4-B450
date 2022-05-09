@@ -125,7 +125,7 @@ int main() {
     char TestMsg2[] = "Client says hello via WiFi!";
 
     while (1) {
-        usleep(1000);
+        sleep(1);
         Timestamp();
         pthread_create(&T1, NULL, sendshit1String, TestMsg);
         pthread_join(T1, NULL);
