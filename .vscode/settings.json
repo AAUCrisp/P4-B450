@@ -7,6 +7,7 @@
         "mman.h": "c",
         "pthread.h": "c",
         "typeinfo": "c",
-        "string_view": "c"
+        "string_view": "c",
+        "unistd.h": "c"
     }
 }
