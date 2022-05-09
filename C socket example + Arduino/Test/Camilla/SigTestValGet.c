@@ -32,16 +32,16 @@ int main() {
         //printf("%s\n",RSSI);
 
     }
-    /*
+    
     //Get RSRP value from LTE 
-    FILE* pipe_LTE = popen("mmcli -m 0 --signal-get", "r");
+    FILE* pipe_LTE = popen("mmcli -m 0 --signal-get | grep -i rsrp", "r");
     if (pipe_LTE){
         char BufferLTE[128];
         char RSRP[20] = {0};
         while(!feof(pipe_LTE)){
             if(fgets(BufferLTE,128,pipe_LTE) !=NULL){
-                fseek(pipe_LTE,50,SEEK_SET);
-                fread(RSRP,50,55,pipe_LTE);
+                //fseek(pipe_LTE,50,SEEK_SET);
+                //fread(RSRP,50,55,pipe_LTE);
             }
         }
         pclose(pipe_LTE);
@@ -50,5 +50,5 @@ int main() {
         RSRP[strlen(RSRP)-1] = '\0';
         printf("%s\n",RSRP);
     }
-    */
+    
 }
