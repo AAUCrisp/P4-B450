@@ -88,13 +88,13 @@ char *Timestamp() {
 
     return curr_time;
 }
-
+/*
 void Update_GSV() {
     /*
     1. Receive message/GSV from Control Unit.
     2. Update local GSV.
     3. Notify to send via LTE/WiFi.
-    */
+    
     if (recvfrom(sockLTE, &GSV, sizeof(GSV), 0, (struct sockaddr *)&ServerLTE, &lenLTE)) {
         printf("LTE-Thread id = %ld\n", pthread_self());
         printf("%s\n", Message);
@@ -105,7 +105,7 @@ void Update_GSV() {
         printf("WiFi-Thread id = %ld\n", pthread_self());
         printf("%s\n", Message);
         printf("Message from WiFi received at: %s\n\n", curr_time);
-    }
+    }*/
 
     /* Main running code */
     int main() {
