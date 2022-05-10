@@ -16,7 +16,7 @@ Sockets: Sockets.c shm_read.o
 	gcc -c Sockets.c shm_read.o 
 
 Sockets.o: Sockets.c  Sockets_TX_RX.h shm_read.c shm_write_read.h
-	gcc -c Sockets.c shm.read.c
+	gcc -c Sockets.c shm_read.c
 	touch Sockets.c
 
 RSSI.o: RSSI.c Sockets_TX_RX.h
