@@ -136,10 +136,10 @@ int main() {
         sprintf(SendMsg2,"%s %d", TestMsg2, r);
 
         Timestamp();
-        pthread_create(&T1, NULL, sendshit1String, TestMsg);
+        pthread_create(&T1, NULL, sendshit1String, SendMsg);
         pthread_join(T1, NULL);
         Timestamp();
-        pthread_create(&T2, NULL, sendshit2String, TestMsg2);
+        pthread_create(&T2, NULL, sendshit2String, SendMsg2);
         pthread_join(T2, NULL);
     }
 
