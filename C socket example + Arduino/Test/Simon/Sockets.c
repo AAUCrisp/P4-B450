@@ -44,9 +44,24 @@ int RSSI = 1;
 /* Function to bind sockets */
 void Create_Bind_Sockets(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
     /* Create socket */
+    sock->sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    sock->sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+
     /* Setting up socket options & specifying interface */
+    setsockopt(sock->sockLTE, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
+    setsockopt(sock->sockWiFi, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
+
+    /* Error checking */
     if (sock->sockLTE == -1) {
         perror("Failed to create sockLTE");
+        exit(0);
+    }
+    if (sock->sockWiFi == -1) {
+        perror("Failed to create sockLTE");
+        exit(0);
+    }
+
+    /* Configure settings to communicate with remote UDP client */
     sock->ServerLTE.sin_family = AF_INET;
     sock->ServerLTE.sin_port = htons(PORT_LTE);
     sock->ServerLTE.sin_addr.s_addr = INADDR_ANY;
