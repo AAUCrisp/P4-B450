@@ -41,15 +41,16 @@ int main() {
     /* Start signal monitoring process */
     pid_t signal_monitor;       // Prepare the process ID for monitoring
     signal_monitor = fork();    // Starts new process
-    printf("Parent Process ID: %d \n", getppid());
-    printf("Monitoring Process ID is: %d \n", getpid());
-    char *args[] = {"SignalMonitoring", "c"};   // TING!
-    execv("./SignalMonitoring", args);      // Tells the new process to run the code in this file
-
-
-
+    if(signal_monitor == 0){
+        printf("Parent Process ID: %d \n", getppid());
+        printf("Monitoring Process ID is: %d \n", getpid());
+        char *args[] = {"SignalMonitoring", "c"};   // TING!
+        execv("./SignalMonitoring&", args);      // Tells the new process to run the code in this file
+        printf("I am at line 49");
+    }
+    
     while (1) {
-        
+        printf("Hello i am here");
         Timestamp();
         pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
         Timestamp();
@@ -60,6 +61,7 @@ int main() {
         //printf("%s\n", msg);
         //sleep(1);
     }
+    
 
     close(sock.sockLTE && sock.sockWiFi);
     exit(0);

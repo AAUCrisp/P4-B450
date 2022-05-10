@@ -77,6 +77,7 @@ void Create_Bind_Sockets(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const cha
 
 /* Function to receive LTE packets */
 void *receiveLTE(void *socket) {
+    printf("I am here");
     time_struct time1;
     time_struct time2;
     int timediff;
@@ -90,7 +91,7 @@ void *receiveLTE(void *socket) {
     sscanf(curr_time, "%c %d %c %d %c %d %c %d", voidChar, &time1.hour, voidChar, &time1.minute, voidChar, &time1.second, voidChar, &time1.millis);
     sscanf(message, "%c %d %c %d %c %d %c %d", voidChar, &time2.hour, voidChar, &time2.minute, voidChar, &time2.second, voidChar, &time2.millis);
     sscanf(message, "%s %s %[^\n]", voidChar, voidChar, messageRecieved);
-    printf("LTE || The message recieved was: %s \n", messageRecieved);
+    printf("LTE || The message received was: %s \n", messageRecieved);
     timediff = (((time1.hour * 3600000) + (time1.minute * 60000) + (time1.second * 1000) + (time1.millis)) - ((time2.hour * 3600000) + (time2.minute * 60000) + (time2.second * 1000) + (time2.millis)));
     if (timediff >= 0) {
         printf("LTE || Time difference: %d milliseconds \n\n", timediff);
