@@ -49,11 +49,10 @@ int main() {
         Timestamp();
         pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
         pthread_join(T1, (void**)&msg);
-        sleep(1);
         pthread_join(T2, (void**)&msg);
         
         //printf("%s\n", msg);
-        sleep(1);
+        //sleep(1);
     }
 
     close(sock.sockLTE && sock.sockWiFi);
