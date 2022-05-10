@@ -27,10 +27,10 @@ void *receiveLTE(void* sockLTE);
 void *receiveWiFi(void* sockWiFi);
 
 /* Function to transmit LTE packets */
-void *transmitLTE(int data);
+void *transmitLTE(void* sockLTE);
 
 /* Function to transmit WiFi packets */
-void *transmitWiFi(int data);
+void *transmitWiFi(void* sockWiFi);
 
 /* Function to timestamp packets */
 char *Timestamp();
