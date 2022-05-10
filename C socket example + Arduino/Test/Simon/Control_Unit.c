@@ -27,8 +27,6 @@ int main() {
     const char* WiFi = "wlp2s0";
 
     /* Misc */
-
-
     pthread_t T1, T2;
 
     /* Struct for message & buffer size */
