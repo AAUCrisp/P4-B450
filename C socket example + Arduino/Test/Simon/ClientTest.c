@@ -119,17 +119,20 @@ int main() {
     IP_WiFi = "192.168.1.136";
     LTE = "wwan0";
     WiFi = "wlan0";
-
+    int r;
     /* Create sockets */
     Create_Sockets(PORT_LTE, PORT_WiFi, IP_LTE, IP_WiFi);
 
     /* Messages to send */
     char TestMsg[] = "Client says hello via LTE!";
     char TestMsg2[] = "Client says hello via WiFi!";
-
+    srand(time(NULL));
     while (1) {
         sleep(1);
         Timestamp();
+        r = rand() % 100;
+        snprintf(TestMsg, BUFFER + 1, "%s %d", TestMsg, r);
+        snprintf(TestMsg2, BUFFER + 1, "%s %d", TestMsg2, r);
         pthread_create(&T1, NULL, sendshit1String, TestMsg);
         pthread_join(T1, NULL);
         Timestamp();
