@@ -139,7 +139,7 @@ void *transmitLTE(void *socket) {
     const char *GSV;
     const char *GSV_KEY = "GSV_KEY";
     GSV = shm_read(10, GSV_KEY);
-    TX_LTE = sendto(sockLTE, GSV, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE, lenLTE);
+    TX_LTE = sendto(sockLTE, GSV, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE, LenLTE);
     printf("WiFi-Thread id = %ld\n", pthread_self());
     printf("%s\n", GSV);
     printf("Message from LTE transmitted at: %s\n\n", curr_time);
@@ -153,7 +153,7 @@ void *transmitWiFi(void *socket) {
     const char *GSV;
     const char *GSV_KEY = "GSV_KEY";
     GSV = shm_read(10, GSV_KEY);
-    TX_WiFi = sendto(sockWiFi, GSV, BUFFER, 0, (struct sockaddr *)&ServerWiFi, lenWiFi);
+    TX_WiFi = sendto(sockWiFi, GSV, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi, LenWiFi);
     printf("WiFi-Thread id = %ld\n", pthread_self());
     printf("%s\n", GSV);
     printf("Message from WiFi transmitted at: %s\n\n", curr_time);
