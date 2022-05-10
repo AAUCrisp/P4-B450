@@ -61,7 +61,6 @@ void Create_Sockets(uint PORT_LTE, uint PORT_WiFi, const char *IP1, const char *
 void *sendshit1String(void *msg1) {
     char TimestampLTE[BUFFER];
     char *newTextLTE = msg1;
-    Timestamp();
     snprintf(TimestampLTE, BUFFER + 1, "%s %s", curr_time, newTextLTE);
     TX_LTE = sendto(sockLTE, TimestampLTE, BUFFER, 0, (struct sockaddr *)&ClientLTE, lenLTE);
     printf("LTE-Thread id = %ld \n", pthread_self());
