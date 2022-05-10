@@ -20,6 +20,9 @@ Eth: 192.168.1.117
 ## Reminders:
 <ins>**Server must not be started with sudo:   "./[ServerName]"**</ins>  
 <ins>**Client must be started with sudo:       "sudo ./[ClientName]"**</ins>  
+
+LTE Refresh rate setup cmd: mmcli -m 0 --signal-setup=10
+
 <ins>**Git:**</ins>
     - `sudo apt-get install git`        Install Git on your machine    
     - `git clone https://github.com/AAUCrisp/P4-B450.git`       To get the repository to your computer  
