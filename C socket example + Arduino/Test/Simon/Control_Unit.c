@@ -27,35 +27,31 @@ int main() {
     const char* WiFi = "wlp2s0";
 
     /* Misc */
-    
-    struct Sockets {
-        int sockLTE;
-        int sockWiFi;
-        struct sockaddr_in ServerLTE;
-        struct sockaddr_in ServerWiFi;
-    };
-    
+
+
     pthread_t T1, T2;
 
     /* Struct for message & buffer size */
     char* msg;
 
     /* Create sockets */
-    struct Sockets sockets;
-    Create_Bind_Sockets(&sockets, PORT_LTE, PORT_WiFi, LTE, WiFi);
-    printf("sockLTE control_unit: %d\n", sockets.sockLTE);
-    printf("sockWiFi control_unit: %d\n", sockets.sockWiFi);
+    Sockets sock;
+    Create_Bind_Sockets(&sock, PORT_LTE, PORT_WiFi, LTE, WiFi);
+    printf("sockLTE control_unit: %d\n", sock.sockLTE);
+    printf("sockWiFi control_unit: %d\n", sock.sockWiFi);
 
     while (1) {
         Timestamp();
-        //pthread_create(&T1, NULL, receiveLTE, (void*)&sockets);
-        //pthread_join(T1, (void**)&msg);
-        pthread_create(&T2, NULL, receiveWiFi, (void*)&sockets);
+        RSSI_VAL();
+        RSRP_VAL();
+        pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
+        pthread_join(T1, (void**)&msg);
+        pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
         pthread_join(T2, (void**)&msg);
-        // printf("%s\n", msg);
+        printf("%s\n", msg);
         sleep(1);
     }
 
-    close(sockets.sockLTE && sockets.sockWiFi);
+    close(sock.sockLTE && sock.sockWiFi);
     exit(0);
 }
