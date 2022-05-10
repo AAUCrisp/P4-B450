@@ -92,6 +92,7 @@ void *receiveLTE(void *socket) {
     time_struct time2;
     int timediff;
     char voidChar[128];
+    char messageRecieved[128];
     Sockets *sock = (Sockets *)socket;
     int LenLTE = sizeof(sock->ServerWiFi);
     RX_LTE = recvfrom(sock->sockLTE, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE, &LenLTE);
@@ -99,6 +100,8 @@ void *receiveLTE(void *socket) {
     printf("Message from LTE received at: %s\n", curr_time);
     sscanf(curr_time,"%c %d %c %d %c %d %c %d", voidChar, &time1.hour, voidChar, &time1.minute, voidChar, &time1.second, voidChar, &time1.millis);
     sscanf(message,"%c %d %c %d %c %d %c %d", voidChar, &time2.hour, voidChar, &time2.minute, voidChar, &time2.second, voidChar, &time2.millis);
+    sscanf(message,"%s %s %[^\n]", voidChar, voidChar, messageRecieved);
+    printf("The message recieved was: %s", messageRecieved);
     timediff = (((time1.hour * 3600000) + (time1.minute * 60000) + (time1.second * 1000) + (time1.millis)) - ((time2.hour * 3600000) + (time2.minute * 60000) + (time2.second * 1000) + (time2.millis)) );
     if (timediff >= 0)
     {
@@ -119,6 +122,7 @@ void *receiveWiFi(void *socket) {
     time_struct time2;
     int timediff;
     char voidChar[128];
+    char messageRecieved[128];
     Sockets *sock = (Sockets *)socket;
     int LenWiFi = sizeof(sock->ServerWiFi);
     RX_WiFi = recvfrom(sock->sockWiFi, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi, &LenWiFi);
@@ -126,10 +130,13 @@ void *receiveWiFi(void *socket) {
     printf("Message from WiFi received at: %s \n", curr_time);
     sscanf(curr_time,"%c %d %c %d %c %d %c %d", voidChar, &time1.hour, voidChar, &time1.minute, voidChar, &time1.second, voidChar, &time1.millis);
     sscanf(message,"%c %d %c %d %c %d %c %d", voidChar, &time2.hour, voidChar, &time2.minute, voidChar, &time2.second, voidChar, &time2.millis);
+    sscanf(message,"%s %s %[^\n]", voidChar, voidChar, messageRecieved);
+    printf("The message recieved was: %s", messageRecieved);
     timediff = (((time1.hour * 3600000) + (time1.minute * 60000) + (time1.second * 1000) + (time1.millis)) - ((time2.hour * 3600000) + (time2.minute * 60000) + (time2.second * 1000) + (time2.millis)) );
     if (timediff >= 0)
     {
         printf("Time difference: %d milliseconds \n\n", timediff);
+        
     } else{
         printf("Timediff not available?\n\n");
     }

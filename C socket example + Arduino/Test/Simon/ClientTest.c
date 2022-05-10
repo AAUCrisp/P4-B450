@@ -129,10 +129,11 @@ int main() {
     srand(time(NULL));
     while (1) {
         sleep(1);
-        Timestamp();
         r = rand() % 100;
         snprintf(TestMsg, BUFFER + 1, "%s %d", TestMsg, r);
         snprintf(TestMsg2, BUFFER + 1, "%s %d", TestMsg2, r);
+
+        Timestamp();
         pthread_create(&T1, NULL, sendshit1String, TestMsg);
         pthread_join(T1, NULL);
         Timestamp();
