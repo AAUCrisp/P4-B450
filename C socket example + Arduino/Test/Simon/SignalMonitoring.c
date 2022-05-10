@@ -25,6 +25,7 @@ Sockets sock;
 pthread_t wifi, lte;
 
 char gsv = "B";  // Global Signal Variable   W = WiFi   L = LTE    B = Both
+const char* GSV_KEY = "GSV_KEY";
 
 /* Signal Quality Settings */
 int wifi_rssi[buffer];

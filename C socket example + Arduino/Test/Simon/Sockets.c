@@ -136,6 +136,7 @@ void *transmitLTE(void *socket) {
     Sockets *sock = (Sockets *)socket;
     int LenLTE = sizeof(sock->ServerWiFi);
     const char *GSV;
+    const char *GSV_KEY = "GSV_KEY";
     GSV = shm_read(10, GSV_KEY);
     TX_LTE = sendto(sockLTE, GSV, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE, lenLTE);
     printf("WiFi-Thread id = %ld\n", pthread_self());
@@ -149,6 +150,7 @@ void *transmitWiFi(void *socket) {
     Sockets *sock = (Sockets *)socket;
     int LenWiFi = sizeof(sock->ServerWiFi);
     const char *GSV;
+    const char *GSV_KEY = "GSV_KEY";
     GSV = shm_read(10, GSV_KEY);
     TX_WiFi = sendto(sockWiFi, GSV, BUFFER, 0, (struct sockaddr *)&ServerWiFi, lenWiFi);
     printf("WiFi-Thread id = %ld\n", pthread_self());
