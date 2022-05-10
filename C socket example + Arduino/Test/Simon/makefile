@@ -12,7 +12,7 @@ SignalMonitoring: SignalMonitoring.c shm_read.o Sockets.o
 	gcc -c -pthread SignalMonitoring.c shm_read.o Sockets.o -o SignalMonitoring
 	touch SignalMonitoring.c
 
-Sockets.o: Sockets.c  Sockets_TX_RX.h
+Sockets.o: Sockets.c  Sockets_TX_RX.h shm_write_read.h
 	gcc -c Sockets.c 
 	touch Sockets.c
 
