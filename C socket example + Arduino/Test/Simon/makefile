@@ -29,6 +29,6 @@ shm_read.o: shm_read.c shm_write_read.h
 	touch shm_read.c 
 
 clean:
-	rm -f ClientStart ServerStart
+	rm -f ClientStart ServerStart SignalMonitoring
 	rm *.o
 	@echo "clean completed!"
