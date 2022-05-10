@@ -107,7 +107,7 @@ void *receiveLTE(void *socket) {
     {
         printf("LTE || Time difference: %d milliseconds \n\n", timediff);
     } else{
-        printf("LTE || Timediff not available?\n\n");
+        printf("LTE || Timediff not available? %d\n\n", timediff);
     }
     // pthread_exit(NULL);
     receive = malloc(sizeof(receive));
@@ -138,7 +138,7 @@ void *receiveWiFi(void *socket) {
         printf("WIFI || Time difference: %d milliseconds \n\n", timediff);
         
     } else{
-        printf("WIFI || Timediff not available?\n\n");
+        printf("WIFI || Timediff not available? %d\n\n", timediff);
     }
     // pthread_exit(NULL);
     receive = malloc(sizeof(receive));
