@@ -126,12 +126,14 @@ int main() {
     /* Messages to send */
     char TestMsg[] = "Client says hello via LTE!";
     char TestMsg2[] = "Client says hello via WiFi!";
+    char SendMsg[128];
+    char SendMsg2[128];
     srand(time(NULL));
     while (1) {
         sleep(1);
         r = rand() % 100;
-        snprintf(TestMsg, BUFFER + 1, "%s %d", TestMsg, r);
-        snprintf(TestMsg2, BUFFER + 1, "%s %d", TestMsg2, r);
+        sprintf(SendMsg, "%s %d", TestMsg, r);
+        sprintf(SendMsg2,"%s %d", TestMsg2, r);
 
         Timestamp();
         pthread_create(&T1, NULL, sendshit1String, TestMsg);
