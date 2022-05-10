@@ -25,7 +25,8 @@ Sockets sock;
 
 pthread_t wifi, lte;
 
-char gsv = "B";        // Global Signal Variable   W = WiFi   L = LTE    B = Both
+char* gsv = "B";        // Global Signal Variable   W = WiFi   L = LTE    B = Both
+const char* GSV_KEY = "GSV_KEY";
 
 /* Signal Quality Settings */
 int wifi_rssi[buffer];
@@ -59,25 +60,26 @@ int main() {
         if(gsv == "W" || gsv == "B") {    // If GSV is set to WiFi
             if(wifi_rssi[counter] < rssi_bad){
                 gsv = "L";
-                break;
             }
         }
 
         if(gsv == "L" || gsv == "B") {
             if(lte_rsrp[counter] < rsrp_bad) {
-                gsv = "W"
-                break;
+                gsv = "W";
             }
         }
 
+        rssi_sum = 0;
+        rsrp_sum = 0;
 
-        for(int i = 0, i < buffer, i++){
+        for(int i = 0; i < sizeof(buffer); i++){
             rssi_sum += wifi_rssi[i];
 			rsrp_sum += lte_rsrp[i];
         }
 
-		rssi_average = rssi_sum / buffer;
-		rsrp_average = rsrp_sum / buffer;
+		rssi_average = rssi_sum / sizeof(buffer);
+		rsrp_average = rsrp_sum / sizeof(buffer);
+
 
 		/* Compare signals and select a technology */
 		if( (rssi_average >= rssi_good && rsrp_average >= rsrp_good) || (rssi_average >= rssi_mid && rsrp_average >= rsrp_mid) ) {
@@ -93,10 +95,10 @@ int main() {
 
 
 		if(gsv == "W" || gsv == "B") {
-			pthread_create(&wifi, NULL, transmitWiFi, (void*) &sock)
+			pthread_create(&wifi, NULL, transmitWiFi, (void*) &sock);
 		}
 		if(gsv == "L" || gsv == "B") {
-			pthread_create(&lte, NULL, transmitLTE, (void*) &sock)
+			pthread_create(&lte, NULL, transmitLTE, (void*) &sock);
 		}
 
         if(counter == (buffer -1)) { counter = 0; }

@@ -4,19 +4,16 @@ ClientStart: ClientTest.c
 	gcc -pthread ClientTest.c -o ClientStart
 	touch ClientStart
 
-ServerStart: Control_Unit.c Sockets.o 
-	gcc -pthread Control_Unit.c Sockets.o -o ServerStart
+ServerStart: Control_Unit.c Sockets.o shm_read.o
+	gcc -pthread Control_Unit.c Sockets.o shm_read.o -o ServerStart
 	touch ServerStart
 
 SignalMonitoring: SignalMonitoring.c shm_write.o Sockets.o RSSI.o
 	gcc -pthread SignalMonitoring.c shm_write.o Sockets.o RSSI.o -o SignalMonitoring
 	touch SignalMonitoring
 
-Sockets: Sockets.c shm_read.o
-	gcc -c Sockets.c shm_read.o 
-
-Sockets.o: Sockets.c  Sockets_TX_RX.h shm_read.c shm_write_read.h
-	gcc -c Sockets.c shm_read.c
+Sockets.o: Sockets.c Sockets_TX_RX.h shm_write_read.h
+	gcc -c Sockets.c
 	touch Sockets.c
 
 RSSI.o: RSSI.c Sockets_TX_RX.h
