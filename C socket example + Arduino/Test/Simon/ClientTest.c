@@ -32,7 +32,7 @@ pthread_t T1, T2;
 /* Global Signal Variable & RSSI*/
 int GSV;
 
-void Create_Sockets(uint PORT_LTE, uint PORT_WiFi, const char *IP1, const char *IP2) {
+void Create_Sockets(uint PORT_LTE, uint PORT_WiFi, const char *IP1, const char *IP2, const char *LTE, const char *WiFi) {
     /* Defining sockets & specifying protocol */
     sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -116,12 +116,12 @@ int main() {
     PORT_LTE = 9123;
     PORT_WiFi = 9124;
     IP_LTE = "10.20.0.16";
-    IP_WiFi = "192.168.1.114";
+    IP_WiFi = "192.168.1.136";
     LTE = "wwan0";
-    WiFi = "wlp2s0";
+    WiFi = "wlan0";
 
     /* Create sockets */
-    Create_Sockets(PORT_LTE, PORT_WiFi, IP_LTE, IP_WiFi);
+    Create_Sockets(PORT_LTE, PORT_WiFi, IP_LTE, IP_WiFi, LTE, WiFi);
 
     /* Messages to send */
     char TestMsg[] = "Client says hello via LTE!";
