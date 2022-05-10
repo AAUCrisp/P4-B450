@@ -9,7 +9,7 @@ ServerStart: Control_Unit.c Sockets.o RSSI.o
 	touch ServerStart
 
 SignalMonitoring: SignalMonitoring.c shm_read.o Sockets.o
-	gcc -c SignalMonitoring.c shm_read.o Sockets.o -o SignalMonitoring
+	gcc -c -pthread SignalMonitoring.c shm_read.o Sockets.o -o SignalMonitoring
 	touch SignalMonitoring.c
 
 Sockets.o: Sockets.c  Sockets_TX_RX.h
