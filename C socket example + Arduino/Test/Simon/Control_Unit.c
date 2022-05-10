@@ -48,6 +48,7 @@ int main() {
         pthread_join(T1, (void**)&msg);
         pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
         pthread_join(T2, (void**)&msg);
+        
         //printf("%s\n", msg);
         sleep(1);
     }
