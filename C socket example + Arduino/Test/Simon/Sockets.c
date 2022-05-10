@@ -96,6 +96,7 @@ void *receiveLTE(void *socket) {
     int LenLTE = sizeof(sock->ServerWiFi);
     RX_LTE = recvfrom(sock->sockLTE, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE, &LenLTE);
     printf("LTE-Thread id = %ld\n", pthread_self());
+    Timestamp();
     printf("Message from LTE received at: %s\n", curr_time);
     sscanf(curr_time,"%c %d %c %d %c %d %c %d", voidChar, &time1.hour, voidChar, &time1.minute, voidChar, &time1.second, voidChar, &time1.millis);
     sscanf(message,"%c %d %c %d %c %d %c %d", voidChar, &time2.hour, voidChar, &time2.minute, voidChar, &time2.second, voidChar, &time2.millis);
@@ -123,6 +124,7 @@ void *receiveWiFi(void *socket) {
     int LenWiFi = sizeof(sock->ServerWiFi);
     RX_WiFi = recvfrom(sock->sockWiFi, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi, &LenWiFi);
     printf("WiFi-Thread id = %ld\n", pthread_self());
+    Timestamp();
     printf("Message from WiFi received at: %s \n", curr_time);
     sscanf(curr_time,"%c %d %c %d %c %d %c %d", voidChar, &time1.hour, voidChar, &time1.minute, voidChar, &time1.second, voidChar, &time1.millis);
     sscanf(message,"%c %d %c %d %c %d %c %d", voidChar, &time2.hour, voidChar, &time2.minute, voidChar, &time2.second, voidChar, &time2.millis);

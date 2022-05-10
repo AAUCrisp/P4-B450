@@ -41,7 +41,7 @@ int main() {
     printf("sockWiFi control_unit: %d\n", sock.sockWiFi);
 
     while (1) {
-        Timestamp();
+        //Timestamp();
         //RSSI_VAL();
         //RSRP_VAL();
         pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
