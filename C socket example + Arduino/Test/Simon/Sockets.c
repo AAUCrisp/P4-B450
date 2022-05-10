@@ -131,7 +131,7 @@ void *receiveWiFi(void *socket) {
     {
         printf("Time difference: %d milliseconds \n\n", timediff);
     } else{
-        printf("\n");
+        printf("Timediff not available?\n\n");
     }
     // pthread_exit(NULL);
     receive = malloc(sizeof(receive));
