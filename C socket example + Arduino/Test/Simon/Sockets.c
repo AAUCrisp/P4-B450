@@ -96,7 +96,6 @@ void *receiveLTE(void *socket) {
     int LenLTE = sizeof(sock->ServerWiFi);
     RX_LTE = recvfrom(sock->sockLTE, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE, &LenLTE);
     printf("LTE-Thread id = %ld\n", pthread_self());
-    printf("%s\n", message);
     printf("Message from LTE received at: %s\n", curr_time);
     sscanf(message,"%c %d %c %d %c %d %c %d", voidChar, &time1.hour, voidChar, &time1.minute, voidChar, &time1.second, voidChar, &time1.millis);
     sscanf(curr_time,"%c %d %c %d %c %d %c %d", voidChar, &time2.hour, voidChar, &time2.minute, voidChar, &time2.second, voidChar, &time2.millis);

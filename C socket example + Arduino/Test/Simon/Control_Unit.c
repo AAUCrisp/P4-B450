@@ -24,9 +24,11 @@ int main() {
     uint PORT_LTE = 9123;
     uint PORT_WiFi = 9124;
     const char* LTE = "wwan0";
-    const char* WiFi = "wlp2s0";
+    const char* WiFi = "wlan0";
 
     /* Misc */
+
+
     pthread_t T1, T2;
 
     /* Struct for message & buffer size */
@@ -42,11 +44,11 @@ int main() {
         Timestamp();
         //RSSI_VAL();
         //RSRP_VAL();
-        //pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
-        //pthread_join(T1, (void**)&msg);
+        pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
+        pthread_join(T1, (void**)&msg);
         pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
         pthread_join(T2, (void**)&msg);
-        printf("%s\n", msg);
+        //printf("%s\n", msg);
         sleep(1);
     }
 
