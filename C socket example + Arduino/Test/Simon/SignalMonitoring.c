@@ -17,6 +17,7 @@
 #include <unistd.h>
 
 #include "Sockets_TX_RX.h"
+#include "shm_write_read.h"
 
 #define buffer 10
 
