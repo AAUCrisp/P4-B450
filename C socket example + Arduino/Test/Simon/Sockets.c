@@ -100,12 +100,12 @@ void *receiveLTE(void *socket) {
     sscanf(message,"%c %d %c %d %c %d %c %d", voidChar, &time1.hour, voidChar, &time1.minute, voidChar, &time1.second, voidChar, &time1.millis);
     sscanf(curr_time,"%c %d %c %d %c %d %c %d", voidChar, &time2.hour, voidChar, &time2.minute, voidChar, &time2.second, voidChar, &time2.millis);
     timediff = (((time1.hour * 3600000) + (time1.minute * 60000) + (time1.second * 1000) + (time1.millis)) - ((time2.hour * 3600000) + (time2.minute * 60000) + (time2.second * 1000) + (time2.millis)) );
-    if (timediff >= 0)
-    {
-        printf("Time difference: %d milliseconds \n\n", timediff);
-    } else{
-        printf("Timediff not available?\n\n");
-    }
+    //if (timediff >= 0)
+    //{
+    printf("Time difference: %d milliseconds \n\n", timediff);
+    //} else{
+    //    printf("Timediff not available?\n\n");
+    //}
     // pthread_exit(NULL);
     receive = malloc(sizeof(receive));
     receive = message;
@@ -127,12 +127,12 @@ void *receiveWiFi(void *socket) {
     sscanf(message,"%c %d %c %d %c %d %c %d", voidChar, &time1.hour, voidChar, &time1.minute, voidChar, &time1.second, voidChar, &time1.millis);
     sscanf(curr_time,"%c %d %c %d %c %d %c %d", voidChar, &time2.hour, voidChar, &time2.minute, voidChar, &time2.second, voidChar, &time2.millis);
     timediff = (((time1.hour * 3600000) + (time1.minute * 60000) + (time1.second * 1000) + (time1.millis)) - ((time2.hour * 3600000) + (time2.minute * 60000) + (time2.second * 1000) + (time2.millis)) );
-    if (timediff >= 0)
-    {
-        printf("Time difference: %d milliseconds \n\n", timediff);
-    } else{
-        printf("Timediff not available?\n\n");
-    }
+    //if (timediff >= 0)
+    //{
+    printf("Time difference: %d milliseconds \n\n", timediff);
+    //} else{
+    //    printf("Timediff not available?\n\n");
+    //}
     // pthread_exit(NULL);
     receive = malloc(sizeof(receive));
     receive = message;
