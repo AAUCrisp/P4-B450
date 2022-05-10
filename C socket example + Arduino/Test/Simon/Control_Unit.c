@@ -28,7 +28,6 @@ int main() {
 
     /* Misc */
 
-
     pthread_t T1, T2;
 
     /* Struct for message & buffer size */
@@ -41,18 +40,17 @@ int main() {
     printf("sockWiFi control_unit: %d\n", sock.sockWiFi);
 
     while (1) {
-
-        //RSSI_VAL();
-        //RSRP_VAL();
+        // RSSI_VAL();
+        // RSRP_VAL();
         Timestamp();
         pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
         Timestamp();
         pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
         pthread_join(T1, (void**)&msg);
         pthread_join(T2, (void**)&msg);
-        
-        //printf("%s\n", msg);
-        //sleep(1);
+
+        // printf("%s\n", msg);
+        // sleep(1);
     }
 
     close(sock.sockLTE && sock.sockWiFi);

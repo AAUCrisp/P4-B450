@@ -30,7 +30,7 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     ftruncate(shm_fd, SIZE);
 
     /* memory map the shared memory object */
-    ptr = mmap(0/*or NULL*/, SIZE, PROT_WRITE, MAP_SHARED, shm_fd, 0);
+    ptr = mmap(0 /*or NULL*/, SIZE, PROT_WRITE, MAP_SHARED, shm_fd, 0);
 
     /* write to the shared memory object */
     sprintf(ptr, "%s", message);
