@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue May 10 14:52:57 2022
+# Make data base, printed on Tue May 10 15:25:17 2022
 
 # Variables
 
@@ -189,6 +189,7 @@ XDG_SESSION_CLASS = user
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
+ 
 GTK2_RC_FILES = /home/bamse/.gtkrc-2.0
 # environment
 HOME = /home/bamse
@@ -257,6 +258,7 @@ all:
 #  Command line target.
 #  Implicit rule search has been done.
 #  File does not exist.
+ 
 #  File has not been updated.
 
 # Not a target:
@@ -286,8 +288,7 @@ GNUmakefile:
 
 # strcache performance: lookups = 19 / hit rate = 15%
 # hash-table stats:
- 
 # Load=16/8192=0%, Rehash=0, Collisions=0/19=0%
-# Finished Make data base on Tue May 10 14:52:57 2022
+# Finished Make data base on Tue May 10 15:25:17 2022
 
  

@@ -24,7 +24,7 @@ int main() {
     uint PORT_LTE = 9123;
     uint PORT_WiFi = 9124;
     const char* LTE = "wwan0";
-    const char* WiFi = "wlan0";
+    const char* WiFi = "lo";
 
     /* Misc */
     pthread_t T1, T2;
@@ -41,25 +41,29 @@ int main() {
     /* Start signal monitoring process */
     pid_t signal_monitor;       // Prepare the process ID for monitoring
     signal_monitor = fork();    // Starts new process
-    printf("Parent Process ID: %d \n", getppid());
-    printf("Monitoring Process ID is: %d \n", getpid());
-    char *args[] = {"SignalMonitoring", "c"};   // TING!
-    execv("./SignalMonitoring", args);      // Tells the new process to run the code in this file
-
-
-
+    if(signal_monitor == 0){
+        printf("Parent Process ID: %d \n", getppid());
+        printf("Before Mon-ID Print \n");
+        printf("Monitoring Process ID is: %d \n", getpid());
+        printf("After Mon-ID Print \n");
+        char *args[] = {"SignalMonitoring", "c"};   // TING!
+        execv("./SignalMonitoring", args);      // Tells the new process to run the code in this file
+        printf("I am at line 50\n");
+    }
+    
     while (1) {
-        
+        printf("Hello i am in while\n");
         Timestamp();
-        pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
+        //pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
         Timestamp();
         pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
-        pthread_join(T1, (void**)&msg);
+        //pthread_join(T1, (void**)&msg);
         pthread_join(T2, (void**)&msg);
         
         //printf("%s\n", msg);
         //sleep(1);
     }
+    
 
     close(sock.sockLTE && sock.sockWiFi);
     exit(0);
