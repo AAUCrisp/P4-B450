@@ -25,13 +25,14 @@ struct Coordinate parse_coordinates(char msg[buffer])
 
     return C;
 }
-
+/*
 int main() 
 {
-   struct Coordinate result;
+   //struct Coordinate result;
 
    result = parse_coordinates(string_coordinates);
    
    printf("the robot has moved this much on the x and y-axis: %s \n", result.feedback);
 
 }
+*/
