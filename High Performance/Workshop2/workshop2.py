@@ -24,9 +24,28 @@ if __name__ == '__main__':
     f = np.asarray(Image.open("AK.png").convert('L'), dtype='int16')
 
     pos = 0
-    size = 256
-    f = f[pos:size,pos:size]
-    f.astype(np.int16)
+    size = 8
+    f = f[pos:pos+size,pos:pos+size]
+    #f.astype(np.int16)
     f-=128
-    
     show(f, "Test")
+    print(f)
+    blocksize = 4
+    width = int (len(f)/blocksize)
+    height = int (len(f[0])/blocksize)
+    imageDimensions = [width, height]
+    print(imageDimensions)
+    blockPartition = np.zeros((imageDimensions[0], imageDimensions[1], blocksize, blocksize))
+    print(blockPartition)
+    print(len(blockPartition))
+
+    #"""
+    for i in range(len(blockPartition)):
+        for ii in range(len(blockPartition[0])):
+            for iii in range(blocksize):
+                for iiii in range(blocksize):
+                    blockPartition[i][ii][iii][iiii] = f[iii + (blocksize*i)][iiii + (blocksize*ii)]
+
+    print(blockPartition)               
+    #"""
+    
