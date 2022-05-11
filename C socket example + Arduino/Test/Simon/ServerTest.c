@@ -41,6 +41,7 @@ sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 /* Setting up socket options & specifying interface */
 setsockopt(sockLTE, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
 setsockopt(sockWiFi, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
+setsockopt(sockWiFi, SOL_SOCKET, SO_REUSEADDR, WiFi, strlen(WiFi));
 
 /* Error checking */
 if (sockLTE == -1) {
