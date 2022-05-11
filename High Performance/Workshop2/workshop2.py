@@ -43,13 +43,12 @@ if __name__ == '__main__':
     
     f = np.asarray(Image.open("AK.png").convert('L'), dtype='int16')        # Opens the image as an array with separate pixels, only with the lumen value, typecasted to int for processing
 
-<<<<<<< HEAD
-    pos = 0
-    size = 8
+    pos = 0  # Starting position of conversion
+    size = 8 # How many pixels (from start) to include
     f = f[pos:pos+size,pos:pos+size]
     #f.astype(np.int16)
-    f-=128
-    show(f, "Test")
+    f-=128 # Substranct 128 from all the values, to make them center around 0
+    show(f, "Test") # Start GUI and show the result
     print(f)
     blocksize = 4
     width = int (len(f)/blocksize)
@@ -70,12 +69,3 @@ if __name__ == '__main__':
     print(blockPartition)               
     #"""
     
-=======
-    pos = 0     # Starting position of conversion
-    size = 256  # How many pixels (from start) to include
-    f = f[pos:(pos+size),pos:(pos+size)]    # Cuts out the selected part of the image
-    # f.astype(np.int16)      # Typecasting to int, for no apparent reason :P
-    f-=128      # Substranct 128 from all the values, to make them center around 0
-    
-    show(f, "Test")     # Start GUI and show the result
->>>>>>> 1e88b4964e09815ab67b754a938cc8be6f399ca2
