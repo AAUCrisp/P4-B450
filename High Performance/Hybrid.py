@@ -1,7 +1,7 @@
 import numpy as np
 import time as time
 
-size = 100
+size = 1000
 min_value = -100        # Minimum value in each matrix entrance
 max_value = 100         # Maximum value in each matrix entrance
 
