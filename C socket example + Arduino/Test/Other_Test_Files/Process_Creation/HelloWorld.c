@@ -35,15 +35,15 @@ int main() {
     printf("Sum of a+b+count: %d+%d+%d = %d\n", a, b, count, sum);
     shm_unlink(name);
 
-    /*while (1) {
+    while (1) {
         sleep(1);
         count++;
         printf("Hello world! %d\n", count);
         // printf("PID of parent_pid: %d\n", getppid());
         // printf("PID of child_pid: %d\n", getpid());
-        if (count == 4) {
+        if (count == 130) {
             break;
         }
-    }*/
+    }
     exit(0);
 }

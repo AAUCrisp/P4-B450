@@ -46,22 +46,25 @@ int main() {
         printf("Before Mon-ID Print \n");
         printf("Monitoring Process ID is: %d \n", getpid());
         printf("After Mon-ID Print \n");
-        char *args[] = {"SignalMonitoring", "c"};   // TING!
-        execv("./SignalMonitoring", args);      // Tells the new process to run the code in this file
-        printf("I am at line 50\n");
+        char path[] = "./SignalMonitoring";
+        char *args[] = {"./SignalMonitoring", NULL};   // TING!
+        execv(path, args);      // Tells the new process to run the code in this file
+        printf("DIDN'T START THE NEW PROCESS!!\n");
     }
-    
-    while (1) {
-        printf("Hello i am in while\n");
-        Timestamp();
-        //pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
-        Timestamp();
-        pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
-        //pthread_join(T1, (void**)&msg);
-        pthread_join(T2, (void**)&msg);
-        
-        //printf("%s\n", msg);
-        //sleep(1);
+    else{
+
+        while (1) {
+            printf("Hello i am in while\n");
+            Timestamp();
+            //pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
+            Timestamp();
+            pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
+            //pthread_join(T1, (void**)&msg);
+            pthread_join(T2, (void**)&msg);
+            
+            //printf("%s\n", msg);
+            //sleep(1);
+        }
     }
     
 
