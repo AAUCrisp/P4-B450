@@ -13,7 +13,8 @@
 
 struct sockaddr_in ClientLTE;   // a socket struct design to be used with IPv4
 struct sockaddr_in ClientWiFi;  // a socket struct design to be used with IPv4
-struct sockaddr_in ServerLTE, ServerWiFi;
+struct sockaddr_in ServerLTE;
+struct sockaddr_in ServerWiFi;
 struct sockaddr_storage remote_addr;
 socklen_t fromlen;
 int rv;
@@ -48,16 +49,19 @@ char buf4[64];
 void *transmit_LTE(void* message) {
     char transmitbuffer [1024];
     char *msg = message;
+
+    char test[] = "This is sent from LTE test";
     sprintf(transmitbuffer,"%s", msg);
-    tx_LTE = sendto(sockLTE, msg, 1024, 0, (struct sockaddr *)&ClientLTE, lenLTE);
+    tx_LTE = sendto(sockLTE, test, 1024, 0, (struct sockaddr *)&ClientLTE, lenLTE);
     //printf("LTE-Thread id = %ld\n", pthread_self());
     //printf("Sending Data from LTE \n \n");
 }
 void *transmit_WiFi(void *message) {
     char transmitbuffer[1024];
     char *msg = message;
+    char test[] = "This is sent from WiFi test";
     sprintf(transmitbuffer,"%s", msg);
-    tx_WiFI = sendto(sockWiFi, msg, 1024, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
+    tx_WiFI = sendto(sockWiFi, test, 1024, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
     //printf("WiFi-Thread id = %ld\n", pthread_self());
     //printf("Sending Data from WiFi\n \n");
 }
@@ -125,10 +129,12 @@ int main() {
         // printf("From LTE: %s\n", buf3);
         // rc_WiFi = recvfrom(sockWiFi, buf4, sizeof(buf4), 0, (struct sockaddr *)&ClientWiFi, &lenWiFi);
         // printf("From WiFi: %s\n", buf4);
-        
+        pthread_create(&T3, NULL, transmit_LTE, buf);
+	pthread_create(&T4, NULL, transmit_WiFi, buf2);
+	
         pthread_create(&T1, NULL, receiveLTE1, NULL);
         pthread_create(&T2, NULL, receiveWiFi1, NULL);
-        pthread_create(&T3, NULL, transmit_LTE, buf);
-        pthread_create(&T4, NULL, transmit_WiFi, buf2);
+        //pthread_create(&T3, NULL, transmit_LTE, buf);
+        //pthread_create(&T4, NULL, transmit_WiFi, buf2);
     }
 }
