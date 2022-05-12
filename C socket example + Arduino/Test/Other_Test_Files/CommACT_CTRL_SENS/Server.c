@@ -55,6 +55,7 @@ void *receiveWiFi1() {
 }
 
 int main() {
+    printf("Test");
     sockLTE1 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sockWiFi1 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
