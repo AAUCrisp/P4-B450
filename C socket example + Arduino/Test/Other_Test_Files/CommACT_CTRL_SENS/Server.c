@@ -33,6 +33,8 @@ const char *IP_WiFi = "192.168.1.143";
 /* Misc */
 struct sockaddr_in ServerLTE1;
 struct sockaddr_in ServerWiFi1;
+struct sockaddr_in ServerLTE2;
+struct sockaddr_in ServerWiFi2;
 int sockLTE1, lenLTE1 = sizeof(ServerLTE1);
 int sockWiFi1, lenWiFi1 = sizeof(ServerWiFi1);
 int sockLTE2, lenLTE2 = sizeof(ServerLTE2);
