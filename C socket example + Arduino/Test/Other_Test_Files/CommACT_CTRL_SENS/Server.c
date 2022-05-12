@@ -46,11 +46,11 @@ void *receiveLTE1() {
     printf("LTE-Thread id = %ld\n", pthread_self());
     printf("From LTE1: %s\n", Message);
     char msg[] = "Hello back from LTE";
-    if (RX_LTE1) {
+    /*if (RX_LTE1) {
         printf("Did I reach if statement? LTE");
         sendto(sockLTE1, msg, BUFFER, 0, (struct sockaddr *)&ServerLTE1, lenLTE1);
         pthread_exit(NULL);
-    }
+    }*/
     pthread_exit(NULL);
 }
 
@@ -60,11 +60,11 @@ void *receiveWiFi1() {
     printf("WiFi-Thread id = %ld\n", pthread_self());
     printf("From WiFi1: %s\n", Message);
     char msg[] = "Hello back from WiFi";
-    if (RX_WiFi1) {
+    /*if (RX_WiFi1) {
         printf("Did I reach if statement? WiFi");
         sendto(sockWiFi1, msg, BUFFER, 0, (struct sockaddr *)&ServerWiFi1, lenWiFi1);
         pthread_exit(NULL);
-    }
+    }*/
     pthread_exit(NULL);
 }
 

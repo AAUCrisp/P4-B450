@@ -32,11 +32,11 @@ int main() {
         printf("PID of parent_pid: %d\n", getppid());
         printf("PID of child_pid: %d\n", getpid());
         printf("\n");
-        char *args[] = {"HelloWorld", "c"};
+        char *args[] = {"HelloWorld", NULL};
         execv("./HelloWorld", args);
         int count;
 
-        /*while (1) {
+        while (1) {
             sleep(1);
             count++;
             printf("Main program/parent process: %d\n", count);
@@ -45,7 +45,7 @@ int main() {
             if (count == 5) {
                 break;
             }
-        }*/
+        }
         exit(0);
     }
     exit(0);

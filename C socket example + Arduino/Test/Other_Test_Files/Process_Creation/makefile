@@ -1,19 +1,19 @@
 all: ProcessStart HelloWorld
 
 ProcessStart: ProcessCreationTest.c shm_write.o
-	gcc -pthread -lconfig ProcessCreationTest.c shm_write.o -o ProcessStart
+	gcc -pthread -lconfig ProcessCreationTest.c shm_write.o -o ProcessStart -lrt
 	touch ProcessStart
 
 HelloWorld: HelloWorld.c shm_read.o
-	gcc -pthread -lconfig HelloWorld.c shm_read.o -o HelloWorld
+	gcc -pthread -lconfig HelloWorld.c shm_read.o -o HelloWorld -lrt
 	touch HelloWorld
 
 shm_write.o: shm_write.c shm_write_read.h
-	gcc -c shm_write.c
+	gcc -c shm_write.c -lrt
 	touch shm_write.c 
 
 shm_read.o: shm_read.c shm_write_read.h
-	gcc -c shm_read.c 
+	gcc -c shm_read.c -lrt
 	touch shm_read.c 
 
 clean:
