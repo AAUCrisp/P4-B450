@@ -29,9 +29,9 @@ const char *WiFi = "wlan0";
 
 #define LTE_ip "10.20.0.16"
 #define WiFi_ip "192.168.1.136"
+#define BUFFER 128
 
-char buf3[64];
-char buf4[64];
+
 
 void transmit_LTE(char *buf) {
     tx_LTE = sendto(sockLTE, buf, 1024, 0, (struct sockaddr *)&ServerLTE, lenLTE);
@@ -43,15 +43,16 @@ void transmit_WiFI(char *buf) {
 }
 
 void *receiveLTE() {
-    rc_LTE = recvfrom(sockLTE, buf3, sizeof(buf3), 0, (struct sockaddr *)&ServerLTE, &lenLTE);
+    char buf3[BUFFER];
+    rc_LTE = recvfrom(sockLTE_RECEIVE, buf3, BUFFER, 0, (struct sockaddr *)&ServerLTE_RECEIVE, &lenLTE_RECEIVE);
     printf("LTE-Thread id = %ld\n", pthread_self());
     printf("From LTE: %s\n", buf3);
     pthread_exit(NULL);
 }
 
-/* Function to receive WiFi packets */
 void *receiveWiFi() {
-    rc_WiFi = recvfrom(sockWiFi, buf4, sizeof(buf4), 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
+    char buf4[BUFFER];
+    rc_WiFi = recvfrom(sockWiFi_RECEIVE, buf4, BUFFER, 0, (struct sockaddr *)&ServerWiFi_RECEIVE, &lenWiFi_RECEIVE);
     printf("WiFi-Thread id = %ld\n", pthread_self());
     printf("From WiFi: %s\n", buf4);
     pthread_exit(NULL);
@@ -128,9 +129,9 @@ int main() {
     while (1) {
         usleep(500000);
         tx_LTE = sendto(sockLTE, buf, sizeof(buf), 0, (struct sockaddr *)&ServerLTE, lenLTE);
-        printf("data from LTE \n \n");
+        //printf("data from LTE \n \n");
         tx_WiFI = sendto(sockWiFi, buf2, sizeof(buf2), 0, (struct sockaddr *)&ServerWiFi, lenWiFi);
-        printf("Data from WiFi\n \n");
+        //printf("Data from WiFi\n \n");
 
         pthread_create(&T1, NULL, receiveLTE, NULL);
         pthread_create(&T2, NULL, receiveWiFi, NULL);
