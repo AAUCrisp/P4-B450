@@ -21,8 +21,8 @@
 char Message[BUFFER];
 uint PORT_LTE1 = 6969;
 uint PORT_WiFi1 = 6968;
-uint PORT_LTE1 = 6967;
-uint PORT_WiFi1 = 6966;
+uint PORT_LTE2 = 6967;
+uint PORT_WiFi2 = 6966;
 
 /* Specify LTE & WiFi interface */
 const char *LTE;
@@ -58,8 +58,8 @@ int main() {
     sockLTE1 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sockWiFi1 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
-    setsockopt(sockLTE1, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE1));
-    setsockopt(sockWiFi1, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi1));
+    setsockopt(sockLTE1, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
+    setsockopt(sockWiFi1, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
 
     if (sockLTE1 == -1) {
         perror("Failed to create sockLTE1");
