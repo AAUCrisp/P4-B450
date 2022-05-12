@@ -48,7 +48,7 @@ void transmit_WiFI(char *buf) {
 void *receiveLTE1() {
     rc_LTE = recvfrom(sockLTE, buf3, sizeof(buf3), 0, (struct sockaddr *)&ServerLTE, &lenLTE);
     printf("LTE-Thread id = %ld\n", pthread_self());
-    printf("From LTE: %s\n", Message);
+    printf("From LTE: %s\n", buf3);
     pthread_exit(NULL);
 }
 
@@ -56,7 +56,7 @@ void *receiveLTE1() {
 void *receiveWiFi1() {
     rc_WiFi = recvfrom(sockWiFi, buf4, sizeof(buf4), 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
     printf("WiFi-Thread id = %ld\n", pthread_self());
-    printf("From WiFi: %s\n", Message);
+    printf("From WiFi: %s\n", buf4);
     pthread_exit(NULL);
 }
 
