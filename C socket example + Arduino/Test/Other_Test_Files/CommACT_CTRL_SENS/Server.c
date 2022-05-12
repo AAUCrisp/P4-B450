@@ -84,7 +84,6 @@ int main() {
     printf("Bind to sockWiFi1 was successful\n");
 
     while (1) {
-        printf("Test");
         pthread_create(&T1, NULL, receiveLTE1, NULL);
         pthread_create(&T2, NULL, receiveWiFi1, NULL);
         //pthread_join(T1, NULL);
