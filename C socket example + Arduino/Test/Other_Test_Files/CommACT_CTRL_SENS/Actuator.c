@@ -49,7 +49,7 @@ void *transmit_LTE(void* message) {
     char transmitbuffer [1024];
     char *msg = message;
     sprintf(transmitbuffer,"%s", msg);
-    tx_LTE = sendto(sockLTE, msg, 1024, 0, (struct sockaddr *)&ClientLTE, lenLTE);
+    tx_LTE = sendto(sockLTE, transmitbuffer, 1024, 0, (struct sockaddr *)&ClientLTE, lenLTE);
     //printf("LTE-Thread id = %ld\n", pthread_self());
     //printf("Sending Data from LTE \n \n");
 }
@@ -57,7 +57,7 @@ void *transmit_WiFi(void *message) {
     char transmitbuffer[1024];
     char *msg = message;
     sprintf(transmitbuffer,"%s", msg);
-    tx_WiFI = sendto(sockWiFi, msg, 1024, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
+    tx_WiFI = sendto(sockWiFi, transmitbuffer, 1024, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
     //printf("WiFi-Thread id = %ld\n", pthread_self());
     //printf("Sending Data from WiFi\n \n");
 }
@@ -93,14 +93,15 @@ int main() {
     ClientLTE.sin_family = AF_INET;
     ClientLTE.sin_port = htons(LTE_PORT);
     ClientLTE.sin_addr.s_addr = inet_addr(LTE_ip);
-
-    ServerLTE.sin_family = AF_INET;
-    ServerLTE.sin_port = htons(LTE_PORT2);
-    ServerLTE.sin_addr.s_addr = INADDR_ANY;
-
+    
     ClientWiFi.sin_family = AF_INET;
     ClientWiFi.sin_port = htons(WiFi_PORT);
     ClientWiFi.sin_addr.s_addr = inet_addr(WiFi_ip);
+    
+    
+    ServerLTE.sin_family = AF_INET;
+    ServerLTE.sin_port = htons(LTE_PORT2);
+    ServerLTE.sin_addr.s_addr = INADDR_ANY;
 
     ServerWiFi.sin_family = AF_INET;
     ServerWiFi.sin_port = htons(WiFi_PORT2);
@@ -126,9 +127,13 @@ int main() {
         // rc_WiFi = recvfrom(sockWiFi, buf4, sizeof(buf4), 0, (struct sockaddr *)&ClientWiFi, &lenWiFi);
         // printf("From WiFi: %s\n", buf4);
         
-        pthread_create(&T1, NULL, receiveLTE1, NULL);
-        pthread_create(&T2, NULL, receiveWiFi1, NULL);
         pthread_create(&T3, NULL, transmit_LTE, buf);
         pthread_create(&T4, NULL, transmit_WiFi, buf2);
+        
+        pthread_create(&T1, NULL, receiveLTE1, NULL);
+        pthread_create(&T2, NULL, receiveWiFi1, NULL);
+        
+
+        
     }
 }
