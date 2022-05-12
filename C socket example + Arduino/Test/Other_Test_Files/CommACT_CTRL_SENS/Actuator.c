@@ -23,8 +23,6 @@ int lenWiFi = sizeof(ServerWiFi);
 int rc_LTE, rc_WiFi;
 int tx_LTE, tx_WiFI;
 pthread_t T1, T2;
-char *buf[1024];
-char buf2[1024];
 
 const char *LTE = "wwan0";
 const char *WiFi = "wlan0";
@@ -66,10 +64,14 @@ int main() {
 
     // bindLTE = bind(sockLTE, (struct sockadd *)&ServerLTE, sizeof(struct sockaddr));
     // bindWiFi = bind (sockWiFi, (struct sockaddr *)&ServerWiFi, sizeof(struct sockaddr));
+    char buf[] = "THIS IS LTE!";
+    char buf2[] = "THIS IS WIFI!";
 
     while (1) {
         usleep(500000);
-        transmit_LTE("Did you get this LTE-packet?");
-        transmit_WiFI("did you get this WiFi-packet?");
+        tx_LTE = sendto(sockLTE, buf, sizeof(buf), 0, (struct sockaddr *)&ServerLTE, lenLTE);
+        printf("data from LTE \n \n");
+        tx_WiFI = sendto(sockWiFi, buf2, sizeof(buf2), 0, (struct sockaddr *)&ServerWiFi, lenWiFi);
+        printf("Data from WiFi\n \n");
     }
 }
