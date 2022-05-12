@@ -87,7 +87,12 @@ int main() {
         printf("data from LTE \n \n");
         tx_WiFI = sendto(sockWiFi, buf2, sizeof(buf2), 0, (struct sockaddr *)&ServerWiFi, lenWiFi);
         printf("Data from WiFi\n \n");
-        pthread_create(&T1, NULL, receiveLTE1, NULL);
-        pthread_create(&T2, NULL, receiveWiFi1, NULL);
+
+        rc_LTE = recvfrom(sockLTE, buf3, sizeof(buf3), 0, (struct sockaddr *)&ServerLTE, &lenLTE);
+        printf("From LTE: %s\n", buf3);
+        rc_WiFi = recvfrom(sockWiFi, buf4, sizeof(buf4), 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
+        printf("From WiFi: %s\n", buf4);
+        //pthread_create(&T1, NULL, receiveLTE1, NULL);
+        //pthread_create(&T2, NULL, receiveWiFi1, NULL);
     }
 }
