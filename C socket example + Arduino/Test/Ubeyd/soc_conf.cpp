@@ -45,7 +45,7 @@ void *receive_WiFi(void *);
 pthread_t T1,T2;
 
 
-void socket_configuration() {
+int socket_configuration() {
     /* Create socket and bind them to Interface*/
 	sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 	sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -92,5 +92,6 @@ void socket_configuration() {
 		perror("error with binding WiFi socket");
 		exit(0);
 	}
+	return 0;
 }
 

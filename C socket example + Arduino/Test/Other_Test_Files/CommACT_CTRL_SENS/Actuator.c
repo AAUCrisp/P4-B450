@@ -23,7 +23,7 @@ int lenWiFi = sizeof(ServerWiFi);
 int rc_LTE, rc_WiFi;
 int tx_LTE, tx_WiFI;
 pthread_t T1, T2;
-char buf[1024];
+char *buf[1024];
 char buf2[1024];
 
 const char *LTE = "wwan0";
@@ -35,12 +35,12 @@ const char *WiFi = "wlan0";
 #define LTE_ip "10.20.0.16"
 #define WiFi_ip "192.168.1.136"
 
-void transmit_LTE(char buf) {
-    tx_LTE = sendto(sockLTE, buf, strlen(buf), 0, (struct sockaddr *)&ServerLTE, lenLTE);
+void transmit_LTE(char *buf) {
+    tx_LTE = sendto(sockLTE, buf, 1024, 0, (struct sockaddr *)&ServerLTE, lenLTE);
     printf("data from LTE \n \n");
 }
-void transmit_WiFI(char buf) {
-    tx_WiFI = sendto(sockWiFi, buf, strlen(buf), 0, (struct sockaddr *)&ServerWiFi, lenWiFi);
+void transmit_WiFI(char *buf) {
+    tx_WiFI = sendto(sockWiFi, buf, 1024, 0, (struct sockaddr *)&ServerWiFi, lenWiFi);
     printf("Data from WiFi\n \n");
 }
 
@@ -62,7 +62,7 @@ int main() {
 
     ServerWiFi.sin_family = AF_INET;
     ServerWiFi.sin_port = htons(WiFi_PORT);
-    ServerWiFi.sin_addr.s_addr = inet(WiFi_ip);
+    ServerWiFi.sin_addr.s_addr = inet_addr(WiFi_ip);
 
     // bindLTE = bind(sockLTE, (struct sockadd *)&ServerLTE, sizeof(struct sockaddr));
     // bindWiFi = bind (sockWiFi, (struct sockaddr *)&ServerWiFi, sizeof(struct sockaddr));
