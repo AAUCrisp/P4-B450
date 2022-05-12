@@ -33,6 +33,9 @@ const char *WiFi = "wlan0";
 #define LTE_ip "10.20.0.16"
 #define WiFi_ip "192.168.1.136"
 
+char buf3[64];
+char buf4[64];
+
 void transmit_LTE(char *buf) {
     tx_LTE = sendto(sockLTE, buf, 1024, 0, (struct sockaddr *)&ServerLTE, lenLTE);
     printf("data from LTE \n \n");
@@ -42,10 +45,21 @@ void transmit_WiFI(char *buf) {
     printf("Data from WiFi\n \n");
 }
 
-/*void receive_LTE() {
-    rc_LTE = recvfrom(sockLTE, buf2, strlen(buf2), (struct sockaddr *)&ServerLTE, &lenLTE);
+void *receiveLTE1() {
+    rc_LTE = recvfrom(sockLTE, buf3, sizeof(buf3), 0, (struct sockaddr *)&ServerLTE, &lenLTE);
+    printf("LTE-Thread id = %ld\n", pthread_self());
+    printf("From LTE: %s\n", Message);
+    pthread_exit(NULL);
 }
-*/
+
+/* Function to receive WiFi packets */
+void *receiveWiFi1() {
+    rc_WiFi = recvfrom(sockWiFi, buf4, sizeof(buf4), 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
+    printf("WiFi-Thread id = %ld\n", pthread_self());
+    printf("From WiFi: %s\n", Message);
+    pthread_exit(NULL);
+}
+
 int main() {
     int sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     int sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -66,16 +80,14 @@ int main() {
     // bindWiFi = bind (sockWiFi, (struct sockaddr *)&ServerWiFi, sizeof(struct sockaddr));
     char buf[] = "THIS IS LTE!";
     char buf2[] = "THIS IS WIFI!";
-    char buf3[64];
-    char buf4[64];
 
     while (1) {
         usleep(500000);
         tx_LTE = sendto(sockLTE, buf, sizeof(buf), 0, (struct sockaddr *)&ServerLTE, lenLTE);
         printf("data from LTE \n \n");
-       tx_WiFI = sendto(sockWiFi, buf2, sizeof(buf2), 0, (struct sockaddr *)&ServerWiFi, lenWiFi);
-       printf("Data from WiFi\n \n");
-       rc_LTE = recvfrom(sockLTE, buf3, sizeof(buf3), 0, (struct sockaddr *)&ServerLTE, &lenLTE);
-       rc_WiFi = recvfrom(sockWiFi, buf4, sizeof(buf4), 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
+        tx_WiFI = sendto(sockWiFi, buf2, sizeof(buf2), 0, (struct sockaddr *)&ServerWiFi, lenWiFi);
+        printf("Data from WiFi\n \n");
+        pthread_create(&T1, NULL, receiveLTE1, NULL);
+        pthread_create(&T2, NULL, receiveWiFi1, NULL);
     }
 }
