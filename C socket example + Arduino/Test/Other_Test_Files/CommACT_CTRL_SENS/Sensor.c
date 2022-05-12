@@ -19,7 +19,22 @@ int lenLTE = sizeof(ServerLTE);
 int lenWiFi = sizeof(ServerWiFi);
 int rc_LTE, rc_WiFi;
 int tx_LTE, tx_WiFI;
-pthread_t T1, T2;
+
+struct sockaddr_in ServerLTE_RECEIVE;   // a socket struct design to be used with IPv4
+struct sockaddr_in ServerWiFi_RECEIVE;  // a socket struct design to be used with IPv4
+int sockLTE_RECEIVE, sockWiFi_RECEIVE;
+int bindLTE_RECEIVE, bindWiFi_RECEIVE;
+int lenLTE_RECEIVE = sizeof(ServerLTE_RECEIVE);
+int lenWiFi_RECEIVE = sizeof(ServerWiFi_RECEIVE);
+int rc_LTE, rc_WiFi;
+int tx_LTE, tx_WiFI;
+pthread_t T1, T2, T3, T4;
+
+const char *LTE = "wwan0";
+const char *WiFi = "wlan0";
+
+uint LTE_PORT_RECEIVE = 6967;
+uint WiFi_PORT_RECEIVE = 6966;
 
 const char *LTE = "wwan0";
 const char *WiFi = "wlan0";
@@ -49,7 +64,6 @@ void *receiveLTE() {
     printf("From LTE: %s\n", buf3);
     pthread_exit(NULL);
 }
-
 void *receiveWiFi() {
     char buf4[BUFFER];
     rc_WiFi = recvfrom(sockWiFi_RECEIVE, buf4, BUFFER, 0, (struct sockaddr *)&ServerWiFi_RECEIVE, &lenWiFi_RECEIVE);
@@ -59,8 +73,8 @@ void *receiveWiFi() {
 }
 
 int main() {
-    int sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    int sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
     // bind to device
     setsockopt(sockLTE, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
@@ -74,25 +88,9 @@ int main() {
     ServerWiFi.sin_port = htons(WiFi_PORT);
     ServerWiFi.sin_addr.s_addr = inet_addr(WiFi_ip);
 
-    // bindLTE = bind(sockLTE, (struct sockadd *)&ServerLTE, sizeof(struct sockaddr));
-    // bindWiFi = bind (sockWiFi, (struct sockaddr *)&ServerWiFi, sizeof(struct sockaddr));
-
+    
     /* ---------------------------------------------------------------- */
-    struct sockaddr_in ServerLTE_RECEIVE;   // a socket struct design to be used with IPv4
-    struct sockaddr_in ServerWiFi_RECEIVE;  // a socket struct design to be used with IPv4
-    int sockLTE_RECEIVE, sockWiFi_RECEIVE;
-    int bindLTE_RECEIVE, bindWiFi_RECEIVE;
-    int lenLTE_RECEIVE = sizeof(ServerLTE_RECEIVE);
-    int lenWiFi_RECEIVE = sizeof(ServerWiFi_RECEIVE);
-    int rc_LTE, rc_WiFi;
-    int tx_LTE, tx_WiFI;
-    pthread_t T1, T2, T3, T4;
 
-    const char *LTE = "wwan0";
-    const char *WiFi = "wlan0";
-
-    uint LTE_PORT_RECEIVE = 6967;
-    uint WiFi_PORT_RECEIVE = 6966;
 
     /* Receive Socket */
     sockLTE_RECEIVE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
