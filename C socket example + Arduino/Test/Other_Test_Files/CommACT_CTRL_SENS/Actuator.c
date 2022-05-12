@@ -100,7 +100,8 @@ int main() {
 
     bindLTE = bind(sockLTE2, (struct sockaddr *)&ServerLTE, sizeof(struct sockaddr));
     bindWiFi = bind (sockWiFi2, (struct sockaddr *)&ServerWiFi, sizeof(struct sockaddr));
-    
+    char *buf[] = "THIS IS LTE!";
+    char *buf2[] = "THIS IS WIFI!";
 
     while (1) {
         
@@ -115,8 +116,7 @@ int main() {
         // printf("From LTE: %s\n", buf3);
         // rc_WiFi = recvfrom(sockWiFi, buf4, sizeof(buf4), 0, (struct sockaddr *)&ClientWiFi, &lenWiFi);
         // printf("From WiFi: %s\n", buf4);
-        char *buf[] = "THIS IS LTE!";
-        char *buf2[] = "THIS IS WIFI!";
+        
         pthread_create(&T1, NULL, receiveLTE1, NULL);
         pthread_create(&T2, NULL, receiveWiFi1, NULL);
         pthread_create(&T3, NULL, transmit_LTE, buf);
