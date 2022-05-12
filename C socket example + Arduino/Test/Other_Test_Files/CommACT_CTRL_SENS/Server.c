@@ -65,7 +65,7 @@ void *transmitLTE(void *message) {
     char *msg = message;
     sprintf(transmitBuffer, "%s", msg);
     sendto(sockLTE2, transmitBuffer, BUFFER, 0, (struct sockaddr *)&ServerLTE2, lenLTE2);
-    //printf("LTE-Thread id = %ld\n\n", pthread_self());
+    // printf("LTE-Thread id = %ld\n\n", pthread_self());
     pthread_exit(NULL);
 }
 
@@ -74,7 +74,7 @@ void *transmitWiFi(void *message) {
     char *msg = message;
     sprintf(transmitBuffer, "%s", msg);
     sendto(sockWiFi2, transmitBuffer, BUFFER, 0, (struct sockaddr *)&ServerWiFi2, lenWiFi2);
-    //printf("WiFi-Thread id = %ld\n\n", pthread_self());
+    // printf("WiFi-Thread id = %ld\n\n", pthread_self());
     pthread_exit(NULL);
 }
 
@@ -142,11 +142,12 @@ int main() {
     while (1) {
         pthread_create(&T1, NULL, receiveLTE, NULL);
         pthread_create(&T2, NULL, receiveWiFi, NULL);
-        //pthread_create(&T3, NULL, transmitLTE, msg);
-        //pthread_create(&T4, NULL, transmitWiFi, msg2);
+        // pthread_create(&T3, NULL, transmitLTE, msg);
+        // pthread_create(&T4, NULL, transmitWiFi, msg2);
 
-        //transmitLTE(msg);
-        //transmitWiFi(msg2);
+        sendto(sockLTE2, msg, BUFFER, 0, (struct sockaddr *)&ServerLTE2, lenLTE2);
+        sendto(sockWiFi2, msg2, BUFFER, 0, (struct sockaddr *)&ServerWiFi2, lenWiFi2);
+
         // RX_LTE1 = recvfrom(sockLTE1, Message, BUFFER, 0, (struct sockaddr *)&ServerLTE1, &lenLTE1);
         // printf("From LTE1: %s\n", Message);
         // RX_WiFi1 = recvfrom(sockWiFi1, Message, BUFFER, 0, (struct sockaddr *)&ServerWiFi1, &lenWiFi1);
