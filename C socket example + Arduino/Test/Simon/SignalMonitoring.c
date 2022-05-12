@@ -49,7 +49,7 @@ int rsrp_good = -80;
 
 
 int main() {
-    printf("In Monitoring Now!!\n\n");
+    printf("==================\nMonitoring Process Started\n==================\n\n");
     int counter = 0;
 
     while(1){
