@@ -21,7 +21,7 @@ Eth: 192.168.1.117
 <ins>**Server must not be started with sudo:   "./[ServerName]"**</ins>  
 <ins>**Client must be started with sudo:       "sudo ./[ClientName]"**</ins>  
 
-LTE Refresh rate setup cmd: sudo mmcli -m 0 --signal-setup=1
+
 
 <ins>**Git:**</ins>
     - `sudo apt-get install git`        Install Git on your machine    
@@ -32,7 +32,10 @@ LTE Refresh rate setup cmd: sudo mmcli -m 0 --signal-setup=1
     - `git commit`      Tell GitHub what changes you've made  
     - `git push`        Push the changes to GitHub  
 
-    - `sudo ip route add 10.20.0.0/24 dev wwan0`        add ip routing for wwan0
+    - `sudo ip route add 10.20.0.0/24 dev wwan0`
+    add ip routing for wwan0
 
-    - `sudo ifconfig wwan0 [4G IP] netmask 255.255.255.0
-`        add netmask for wwan0
+    - `sudo ifconfig wwan0 [4G IP] netmask 255.255.255.0`        add netmask for wwan0
+
+    - `sudo sudo mmcli -m 0 --signal-setup=1`
+    LTE refresh rate
