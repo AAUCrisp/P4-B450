@@ -31,8 +31,8 @@ const char *WiFi;
 /* Misc */
 struct sockaddr_in ServerLTE1;
 struct sockaddr_in ServerWiFi1;
-int sockLTE1, lenLTE = sizeof(ServerLTE1);
-int sockWiFi1, lenWiFi = sizeof(ServerWiFi1);
+int sockLTE1, lenLTE1 = sizeof(ServerLTE1);
+int sockWiFi1, lenWiFi1 = sizeof(ServerWiFi1);
 int bindLTE1, bindWiFi1;
 int RX_LTE1, RX_WiFi1;
 int TX_LTE1, TX_WiFi1;
@@ -58,8 +58,8 @@ int main() {
     sockLTE1 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sockWiFi1 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
-    setsockopt(sockLTE1, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
-    setsockopt(sockWiFi1, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
+    setsockopt(sockLTE1, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE1));
+    setsockopt(sockWiFi1, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi1));
 
     if (sockLTE1 == -1) {
         perror("Failed to create sockLTE1");
