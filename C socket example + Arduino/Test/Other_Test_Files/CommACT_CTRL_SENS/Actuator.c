@@ -33,6 +33,8 @@ const char *WiFi = "wlan0";
 #define LTE_ip "10.20.0.16"
 #define WiFi_ip "192.168.1.136"
 
+char buf[] = "THIS IS LTE!";
+char buf2[] = "THIS IS WIFI!";
 char buf3[64];
 char buf4[64];
 
@@ -82,8 +84,7 @@ int main() {
 
     // bindLTE = bind(sockLTE, (struct sockadd *)&ServerLTE, sizeof(struct sockaddr));
     // bindWiFi = bind (sockWiFi, (struct sockaddr *)&ServerWiFi, sizeof(struct sockaddr));
-    char buf[] = "THIS IS LTE!";
-    char buf2[] = "THIS IS WIFI!";
+    
 
     while (1) {
         usleep(500000);
