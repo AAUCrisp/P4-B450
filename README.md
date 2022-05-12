@@ -35,4 +35,4 @@ LTE Refresh rate setup cmd: sudo mmcli -m 0 --signal-setup=1
     - `sudo ip route add 10.20.0.0/24 dev wwan0`        add ip routing for wwan0
 
     - `sudo ifconfig wwan0 [4G IP] netmask 255.255.255.0
-`        add ip routing for wwan0
+`        add netmask for wwan0
