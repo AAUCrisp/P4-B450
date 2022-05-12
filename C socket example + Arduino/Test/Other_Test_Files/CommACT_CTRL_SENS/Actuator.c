@@ -43,7 +43,7 @@ void transmit_LTE(char *buf) {
     printf("data from LTE \n \n");
 }
 void transmit_WiFI(char *buf) {
-    tx_WiFI = sendto(sockWiFi, buf, 1024, 0, (struct sockaddr *)&ServerWiFi, lenWiFi);
+    tx_WiFi = sendto(sockWiFi, buf, 1024, 0, (struct sockaddr *)&ServerWiFi, lenWiFi);
     printf("Data from WiFi\n \n");
 }
 
@@ -88,9 +88,6 @@ int main() {
 
     while (1) {
         usleep(500000);
-        
-        
-
         // rc_LTE = recvfrom(sockLTE, buf3, sizeof(buf3), 0, (struct sockaddr *)&ServerLTE, &lenLTE);
         // printf("From LTE: %s\n", buf3);
         // rc_WiFi = recvfrom(sockWiFi, buf4, sizeof(buf4), 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
