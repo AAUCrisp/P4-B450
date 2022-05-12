@@ -80,19 +80,20 @@ int main() {
 
     ServerLTE1.sin_family = AF_INET;
     ServerLTE1.sin_port = htons(PORT_LTE1);
-    ServerLTE1.sin_addr.s_addr = inet_addr(LTE_IP);
+    ServerLTE1.sin_addr.s_addr = INADDR_ANY;
 
     ServerWiFi1.sin_family = AF_INET;
     ServerWiFi1.sin_port = htons(PORT_WiFi1);
-    ServerWiFi1.sin_addr.s_addr = inet_addr(WiFi_IP);
+    ServerWiFi1.sin_addr.s_addr = INADDR_ANY;
 
     bindLTE1 = bind(sockLTE1, (struct sockaddr *)&ServerLTE1, sizeof(struct sockaddr));
     printf("Bind to sockLTE1 was successful\n");
     bindWiFi1 = bind(sockWiFi1, (struct sockaddr *)&ServerWiFi1, sizeof(struct sockaddr));
     printf("Bind to sockWiFi1 was successful\n");
     char msg[] = "Hello back from WiFi";
+    char msg2[] = "Hello back from LTE";
     while (1) {
-        sendto(sockLTE1, msg, BUFFER, 0, (struct sockaddr *)&ServerLTE1, lenLTE1);
+        sendto(sockLTE1, msg2, BUFFER, 0, (struct sockaddr *)&ServerLTE1, lenLTE1);
         sendto(sockWiFi1, msg, BUFFER, 0, (struct sockaddr *)&ServerWiFi1, lenWiFi1);
         pthread_create(&T1, NULL, receiveLTE1, NULL);
         pthread_create(&T2, NULL, receiveWiFi1, NULL);
