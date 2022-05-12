@@ -36,9 +36,6 @@ const char *WiFi = "wlan0";
 uint LTE_PORT_RECEIVE = 6967;
 uint WiFi_PORT_RECEIVE = 6966;
 
-const char *LTE = "wwan0";
-const char *WiFi = "wlan0";
-
 #define LTE_PORT 6969
 #define WiFi_PORT 6968
 
