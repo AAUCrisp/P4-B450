@@ -103,5 +103,7 @@ int main() {
 
         if(counter == (buffer -1)) { counter = 0; }
 		else{ counter++;}
+
+        sleep(1);
     }
 }
