@@ -145,8 +145,8 @@ int main() {
         //pthread_create(&T3, NULL, transmitLTE, msg);
         //pthread_create(&T4, NULL, transmitWiFi, msg2);
 
-        transmitLTE(msg);
-        transmitWiFi(msg2);
+        //transmitLTE(msg);
+        //transmitWiFi(msg2);
         // RX_LTE1 = recvfrom(sockLTE1, Message, BUFFER, 0, (struct sockaddr *)&ServerLTE1, &lenLTE1);
         // printf("From LTE1: %s\n", Message);
         // RX_WiFi1 = recvfrom(sockWiFi1, Message, BUFFER, 0, (struct sockaddr *)&ServerWiFi1, &lenWiFi1);
