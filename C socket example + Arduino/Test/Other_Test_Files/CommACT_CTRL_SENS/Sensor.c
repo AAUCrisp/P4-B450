@@ -117,9 +117,9 @@ int main() {
     ServerWiFi_RECEIVE.sin_port = htons(WiFi_PORT_RECEIVE);
     ServerWiFi_RECEIVE.sin_addr.s_addr = INADDR_ANY;
 
-    bindLTE1 = bind(sockLTE_RECEIVE, (struct sockaddr *)&ServerLTE_RECEIVE, sizeof(struct sockaddr));
+    bindLTE_RECEIVE = bind(sockLTE_RECEIVE, (struct sockaddr *)&ServerLTE_RECEIVE, sizeof(struct sockaddr));
     printf("Bind to sockLTE_RECEIVE was successful\n");
-    bindWiFi1 = bind(sockWiFi_RECEIVE, (struct sockaddr *)&ServerWiFi_RECEIVE, sizeof(struct sockaddr));
+    bindWiFi_RECEIVE = bind(sockWiFi_RECEIVE, (struct sockaddr *)&ServerWiFi_RECEIVE, sizeof(struct sockaddr));
     printf("Bind to sockWiFi_RECEIVE was successful\n");
 
     char buf[] = "THIS IS LTE! SENSOR";
