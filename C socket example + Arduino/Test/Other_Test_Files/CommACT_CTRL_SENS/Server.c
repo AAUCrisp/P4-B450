@@ -87,7 +87,7 @@ int main() {
         printf("Test");
         pthread_create(&T1, NULL, receiveLTE1, NULL);
         pthread_create(&T2, NULL, receiveWiFi1, NULL);
-        pthread_join(T1, NULL);
-        pthread_join(T2, NULL);
+        //pthread_join(T1, NULL);
+        //pthread_join(T2, NULL);
     }
 }
