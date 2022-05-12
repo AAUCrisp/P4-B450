@@ -90,8 +90,8 @@ int main() {
     const char *LTE = "wwan0";
     const char *WiFi = "wlan0";
 
-    uint LTE_PORT_RECEIVE 6967;
-    uint WiFi_PORT_RECEIVE 6966;
+    uint LTE_PORT_RECEIVE = 6967;
+    uint WiFi_PORT_RECEIVE = 6966;
 
     /* Receive Socket */
     sockLTE_RECEIVE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -111,7 +111,7 @@ int main() {
 
     ServerLTE_RECEIVE.sin_family = AF_INET;
     ServerLTE_RECEIVE.sin_port = htons(LTE_PORT_RECEIVE);
-    ServerLTE__RECEIVE.sin_addr.s_addr = INADD_RECEIVE_ANY;
+    ServerLTE_RECEIVE.sin_addr.s_addr = INADDR_ANY;
 
     ServerWiFi_RECEIVE.sin_family = AF_INET;
     ServerWiFi_RECEIVE.sin_port = htons(WiFi_PORT_RECEIVE);
