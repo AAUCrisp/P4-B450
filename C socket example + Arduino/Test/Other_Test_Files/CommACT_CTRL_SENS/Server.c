@@ -35,6 +35,8 @@ struct sockaddr_in ServerLTE1;
 struct sockaddr_in ServerWiFi1;
 int sockLTE1, lenLTE1 = sizeof(ServerLTE1);
 int sockWiFi1, lenWiFi1 = sizeof(ServerWiFi1);
+int sockLTE2, lenLTE2 = sizeof(ServerLTE2);
+int sockWiFi2, lenWiFi2 = sizeof(ServerWiFi2);
 int bindLTE1, bindWiFi1;
 int RX_LTE1, RX_WiFi1;
 int TX_LTE1, TX_WiFi1;
