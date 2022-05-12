@@ -25,8 +25,8 @@ uint PORT_LTE2 = 6967;
 uint PORT_WiFi2 = 6966;
 
 /* Specify LTE & WiFi interface */
-const char *LTE;
-const char *WiFi;
+const char *LTE = "wwan0";
+const char *WiFi = "wlan0";
 
 /* Misc */
 struct sockaddr_in ServerLTE1;
