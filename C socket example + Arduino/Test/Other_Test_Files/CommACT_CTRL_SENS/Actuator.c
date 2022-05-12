@@ -42,13 +42,15 @@ const char *WiFi = "wlan0";
 char buf3[64];
 char buf4[64];
 
-void *transmit_LTE(void *msg) {
+void *transmit_LTE(void* message) {
+    char *msg = message;
     tx_LTE = sendto(sockLTE, msg, 1024, 0, (struct sockaddr *)&ClientLTE, lenLTE);
     printf("LTE-Thread id = %ld\n", pthread_self());
     printf("Sending Data from LTE \n \n");
 }
-void *transmit_WiFi(void *msg2) {
-    tx_WiFI = sendto(sockWiFi, msg2, 1024, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
+void *transmit_WiFi(void *message) {
+    char *msg = message;
+    tx_WiFI = sendto(sockWiFi, msg, 1024, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
     printf("WiFi-Thread id = %ld\n", pthread_self());
     printf("Sending Data from WiFi\n \n");
 }
