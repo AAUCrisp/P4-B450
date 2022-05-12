@@ -109,8 +109,8 @@ int main() {
 
     bindLTE = bind(sockLTE2, (struct sockaddr *)&ServerLTE, sizeof(struct sockaddr));
     bindWiFi = bind (sockWiFi2, (struct sockaddr *)&ServerWiFi, sizeof(struct sockaddr));
-    char *buf[] = "THIS IS LTE!";
-    char *buf2[] = "THIS IS WIFI!";
+    char buf[] = "THIS IS LTE!";
+    char buf2[] = "THIS IS WIFI!";
 
     while (1) {
         
