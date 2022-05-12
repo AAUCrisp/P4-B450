@@ -67,6 +67,9 @@ int main() {
     // bindLTE = bind(sockLTE, (struct sockadd *)&ServerLTE, sizeof(struct sockaddr));
     // bindWiFi = bind (sockWiFi, (struct sockaddr *)&ServerWiFi, sizeof(struct sockaddr));
 
-    transmit_LTE("Did you get this LTE-packet?");
-    transmit_WiFI("did you get this WiFi-packet?");
+    while (1) {
+        usleep(500000);
+        transmit_LTE("Did you get this LTE-packet?");
+        transmit_WiFI("did you get this WiFi-packet?");
+    }
 }
