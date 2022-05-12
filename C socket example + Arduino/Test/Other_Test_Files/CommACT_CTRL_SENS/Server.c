@@ -55,7 +55,6 @@ void *receiveWiFi1() {
 }
 
 int main() {
-    printf("Test");
     sockLTE1 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sockWiFi1 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
@@ -85,7 +84,10 @@ int main() {
     printf("Bind to sockWiFi1 was successful\n");
 
     while (1) {
+        printf("Test");
         pthread_create(&T1, NULL, receiveLTE1, NULL);
         pthread_create(&T2, NULL, receiveWiFi1, NULL);
+        pthread_join(T1, NULL);
+        pthread_join(T2, NULL);
     }
 }
