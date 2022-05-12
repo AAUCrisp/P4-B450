@@ -32,21 +32,30 @@ int main() {
         printf("PID of parent_pid: %d\n", getppid());
         printf("PID of child_pid: %d\n", getpid());
         printf("\n");
-        char *args[] = {"HelloWorld", NULL};
-        execv("./HelloWorld", args);
-        int count;
+        // char cmd[] = "/home/bamse/Desktop/P4/P4-B450/C socket example + Arduino/Test/Other_Test_Files/Process_Creation/HelloWorld";
+        // char cmd[] = "/home/bamse/Desktop/P4/P4-B450/C socket example + Arduino/Test/Other_Test_Files/Process_Creation/";
+        char cmd[] = "./HelloWorld";
 
-        while (1) {
-            sleep(1);
-            count++;
-            printf("Main program/parent process: %d\n", count);
-            // printf("PID of parent_pid: %d\n", getppid());
-            // printf("PID of child_pid: %d\n", getpid());
-            if (count == 5) {
-                break;
-            }
-        }
+        printf(cmd);
+        char *args[] = {"./HelloWorld", NULL};
+        char *envVec[] = {NULL};
+        //exec("./HelloWorld", args);
+        execv(cmd, args);
+        // execve(cmd, args, envVec);
+        printf("MULTIPROCESS FAIL! Didn't start the second process\n\n");
         exit(0);
+    }
+    int count = 0;
+
+    while (1) {
+        sleep(1);
+        count++;
+        printf("Main program/parent process: %d\n", count);
+        // printf("PID of parent_pid: %d\n", getppid());
+        // printf("PID of child_pid: %d\n", getpid());
+        if (count == 5) {
+            break;
+        }
     }
     exit(0);
 }
