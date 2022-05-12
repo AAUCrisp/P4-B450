@@ -40,7 +40,7 @@ pthread_t T1, T2, T3, T4;
 
 /* Function to receive LTE packets */
 void *receiveLTE1() {
-    RX_LTE1 = recvfrom(sockLTE1, Message, BUFFER, 0, (struct sockaddr *)&ServerLTE1, lenLTE1);
+    RX_LTE1 = recvfrom(sockLTE1, Message, BUFFER, 0, (struct sockaddr *)&ServerLTE1, &lenLTE1);
     printf("LTE-Thread id = %ld\n", pthread_self());
     printf("From LTE1: %s\n", Message);
     char msg[] = "Hello back from LTE";
@@ -51,7 +51,7 @@ void *receiveLTE1() {
 
 /* Function to receive WiFi packets */
 void *receiveWiFi1() {
-    RX_WiFi1 = recvfrom(sockWiFi1, Message, BUFFER, 0, (struct sockaddr *)&ServerWiFi1, lenWiFi1);
+    RX_WiFi1 = recvfrom(sockWiFi1, Message, BUFFER, 0, (struct sockaddr *)&ServerWiFi1, &lenWiFi1);
     printf("WiFi-Thread id = %ld\n", pthread_self());
     printf("From WiFi1: %s\n", Message);
     char msg[] = "Hello back from WiFi";
