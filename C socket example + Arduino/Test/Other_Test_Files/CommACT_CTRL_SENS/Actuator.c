@@ -66,12 +66,16 @@ int main() {
     // bindWiFi = bind (sockWiFi, (struct sockaddr *)&ServerWiFi, sizeof(struct sockaddr));
     char buf[] = "THIS IS LTE!";
     char buf2[] = "THIS IS WIFI!";
+    char buf3[64];
+    char buf4[64];
 
     while (1) {
         usleep(500000);
         tx_LTE = sendto(sockLTE, buf, sizeof(buf), 0, (struct sockaddr *)&ServerLTE, lenLTE);
         printf("data from LTE \n \n");
-        tx_WiFI = sendto(sockWiFi, buf2, sizeof(buf2), 0, (struct sockaddr *)&ServerWiFi, lenWiFi);
-        printf("Data from WiFi\n \n");
+       tx_WiFI = sendto(sockWiFi, buf2, sizeof(buf2), 0, (struct sockaddr *)&ServerWiFi, lenWiFi);
+       printf("Data from WiFi\n \n");
+       rc_LTE = recvfrom(sockLTE, buf3, sizeof(buf3), 0, (struct sockaddr *)&ServerLTE, &lenLTE);
+       rc_WiFi = recvfrom(sockWiFi, buf4, sizeof(buf4), 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
     }
 }
