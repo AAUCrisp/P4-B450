@@ -18,11 +18,14 @@
 
 /* Define buffers & PORT number */
 #define BUFFER 128
+#define LTE_IP "10.20.0.16"
+#define WiFi_IP "192.168.1.136"
 char Message[BUFFER];
 uint PORT_LTE1 = 6969;
 uint PORT_WiFi1 = 6968;
 uint PORT_LTE2 = 6967;
 uint PORT_WiFi2 = 6966;
+
 
 /* Specify LTE & WiFi interface */
 const char *LTE = "wwan0";
@@ -77,11 +80,11 @@ int main() {
 
     ServerLTE1.sin_family = AF_INET;
     ServerLTE1.sin_port = htons(PORT_LTE1);
-    ServerLTE1.sin_addr.s_addr = INADDR_ANY;
+    ServerLTE1.sin_addr.s_addr = inet_addr(LTE_IP);
 
     ServerWiFi1.sin_family = AF_INET;
     ServerWiFi1.sin_port = htons(PORT_WiFi1);
-    ServerWiFi1.sin_addr.s_addr = INADDR_ANY;
+    ServerWiFi1.sin_addr.s_addr = inet_addr(WiFi_IP);
 
     bindLTE1 = bind(sockLTE1, (struct sockaddr *)&ServerLTE1, sizeof(struct sockaddr));
     printf("Bind to sockLTE1 was successful\n");
