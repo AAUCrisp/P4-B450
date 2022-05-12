@@ -43,13 +43,17 @@ char buf3[64];
 char buf4[64];
 
 void *transmit_LTE(void* message) {
+    char transmitbuffer [1024];
     char *msg = message;
+    sprintf(transmitbuffer, msg);
     tx_LTE = sendto(sockLTE, msg, 1024, 0, (struct sockaddr *)&ClientLTE, lenLTE);
     printf("LTE-Thread id = %ld\n", pthread_self());
     printf("Sending Data from LTE \n \n");
 }
 void *transmit_WiFi(void *message) {
+    char transmitbuffer[1024];
     char *msg = message;
+    sprintf(transmitbuffer, msg);
     tx_WiFI = sendto(sockWiFi, msg, 1024, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
     printf("WiFi-Thread id = %ld\n", pthread_self());
     printf("Sending Data from WiFi\n \n");
