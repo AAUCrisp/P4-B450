@@ -39,7 +39,6 @@ int main() {
         printf(cmd);
         char *args[] = {"./HelloWorld", NULL};
         char *envVec[] = {NULL};
-        //exec("./HelloWorld", args);
         execv(cmd, args);
         // execve(cmd, args, envVec);
         printf("MULTIPROCESS FAIL! Didn't start the second process\n\n");
