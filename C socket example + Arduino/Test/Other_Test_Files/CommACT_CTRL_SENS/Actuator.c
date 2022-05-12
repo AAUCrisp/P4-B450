@@ -44,10 +44,10 @@ void transmit_WiFI(char buf) {
     printf("Data from WiFi\n \n");
 }
 
-void receive_LTE() {
+/*void receive_LTE() {
     rc_LTE = recvfrom(sockLTE, buf2, strlen(buf2), (struct sockaddr *)&ServerLTE, &lenLTE);
 }
-
+*/
 int main() {
     int sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     int sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
