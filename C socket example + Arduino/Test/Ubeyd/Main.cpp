@@ -28,20 +28,20 @@ void create_threads() {
 int main()
 {
 
-   socket_configuration();
-   //if (i != -1){
-//	   perror("failed to execute socket_configurations function");
-//	   exit(0);
-//   }
+  socket_configuration();
+  if (i == -1){
+	   perror("failed to execute socket_configurations function");
+	   exit(0);
+  }
 
-printf("FED LORT 1");
+//printf("FED LORT 1");
 
 	/* Main running code */
 	while(1)
 	{
 	//	receive_WiFi();
 	//	receive_LTE();
-		printf("FED LORT\n\n");
+	//	printf("FED LORT\n\n");
 		//LORT();
 	pthread_create(&T1, NULL, receive_LTE, NULL);
         pthread_create(&T2, NULL, receive_WiFi, NULL);
