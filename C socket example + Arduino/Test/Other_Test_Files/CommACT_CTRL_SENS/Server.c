@@ -60,19 +60,19 @@ void *receiveWiFi() {
     pthread_exit(NULL);
 }
 
-void *transmitLTE(void* message) {
+void *transmitLTE(void *message) {
     char transmitBuffer[BUFFER];
     char *msg = message;
-    sprintf(transmitBuffer, msg);
+    sprintf(transmitBuffer, "%s", msg);
     sendto(sockLTE2, transmitBuffer, BUFFER, 0, (struct sockaddr *)&ServerLTE2, lenLTE2);
     printf("LTE-Thread id = %ld\n\n", pthread_self());
     pthread_exit(NULL);
 }
 
-void *transmitWiFi(void* message) {
+void *transmitWiFi(void *message) {
     char transmitBuffer[BUFFER];
     char *msg = message;
-    sprintf(transmitBuffer,msg);
+    sprintf(transmitBuffer, "%s", msg);
     sendto(sockWiFi2, transmitBuffer, BUFFER, 0, (struct sockaddr *)&ServerWiFi2, lenWiFi2);
     printf("WiFi-Thread id = %ld\n\n", pthread_self());
     pthread_exit(NULL);
@@ -133,9 +133,8 @@ int main() {
     ServerWiFi2.sin_port = htons(PORT_WiFi1);
     ServerWiFi2.sin_addr.s_addr = IP_WiFi;
 
-    
-    //char msg[] = "Hello back from WiFi";
-    //char msg2[] = "Hello back from LTE";
+    // char msg[] = "Hello back from WiFi";
+    // char msg2[] = "Hello back from LTE";
 
     char msg[] = "Hello back from LTE! Control Unit";
     char msg2[] = "Hello back from WiFi! Control Unit";
