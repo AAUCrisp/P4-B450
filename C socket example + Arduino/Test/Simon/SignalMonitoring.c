@@ -49,9 +49,9 @@ int rsrp_good = -80;
 
 
 int main() {
-
+    printf("In Monitoring Now!!\n\n");
     int counter = 0;
-    printf("I am in signal\n\n");
+
     while(1){
         wifi_rssi[counter] = RSSI_VAL();
         lte_rsrp[counter] = RSRP_VAL();
