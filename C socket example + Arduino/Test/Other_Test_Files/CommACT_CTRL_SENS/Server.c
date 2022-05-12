@@ -127,11 +127,11 @@ int main() {
 
     ServerLTE2.sin_family = AF_INET;
     ServerLTE2.sin_port = htons(PORT_LTE1);
-    ServerLTE2.sin_addr.s_addr = IP_LTE;
+    ServerLTE2.sin_addr.s_addr = inet_addr(IP_LTE);
 
     ServerWiFi2.sin_family = AF_INET;
     ServerWiFi2.sin_port = htons(PORT_WiFi1);
-    ServerWiFi2.sin_addr.s_addr = IP_WiFi;
+    ServerWiFi2.sin_addr.s_addr = inet_addr(IP_WiFi);
 
     // char msg[] = "Hello back from WiFi";
     // char msg2[] = "Hello back from LTE";
