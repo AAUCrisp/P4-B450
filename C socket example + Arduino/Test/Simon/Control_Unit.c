@@ -43,16 +43,17 @@ int main() {
     signal_monitor = fork();    // Starts new process
     if(signal_monitor == 0){
         printf("Parent Process ID: %d \n", getppid());
-        printf("Before Mon-ID Print \n");
+        // printf("Before Mon-ID Print \n");
         printf("Monitoring Process ID is: %d \n", getpid());
-        printf("After Mon-ID Print \n");
-        char path[] = "./SignalMonitoring";
-        char *args[] = {"./SignalMonitoring", NULL};   // TING!
-        execv(path, args);      // Tells the new process to run the code in this file
-        printf("DIDN'T START THE NEW PROCESS!!\n");
+        // printf("After Mon-ID Print \n");
+        char path[] = "./SignalMonitoring";     // Path of the file for new process to run
+        char *args[] = {"./SignalMonitoring", NULL};   // Command for the function to execute, always ended on NULL argument
+        // char *envVec[] = {NULL};
+        // execve(path, args, envVec);
+        execv(path, args);      // Tells the new process to "reset" and run a different code instead
+        printf("ERROR: DIDN'T START THE NEW PROCESS!!\n");      // Should never get this far!
     }
     else{
-
         while (1) {
             printf("Hello i am in while\n");
             Timestamp();

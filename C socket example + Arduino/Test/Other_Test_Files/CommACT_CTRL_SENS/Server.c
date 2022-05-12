@@ -33,8 +33,12 @@ const char *IP_WiFi = "192.168.1.143";
 /* Misc */
 struct sockaddr_in ServerLTE1;
 struct sockaddr_in ServerWiFi1;
+struct sockaddr_in ServerLTE2;
+struct sockaddr_in ServerWiFi2;
 int sockLTE1, lenLTE1 = sizeof(ServerLTE1);
 int sockWiFi1, lenWiFi1 = sizeof(ServerWiFi1);
+int sockLTE2, lenLTE2 = sizeof(ServerLTE2);
+int sockWiFi2, lenWiFi2 = sizeof(ServerWiFi2);
 int bindLTE1, bindWiFi1;
 int RX_LTE1, RX_WiFi1;
 int TX_LTE1, TX_WiFi1;
@@ -56,19 +60,19 @@ void *receiveWiFi() {
     pthread_exit(NULL);
 }
 
-void *transmitLTE(void* message) {
+void *transmitLTE(void *message) {
     char transmitBuffer[BUFFER];
     char *msg = message;
-    sprintf(transmitBuffer, msg);
+    sprintf(transmitBuffer, "%s", msg);
     sendto(sockLTE2, transmitBuffer, BUFFER, 0, (struct sockaddr *)&ServerLTE2, lenLTE2);
     printf("LTE-Thread id = %ld\n\n", pthread_self());
     pthread_exit(NULL);
 }
 
-void *transmitWiFi(void* message) {
+void *transmitWiFi(void *message) {
     char transmitBuffer[BUFFER];
     char *msg = message;
-    sprintf(transmitBuffer,msg);
+    sprintf(transmitBuffer, "%s", msg);
     sendto(sockWiFi2, transmitBuffer, BUFFER, 0, (struct sockaddr *)&ServerWiFi2, lenWiFi2);
     printf("WiFi-Thread id = %ld\n\n", pthread_self());
     pthread_exit(NULL);
@@ -129,9 +133,8 @@ int main() {
     ServerWiFi2.sin_port = htons(PORT_WiFi1);
     ServerWiFi2.sin_addr.s_addr = IP_WiFi;
 
-    
-    //char msg[] = "Hello back from WiFi";
-    //char msg2[] = "Hello back from LTE";
+    // char msg[] = "Hello back from WiFi";
+    // char msg2[] = "Hello back from LTE";
 
     char msg[] = "Hello back from LTE! Control Unit";
     char msg2[] = "Hello back from WiFi! Control Unit";
