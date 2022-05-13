@@ -66,8 +66,8 @@ void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *
     sock->ServerWiFi_RECEIVER.sin_addr.s_addr = INADDR_ANY;
 
     /* Bind to socket */
-    bindLTE = bind(sock->sockLTE_RECEIVER, (struct sockaddr *)&sock->ServerLTE, sizeof(struct sockaddr));
-    bindWiFi = bind(sock->sockWiFi_RECEIVER, (struct sockaddr *)&sock->ServerWiFi, sizeof(struct sockaddr));
+    bindLTE = bind(sock->sockLTE_RECEIVER, (struct sockaddr *)&sock->ServerLTE_RECEIVER, sizeof(struct sockaddr));
+    bindWiFi = bind(sock->sockWiFi_RECEIVER, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, sizeof(struct sockaddr));
 
     /* Error checking */
     if (bindLTE == -1) {
