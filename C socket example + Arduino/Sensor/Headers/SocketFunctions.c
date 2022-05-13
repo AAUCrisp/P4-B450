@@ -20,6 +20,11 @@
 #include "Sockets.h"
 #include "shm_write_read.h"
 
+#ifndef LIBRARIES
+#define LIBRARIES
+#include "../Libraries.c"  // File with all our includes
+#endif
+
 /* Define buffers & PORT number */
 #define BUFFER 1024
 char message[BUFFER];
