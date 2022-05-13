@@ -48,30 +48,23 @@ char buf4[64];
 
 void *transmit_LTE(void* message) {
     char transmitbuffer [1024];
-    char *msg = message;
 
-    char test[] = "This is sent from LTE test";
-    sprintf(transmitbuffer,"%s", msg);
-<<<<<<< HEAD
-    tx_LTE = sendto(sockLTE, test, 1024, 0, (struct sockaddr *)&ClientLTE, lenLTE);
-=======
+    //char test[] = "This is sent from LTE test";
+    sprintf(transmitbuffer,"%s", message);
+    //tx_LTE = sendto(sockLTE, test, 1024, 0, (struct sockaddr *)&ClientLTE, lenLTE);
     tx_LTE = sendto(sockLTE, transmitbuffer, 1024, 0, (struct sockaddr *)&ClientLTE, lenLTE);
->>>>>>> 1bf42dca33bce8c032f97019543ac663d2453c90
     //printf("LTE-Thread id = %ld\n", pthread_self());
-    //printf("Sending Data from LTE \n \n");
+   // printf("Sending Data from LTE \n \n");
+    printf("The buffer being transmitted is: %s \n, from LTE \n\n ", transmitbuffer);
 }
 void *transmit_WiFi(void *message) {
     char transmitbuffer[1024];
-    char *msg = message;
-    char test[] = "This is sent from WiFi test";
-    sprintf(transmitbuffer,"%s", msg);
-<<<<<<< HEAD
-    tx_WiFI = sendto(sockWiFi, test, 1024, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
-=======
+    //char test[] = "This is sent from WiFi test";
+    sprintf(transmitbuffer,"%s", message);
+    //tx_WiFI = sendto(sockWiFi, test, 1024, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
     tx_WiFI = sendto(sockWiFi, transmitbuffer, 1024, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
->>>>>>> 1bf42dca33bce8c032f97019543ac663d2453c90
     //printf("WiFi-Thread id = %ld\n", pthread_self());
-    //printf("Sending Data from WiFi\n \n");
+    printf("Sending buffer: %s,\n from WiFi\n \n", transmitbuffer);
 }
 
 void *receiveLTE1() {
@@ -138,24 +131,13 @@ int main() {
         // printf("From LTE: %s\n", buf3);
         // rc_WiFi = recvfrom(sockWiFi, buf4, sizeof(buf4), 0, (struct sockaddr *)&ClientWiFi, &lenWiFi);
         // printf("From WiFi: %s\n", buf4);
-<<<<<<< HEAD
         pthread_create(&T3, NULL, transmit_LTE, buf);
 	pthread_create(&T4, NULL, transmit_WiFi, buf2);
-	
-        pthread_create(&T1, NULL, receiveLTE1, NULL);
-        pthread_create(&T2, NULL, receiveWiFi1, NULL);
+
+        //pthread_create(&T1, NULL, receiveLTE1, NULL);
+        //pthread_create(&T2, NULL, receiveWiFi1, NULL);
         //pthread_create(&T3, NULL, transmit_LTE, buf);
         //pthread_create(&T4, NULL, transmit_WiFi, buf2);
-=======
-        
-        pthread_create(&T3, NULL, transmit_LTE, buf);
-        pthread_create(&T4, NULL, transmit_WiFi, buf2);
-        
-        pthread_create(&T1, NULL, receiveLTE1, NULL);
-        pthread_create(&T2, NULL, receiveWiFi1, NULL);
-        
 
-        
->>>>>>> 1bf42dca33bce8c032f97019543ac663d2453c90
     }
 }
