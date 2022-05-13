@@ -59,8 +59,8 @@ int main() {
             pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
             // pthread_join(T1, (void**)&msg);
             // pthread_join(T2, (void**)&msg);
-            pthread_create(&T3, NULL, transmitLTE,(void*)&sock);
-            pthread_create(&T4, NULL, transmitWiFi,(void*)&sock);
+            //pthread_create(&T3, NULL, transmitLTE,(void*)&sock);
+            //pthread_create(&T4, NULL, transmitWiFi,(void*)&sock);
 
             // printf("%s\n", msg);
             sleep(5);
