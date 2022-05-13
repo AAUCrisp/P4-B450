@@ -8,9 +8,9 @@ SensorMonitoring: SensorMonitoring.c shm_write.o shm_read.o Sockets.o
 	gcc -pthread SensorMonitoring.c shm_write.o shm_read.o Sockets.o -o SensorMonitoring -lrt
 	touch SensorMonitoring
 
-Sockets.o: Headers/Sockets.c Headers/Sockets.h Headers/shm_write_read.h
-	gcc -c Headers/Sockets.c -lrt
-	touch Headers/Sockets.c
+Sockets.o: Headers/SocketFunctions.c Headers/Sockets.h Headers/shm_write_read.h
+	gcc -c Headers/SocketFunctions.c -lrt
+	touch Headers/SocketFunctions.c
 
 shm_write.o: Headers/shm_write.c Headers/shm_write_read.h
 	gcc -c Headers/shm_write.c -lrt
