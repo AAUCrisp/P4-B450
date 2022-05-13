@@ -108,7 +108,7 @@ void  *ReceiveCoordinateWiFi() {
     printf("Actuator_LTE: packet contains \"%s\"\n", ActuatorBuffer);
     result = parse_coordinates(ActuatorBuffer);
     printf("the coordinates are x = %d and y = %d\n",result.current_x_coordinate, result.current_y_coordinate);
-    printf("Feedback is %s\n\n", result.tempx_feedback, result.tempy_feedback);
+    printf("The robot has moved this much over the x and y axis: %d:%d \n\n", result.movement_x, result.movement_y);
     //tx_WiFI = sendto(sockWiFi, result.feedback,strlen(result.feedback),0,get_in_addr((struct sockaddr *)&remote_addr), sizeof remote_addr);
     
 }
