@@ -2,7 +2,7 @@
 #include "coordinates.c"
 
 
-struct addrinfo ServerLTE, res1;   // a socket struct design to be used with IPv4
+struct addrinfo ServerLTE, *res1;   // a socket struct design to be used with IPv4
 struct addrinfo ServerWiFi, *res;  // a socket struct design to be used with IPv4
 struct sockaddr_storage remote_addr;
 socklen_t fromlen;
@@ -19,7 +19,7 @@ char ActuatorBuffer[1024];
 char feedback[1024];
 
 const char *LTE = "wwan0";
-const char *WiFi = "wlan1";
+const char *WiFi = "wlan0";
 char s[INET_ADDRSTRLEN];
 
 void *get_in_addr(struct sockaddr *sa) {
@@ -78,7 +78,7 @@ int initialize_Server() {
         perror("failed to create sockLTE");
         exit(0);
     }
-    bindLTE = bind(sockLTE, res1->ai_addr, res->ai_addrlen);
+    bindLTE = bind(sockLTE, res1->ai_addr, res1->ai_addrlen);
     if (bindLTE == -1)
     {
         close(sockLTE);
@@ -132,9 +132,10 @@ int ReceiveCoordinateLTE() {
 
 
 int main() {
+    initialize_Server();
     while (1)
     {
-        initialize_Server();
+        
         ReceiveCoordinateWiFi();
         ReceiveCoordinateLTE();
       
