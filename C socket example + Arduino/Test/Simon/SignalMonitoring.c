@@ -54,9 +54,8 @@ int main() {
         wifi_rssi[counter] = RSSI_VAL();
         lte_rsrp[counter] = RSRP_VAL();
 
-
-        if(gsv == "W" || gsv == "B") {    // If GSV is set to WiFi or both
-            if(wifi_rssi[counter] < rssi_bad){
+        if (gsv == "W" || gsv == "B") {  // If GSV is set to WiFi or both
+            if (wifi_rssi[counter] < rssi_bad) {
                 gsv = "L";
             }
         }
@@ -94,11 +93,23 @@ int main() {
         shm_write(gsv, buffer, GSV_KEY);  // Write selected technology to shared memory
 
         if (gsv == "W" || gsv == "B") {
-            pthread_create(&wifi, NULL, transmitWiFi, (void*)&sock);
+            pthread_t wifi, lte;
+            int threadWiFi = pthread_create(&wifi, NULL, transmitWiFi, (void*)&sock);
+            if (threadWiFi == 0) {
+                printf("WiFi thread is running!\n", threadWiFi);
+            }
+            else{
+                perror("WiFi thread was not created");
+            }
             printf("GSV: Sent via WiFi\n");
         }
         if (gsv == "L" || gsv == "B") {
-            pthread_create(&lte, NULL, transmitLTE, (void*)&sock);
+            int threadLTE = pthread_create(&lte, NULL, transmitLTE, (void*)&sock);
+            if (threadLTE == 0) {
+                printf("LTE thread is running!\n");
+            } else{
+                perror("LTE thread was not created");
+            }
             printf("GSV: Sent via LTE\n");
         }
 
