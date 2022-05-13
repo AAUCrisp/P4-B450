@@ -103,7 +103,6 @@ void Create_Bind_Sockets(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, uint PORT
 
 /* Function to receive LTE packets */
 void *receiveLTE(void *socket) {
-    printf("I am here");
     time_struct time1;
     time_struct time2;
     int timediff;
