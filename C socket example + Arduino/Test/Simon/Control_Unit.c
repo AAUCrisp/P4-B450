@@ -23,8 +23,10 @@ int main() {
     /* Initialize PORT & INTERFACE*/
     uint PORT_LTE = 9123;
     uint PORT_WiFi = 9124;
+    uint PORT_LTE_TRANS = 9121;
+    uint PORT_WiFi_TRANS = 9122;
     const char* LTE = "wwan0";
-    const char* WiFi = "lo";
+    const char* WiFi = "wlan0";
 
     /* Misc */
     pthread_t T1, T2;
@@ -34,40 +36,34 @@ int main() {
 
     /* Create sockets */
     Sockets sock;
-    Create_Bind_Sockets(&sock, PORT_LTE, PORT_WiFi, LTE, WiFi);
+    Create_Bind_Sockets(&sock, PORT_LTE, PORT_WiFi, PORT_LTE_TRANS, PORT_WiFi_TRANS, LTE, WiFi);
     printf("sockLTE control_unit: %d\n", sock.sockLTE);
     printf("sockWiFi control_unit: %d\n", sock.sockWiFi);
 
     /* Start signal monitoring process */
-    pid_t signal_monitor;       // Prepare the process ID for monitoring
-    signal_monitor = fork();    // Starts new process
-    if(signal_monitor == 0){
+    pid_t signal_monitor;     // Prepare the process ID for monitoring
+    signal_monitor = fork();  // Starts new process
+    if (signal_monitor == 0) {
         printf("Parent Process ID: %d \n", getppid());
-        // printf("Before Mon-ID Print \n");
         printf("Monitoring Process ID is: %d \n", getpid());
-        // printf("After Mon-ID Print \n");
-        char path[] = "./SignalMonitoring";     // Path of the file for new process to run
-        char *args[] = {"./SignalMonitoring", NULL};   // Command for the function to execute, always ended on NULL argument
-        // char *envVec[] = {NULL};
-        // execve(path, args, envVec);
-        execv(path, args);      // Tells the new process to "reset" and run a different code instead
-        printf("ERROR: DIDN'T START THE NEW PROCESS!!\n");      // Should never get this far!
-    }
-    else{
+        char path[] = "./SignalMonitoring";                 // Path of the file for new process to run
+        char* args[] = {"./SignalMonitoring", NULL};        // Command for the function to execute, always ended on NULL argument
+        execv(path, args);                                  // Tells the new process to "reset" and run a different code instead
+        printf("ERROR: DIDN'T START THE NEW PROCESS!!\n");  // Should never get this far!
+    } else {
         while (1) {
             printf("Hello i am in while\n");
             Timestamp();
-            //pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
+            pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
             Timestamp();
             pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
-            //pthread_join(T1, (void**)&msg);
-            pthread_join(T2, (void**)&msg);
-            
-            //printf("%s\n", msg);
-            //sleep(1);
+            // pthread_join(T1, (void**)&msg);
+            // pthread_join(T2, (void**)&msg);
+
+            // printf("%s\n", msg);
+            // sleep(1);
         }
     }
-    
 
     close(sock.sockLTE && sock.sockWiFi);
     exit(0);
