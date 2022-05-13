@@ -2,11 +2,11 @@
 #include "coordinates.c"
 
 
-struct sockaddr_in ServerLTE;   // a socket struct design to be used with IPv4
+struct addrinfo ServerLTE, res1;   // a socket struct design to be used with IPv4
 struct addrinfo ServerWiFi, *res;  // a socket struct design to be used with IPv4
 struct sockaddr_storage remote_addr;
 socklen_t fromlen;
-int rv;
+int rv, rl;
 int sockLTE, sockWiFi;
 int bindLTE, bindWiFi;
 int lenLTE = sizeof(ServerLTE);
@@ -19,7 +19,7 @@ char ActuatorBuffer[1024];
 char feedback[1024];
 
 const char *LTE = "wwan0";
-const char *WiFi = "wlp7s0";
+const char *WiFi = "wlan1";
 char s[INET_ADDRSTRLEN];
 
 void *get_in_addr(struct sockaddr *sa) {
@@ -33,6 +33,8 @@ void *get_in_addr(struct sockaddr *sa) {
 
 
 int initialize_Server() {
+    //_______________________________________
+    //                  Initializing WiFi socket
     memset(&ServerWiFi, 0, lenWiFi);
     ServerWiFi.ai_family = AF_INET;
     ServerWiFi.ai_socktype = SOCK_DGRAM;
@@ -45,7 +47,7 @@ int initialize_Server() {
     sockWiFi = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
     setsockopt(sockWiFi, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
     if (sockWiFi == -1) {
-        perror("Failed to create sockLTE");
+        perror("Failed to create sockWiFi");
         exit(0);
     }
     bindWiFi = bind(sockWiFi, res->ai_addr, res->ai_addrlen);
@@ -55,15 +57,45 @@ int initialize_Server() {
         perror("bind");
         exit(0);
     }   
+    
+    
+    //_______________________________________
+    //                  Initializing LTE socket
+    memset(&ServerLTE, 0, lenLTE);
+    ServerLTE.ai_family = AF_INET;
+    ServerLTE.ai_socktype = SOCK_DGRAM;
+    ServerLTE.ai_flags = AI_PASSIVE;
+    if ((rl = getaddrinfo(NULL, "8001",&ServerLTE, &res1)) !=0 )
+    {
+        fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(rl));
+        exit(1);
+    }
+
+    sockLTE = socket(res1->ai_family, res1->ai_socktype, res1->ai_protocol);
+    setsockopt(sockLTE, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
+    if(sockLTE == -1)
+    {
+        perror("failed to create sockLTE");
+        exit(0);
+    }
+    bindLTE = bind(sockLTE, res1->ai_addr, res->ai_addrlen);
+    if (bindLTE == -1)
+    {
+        close(sockLTE);
+        perror("bind LTE socket");
+        exit(0);
+    }
+
+
 
     freeaddrinfo(res);
+    freeaddrinfo(res1);
 
     printf("listener: waiting to recvfrom... \n");
 
-
 }
 
-int ReceiveCoordinate() {
+int ReceiveCoordinateWiFi() {
     fromlen = sizeof remote_addr;
     if(rc_WiFi = recvfrom(sockWiFi, ActuatorBuffer, 1024, 0, (struct sockaddr *)&remote_addr, &fromlen) == -1)
     {
@@ -71,15 +103,31 @@ int ReceiveCoordinate() {
         exit(1);
     }
     printf("we got the buffer from %s\n",
-    inet_ntop(remote_addr.ss_family,get_in_addr((struct sockaddr *)&remote_addr), s, sizeof s));
+    inet_ntop(remote_addr.ss_family,get_in_addr((struct sockaddr *)&remote_addr), s, sizeof s)); // Prints out the remote sockets address
     //printf("listener: packet is %d bytes long\n", rc_WiFi);
-    printf("listener: packet contains \"%s\"\n", ActuatorBuffer);
+    printf("Actuator: packet contains \"%s\"\n", ActuatorBuffer);
     result = parse_coordinates(ActuatorBuffer);
     printf("the coordinates are x = %d and y = %d\n",result.current_x_coordinate, result.current_y_coordinate);
     printf("Feedback is %s\n\n", result.feedback);
-    tx_WiFI = sendto(sockWiFi, result.feedback,strlen(result.feedback),0,get_in_addr((struct sockaddr *)&remote_addr), sizeof remote_addr);
+    //tx_WiFI = sendto(sockWiFi, result.feedback,strlen(result.feedback),0,get_in_addr((struct sockaddr *)&remote_addr), sizeof remote_addr);
 }
 
+int ReceiveCoordinateLTE() {
+    fromlen = sizeof remote_addr;
+    if(rc_LTE = recvfrom(sockLTE, ActuatorBuffer, 1024, 0, (struct sockaddr *)&remote_addr, &fromlen) == -1)
+    {
+        perror("recvfrom failed");
+        exit(1);
+    }
+    printf("we got the buffer from %s\n",
+    inet_ntop(remote_addr.ss_family,get_in_addr((struct sockaddr *)&remote_addr), s, sizeof s)); // Prints out the remote sockets address
+    printf("listener: packet is %d bytes long\n", rc_LTE);
+    printf("Actuator: packet contains \"%s\"\n", ActuatorBuffer);
+    result = parse_coordinates(ActuatorBuffer);
+    printf("the coordinates are x = %d and y = %d\n",result.current_x_coordinate, result.current_y_coordinate);
+    printf("Feedback is %s\n\n", result.feedback);
+    //tx_WiFI = sendto(sockWiFi, result.feedback,strlen(result.feedback),0,get_in_addr((struct sockaddr *)&remote_addr), sizeof remote_addr);
+}
 
 
 
@@ -87,7 +135,8 @@ int main() {
     while (1)
     {
         initialize_Server();
-        ReceiveCoordinate();
+        ReceiveCoordinateWiFi();
+        ReceiveCoordinateLTE();
       
         close(sockWiFi);
     }
