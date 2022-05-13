@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri May 13 11:36:27 2022
+# Make data base, printed on Fri May 13 16:05:10 2022
 
 # Variables
 
@@ -229,9 +229,9 @@ LC_IDENTIFICATION = en_DK.UTF-8
 
 # Directories
 
-# . (device 2050, inode 1312748): 8 files, no impossibilities.
+# . (device 2050, inode 1312748): 15 files, no impossibilities.
 
-# 8 files, no impossibilities in 1 directories.
+# 15 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -281,13 +281,12 @@ GNUmakefile:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 16 / storage = 183 B / avg = 11 B
-# current buf: size = 8162 B / used = 183 B / count = 16 / avg = 11 B
- 
+# strcache buffers: 1 (0) / strings = 23 / storage = 311 B / avg = 13 B
+# current buf: size = 8162 B / used = 311 B / count = 23 / avg = 13 B
 
-# strcache performance: lookups = 19 / hit rate = 15%
+# strcache performance: lookups = 26 / hit rate = 11%
 # hash-table stats:
-# Load=16/8192=0%, Rehash=0, Collisions=0/19=0%
-# Finished Make data base on Fri May 13 11:36:27 2022
+# Load=23/8192=0%, Rehash=0, Collisions=0/26=0%
+# Finished Make data base on Fri May 13 16:05:10 2022
 
  

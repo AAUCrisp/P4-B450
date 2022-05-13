@@ -1,5 +1,11 @@
 #include <string>
-// #include <stdio>
+#include<iostream>
+using namespace std;
+
+
+int main() {
+}
+
 
 // Test Variables
 int data = 250;
@@ -40,6 +46,14 @@ std::string convert_to_grid(int number) {
 
 
 int main(){
+   
+   string animals[4] = {"Elephant", "Lion", "Deer", "Tiger"}; //The
+   string type array
+   for (int i = 0; i < 4; i++)
+      cout << animals[i] << endl;
+
+
+
     printf("\nSensor Data is: %d", data);
     generate_grid(x_axis, y_axis);
     std::string cpu_command = convert_to_grid(data);
