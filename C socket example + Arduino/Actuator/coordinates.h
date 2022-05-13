@@ -26,5 +26,5 @@ struct Coordinate {
 
 
 struct Coordinate C;
-memset(&C, 0, sizeof(C));
+memset(C, 0, sizeof(C));
 struct Coordinate result;
