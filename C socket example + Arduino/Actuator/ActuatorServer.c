@@ -95,7 +95,7 @@ int initialize_Server() {
 
 }
 
-int ReceiveCoordinateWiFi() {
+void  *ReceiveCoordinateWiFi() {
     fromlen = sizeof remote_addr;
     if(rc_WiFi = recvfrom(sockWiFi, ActuatorBuffer, sizeof(ActuatorBuffer), 0, (struct sockaddr *)&remote_addr, &fromlen) == -1)
     {
@@ -104,16 +104,16 @@ int ReceiveCoordinateWiFi() {
     }
     printf("we got the buffer from %s\n",
     inet_ntop(remote_addr.ss_family,get_in_addr((struct sockaddr *)&remote_addr), s, sizeof s)); // Prints out the remote sockets address
-    printf("Actuator_LTE: packet is %d bytes long\n", rc_WiFi);
-    printf("Actuator_LTE: packet contains \"%s\"\n", ActuatorBuffer);
+    printf("Actuator_WiFi: packet is %d bytes long\n", rc_WiFi);
+    printf("Actuator_WiFi: packet contains \"%s\"\n", ActuatorBuffer);
     result = parse_coordinates(ActuatorBuffer);
     printf("the coordinates are x = %d and y = %d\n",result.current_x_coordinate, result.current_y_coordinate);
-    printf("Feedback is %s\n\n", result.feedback);
+    printf("The robot has moved this much over the x and y axis: %d:%d \n\n", result.movement_x, result.movement_y);
     //tx_WiFI = sendto(sockWiFi, result.feedback,strlen(result.feedback),0,get_in_addr((struct sockaddr *)&remote_addr), sizeof remote_addr);
     
 }
 
-int ReceiveCoordinateLTE() {
+void *ReceiveCoordinateLTE() {
     fromlen = sizeof remote_addr;
     if(rc_LTE = recvfrom(sockLTE, ActuatorBuffer, sizeof(ActuatorBuffer), 0, (struct sockaddr *)&remote_addr, &fromlen) == -1)
     {
@@ -126,7 +126,8 @@ int ReceiveCoordinateLTE() {
     printf("Actuator_LTE: packet contains \"%s\"\n", ActuatorBuffer);
     result = parse_coordinates(ActuatorBuffer);
     printf("the coordinates are x = %d and y = %d\n",result.current_x_coordinate, result.current_y_coordinate);
-    printf("Feedback is %s\n\n", result.feedback);
+    printf("The robot has moved this much over the x and y axis: %d:%d \n\n", result.movement_x, result.movement_y);
+    //tx_WiFI = sendto(sockWiFi, result.feedback,strlen(result.feedback),0,get_in_addr((struct sockaddr *)&remote_addr), sizeof remote_addr);
     //tx_WiFI = sendto(sockWiFi, result.feedback,strlen(result.feedback),0,get_in_addr((struct sockaddr *)&remote_addr), sizeof remote_addr);
     
 }
@@ -137,9 +138,10 @@ int main() {
     initialize_Server();
     while (1)
     {
-        
-        ReceiveCoordinateWiFi();
-        ReceiveCoordinateLTE();
+       pthread_create(&T1, NULL, ReceiveCoordinateLTE, NULL);
+       pthread_create(&T2, NULL, ReceiveCoordinateWiFi, NULL); 
+        //ReceiveCoordinateWiFi();
+        //ReceiveCoordinateLTE();
       
         
     }
