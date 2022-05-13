@@ -19,7 +19,7 @@ char ActuatorBuffer[1024];
 char feedback[1024];
 
 const char *LTE = "wwan0";
-const char *WiFi = "wlan1";
+const char *WiFi = "wlan0";
 char s[INET_ADDRSTRLEN];
 
 void *get_in_addr(struct sockaddr *sa) {
@@ -132,9 +132,10 @@ int ReceiveCoordinateLTE() {
 
 
 int main() {
+    initialize_Server();
     while (1)
     {
-        initialize_Server();
+        
         ReceiveCoordinateWiFi();
         ReceiveCoordinateLTE();
       
