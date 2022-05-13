@@ -10,7 +10,9 @@
     "string_view": "c",
     "unistd.h": "c",
     "array": "c",
-    "string": "c"
+    "string": "c",
+    "socketfunctions.h": "c",
+    "shm_write_read.h": "c"
   },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "/usr/bin/g++",

@@ -1,6 +1,6 @@
 all: SensorStart SensorMonitoring
 
-SensorStart: Sensor.c SocketFunctions.o shm_write.o shm_read.o Headers/SocketFunctions.h
+SensorStart: Sensor.c SocketFunctions.o shm_write.o shm_read.o
 	gcc -pthread Sensor.c SocketFunctions.o shm_write.o shm_read.o -o SensorStart -lrt
 	touch SensorStart
 
