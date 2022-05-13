@@ -33,8 +33,8 @@ pthread_t T1, T2, T3, T4;
 const char *LTE = "wwan0";
 const char *WiFi = "wlan0";
 
-uint LTE_PORT_RECEIVE = 6967;
-uint WiFi_PORT_RECEIVE = 6966;
+uint LTE_PORT_RECEIVE = 9121;
+uint WiFi_PORT_RECEIVE = 9122;
 
 #define LTE_PORT 6969
 #define WiFi_PORT 6968
@@ -42,8 +42,6 @@ uint WiFi_PORT_RECEIVE = 6966;
 #define LTE_ip "10.20.0.16"
 #define WiFi_ip "192.168.1.136"
 #define BUFFER 128
-
-
 
 void transmit_LTE(char *buf) {
     tx_LTE = sendto(sockLTE, buf, 1024, 0, (struct sockaddr *)&ServerLTE, lenLTE);
@@ -85,9 +83,7 @@ int main() {
     ServerWiFi.sin_port = htons(WiFi_PORT);
     ServerWiFi.sin_addr.s_addr = inet_addr(WiFi_ip);
 
-    
     /* ---------------------------------------------------------------- */
-
 
     /* Receive Socket */
     sockLTE_RECEIVE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -124,9 +120,9 @@ int main() {
     while (1) {
         usleep(500000);
         tx_LTE = sendto(sockLTE, buf, sizeof(buf), 0, (struct sockaddr *)&ServerLTE, lenLTE);
-        //printf("data from LTE \n \n");
+        // printf("data from LTE \n \n");
         tx_WiFI = sendto(sockWiFi, buf2, sizeof(buf2), 0, (struct sockaddr *)&ServerWiFi, lenWiFi);
-        //printf("Data from WiFi\n \n");
+        // printf("Data from WiFi\n \n");
 
         pthread_create(&T1, NULL, receiveLTE, NULL);
         pthread_create(&T2, NULL, receiveWiFi, NULL);
