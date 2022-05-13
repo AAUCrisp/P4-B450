@@ -17,7 +17,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "Sockets_TX_RX.h"
+#include "SocketFunctions.h"
 #include "shm_write_read.h"
 
 int main() {
