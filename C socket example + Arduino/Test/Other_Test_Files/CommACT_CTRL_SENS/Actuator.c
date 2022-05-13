@@ -62,8 +62,7 @@ void *transmit_WiFi(void *message) {
     //char test[] = "This is sent from WiFi test";
     sprintf(transmitbuffer,"%s", message);
     //tx_WiFI = sendto(sockWiFi, test, 1024, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
-    tx_WiFI = sendto(sockWiFi, transmitbuffer, sizeof(transmitbuffer), 0, (struct sockaddr *)&ClientWiFi, sizeof(struct sockaddr));
-    //printf("WiFi-Thread id = %ld\n", pthread_self());
+    tx_WiFI = sendto(sockWiFi, transmitbuffer, sizeof(transmitbuffer), 0, (struct sockaddr *)&ClientWiFi, sizeof(struct sockaddr));    //printf("WiFi-Thread id = %ld\n", pthread_self());
     printf("Number of bytes sent over WiFi: %d", tx_WiFI);
     printf("Sending buffer: %s,\n from WiFi\n \n", transmitbuffer);
 }
@@ -122,6 +121,7 @@ int main() {
     while (1) {
         
         usleep(500000);
+        /*
         tx_LTE = sendto(sockLTE, buf, sizeof(buf), 0, (struct sockaddr *)&ClientLTE, sizeof(struct sockaddr));
                 printf("Number of bytes sent over LTE: %d \n", tx_LTE);
                 printf("The buffer being transmitted is: %s \n, from LTE \n\n ", buf);
@@ -129,7 +129,7 @@ int main() {
         tx_WiFI = sendto(sockWiFi, buf2, sizeof(buf), 0, (struct sockaddr *)&ClientWiFi, sizeof(struct sockaddr));
             printf("Number of bytes sent over WiFi: %d\n", tx_WiFI);
             printf("Sending buffer: %s,\n from WiFi\n \n", buf2);
-
+        */
         
         /*
         tx_LTE = sendto(sockLTE, buf, sizeof(buf), 0, (struct sockaddr *)&ClientLTE, lenLTE);
@@ -141,8 +141,8 @@ int main() {
         // printf("From LTE: %s\n", buf3);
         // rc_WiFi = recvfrom(sockWiFi, buf4, sizeof(buf4), 0, (struct sockaddr *)&ClientWiFi, &lenWiFi);
         // printf("From WiFi: %s\n", buf4);
-        //pthread_create(&T3, NULL, transmit_LTE, buf);
-	    //pthread_create(&T4, NULL, transmit_WiFi, buf2);
+        pthread_create(&T3, NULL, transmit_LTE, buf);
+	    pthread_create(&T4, NULL, transmit_WiFi, buf2);
 
         //pthread_create(&T1, NULL, receiveLTE1, NULL);
         //pthread_create(&T2, NULL, receiveWiFi1, NULL);
