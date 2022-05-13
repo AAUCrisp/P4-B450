@@ -21,8 +21,6 @@
 
 #define buffer 10
 
-
-
 pthread_t wifi, lte;
 
 char* gsv = "B";  // Global Signal Variable   W = WiFi   L = LTE    B = Both
@@ -107,19 +105,20 @@ int main() {
         if (gsv == "W" || gsv == "B") {
             pthread_t wifi, lte;
             int threadWiFi = pthread_create(&wifi, NULL, transmitWiFi, (void*)&sock);
+            pthread_join(wifi, NULL);
             if (threadWiFi == 0) {
                 printf("WiFi thread is running!\n");
-            }
-            else{
+            } else {
                 perror("WiFi thread was not created");
             }
             printf("GSV: Sent via WiFi\n");
         }
         if (gsv == "L" || gsv == "B") {
             int threadLTE = pthread_create(&lte, NULL, transmitLTE, (void*)&sock);
+            pthread_join(lte, NULL);
             if (threadLTE == 0) {
                 printf("LTE thread is running!\n");
-            } else{
+            } else {
                 perror("LTE thread was not created");
             }
             printf("GSV: Sent via LTE\n");
