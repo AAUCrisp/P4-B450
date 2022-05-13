@@ -21,7 +21,7 @@
 
 #define buffer 10
 
-Sockets sock;
+
 
 pthread_t wifi, lte;
 
@@ -47,6 +47,18 @@ int rsrp_mid = -85;
 int rsrp_good = -80;
 
 int main() {
+    /* Initialize PORT & INTERFACE*/
+    uint PORT_LTE = 9123;
+    uint PORT_WiFi = 9124;
+    uint PORT_LTE_TRANS = 9121;
+    uint PORT_WiFi_TRANS = 9122;
+    const char* LTE = "wwan0";
+    const char* WiFi = "wlan0";
+
+    /* Create sockets */
+    Sockets sock;
+    Create_Bind_Sockets(&sock, PORT_LTE, PORT_WiFi, PORT_LTE_TRANS, PORT_WiFi_TRANS, LTE, WiFi);
+    
     printf("==================\nMonitoring Process Started\n==================\n\n");
     int counter = 0;
 
