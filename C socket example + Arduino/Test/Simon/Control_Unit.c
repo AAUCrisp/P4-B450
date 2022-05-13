@@ -29,7 +29,7 @@ int main() {
     const char* WiFi = "wlan0";
 
     /* Misc */
-    pthread_t T1, T2;
+    pthread_t T1, T2, T3, T4;
 
     /* Struct for message & buffer size */
     char* msg;
@@ -52,16 +52,18 @@ int main() {
         printf("ERROR: DIDN'T START THE NEW PROCESS!!\n");  // Should never get this far!
     } else {
         while (1) {
-            printf("==================\nMain Control Unit Process Started\n==================\n\n");
+            //printf("==================\nMain Control Unit Process Started\n==================\n\n");
             Timestamp();
             pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
             Timestamp();
             pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
             // pthread_join(T1, (void**)&msg);
             // pthread_join(T2, (void**)&msg);
+            pthread_create(&T3, NULL, transmitLTE,(void*)&sock);
+            pthread_create(&T4, NULL, transmitWiFi,(void*)&sock);
 
             // printf("%s\n", msg);
-            // sleep(1);
+            //sleep(1);
         }
     }
 
