@@ -123,8 +123,15 @@ int main() {
     while (1) {
         
         usleep(500000);
-        //tx_LTE = sendto(sockLTE, buf, 1024, 0, (struct sockaddr *)&ClientLTE, lenLTE);
-        //tx_WiFI = sendto(sockWiFi, buf2, 1024, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
+        tx_LTE = sendto(sockLTE, buf, 1024, 0, (struct sockaddr *)&ClientLTE, lenLTE);
+                printf("Number of bytes sent over LTE: %d", tx_LTE);
+                printf("The buffer being transmitted is: %s \n, from LTE \n\n ", buf);
+        
+        tx_WiFI = sendto(sockWiFi, buf2, 1024, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
+            printf("Number of bytes sent over WiFi: %d", tx_WiFI);
+            printf("Sending buffer: %s,\n from WiFi\n \n", buf2);
+
+        
         /*
         tx_LTE = sendto(sockLTE, buf, sizeof(buf), 0, (struct sockaddr *)&ClientLTE, lenLTE);
         printf("data from LTE \n \n");
