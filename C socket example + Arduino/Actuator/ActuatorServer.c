@@ -95,7 +95,7 @@ int initialize_Server() {
 
 }
 
-int ReceiveCoordinateWiFi() {
+void  *ReceiveCoordinateWiFi() {
     fromlen = sizeof remote_addr;
     if(rc_WiFi = recvfrom(sockWiFi, ActuatorBuffer, sizeof(ActuatorBuffer), 0, (struct sockaddr *)&remote_addr, &fromlen) == -1)
     {
@@ -113,7 +113,7 @@ int ReceiveCoordinateWiFi() {
     
 }
 
-int ReceiveCoordinateLTE() {
+void *ReceiveCoordinateLTE() {
     fromlen = sizeof remote_addr;
     if(rc_LTE = recvfrom(sockLTE, ActuatorBuffer, sizeof(ActuatorBuffer), 0, (struct sockaddr *)&remote_addr, &fromlen) == -1)
     {
@@ -137,9 +137,10 @@ int main() {
     initialize_Server();
     while (1)
     {
-        
-        ReceiveCoordinateWiFi();
-        ReceiveCoordinateLTE();
+       pthread_create(&T1, NULL, ReceiveCoordinateLTE, NULL);
+       pthread_create(&T2, NULL, ReceiveCoordinateWiFi, NULL); 
+        //ReceiveCoordinateWiFi();
+        //ReceiveCoordinateLTE();
       
         
     }
