@@ -57,7 +57,7 @@ int main() {
         lte_rsrp[counter] = RSRP_VAL();
 
 
-        if(gsv == "W" || gsv == "B") {    // If GSV is set to WiFi
+        if(gsv == "W" || gsv == "B") {    // If GSV is set to WiFi or both
             if(wifi_rssi[counter] < rssi_bad){
                 gsv = "L";
             }

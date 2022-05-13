@@ -55,7 +55,7 @@ int main() {
     }
     else{
         while (1) {
-            printf("Hello i am in while\n");
+            printf("==================\nMain Control Unit Process Started\n==================\n\n");
             Timestamp();
             //pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
             Timestamp();
