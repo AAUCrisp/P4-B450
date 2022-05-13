@@ -97,7 +97,7 @@ int initialize_Server() {
 
 int ReceiveCoordinateWiFi() {
     fromlen = sizeof remote_addr;
-    if(rc_WiFi = recvfrom(sockWiFi, ActuatorBuffer, 1024, 0, (struct sockaddr *)&remote_addr, &fromlen) == -1)
+    if(rc_WiFi = recvfrom(sockWiFi, ActuatorBuffer, sizeof(ActuatorBuffer), 0, (struct sockaddr *)&remote_addr, &fromlen) == -1)
     {
         perror("recvfrom failed");
         exit(1);
@@ -114,7 +114,7 @@ int ReceiveCoordinateWiFi() {
 
 int ReceiveCoordinateLTE() {
     fromlen = sizeof remote_addr;
-    if(rc_LTE = recvfrom(sockLTE, ActuatorBuffer, 1024, 0, (struct sockaddr *)&remote_addr, &fromlen) == -1)
+    if(rc_LTE = recvfrom(sockLTE, ActuatorBuffer, sizeof(ActuatorBuffer), 0, (struct sockaddr *)&remote_addr, &fromlen) == -1)
     {
         perror("recvfrom failed");
         exit(1);
