@@ -1,7 +1,7 @@
 #include "ActuatorServer.h"
 
 #define SERVERPORT 8000
-#define SERVERIP "192.168.1.136"
+#define SERVERIP "192.168.1.143"
 #define LTE_SERVERPORT 8001
 #define LTE_SERVERIP "10.20.0.13"
 struct sockaddr_in ClientWiFi, *res3;
