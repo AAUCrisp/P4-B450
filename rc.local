@@ -11,7 +11,8 @@
 #
 # By default this script does nothing.
 
-sh /home/aau/netplan_apply.sh
-sh /home/aau/refresh_LTE.sh
+sh /home/aau/P4-B450/netmask_apply_.sh
+sh /home/aau/P4-B450/ip_route.sh
+sh /home/aau/P4-B450/refresh_LTE.sh
 
 exit 0
