@@ -79,11 +79,11 @@ void Create_Bind_Sockets(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, uint PORT
     /* Configure settings to communicate with remote UDP client for transmitter */
     sock->ServerLTE_transmit.sin_family = AF_INET;
     sock->ServerLTE_transmit.sin_port = htons(PORT_LTE_TRANS);
-    sock->ServerLTE_transmit.sin_addr.s_addr = INADDR_ANY;
+    sock->ServerLTE_transmit.sin_addr.s_addr = inet_addr("10.20.0.10");
 
     sock->ServerWiFi_transmit.sin_family = AF_INET;
     sock->ServerWiFi_transmit.sin_port = htons(PORT_WiFi_TRANS);
-    sock->ServerWiFi_transmit.sin_addr.s_addr = INADDR_ANY;
+    sock->ServerWiFi_transmit.sin_addr.s_addr = inet_addr("192.168.1.160");
 
     /* Bind to socket */
     bindLTE = bind(sock->sockLTE, (struct sockaddr *)&sock->ServerLTE, sizeof(struct sockaddr));
