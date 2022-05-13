@@ -104,8 +104,8 @@ void  *ReceiveCoordinateWiFi() {
     }
     printf("we got the buffer from %s\n",
     inet_ntop(remote_addr.ss_family,get_in_addr((struct sockaddr *)&remote_addr), s, sizeof s)); // Prints out the remote sockets address
-    printf("Actuator_LTE: packet is %d bytes long\n", rc_WiFi);
-    printf("Actuator_LTE: packet contains \"%s\"\n", ActuatorBuffer);
+    printf("Actuator_WiFi: packet is %d bytes long\n", rc_WiFi);
+    printf("Actuator_WiFi: packet contains \"%s\"\n", ActuatorBuffer);
     result = parse_coordinates(ActuatorBuffer);
     printf("the coordinates are x = %d and y = %d\n",result.current_x_coordinate, result.current_y_coordinate);
     printf("The robot has moved this much over the x and y axis: %d:%d \n\n", result.movement_x, result.movement_y);
