@@ -24,7 +24,7 @@ struct Coordinate parse_coordinates(char msg[buffer])
    C.last_y_coordinate = C.current_y_coordinate; 
 
     return C;
-   C.feedback[0] = '\0';
+   C.feedback = "";
 }
 /*
 int main() 

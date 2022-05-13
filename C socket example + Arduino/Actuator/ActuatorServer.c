@@ -110,7 +110,7 @@ int ReceiveCoordinateWiFi() {
     printf("the coordinates are x = %d and y = %d\n",result.current_x_coordinate, result.current_y_coordinate);
     printf("Feedback is %s\n\n", result.feedback);
     //tx_WiFI = sendto(sockWiFi, result.feedback,strlen(result.feedback),0,get_in_addr((struct sockaddr *)&remote_addr), sizeof remote_addr);
-    free(result.feedback);
+    
 }
 
 int ReceiveCoordinateLTE() {
@@ -128,7 +128,7 @@ int ReceiveCoordinateLTE() {
     printf("the coordinates are x = %d and y = %d\n",result.current_x_coordinate, result.current_y_coordinate);
     printf("Feedback is %s\n\n", result.feedback);
     //tx_WiFI = sendto(sockWiFi, result.feedback,strlen(result.feedback),0,get_in_addr((struct sockaddr *)&remote_addr), sizeof remote_addr);
-    free(result.feedback);
+    
 }
 
 
