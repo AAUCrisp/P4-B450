@@ -118,7 +118,7 @@ int main() {
     char buf2[] = "THIS IS WIFI! SENSOR";
 
     while (1) {
-        usleep(500000);
+        //usleep(500000);
         tx_LTE = sendto(sockLTE, buf, sizeof(buf), 0, (struct sockaddr *)&ServerLTE, lenLTE);
         // printf("data from LTE \n \n");
         tx_WiFI = sendto(sockWiFi, buf2, sizeof(buf2), 0, (struct sockaddr *)&ServerWiFi, lenWiFi);
@@ -133,5 +133,6 @@ int main() {
         // printf("From WiFi: %s\n", buf4);
         // pthread_create(&T1, NULL, receiveLTE1, NULL);
         // pthread_create(&T2, NULL, receiveWiFi1, NULL);
+        sleep(5);
     }
 }
