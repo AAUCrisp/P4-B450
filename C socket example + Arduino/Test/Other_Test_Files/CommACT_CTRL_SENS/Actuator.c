@@ -31,13 +31,13 @@ pthread_t T1, T2, T3, T4;
 const char *LTE = "wwan0";
 const char *WiFi = "wlan0";
 
-#define LTE_PORT 6969
-#define WiFi_PORT 6968
-#define LTE_PORT2 6967
-#define WiFi_PORT2 6966
+uint LTE_PORT = 6969;
+uint WiFi_PORT = 6968;
+uint LTE_PORT2 = 6967;
+uint WiFi_PORT2 = 6966;
 
-#define LTE_ip "10.20.0.16"
-#define WiFi_ip "192.168.1.136"
+const char *LTE_ip = "10.20.0.16";
+const char *WiFi_ip = "192.168.1.136";
 
 
 //char *buf[] = "THIS IS LTE!";
