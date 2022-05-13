@@ -32,7 +32,7 @@ int RX_LTE, RX_WiFi;
 int TX_LTE, TX_WiFi;
 
 /* Function to bind sockets */
-void Create_Bind_Sockets(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, uint PORT_LTE_TRANS, uint PORT_WiFi_TRANS, , const char *LTE, const char *WiFi) {
+void Create_Bind_Sockets(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, uint PORT_LTE_TRANS, uint PORT_WiFi_TRANS, const char *LTE, const char *WiFi) {
     /* Create socket receiver */
     sock->sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sock->sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
