@@ -52,7 +52,11 @@ void *transmit_LTE(void* message) {
 
     char test[] = "This is sent from LTE test";
     sprintf(transmitbuffer,"%s", msg);
+<<<<<<< HEAD
     tx_LTE = sendto(sockLTE, test, 1024, 0, (struct sockaddr *)&ClientLTE, lenLTE);
+=======
+    tx_LTE = sendto(sockLTE, transmitbuffer, 1024, 0, (struct sockaddr *)&ClientLTE, lenLTE);
+>>>>>>> 1bf42dca33bce8c032f97019543ac663d2453c90
     //printf("LTE-Thread id = %ld\n", pthread_self());
     //printf("Sending Data from LTE \n \n");
 }
@@ -61,7 +65,11 @@ void *transmit_WiFi(void *message) {
     char *msg = message;
     char test[] = "This is sent from WiFi test";
     sprintf(transmitbuffer,"%s", msg);
+<<<<<<< HEAD
     tx_WiFI = sendto(sockWiFi, test, 1024, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
+=======
+    tx_WiFI = sendto(sockWiFi, transmitbuffer, 1024, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
+>>>>>>> 1bf42dca33bce8c032f97019543ac663d2453c90
     //printf("WiFi-Thread id = %ld\n", pthread_self());
     //printf("Sending Data from WiFi\n \n");
 }
@@ -97,14 +105,15 @@ int main() {
     ClientLTE.sin_family = AF_INET;
     ClientLTE.sin_port = htons(LTE_PORT);
     ClientLTE.sin_addr.s_addr = inet_addr(LTE_ip);
-
-    ServerLTE.sin_family = AF_INET;
-    ServerLTE.sin_port = htons(LTE_PORT2);
-    ServerLTE.sin_addr.s_addr = INADDR_ANY;
-
+    
     ClientWiFi.sin_family = AF_INET;
     ClientWiFi.sin_port = htons(WiFi_PORT);
     ClientWiFi.sin_addr.s_addr = inet_addr(WiFi_ip);
+    
+    
+    ServerLTE.sin_family = AF_INET;
+    ServerLTE.sin_port = htons(LTE_PORT2);
+    ServerLTE.sin_addr.s_addr = INADDR_ANY;
 
     ServerWiFi.sin_family = AF_INET;
     ServerWiFi.sin_port = htons(WiFi_PORT2);
@@ -129,6 +138,7 @@ int main() {
         // printf("From LTE: %s\n", buf3);
         // rc_WiFi = recvfrom(sockWiFi, buf4, sizeof(buf4), 0, (struct sockaddr *)&ClientWiFi, &lenWiFi);
         // printf("From WiFi: %s\n", buf4);
+<<<<<<< HEAD
         pthread_create(&T3, NULL, transmit_LTE, buf);
 	pthread_create(&T4, NULL, transmit_WiFi, buf2);
 	
@@ -136,5 +146,16 @@ int main() {
         pthread_create(&T2, NULL, receiveWiFi1, NULL);
         //pthread_create(&T3, NULL, transmit_LTE, buf);
         //pthread_create(&T4, NULL, transmit_WiFi, buf2);
+=======
+        
+        pthread_create(&T3, NULL, transmit_LTE, buf);
+        pthread_create(&T4, NULL, transmit_WiFi, buf2);
+        
+        pthread_create(&T1, NULL, receiveLTE1, NULL);
+        pthread_create(&T2, NULL, receiveWiFi1, NULL);
+        
+
+        
+>>>>>>> 1bf42dca33bce8c032f97019543ac663d2453c90
     }
 }

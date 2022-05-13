@@ -49,7 +49,7 @@ int rsrp_good = -80;
 
 
 int main() {
-    printf("In Monitoring Now!!\n\n");
+    printf("==================\nMonitoring Process Started\n==================\n\n");
     int counter = 0;
 
     while(1){
@@ -82,23 +82,29 @@ int main() {
 
 
 		/* Compare signals and select a technology */
-		if( (rssi_average >= rssi_good && rsrp_average >= rsrp_good) || (rssi_average >= rssi_mid && rsrp_average >= rsrp_mid) ) {
-			gsv = "B";		// If no clear winner, set to send on both
-		}
-		else if( (rssi_average >= rssi_good && rsrp_average < rsrp_good) || (rssi_average >= rssi_mid && rsrp_average < rsrp_mid) ) {
+		if( (rssi_average >= rssi_good && rsrp_average < rsrp_good) || (rssi_average >= rssi_mid && rsrp_average < rsrp_mid) ) {
 			gsv = "W";		// If WiFi has stronger signal, set WiFi
+            printf("GSV: WiFi Selected\n");
 		}
 		else if( (rssi_average < rssi_good && rsrp_average >= rsrp_good) || (rssi_average < rssi_mid && rsrp_average >= rsrp_mid) ) {
 			gsv = "L";		// If LTE has stronger signal, set LTE
+            printf("GSV: LTE Selected\n");
+		}
+		// else if( (rssi_average >= rssi_good && rsrp_average >= rsrp_good) || (rssi_average >= rssi_mid && rsrp_average >= rsrp_mid) ) {
+		else {
+			gsv = "B";		// If no clear winner, set to send on both
+            printf("GSV: Both Selected\n");
 		}
 		shm_write(gsv, buffer, GSV_KEY);	// Write selected technology to shared memory
 
 
 		if(gsv == "W" || gsv == "B") {
 			pthread_create(&wifi, NULL, transmitWiFi, (void*) &sock);
+            printf("GSV: Sent via WiFi\n");
 		}
 		if(gsv == "L" || gsv == "B") {
 			pthread_create(&lte, NULL, transmitLTE, (void*) &sock);
+            printf("GSV: Sent via LTE\n");
 		}
 
         if(counter == (buffer -1)) { counter = 0; }
