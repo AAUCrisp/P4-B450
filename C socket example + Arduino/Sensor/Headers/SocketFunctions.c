@@ -17,40 +17,52 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "Sockets_TX_RX.h"
+#include "Sockets.h"
 #include "shm_write_read.h"
 
-void Bind_Sockets_Receiver(){
+/* Define buffers & PORT number */
+#define BUFFER 1024
+char message[BUFFER];
+char curr_time[128];
+char *receive;
+
+/* Misc */
+int bindLTE, bindWiFi;
+int RX_LTE, RX_WiFi;
+int TX_LTE, TX_WiFi;
+
+/* Function to bind sockets */
+void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
     /* Create socket receiver */
-    sock->sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    sock->sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    sock->sockLTE_RECEIVER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    sock->sockWiFi_RECEIVER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
     /* Setting up socket options & specifying interface for receiver */
-    setsockopt(sock->sockLTE, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
-    setsockopt(sock->sockWiFi, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
+    setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
+    setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
 
     /* Error checking */
-    if (sock->sockLTE == -1) {
+    if (sock->sockLTE_RECEIVER == -1) {
         perror("Failed to create sockLTE");
         exit(0);
     }
-    if (sock->sockWiFi == -1) {
+    if (sock->sockWiFi_RECEIVER == -1) {
         perror("Failed to create sockLTE");
         exit(0);
     }
 
     /* Configure settings to communicate with remote UDP client for receiver */
-    sock->ServerLTE.sin_family = AF_INET;
-    sock->ServerLTE.sin_port = htons(PORT_LTE);
-    sock->ServerLTE.sin_addr.s_addr = INADDR_ANY;
+    sock->ServerLTE_RECEIVER.sin_family = AF_INET;
+    sock->ServerLTE_RECEIVER.sin_port = htons(PORT_LTE);
+    sock->ServerLTE_RECEIVER.sin_addr.s_addr = INADDR_ANY;
 
-    sock->ServerWiFi.sin_family = AF_INET;
-    sock->ServerWiFi.sin_port = htons(PORT_WiFi);
-    sock->ServerWiFi.sin_addr.s_addr = INADDR_ANY;
+    sock->ServerWiFi_RECEIVER.sin_family = AF_INET;
+    sock->ServerWiFi_RECEIVER.sin_port = htons(PORT_WiFi);
+    sock->ServerWiFi_RECEIVER.sin_addr.s_addr = INADDR_ANY;
 
     /* Bind to socket */
-    bindLTE = bind(sock->sockLTE, (struct sockaddr *)&sock->ServerLTE, sizeof(struct sockaddr));
-    bindWiFi = bind(sock->sockWiFi, (struct sockaddr *)&sock->ServerWiFi, sizeof(struct sockaddr));
+    bindLTE = bind(sock->sockLTE_RECEIVER, (struct sockaddr *)&sock->ServerLTE, sizeof(struct sockaddr));
+    bindWiFi = bind(sock->sockWiFi_RECEIVER, (struct sockaddr *)&sock->ServerWiFi, sizeof(struct sockaddr));
 
     /* Error checking */
     if (bindLTE == -1) {
@@ -62,4 +74,103 @@ void Bind_Sockets_Receiver(){
         exit(0);
     }
     printf("Bind was succesful!\n");
+}
+
+void Sockets_Transmitter(Sockets *sock, const char *IP, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
+    /* Create socket receiver */
+    sock->sockLTE_TRANSMITTER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    sock->sockWiFi_TRANSMITTER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+
+    /* Setting up socket options & specifying interface for receiver */
+    setsockopt(sock->sockLTE_TRANSMITTER, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
+    setsockopt(sock->sockWiFi_TRANSMITTER, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
+
+    /* Error checking */
+    if (sock->sockLTE_TRANSMITTER == -1) {
+        perror("Failed to create sockLTE");
+        exit(0);
+    }
+    if (sock->sockWiFi_TRANSMITTER == -1) {
+        perror("Failed to create sockLTE");
+        exit(0);
+    }
+
+    /* Configure settings to communicate with remote UDP client for receiver */
+    sock->ClientLTE_TRANSMITTER.sin_family = AF_INET;
+    sock->ClientLTE_TRANSMITTER.sin_port = htons(PORT_LTE);
+    sock->ClientLTE_TRANSMITTER.sin_addr.s_addr = inet_addr(IP);
+
+    sock->ClientWiFi_TRANSMITTER.sin_family = AF_INET;
+    sock->ClientWiFi_TRANSMITTER.sin_port = htons(PORT_WiFi);
+    sock->ClientWiFi_TRANSMITTER.sin_addr.s_addr = inet_addr(IP);
+}
+
+/* Function to receive LTE packets */
+void *receiveLTE(void *socket) {
+    const char *GSV;
+    const char *GSV_KEY = "GSV_KEY";
+    Sockets *sock = (Sockets *)socket;
+    int LenLTE = sizeof(sock->ServerWiFi);
+    RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_TRANSMITTER, &LenLTE);
+    printf("LTE || LTE-Thread id = %ld\n", pthread_self());
+    printf("LTE || Message from LTE received at: %s\n", curr_time);
+    printf("LTE || Message: %s\n", message);
+    shm_write(message, 10, GSV_KEY);
+    pthread_exit(NULL);
+}
+
+/* Function to receive WiFi packets */
+void *receiveWiFi(void *socket) {
+    const char *GSV;
+    const char *GSV_KEY = "GSV_KEY";
+    Sockets *sock = (Sockets *)socket;
+    int LenWiFi = sizeof(sock->ServerWiFi);
+    RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
+    printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
+    printf("WiFi || Message from WiFi received at: %s \n", curr_time);
+    printf("WiFi || Message: %s\n", message);
+    shm_write(message, 10, GSV_KEY);
+    pthread_exit(NULL);
+}
+
+/* ******************************** NOT USED FUNCTIONS ******************************** */
+// Function to transmit GSV via LTE
+void *transmitLTE(void *socket) {
+    Sockets *sock = (Sockets *)socket;
+    int LenLTE = sizeof(sock->ServerLTE_transmit);
+    const char *GSV;
+    const char *GSV_KEY = "GSV_KEY";
+    GSV = shm_read(10, GSV_KEY);
+    TX_LTE = sendto(sock->sockLTE_transmit, GSV, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_transmit, LenLTE);
+    printf("WiFi-Thread id = %ld\n", pthread_self());
+    printf("%s\n", GSV);
+    // printf("Message from LTE transmitted at: %s\n\n", curr_time);
+    pthread_exit(NULL);
+}
+
+// Function to transmit GSV via WiFi
+void *transmitWiFi(void *socket) {
+    Sockets *sock = (Sockets *)socket;
+    int LenWiFi = sizeof(sock->ServerWiFi_transmit);
+    const char *GSV;
+    const char *GSV_KEY = "GSV_KEY";
+    GSV = shm_read(10, GSV_KEY);
+    TX_WiFi = sendto(sock->sockWiFi_transmit, GSV, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_transmit, LenWiFi);
+    printf("WiFi-Thread id = %ld\n", pthread_self());
+    printf("%s\n", GSV);
+    // printf("Message from WiFi transmitted at: %s\n\n", curr_time);
+    pthread_exit(NULL);
+}
+
+/* Function to timestamp packets */
+char *Timestamp() {
+    /* Timestamp format : [hh:mm:ss dd/mm/yy] */
+    struct tm *timeinfo;
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    timeinfo = localtime(&tv.tv_sec);
+
+    sprintf(curr_time, "[%d:%d:%d.%03ld %d/%d/%d]", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, tv.tv_usec / 1000, timeinfo->tm_mday, timeinfo->tm_mon + 1, timeinfo->tm_year + 1900);
+
+    return curr_time;
 }

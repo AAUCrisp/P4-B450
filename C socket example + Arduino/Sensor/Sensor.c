@@ -20,27 +20,34 @@
 #include "Sockets_TX_RX.h"
 #include "shm_write_read.h"
 
+int generate(int Min, int Max) {
+    int number = (rand() % ((Max + 1) - Min)) + Min;
+    return number;
+}
+
 int main() {
     /* Initialize PORT & INTERFACE*/
-    uint PORT_LTE_RECEIVE = 6969;
-    uint PORT_WiFi_RECEIVE = 6968;
-    uint PORT_LTE_TRANSMIT = 9121;
-    uint PORT_WiFi_TRANSMIT = 9122;
+    uint PORT_LTE = 9000;
+    uint PORT_WiFi = 9001;
     const char* LTE = "wwan0";
     const char* WiFi = "wlan0";
 
     /* Misc */
-    pthread_t T1, T2, T3, T4;
+    pthread_t T1, T2;
 
-    /* Struct for message & buffer size */
-    char* msg;
 
     /* Create sockets */
     Sockets sock;
-    Create_Bind_Sockets(&sock, PORT_LTE, PORT_WiFi, PORT_LTE_TRANS, PORT_WiFi_TRANS, LTE, WiFi);
-    printf("sockLTE control_unit: %d\n", sock.sockLTE);
-    printf("sockWiFi control_unit: %d\n", sock.sockWiFi);
+    Sockets_Receiver(&sock, PORT_LTE, PORT_WiFi, LTE, WiFi);
+    printf("sockLTE_TRANSMITTER: %d\n", sock.sockLTE_TRANSMITTER);
+    printf("sockWiFi_TRANSMITTER: %d\n", sock.sockWiFi_TRANSMITTER);
 
+    /* Shared memory object variables */
+    const char* GSV_KEY = "GSV_KEY";
+    const char* msg;
+    
+
+    /* Create child process */
     pid_t sensor_monitor;     // Prepare the process ID for monitoring
     sensor_monitor = fork();  // Starts new process
     if (sensor_monitor == 0) {
@@ -51,8 +58,15 @@ int main() {
         execv(path, args);
     } else {
         while (1) {
-            pthread_create(&T1, NULL, /*Function*/, (void*)&sock);
-            pthread_create(&T2, NULL, /*Function*/, (void*)&sock);
+            msg = shm_read(10, GSV_KEY);
+            printf("GSV from shared memory: %s\n", msg);
+
+            if (msg == "B") {
+                printf("Shared memory GSV thing works!");
+            }
+            
+            //pthread_create(&T1, NULL, /*Function*/, (void*)&sock);
+            //pthread_create(&T2, NULL, /*Function*/, (void*)&sock);
         }
     }
 }
