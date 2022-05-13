@@ -21,7 +21,7 @@
 
 #define buffer 10
 
-Sockets sock;
+
 
 pthread_t wifi, lte;
 
@@ -47,6 +47,18 @@ int rsrp_mid = -85;
 int rsrp_good = -80;
 
 int main() {
+    /* Initialize PORT & INTERFACE*/
+    uint PORT_LTE = 91231;
+    uint PORT_WiFi = 91241;
+    uint PORT_LTE_TRANS = 9121;
+    uint PORT_WiFi_TRANS = 9122;
+    const char* LTE = "wwan0";
+    const char* WiFi = "wlan0";
+
+    /* Create sockets */
+    Sockets sock;
+    Create_Bind_Sockets(&sock, PORT_LTE, PORT_WiFi, PORT_LTE_TRANS, PORT_WiFi_TRANS, LTE, WiFi);
+
     printf("==================\nMonitoring Process Started\n==================\n\n");
     int counter = 0;
 
@@ -54,9 +66,8 @@ int main() {
         wifi_rssi[counter] = RSSI_VAL();
         lte_rsrp[counter] = RSRP_VAL();
 
-
-        if(gsv == "W" || gsv == "B") {    // If GSV is set to WiFi or both
-            if(wifi_rssi[counter] < rssi_bad){
+        if (gsv == "W" || gsv == "B") {  // If GSV is set to WiFi or both
+            if (wifi_rssi[counter] < rssi_bad) {
                 gsv = "L";
             }
         }
@@ -94,11 +105,23 @@ int main() {
         shm_write(gsv, buffer, GSV_KEY);  // Write selected technology to shared memory
 
         if (gsv == "W" || gsv == "B") {
-            pthread_create(&wifi, NULL, transmitWiFi, (void*)&sock);
+            pthread_t wifi, lte;
+            int threadWiFi = pthread_create(&wifi, NULL, transmitWiFi, (void*)&sock);
+            if (threadWiFi == 0) {
+                printf("WiFi thread is running!\n");
+            }
+            else{
+                perror("WiFi thread was not created");
+            }
             printf("GSV: Sent via WiFi\n");
         }
         if (gsv == "L" || gsv == "B") {
-            pthread_create(&lte, NULL, transmitLTE, (void*)&sock);
+            int threadLTE = pthread_create(&lte, NULL, transmitLTE, (void*)&sock);
+            if (threadLTE == 0) {
+                printf("LTE thread is running!\n");
+            } else{
+                perror("LTE thread was not created");
+            }
             printf("GSV: Sent via LTE\n");
         }
 
