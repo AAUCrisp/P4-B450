@@ -2,7 +2,7 @@
 #include "coordinates.c"
 
 
-struct addrinfo ServerLTE, res1;   // a socket struct design to be used with IPv4
+struct addrinfo ServerLTE, *res1;   // a socket struct design to be used with IPv4
 struct addrinfo ServerWiFi, *res;  // a socket struct design to be used with IPv4
 struct sockaddr_storage remote_addr;
 socklen_t fromlen;
@@ -78,7 +78,7 @@ int initialize_Server() {
         perror("failed to create sockLTE");
         exit(0);
     }
-    bindLTE = bind(sockLTE, res1->ai_addr, res->ai_addrlen);
+    bindLTE = bind(sockLTE, res1->ai_addr, res1->ai_addrlen);
     if (bindLTE == -1)
     {
         close(sockLTE);
