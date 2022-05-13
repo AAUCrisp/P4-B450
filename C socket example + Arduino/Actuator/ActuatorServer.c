@@ -139,7 +139,9 @@ int main() {
         ReceiveCoordinateWiFi();
         ReceiveCoordinateLTE();
       
-        close(sockWiFi);
+        
     }
+    close(sockWiFi);
+    close(sockLTE);
     
 }
