@@ -52,7 +52,7 @@ int main() {
         printf("ERROR: DIDN'T START THE NEW PROCESS!!\n");  // Should never get this far!
     } else {
         while (1) {
-            printf("Hello i am in while\n");
+            //printf("Hello i am in while\n");
             Timestamp();
             pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
             Timestamp();
