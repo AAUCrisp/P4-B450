@@ -5,7 +5,7 @@
 int data = 250;
 
 
-string grid = [];       // Array to contain the grid in the RAM
+std::string grid = [];       // Array to contain the grid in the RAM
 int x_axis = 50;      // Length of the x-axis of the grid
 int y_axis = 50;      // Length of the y-axis of the grid
 // int x_axis = 5000;      // Length of the x-axis of the grid
@@ -19,7 +19,7 @@ void generate_grid(int x_axis, int y_axis) {
     int x_count = 1;
     int y_count = 1;
     for (int i = 0; i < (x_axis * y_axis); i++) {
-        grid[i] = string(x_axis) . ":" . string(y_axis);
+        grid[i] = std::string(x_axis) . ":" . std::string(y_axis);
 
         if (x_count == x_axis){
             x_count = 1;
@@ -29,20 +29,20 @@ void generate_grid(int x_axis, int y_axis) {
 }
 
 /* Option for processing the coordinates instead of using memory */
-string convert_to_grid(int number) {
+std::string convert_to_grid(int number) {
     int x = number % x_axis;
     int y = (number + 1) / x_axis; 
 
-    string coordinate = string(x) . ":" . string(y);
+    std::string coordinate = string(x) . ":" . string(y);
 
     return coordinate;
 }
 
 
-void main(){
+int main(){
     printf("\nSensor Data is: %d", data);
     generate_grid(x_axis, y_axis);
-    string cpu_command = convert_to_grid(data);
+    std::string cpu_command = convert_to_grid(data);
     printf("\nCPU Command is: ");
     //printf(cpu_command);
     printf("\nRAM Command is: ");

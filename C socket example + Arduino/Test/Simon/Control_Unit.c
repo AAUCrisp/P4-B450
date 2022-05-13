@@ -16,7 +16,8 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "Sockets_TX_RX.h"
+// #include "Sockets_TX_RX.h"
+#include "Libraries.c"
 
 /* Main running code */
 int main() {
