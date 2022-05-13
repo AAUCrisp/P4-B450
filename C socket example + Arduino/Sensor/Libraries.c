@@ -17,10 +17,8 @@
 #include <time.h>
 #include <unistd.h>
 
-
 // Own Libraries
-#include "Headers/Sockets.h"
+#include "Headers/SocketFunctions.h"
 // Sockets sock;
 #include "Headers/shm_write_read.h"
 // #include "Headers/RSSI.c"
-
