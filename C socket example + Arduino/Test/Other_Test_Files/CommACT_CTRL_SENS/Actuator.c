@@ -52,7 +52,7 @@ void *transmit_LTE(void* message) {
     //char test[] = "This is sent from LTE test";
     sprintf(transmitbuffer,"%s", message);
     //tx_LTE = sendto(sockLTE, test, 1024, 0, (struct sockaddr *)&ClientLTE, lenLTE);
-    tx_LTE = sendto(sockLTE, transmitbuffer, 1024, 0, (struct sockaddr *)&ClientLTE, lenLTE);
+    tx_LTE = sendto(sockLTE, transmitbuffer, sizeof(transmitbuffer), 0, (struct sockaddr *)&ClientLTE, lenLTE);
     //printf("LTE-Thread id = %ld\n", pthread_self());
    // printf("Sending Data from LTE \n \n");
     printf("Number of bytes sent over LTE: %d", tx_LTE);
@@ -63,7 +63,7 @@ void *transmit_WiFi(void *message) {
     //char test[] = "This is sent from WiFi test";
     sprintf(transmitbuffer,"%s", message);
     //tx_WiFI = sendto(sockWiFi, test, 1024, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
-    tx_WiFI = sendto(sockWiFi, transmitbuffer, 1024, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
+    tx_WiFI = sendto(sockWiFi, transmitbuffer, sizeof(transmitbuffer), 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
     //printf("WiFi-Thread id = %ld\n", pthread_self());
     printf("Number of bytes sent over WiFi: %d", tx_WiFI);
     printf("Sending buffer: %s,\n from WiFi\n \n", transmitbuffer);
@@ -123,8 +123,8 @@ int main() {
     while (1) {
         
         usleep(500000);
-        tx_LTE = sendto(sockLTE, buf, 1024, 0, (struct sockaddr *)&ClientLTE, lenLTE);
-        tx_WiFI = sendto(sockWiFi, buf2, 1024, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
+        //tx_LTE = sendto(sockLTE, buf, 1024, 0, (struct sockaddr *)&ClientLTE, lenLTE);
+        //tx_WiFI = sendto(sockWiFi, buf2, 1024, 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
         /*
         tx_LTE = sendto(sockLTE, buf, sizeof(buf), 0, (struct sockaddr *)&ClientLTE, lenLTE);
         printf("data from LTE \n \n");
