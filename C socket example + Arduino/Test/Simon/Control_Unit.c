@@ -63,7 +63,7 @@ int main() {
             pthread_create(&T4, NULL, transmitWiFi,(void*)&sock);
 
             // printf("%s\n", msg);
-            sleep(1);
+            sleep(5);
         }
     }
 
