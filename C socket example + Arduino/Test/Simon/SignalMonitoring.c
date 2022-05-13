@@ -48,8 +48,8 @@ int rsrp_good = -80;
 
 int main() {
     /* Initialize PORT & INTERFACE*/
-    uint PORT_LTE = 91231;
-    uint PORT_WiFi = 91241;
+    uint PORT_LTE = 0;
+    uint PORT_WiFi = 0;
     uint PORT_LTE_TRANS = 9121;
     uint PORT_WiFi_TRANS = 9122;
     const char* LTE = "wwan0";
