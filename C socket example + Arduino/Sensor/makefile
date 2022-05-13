@@ -1,15 +1,15 @@
 all: SensorStart SensorMonitoring
 
-SensorStart: Sensor.c Sockets.o shm_write.o shm_read.o
-	gcc -pthread Sensor.c Sockets.o shm_write.o shm_read.o -o SensorStart -lrt
+SensorStart: Sensor.c SocketFunctions.o shm_write.o shm_read.o
+	gcc -pthread Sensor.c SocketFunctions.o shm_write.o shm_read.o -o SensorStart -lrt
 	touch SensorStart
 
-SensorMonitoring: SensorMonitoring.c shm_write.o shm_read.o Sockets.o
-	gcc -pthread SensorMonitoring.c shm_write.o shm_read.o Sockets.o -o SensorMonitoring -lrt
+SensorMonitoring: SensorMonitoring.c shm_write.o shm_read.o SocketFunctions.o
+	gcc -pthread SensorMonitoring.c shm_write.o shm_read.o SocketFunctions.o -o SensorMonitoring -lrt
 	touch SensorMonitoring
 
-Sockets.o: Headers/SocketFunctions.c Headers/Sockets.h Headers/shm_write_read.h
-	gcc -c Headers/SocketFunctions.c -o Sockets.o -lrt
+SocketFunctions.o: Headers/SocketFunctions.c Headers/Sockets.h Headers/shm_write_read.h
+	gcc -c Headers/SocketFunctions.c -lrt
 	touch Headers/SocketFunctions.c
 
 shm_write.o: Headers/shm_write.c Headers/shm_write_read.h
