@@ -55,9 +55,9 @@ int main() {
             // printf("==================\nMain Control Unit Process Started\n==================\n\n");
             Timestamp();
             pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
+            pthread_join(T1, (void**)&msg);
             Timestamp();
             pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
-            pthread_join(T1, (void**)&msg);
             pthread_join(T2, (void**)&msg);
             printf("%s\n", msg);
             sleep(5);
