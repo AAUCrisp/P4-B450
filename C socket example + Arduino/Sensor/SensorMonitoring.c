@@ -33,7 +33,7 @@ int main() {
 
     /* Create sockets */
     Sockets sock;
-    Sockets_Receiver(Sockets * sock, PORT_LTE, PORT_WiFi, LTE, WiFi);
+    Sockets_Receiver(&sock, PORT_LTE, PORT_WiFi, LTE, WiFi);
     printf("sockLTE_RECEIVER: %d\n", sock.sockLTE_TRANSMITTER);
     printf("sockWiFi_RECEIVER: %d\n", sock.sockWiFi_TRANSMITTER);
 
