@@ -102,7 +102,8 @@ void logData(char msg[256], int *arr)
 {
     char temp[256];
     sprintf(temp, "Movement on x and y axis:  x = %d, y = %d \n \n", arr[0], arr[1]);
-    fwrite(temp, sizeof(char), strlen(temp), out);
+    //fwrite(temp, sizeof(char), strlen(temp), out);
+    MyFile << temp;
 
 }
 
@@ -152,7 +153,8 @@ void *ReceiveCoordinateLTE(void *) {
 
 int main() {
     initialize_Server();
-    out = fopen("MovementCommands.txt", "w");
+    //out = fopen("MovementCommands.txt", "w");
+    ofstream MyFile("MovementCommands.txt");
     while (1)
     {
        pthread_create(&T1, NULL, ReceiveCoordinateLTE, NULL);
@@ -162,7 +164,8 @@ int main() {
       
         
     }
-    fclose(out);
+    //fclose(out);
+    MyFile.close();
     close(sockWiFi);
     close(sockLTE);
     
