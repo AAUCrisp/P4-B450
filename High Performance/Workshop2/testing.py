@@ -1,3 +1,4 @@
+
 from PIL import Image
 import matplotlib.pyplot as plt
 import numpy as np
@@ -51,9 +52,6 @@ def blockPartitioning(f, blockPartition, blocksize):
                 for iiii in range(blocksize):
                     blockPartition[i][ii][iii][iiii] = f[iii + (blocksize*i)][iiii + (blocksize*ii)]
 
-
-    
-# Use discrete cosine transform on partitioned image                  
 @njit
 def blockPartitioningDCT(blockPartitionDCT, blockPartition, blocksize):
     for i in range(len(blockPartitionDCT)):
@@ -63,12 +61,20 @@ def blockPartitioningDCT(blockPartitionDCT, blockPartition, blocksize):
                     for n1 in range(blocksize):
                         tempInner = 0
                         for n2 in range(blocksize):
-                            tempInner += blockPartition[i][ii][n1][n2] * np.cos((np.pi/blocksize)*(n2+1/2)*iiii) * np.cos((np.pi/blocksize)*(n1+1/2)*iii)
+                            tempInner += blockPartition[i][ii][n1][n2] * np.cos((np.pi*((2*n1)+1)*iii)/(2*blocksize)) * np.cos((np.pi*((2*n2)+1)*iiii)/(2*blocksize))
                         blockPartitionDCT[i][ii][iii][iiii] += tempInner
+                    if iii == 0:
+                        if iiii == 0:
+                            blockPartitionDCT[i][ii][iii][iiii] = blockPartitionDCT[i][ii][iii][iiii] * (1/np.sqrt(blocksize)) * (1/np.sqrt(blocksize))
+                        else:
+                            blockPartitionDCT[i][ii][iii][iiii] = blockPartitionDCT[i][ii][iii][iiii] * (1/np.sqrt(blocksize)) * np.sqrt(2/blocksize)
+                    else:
+                        if iiii == 0:
+                            blockPartitionDCT[i][ii][iii][iiii] = blockPartitionDCT[i][ii][iii][iiii] * (1/np.sqrt(blocksize)) * np.sqrt(2/blocksize)
+                        else:
+                            blockPartitionDCT[i][ii][iii][iiii] = blockPartitionDCT[i][ii][iii][iiii] * np.sqrt(2/blocksize) * np.sqrt(2/blocksize)
 
 
-
-# Quantizise a DCT version.
 
 
 @njit
@@ -88,8 +94,6 @@ def DCT3_Coef(blockPartitionQuant, blockPartitionDCT3, blocksize, quantization_m
                     blockPartitionDCT3[i][ii][iii][iiii] = blockPartitionQuant[i][ii][iii][iiii] * quantization_matrix[iii][iiii]
 
 
-
-              
 @njit
 def restoreImage(blockPartitionDCT3, blockPartitionRestored, blocksize):
     for i in range(len(blockPartitionRestored)):
@@ -99,10 +103,18 @@ def restoreImage(blockPartitionDCT3, blockPartitionRestored, blocksize):
                     for n1 in range(blocksize):
                         tempInner = 0
                         for n2 in range(blocksize):
-                            tempInner += blockPartitionDCT3[i][ii][n1][n2] * np.cos((np.pi/blocksize)*(iii+1/2)*n1) * np.cos((np.pi/blocksize)*(iiii+1/2)*n2)
-                        blockPartitionRestored[i][ii][iii][iiii] += tempInner
-                    blockPartitionRestored[i][ii][iii][iiii] = blockPartitionRestored[i][ii][iii][iiii] * (2/blocksize)
+                            if n1 == 0:
+                                if n2 == 0:
+                                   tempInner += (1/np.sqrt(blocksize)) * (1/np.sqrt(blocksize)) * blockPartitionDCT3[i][ii][n1][n2] * np.cos((np.pi*((2*iii)+1)*n1)/(2*blocksize)) * np.cos((np.pi*((2*iiii)+1)*n2)/(2*blocksize))
+                                else:
+                                    tempInner += (1/np.sqrt(blocksize)) * np.sqrt(2/blocksize) * blockPartitionDCT3[i][ii][n1][n2] * np.cos((np.pi*((2*iii)+1)*n1)/(2*blocksize)) * np.cos((np.pi*((2*iiii)+1)*n2)/(2*blocksize))
+                            else:
+                                if n2 == 0:
+                                    tempInner += (1/np.sqrt(blocksize)) * np.sqrt(2/blocksize) * blockPartitionDCT3[i][ii][n1][n2] * np.cos((np.pi*((2*iii)+1)*n1)/(2*blocksize)) * np.cos((np.pi*((2*iiii)+1)*n2)/(2*blocksize))
+                                else:
+                                    tempInner += np.sqrt(2/blocksize) * np.sqrt(2/blocksize) * blockPartitionDCT3[i][ii][n1][n2] * np.cos((np.pi*((2*iii)+1)*n1)/(2*blocksize)) * np.cos((np.pi*((2*iiii)+1)*n2)/(2*blocksize))
 
+                        blockPartitionRestored[i][ii][iii][iiii] += tempInner
 
 # Turn partition into image array
 @njit

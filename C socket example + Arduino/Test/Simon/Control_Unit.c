@@ -44,7 +44,7 @@ int main() {
             Timestamp();
             pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
             pthread_join(T2, (void**)&msg);
-            printf("%s\n", msg);
+            printf("THIS IS RECEIVED MESSAGE: %s\n", msg);
             sleep(5);
         }
     }
