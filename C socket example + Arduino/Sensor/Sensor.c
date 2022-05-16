@@ -48,13 +48,14 @@ int main() {
     /* Create child process */
     pid_t sensor_monitor;     // Prepare the process ID for monitoring
     sensor_monitor = fork();  // Starts new process
+
     if (sensor_monitor == 0) {
         printf("Parent process ID: %d \n", getppid());
         printf("Sensor monitoring process ID is: %d \n", getpid());
         printf("Do I reach this? Line 54");
         char path[] = "./SensorMonitoring";
         printf("Do I reach this? Line 56");
-        char* args[] = {"./SensorMonitoring&", NULL};
+        char* args[] = {"./SensorMonitoring", NULL};
         printf("Do I reach this? Line 58");
         execv(path, args);
         printf("Do I reach this? Line 60");
