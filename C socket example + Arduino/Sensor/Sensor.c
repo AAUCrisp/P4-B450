@@ -68,10 +68,10 @@ int main() {
         printf("GSV from shared memory: %s\n", msg);
         //GSV = msg;
         GSV = atoi(msg);
-        printf("const char* = typecast to char*: %s\n", GSV);
+        printf("const char* = typecast to char*: %d\n", GSV);
 
         if (GSV == 5 || GSV == "NONE") {
-            printf("Shared memory GSV thing works!2 %s\n", GSV);
+            printf("Shared memory GSV thing works!2 %d\n", GSV);
             printf("SHIT DOES NOT WORK!2\n");
         }
         // while (1) {
