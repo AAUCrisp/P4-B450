@@ -77,7 +77,7 @@ int main() {
             if (GSV == B || GSV == L) {
                 /*printf("Shared memory GSV thing works! %s\n", msg);
                 printf("SHIT DO WORK! %d\n", GSV);*/
-                timestamp();
+                Timestamp();
                 random_int = generate(0, 2500);
                 printf("Random int to char: %s\n", random_int);
                 shm_write(random_int, 10, RAND_KEY);
@@ -85,7 +85,7 @@ int main() {
             }
 
             if (GSV == B || GSV == W) {
-                timestamp();
+                Timestamp();
                 random_int = generate(0, 2500);
                 shm_write(random_int, 10, RAND_KEY);
                 printf("Random int to char: %s\n", random_int);
