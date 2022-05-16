@@ -67,7 +67,7 @@ int main() {
         printf("GSV: %d\n", GSV);
 
         while (1) {
-            sleep(5);
+            sleep(2);
             if (GSV == B || GSV == L || GSV == W) {
                 printf("Shared memory GSV thing works! %s\n", msg);
                 printf("SHIT DO WORK! %d\n", GSV);
