@@ -4,7 +4,7 @@ ClientStart: ActuatorClient.c
 	gcc -pthread ActuatorClient.c -o ClientStart
 	touch ClientStart
 ServerStart: ActuatorServer.c
-	gcc -pthread  ActuatorServer.c -o ServerStart
+	g++ -pthread  ActuatorServer.c -o ServerStart
 	touch ServerStart
 clean:
 	rm -f ClientStart ServerStart
