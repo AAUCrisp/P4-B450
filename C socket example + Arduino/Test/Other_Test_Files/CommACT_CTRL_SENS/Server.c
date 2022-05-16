@@ -19,11 +19,11 @@
 /* Define buffers & PORT number */
 #define BUFFER 128
 char Message[BUFFER];
-uint PORT_LTE1 = 9000;
-uint PORT_WiFi1 = 9001;
+uint PORT_LTE1 = 9002;
+uint PORT_WiFi1 = 9003;
 
-uint PORT_LTE2 = 9002;
-uint PORT_WiFi2 = 9003;
+uint PORT_LTE2 = 9000;
+uint PORT_WiFi2 = 9001;
 
 /* Specify LTE & WiFi interface */
 const char *LTE = "wwan0";
