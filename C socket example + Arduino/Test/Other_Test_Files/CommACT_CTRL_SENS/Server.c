@@ -147,8 +147,8 @@ int main() {
         // pthread_create(&T2, NULL, receiveWiFi, NULL);
         // pthread_create(&T3, NULL, transmitLTE, msg);
         // pthread_create(&T4, NULL, transmitWiFi, msg2);
-        sendto(sockWiFi1, msg, BUFFER, 0, (struct sockaddr *)&ServerWiFi2, lenWiFi2);
-        sendto(sockLTE1, msg2, BUFFER, 0, (struct sockaddr *)&ServerLTE2, lenLTE2);
+        sendto(sockWiFi2, msg, BUFFER, 0, (struct sockaddr *)&ServerWiFi2, lenWiFi2);
+        sendto(sockLTE2, msg2, BUFFER, 0, (struct sockaddr *)&ServerLTE2, lenLTE2);
         printf("Just to make sure it prints");
         sleep(3);
 
