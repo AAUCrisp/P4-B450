@@ -33,4 +33,6 @@ void *transmitLTE(void *socket);
 /* Function to transmit WiFi packets */
 void *transmitWiFi(void *socket);
 
+char *Timestamp();
+
 #endif
