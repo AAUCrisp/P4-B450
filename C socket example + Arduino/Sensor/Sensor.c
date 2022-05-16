@@ -72,7 +72,7 @@ int main() {
         strcpy(GSV, msg);
         printf("const char* = typecast to char*: %s\n", GSV);
 
-        if (GSV == (char*)"B" || GSV == "NONE") {
+        if (GSV == "B" || GSV == "NONE") {
             printf("Shared memory GSV thing works!2 %s\n", GSV);
             printf("SHIT DOES NOT WORK!2\n");
         }
