@@ -98,10 +98,10 @@ int initialize_Server() {
 
 }
 
-void logData(char msg[256], struct ret) 
+void logData(char msg[256], int *arr) 
 {
     char temp[256];
-    sprintf(temp, "Movement on x and y axis:  x = %d, y = %d \n \n", ret.x, ret.y);
+    sprintf(temp, "Movement on x and y axis:  x = %d, y = %d \n \n", arr[0], arr[1]);
     fwrite(temp, sizeof(char), strlen(temp), out);
 
 }

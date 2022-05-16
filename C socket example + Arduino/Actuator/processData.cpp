@@ -35,6 +35,6 @@ int * process_Data(char msg[buffer]) {
     result[1] = movement_y;
     update_last_coordinate(x, y);
     
-    return result
+    return result;
 }
 
