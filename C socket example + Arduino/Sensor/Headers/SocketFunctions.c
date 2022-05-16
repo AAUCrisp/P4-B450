@@ -138,7 +138,7 @@ void *transmitLTE(void *socket) {
     const char *RAND_KEY = "RAND_KEY";
     Sockets *sock = (Sockets *)socket;
     int LenLTE = sizeof(sock->ClientLTE_TRANSMITTER);
-    RAND_INT = shm_read(10, RAND_KEY);
+    int RAND_INT = shm_read(10, RAND_KEY);
     printf("RAND_INT LTE: %d\n" RAND_INT);
     TX_LTE = sendto(sock->sockLTE_TRANSMITTER, RAND_INT, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, LenLTE);
     printf("LTE-Thread id = %ld\n", pthread_self());
@@ -151,7 +151,7 @@ void *transmitWiFi(void *socket) {
     const char *RAND_KEY = "RAND_KEY";
     Sockets *sock = (Sockets *)socket;
     int LenWiFi = sizeof(sock->ClientLTE_TRANSMITTER);
-    RAND_INT = shm_read(10, RAND_KEY);
+    int RAND_INT = shm_read(10, RAND_KEY);
     printf("RAND_INT WiFi: %d\n" RAND_INT);
     TX_WiFi = sendto(sock->sockWiFi_TRANSMITTER, RAND_INT, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, LenWiFi);
     printf("WiFi-Thread id = %ld\n", pthread_self());
