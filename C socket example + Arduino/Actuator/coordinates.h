@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 #define buffer 1024
-char string_coordinates[] = "499:2";
+//char string_coordinates[] = "499:2";
 int bytes_read;
 int last_x_coordinate;
 int last_y_coordinate;
