@@ -35,7 +35,6 @@ int main() {
         char* args[] = {"./SignalMonitoring&", NULL};       // Command for the function to execute, always ended on NULL argument
         //execv(path, args);                                  // Tells the new process to "reset" and run a different code instead
         printf("ERROR: DIDN'T START THE NEW PROCESS!!\n");  // Should never get this far!
-    } else {
         while (1) {
             // printf("==================\nMain Control Unit Process Started\n==================\n\n");
             Timestamp();
@@ -50,6 +49,8 @@ int main() {
             printf("THIS IS RECEIVED MESSAGE: %s\n", msg);
             sleep(5);
         }
+    } else {
+        printf("Stupid");
     }
 
     close(sock.sockLTE && sock.sockWiFi);
