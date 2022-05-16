@@ -48,8 +48,8 @@ int main() {
     printf("GSV NONE : %s\n", GSV);
 
     if (GSV == "B" || GSV == "NONE") {
-        printf("Shared memory GSV thing works! %s\n", GSV);
-        printf("SHIT DOES NOT WORK!");
+        printf("Shared memory GSV thing works!1 %s\n", GSV);
+        printf("SHIT DOES NOT WORK!1");
     }
 
     /* Create child process */
@@ -70,8 +70,8 @@ int main() {
         printf("const char* = typecast  to char*: %s\n", GSV);
 
         if (GSV == "B" || GSV == "NONE") {
-            printf("Shared memory GSV thing works! %s\n", GSV);
-            printf("SHIT DOES NOT WORK!");
+            printf("Shared memory GSV thing works!2 %s\n", GSV);
+            printf("SHIT DOES NOT WORK!2");
         }
         // while (1) {
         //  pthread_create(&T1, NULL, /*Function*/, (void*)&sock);
