@@ -1,4 +1,5 @@
 
+
 #include <arpa/inet.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -153,6 +154,7 @@ void *transmitWiFi(void *socket) {
     Sockets *sock = (Sockets *)socket;
     int LenWiFi = sizeof(sock->ClientLTE_TRANSMITTER);
     RAND_INT = shm_read(10, RAND_KEY);
+    RAND_INT = "FUCK NU AF DIN LORTE PROGRAM";
     printf("RAND_INT WiFi: %s\n", shm_read(10, RAND_KEY));
     TX_WiFi = sendto(sock->sockWiFi_TRANSMITTER, RAND_INT, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, LenWiFi);
     printf("WiFi-Thread id = %ld\n", pthread_self());
