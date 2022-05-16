@@ -20,6 +20,8 @@
 #include "Headers/SocketFunctions.h"
 #include "Headers/shm_write_read.h"
 
+
+
 int generate(int Min, int Max) {
     int number = (rand() % ((Max + 1) - Min)) + Min;
     return number;
@@ -52,8 +54,6 @@ int main() {
     int B = 0;
     int W = 1;
     int L = 2;
-
-    shm_write(const char* message, const int SIZE, const char* name);
 
     /* Create child process */
     pid_t sensor_monitor;     // Prepare the process ID for monitoring
