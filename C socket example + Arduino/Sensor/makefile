@@ -1,7 +1,4 @@
-all: MakeClean Git SensorStart SensorMonitoring
-
-MakeClean: 
-	make clean
+all: Git SensorStart SensorMonitoring
 
 Git:
 	git pull
