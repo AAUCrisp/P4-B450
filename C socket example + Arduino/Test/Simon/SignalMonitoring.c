@@ -91,7 +91,7 @@ int main() {
             int threadWiFi = pthread_create(&wifi, NULL, transmitWiFi, (void*)&sock);
             // pthread_join(wifi, NULL);
             if (threadWiFi == 0) {
-                //½printf("WiFi thread is running!\n");
+                //printf("WiFi thread is running!\n");
             } else {
                 perror("WiFi thread was not created");
             }
@@ -101,7 +101,7 @@ int main() {
             int threadLTE = pthread_create(&lte, NULL, transmitLTE, (void*)&sock);
             // pthread_join(lte, NULL);
             if (threadLTE == 0) {
-                printf("LTE thread is running!\n");
+                //printf("LTE thread is running!\n");
             } else {
                 perror("LTE thread was not created");
             }
