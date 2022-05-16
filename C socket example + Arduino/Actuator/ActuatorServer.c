@@ -97,11 +97,11 @@ int initialize_Server() {
 
 }
 
-void logData(char msg[256], int* arr[]) 
+void logData(char msg[256], int* arr) 
 {
     char temp[256];
     out = fopen("MovementCommands.txt", "w");
-    sprintf(temp, 256, "Movement on x and y axis:  x = %d, y = %d \n \n", arr[0], arr[1]);
+    sprintf(temp, "Movement on x and y axis:  x = %d, y = %d \n \n", arr[0], arr[1]);
     fwrite(temp, sizeof(char), strlen(temp), out);
 }
 
