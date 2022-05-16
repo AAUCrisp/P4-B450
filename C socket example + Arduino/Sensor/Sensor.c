@@ -46,7 +46,7 @@ int main() {
     const char* msg;
 
     const char* RAND_KEY = "RAND_KEY";
-    char* random_int;
+    const char* rand_int;
 
     int GSV;
     int B = 0;
@@ -78,17 +78,17 @@ int main() {
                 /*printf("Shared memory GSV thing works! %s\n", msg);
                 printf("SHIT DO WORK! %d\n", GSV);*/
                 Timestamp();
-                random_int = generate(0, 2500);
-                printf("Random int to char: %s\n", random_int);
-                shm_write(random_int, 10, RAND_KEY);
+                sprintf(rand_int, generate(0, 2500));
+                printf("Random int to char: %s\n", rand_int);
+                shm_write(rand_int, 10, RAND_KEY);
                 pthread_create(&T1, NULL, transmitLTE, (void*)&sock);
             }
 
             if (GSV == B || GSV == W) {
                 Timestamp();
-                random_int = generate(0, 2500);
-                shm_write(random_int, 10, RAND_KEY);
-                printf("Random int to char: %s\n", random_int);
+                sprintf(rand_int, generate(0, 2500));
+                shm_write(rand_int, 10, RAND_KEY);
+                printf("Random int to char: %s\n", rand_int);
                 pthread_create(&T2, NULL, transmitWiFi, (void*)&sock);
             }
         }
