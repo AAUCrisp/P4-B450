@@ -74,10 +74,10 @@ int main() {
         /* Compare signals and select a technology */
         if ((rssi_average >= rssi_good && rsrp_average < rsrp_good) || (rssi_average >= rssi_mid && rsrp_average < rsrp_mid)) {
             gsv = "1";  // If WiFi has stronger signal, set WiFi
-            printf("GSV: WiFi Selected\n");
+            //printf("GSV: WiFi Selected\n");
         } else if ((rssi_average < rssi_good && rsrp_average >= rsrp_good) || (rssi_average < rssi_mid && rsrp_average >= rsrp_mid)) {
             gsv = "2";  // If LTE has stronger signal, set LTE
-            printf("GSV: LTE Selected\n");
+            //printf("GSV: LTE Selected\n");
         }
         // else if( (rssi_average >= rssi_good && rsrp_average >= rsrp_good) || (rssi_average >= rssi_mid && rsrp_average >= rsrp_mid) ) {
         else {
@@ -91,11 +91,11 @@ int main() {
             int threadWiFi = pthread_create(&wifi, NULL, transmitWiFi, (void*)&sock);
             // pthread_join(wifi, NULL);
             if (threadWiFi == 0) {
-                printf("WiFi thread is running!\n");
+                //½printf("WiFi thread is running!\n");
             } else {
                 perror("WiFi thread was not created");
             }
-            printf("GSV: Sent via WiFi\n");
+            //printf("GSV: Sent via WiFi\n");
         }
         if (gsv == "2" || gsv == "0") {
             int threadLTE = pthread_create(&lte, NULL, transmitLTE, (void*)&sock);
@@ -105,7 +105,7 @@ int main() {
             } else {
                 perror("LTE thread was not created");
             }
-            printf("GSV: Sent via LTE\n");
+            //printf("GSV: Sent via LTE\n");
         }
 
         if (counter == (buffer - 1)) {
