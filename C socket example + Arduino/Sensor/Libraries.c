@@ -18,6 +18,7 @@
 #include <unistd.h>
 
 // Own Libraries
+/*
 #ifndef SOCKET_FUNCTIONS
 #define SOCKET_FUNCTIONS
 #include "Headers/shm_write_read.h"
@@ -26,5 +27,4 @@
 #ifndef SOCKET_FUNCTIONS
 #define SOCKET_FUNCTIONS
 #include "Headers/SocketFunctions.h"
-#endif
-
+#endif*/

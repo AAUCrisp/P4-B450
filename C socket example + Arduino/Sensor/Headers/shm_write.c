@@ -1,20 +1,4 @@
-#include <arpa/inet.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <netinet/in.h>
-#include <pthread.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/ipc.h>  //IPC thing
-#include <sys/mman.h>
-#include <sys/shm.h>  //IPC thing
-#include <sys/socket.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <time.h>
-#include <unistd.h>
+#include "../Libraries.c"
 
 void shm_write(const char* message, const int SIZE, const char* name) {
     /* shared memory file descriptor */
