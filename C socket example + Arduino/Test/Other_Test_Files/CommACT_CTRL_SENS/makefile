@@ -1,4 +1,7 @@
-all: ServerStart SensorStart ActuatorStart
+all: Git ServerStart SensorStart ActuatorStart
+
+Git:
+	git pull
 
 ServerStart: Server.c
 	gcc -pthread Server.c -o ServerStart

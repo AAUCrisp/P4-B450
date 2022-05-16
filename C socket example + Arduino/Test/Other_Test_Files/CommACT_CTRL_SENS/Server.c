@@ -19,11 +19,11 @@
 /* Define buffers & PORT number */
 #define BUFFER 128
 char Message[BUFFER];
-uint PORT_LTE1 = 9002;
-uint PORT_WiFi1 = 9003;
+uint PORT_LTE1 = 9002; // Receiver LTE
+uint PORT_WiFi1 = 9003; // Receiver WiFi
 
-uint PORT_LTE2 = 9000;
-uint PORT_WiFi2 = 9001;
+uint PORT_LTE2 = 6666; // Transmitter LTE
+uint PORT_WiFi2 = 6667; // Transmitter WiFi
 
 /* Specify LTE & WiFi interface */
 const char *LTE = "wwan0";
@@ -65,6 +65,7 @@ void *transmitLTE(void *message) {
     char transmitBuffer[BUFFER];
     char *msg = message;
     sprintf(transmitBuffer, "%s", msg);
+    printf("TransmiteLTE: %s\n", transmitBuffer);
     sendto(sockLTE2, transmitBuffer, BUFFER, 0, (struct sockaddr *)&ServerLTE2, lenLTE2);
     // printf("LTE-Thread id = %ld\n\n", pthread_self());
     pthread_exit(NULL);
@@ -74,6 +75,7 @@ void *transmitWiFi(void *message) {
     char transmitBuffer[BUFFER];
     char *msg = message;
     sprintf(transmitBuffer, "%s", msg);
+    printf("TransmiteLTE: %s\n", transmitBuffer);
     sendto(sockWiFi2, transmitBuffer, BUFFER, 0, (struct sockaddr *)&ServerWiFi2, lenWiFi2);
     // printf("WiFi-Thread id = %ld\n\n", pthread_self());
     pthread_exit(NULL);
