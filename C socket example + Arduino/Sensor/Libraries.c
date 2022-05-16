@@ -18,7 +18,12 @@
 #include <unistd.h>
 
 // Own Libraries
-#include "Headers/SocketFunctions.h"
-// Sockets sock;
+#ifndef SOCKET_FUNCTIONS
+#define SOCKET_FUNCTIONS
 #include "Headers/shm_write_read.h"
-// #include "Headers/RSSI.c"
+#endif
+
+#ifndef SOCKET_FUNCTIONS
+#define SOCKET_FUNCTIONS
+#include "Headers/SocketFunctions.h"
+#endif
