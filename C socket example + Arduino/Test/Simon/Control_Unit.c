@@ -69,6 +69,10 @@ int main() {
         }
     }
 
-    close(sock.sockLTE && sock.sockWiFi);
+    close(sock.sockLTE_TRANSMITTER);
+    close(sock.sockWiFi_TRANSMITTER);
+
+    close(sock.sockLTE_RECEIVER);
+    close(sock.sockWiFi_RECEIVER);
     exit(0);
 }
