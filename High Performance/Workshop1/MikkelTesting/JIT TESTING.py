@@ -1,6 +1,6 @@
 import numpy as np
 import time as time
-from numba import jit, njit
+from numba import njit
 
 
 size = 1000
