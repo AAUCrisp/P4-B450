@@ -39,8 +39,11 @@ int main() {
         while (1) {
             // printf("==================\nMain Control Unit Process Started\n==================\n\n");
             Timestamp();
+            printf("Test, does this print?");
             pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
+            printf("Test, does this print?2");
             pthread_join(T1, (void**)&msg);
+            printf("Test, does this print?3");
             Timestamp();
             pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
             pthread_join(T2, (void**)&msg);
