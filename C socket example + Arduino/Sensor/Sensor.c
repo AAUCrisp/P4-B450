@@ -39,7 +39,7 @@ int main() {
 
     /* Create sockets */
     Sockets sock;
-    Sockets_Transmitter(&sock,, PORT_LTE, PORT_WiFi, LTE, WiFi);
+    Sockets_Transmitter(&sock, IP_LTE, IP_WiFi, PORT_LTE, PORT_WiFi, LTE, WiFi);
     printf("sockLTE_TRANSMITTER: %d\n", sock.sockLTE_TRANSMITTER);
     printf("sockWiFi_TRANSMITTER: %d\n", sock.sockWiFi_TRANSMITTER);
 
