@@ -40,7 +40,7 @@ uint WiFi_PORT_RECEIVE = 9003;
 #define WiFi_PORT 9001
 
 #define LTE_ip "10.20.0.16"
-#define WiFi_ip "192.168.1.136"
+#define WiFi_ip "192.168.1.131"
 #define BUFFER 128
 
 void transmit_LTE(char *buf) {
