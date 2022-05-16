@@ -31,22 +31,19 @@ int main() {
     pthread_t T1, T2;
 
     /* Create sockets */
-    printf("Do I reach this? Line: 35");
     Sockets sock;
     Sockets_Receiver(&sock, PORT_LTE, PORT_WiFi, LTE, WiFi);
     printf("sockLTE_RECEIVER: %d\n", sock.sockLTE_TRANSMITTER);
     printf("sockWiFi_RECEIVER: %d\n", sock.sockWiFi_TRANSMITTER);
-    printf("Do I reach this? Line 40:");
 
     while (1) {
-        printf("Do I reach this? Line 43:");
         int a = pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
-        if (a != 0) {
+        int b = pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
+        /*if (a != 0) {
             perror("pthread_create failed");
         }
-        int b = pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
         if (b != 0) {
             perror("pthread_create failed");
-        }
+        }*/
     }
 }
