@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri May 13 16:05:10 2022
+# Make data base, printed on Mon May 16 09:39:47 2022
 
 # Variables
 
@@ -19,7 +19,7 @@ LC_ALL = C
 # environment
 NO_AT_BRIDGE = 1
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-95de94c3-e8c8-4bd3-a63f-201b9695ee63.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-116acd2f-ed1d-4af6-943e-1edfd76316cb.sock
 # environment
 LC_NAME = en_DK.UTF-8
 # environment
@@ -79,7 +79,7 @@ APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_AUTH_SOCK = /tmp/ssh-XXXXXX6HWKI1/agent.1353
+SSH_AUTH_SOCK = /tmp/ssh-XXXXXXoCJ60R/agent.1368
 # default
 .SHELLFLAGS := -c
 # environment
@@ -95,13 +95,13 @@ MAKEFILE_LIST :=
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 1651
+VSCODE_PID = 1703
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/BamseLinux:@/tmp/.ICE-unix/1302,unix/BamseLinux:/tmp/.ICE-unix/1302
+SESSION_MANAGER = local/BamseLinux:@/tmp/.ICE-unix/1317,unix/BamseLinux:/tmp/.ICE-unix/1317
 # automatic
 *F = $(notdir $*)
 # environment
@@ -177,7 +177,7 @@ MAKE_VERSION := 4.3
 # environment
 LC_MEASUREMENT = en_DK.UTF-8
 # environment
-SSH_AGENT_PID = 1354
+SSH_AGENT_PID = 1369
 # environment
 _ = /usr/bin/make
 # environment
@@ -284,9 +284,10 @@ GNUmakefile:
 # strcache buffers: 1 (0) / strings = 23 / storage = 311 B / avg = 13 B
 # current buf: size = 8162 B / used = 311 B / count = 23 / avg = 13 B
 
+ 
 # strcache performance: lookups = 26 / hit rate = 11%
 # hash-table stats:
 # Load=23/8192=0%, Rehash=0, Collisions=0/26=0%
-# Finished Make data base on Fri May 13 16:05:10 2022
+# Finished Make data base on Mon May 16 09:39:47 2022
 
  
