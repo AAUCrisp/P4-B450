@@ -1,3 +1,5 @@
+#include "SocketFunctions.h"
+
 #include <arpa/inet.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -17,7 +19,6 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "SocketFunctions.h"
 #include "shm_write_read.h"
 
 /* Define buffers & PORT number */
@@ -111,10 +112,12 @@ void *receiveLTE(void *socket) {
     const char *GSV_KEY = "GSV_KEY";
     Sockets *sock = (Sockets *)socket;
     int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
+    printf("Do I reach this? 1");
     RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
     printf("LTE || LTE-Thread id = %ld\n", pthread_self());
     printf("LTE || Message from LTE received at: %s\n", curr_time);
     printf("LTE || Message: %s\n", message);
+    printf("Do I reach this? 2");
     shm_write(message, 10, GSV_KEY);
     pthread_exit(NULL);
 }
@@ -125,10 +128,12 @@ void *receiveWiFi(void *socket) {
     const char *GSV_KEY = "GSV_KEY";
     Sockets *sock = (Sockets *)socket;
     int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
+    printf("Do I reach this? 3");
     RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
     printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
     printf("WiFi || Message from WiFi received at: %s \n", curr_time);
     printf("WiFi || Message: %s\n", message);
+    printf("Do I reach this? 4");
     shm_write(message, 10, GSV_KEY);
     pthread_exit(NULL);
 }
