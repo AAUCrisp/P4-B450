@@ -1,4 +1,7 @@
-all: Git SensorStart SensorMonitoring
+all: MakeClean Git SensorStart SensorMonitoring
+
+MakeClean: 
+	make clean
 
 Git:
 	git pull

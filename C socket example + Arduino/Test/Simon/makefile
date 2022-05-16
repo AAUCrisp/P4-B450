@@ -1,4 +1,7 @@
-all: Git ClientStart ServerStart SignalMonitoring
+all: MakeClean Git ClientStart ServerStart SignalMonitoring
+
+MakeClean: 
+	make clean
 
 Git:
 	git pull
