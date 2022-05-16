@@ -5,7 +5,7 @@
 //int movement_x;
 //int movement_y;
 int * process_Data(char msg[buffer]) {
-    int* result = (int *) malloc(sizeof(int) * 2);
+    int* result = (int *) malloc(sizeof(int) * 3);
     bytes_read = sscanf(msg, "%[^:]:%s:%s", tempx, tempy);
     x = hex_to_int(tempx);
     y = hex_to_int(tempy);
