@@ -44,16 +44,14 @@ int main() {
     /* Shared memory object variables */
     const char* GSV_KEY = "GSV_KEY";
     const char* msg;
-    char * B = "B";
-    char * L = "L";
-    char * W = "W";
-    /*
-    printf("GSV NONE : %s\n", GSV);
+    char * Both = "B";
+    char * LTE = "L";
+    char * WiFi = "W";
+   
+    printf("Both : %s\n", Both);
+    printf("LTE : %s\n", LTE);
+    printf("WiFi : %s\n", WiFi);
 
-    if (GSV == "B" || GSV == "NONE") {
-        printf("Shared memory GSV thing works!1 %s\n", GSV);
-        printf("SHIT DOES NOT WORK!1\n");
-    }*/
 
     /* Create child process */
     pid_t sensor_monitor;     // Prepare the process ID for monitoring
