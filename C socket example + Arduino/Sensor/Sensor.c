@@ -57,14 +57,14 @@ int main() {
         printf("Do I reach this? Line 56");
         char* args[] = {"./SensorMonitoring", NULL};
         printf("Do I reach this? Line 58");
-        //execv(path, args);
+        execv(path, args);
         printf("Do I reach this? Line 60");
     } else {
         while (1) {
             printf("Do I reach this? Line 63");
-            if(msg = shm_read(10, GSV_KEY)){
+            msg = shm_read(10, GSV_KEY);
             printf("GSV from shared memory: %s\n", msg);
-            }
+
             if (msg == "B") {
                 printf("Shared memory GSV thing works!");
             }
