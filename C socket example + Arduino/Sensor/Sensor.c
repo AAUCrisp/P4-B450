@@ -18,7 +18,7 @@
 #include <unistd.h>
 
 #include "Headers/SocketFunctions.h"
-#include "shm_write_read.h"
+#include "Headers/shm_write_read.h"
 
 int generate(int Min, int Max) {
     int number = (rand() % ((Max + 1) - Min)) + Min;
