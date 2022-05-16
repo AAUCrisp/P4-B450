@@ -57,7 +57,7 @@ int main() {
         printf("Do I reach this? Line 56");
         char* args[] = {"./SensorMonitoring", NULL};
         printf("Do I reach this? Line 58");
-        execv(path, args);
+        //execv(path, args);
         printf("Do I reach this? Line 60");
     } else {
         while (1) {
