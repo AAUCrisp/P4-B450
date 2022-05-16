@@ -1,7 +1,24 @@
-#ifndef LIBRARIES
-#define LIBRARIES
-#include "Libraries.c"  // File with all our includes
-#endif
+#include <arpa/inet.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <netinet/in.h>
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/ipc.h>  //IPC thing
+#include <sys/mman.h>
+#include <sys/shm.h>  //SHM thing
+#include <sys/socket.h>
+#include <sys/stat.h>
+#include <sys/time.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <time.h>
+#include <unistd.h>
+
+#include "SocketFunctions.h"
+#include "shm_write_read.h"
 
 int main() {
     /* Initialize PORT & INTERFACE*/
