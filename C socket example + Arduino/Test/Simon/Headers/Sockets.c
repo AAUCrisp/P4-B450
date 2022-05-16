@@ -1,9 +1,9 @@
 #ifndef LIBRARIES
 #define LIBRARIES
 #include "../Libraries.c"  // File with all our includes
+#include "Headers/Sockets.h"
 #endif
 
-#include "Headers/Sockets.h"
 
 /* Define buffers & PORT number */
 #define BUFFER 1024
