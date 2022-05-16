@@ -1,8 +1,7 @@
-#ifndef LIBRARIES 
+#ifndef LIBRARIES
 #define LIBRARIES
-#include "../Libraries.c"      // File with all our includes
+#include "../Libraries.c"  // File with all our includes
 #endif
-
 
 /* Define buffers & PORT number */
 #define BUFFER 1024
@@ -156,8 +155,8 @@ void *transmitLTE(void *socket) {
     const char *GSV_KEY = "GSV_KEY";
     GSV = shm_read(10, GSV_KEY);
     TX_LTE = sendto(sock->sockLTE_transmit, GSV, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_transmit, LenLTE);
-    printf("LTE-Thread id = %ld\n", pthread_self());
-    // printf("%s\n", GSV);
+    // printf("LTE-Thread id = %ld\n", pthread_self());
+    //  printf("%s\n", GSV);
     printf("Message from LTE transmitted at: %s\n\n", curr_time);
     pthread_exit(NULL);
 }
@@ -170,8 +169,8 @@ void *transmitWiFi(void *socket) {
     const char *GSV_KEY = "GSV_KEY";
     GSV = shm_read(10, GSV_KEY);
     TX_WiFi = sendto(sock->sockWiFi_transmit, GSV, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_transmit, LenWiFi);
-    printf("WiFi-Thread id = %ld\n", pthread_self());
-    // printf("%s\n", GSV);
+    // printf("WiFi-Thread id = %ld\n", pthread_self());
+    //  printf("%s\n", GSV);
     printf("Message from WiFi transmitted at: %s\n\n", curr_time);
     pthread_exit(NULL);
 }

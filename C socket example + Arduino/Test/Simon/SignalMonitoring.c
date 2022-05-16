@@ -88,6 +88,7 @@ int main() {
 
         if (gsv == "1" || gsv == "0") {
             pthread_t wifi, lte;
+            Timestamp();
             int threadWiFi = pthread_create(&wifi, NULL, transmitWiFi, (void*)&sock);
             // pthread_join(wifi, NULL);
             if (threadWiFi == 0) {
@@ -98,6 +99,7 @@ int main() {
             //printf("GSV: Sent via WiFi\n");
         }
         if (gsv == "2" || gsv == "0") {
+            Timestamp();
             int threadLTE = pthread_create(&lte, NULL, transmitLTE, (void*)&sock);
             // pthread_join(lte, NULL);
             if (threadLTE == 0) {
