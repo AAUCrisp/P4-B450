@@ -17,8 +17,8 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "SocketFunctions.h"
-#include "shm_write_read.h"
+#include "Headers/SocketFunctions.h"
+#include "Headers/shm_write_read.h"
 
 int main() {
     /* Initialize PORT & INTERFACE*/
