@@ -139,12 +139,12 @@ void *ReceiveCoordinateLTE(void *) {
     inet_ntop(remote_addr.ss_family,get_in_addr((struct sockaddr *)&remote_addr), s, sizeof s)); // Prints out the remote sockets address
     //printf("Actuator_LTE: packet is %d bytes long\n", rc_LTE);
     printf("Actuator_LTE: packet contains \"%s\"\n", ActuatorBuffer);
-    struct C;
-    C = process_Data(ActuatorBuffer);
-    logData(ActuatorBuffer, C);
+    
+    int * returnedArr = process_Data(ActuatorBuffer);
+    logData(ActuatorBuffer, returnedArr);
     //printf("Actuator_LTE: robot movement on x-axis: %d\n", returnedArr[0]);
     //printf("Actuator_LTE: robot movement on y-axis: %d\n \n", returnedArr[1]);
-    //free(returnedArr);
+    free(returnedArr);
     pthread_exit(NULL);
 }
 

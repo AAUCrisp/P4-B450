@@ -3,8 +3,8 @@ all: ClientStart ServerStart
 ClientStart: ActuatorClient.c
 	gcc -pthread ActuatorClient.c -o ClientStart
 	touch ClientStart
-ServerStart: ActuatorServer.c
-	g++ -pthread  ActuatorServer.c -o ServerStart
+ServerStart: ActuatorServer.cpp
+	g++ -pthread  ActuatorServer.cpp -o ServerStart
 	touch ServerStart
 clean:
 	rm -f ClientStart ServerStart
