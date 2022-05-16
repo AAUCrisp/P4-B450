@@ -7,7 +7,7 @@
 
 pthread_t wifi, lte;
 
-char* gsv = "B";  // Global Signal Variable   W = WiFi   L = LTE    B = Both
+char* gsv = "0";  // Global Signal Variable   W = WiFi   L = LTE    B = Both
 const char* GSV_KEY = "GSV_KEY";
 
 /* Signal Quality Settings */
@@ -48,15 +48,15 @@ int main() {
         wifi_rssi[counter] = RSSI_VAL();
         lte_rsrp[counter] = RSRP_VAL();
 
-        if (gsv == "W" || gsv == "B") {  // If GSV is set to WiFi or both
+        if (gsv == "1" || gsv == "0") {  // If GSV is set to WiFi or both
             if (wifi_rssi[counter] < rssi_bad) {
-                gsv = "L";
+                gsv = "2";
             }
         }
 
-        if (gsv == "L" || gsv == "B") {
+        if (gsv == "2" || gsv == "0") {
             if (lte_rsrp[counter] < rsrp_bad) {
-                gsv = "W";
+                gsv = "1";
             }
         }
 
@@ -73,20 +73,20 @@ int main() {
 
         /* Compare signals and select a technology */
         if ((rssi_average >= rssi_good && rsrp_average < rsrp_good) || (rssi_average >= rssi_mid && rsrp_average < rsrp_mid)) {
-            gsv = "W";  // If WiFi has stronger signal, set WiFi
+            gsv = "1";  // If WiFi has stronger signal, set WiFi
             printf("GSV: WiFi Selected\n");
         } else if ((rssi_average < rssi_good && rsrp_average >= rsrp_good) || (rssi_average < rssi_mid && rsrp_average >= rsrp_mid)) {
-            gsv = "L";  // If LTE has stronger signal, set LTE
+            gsv = "2";  // If LTE has stronger signal, set LTE
             printf("GSV: LTE Selected\n");
         }
         // else if( (rssi_average >= rssi_good && rsrp_average >= rsrp_good) || (rssi_average >= rssi_mid && rsrp_average >= rsrp_mid) ) {
         else {
-            gsv = "B";  // If no clear winner, set to send on both
+            gsv = "0";  // If no clear winner, set to send on both
             printf("GSV: Both Selected\n");
         }
         shm_write(gsv, buffer, GSV_KEY);  // Write selected technology to shared memory
 
-        if (gsv == "W" || gsv == "B") {
+        if (gsv == "1" || gsv == "0") {
             pthread_t wifi, lte;
             int threadWiFi = pthread_create(&wifi, NULL, transmitWiFi, (void*)&sock);
             //pthread_join(wifi, NULL);
@@ -97,7 +97,7 @@ int main() {
             }
             printf("GSV: Sent via WiFi\n");
         }
-        if (gsv == "L" || gsv == "B") {
+        if (gsv == "2" || gsv == "0") {
             int threadLTE = pthread_create(&lte, NULL, transmitLTE, (void*)&sock);
             //pthread_join(lte, NULL);
             if (threadLTE == 0) {

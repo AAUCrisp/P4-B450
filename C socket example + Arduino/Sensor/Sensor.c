@@ -44,6 +44,10 @@ int main() {
     /* Shared memory object variables */
     const char* GSV_KEY = "GSV_KEY";
     const char* msg;
+    int GSV;
+    int B = 0;
+    int W = 1;
+    int L = 2;
 
     /* Create child process */
     pid_t sensor_monitor;     // Prepare the process ID for monitoring
@@ -59,14 +63,14 @@ int main() {
     } else {
         msg = shm_read(10, GSV_KEY);
         printf("GSV from shared memory: %s\n", msg);
-        int sut = atoi(msg);
-        printf("sut: %d\n", sut);
+        GSV = atoi(msg);
+        printf("GSV: %d\n", GSV);
 
-        /*
-        if (sut == shit1) {
-            printf("Shared memory GSV thing works!2 %s\n", msg);
-            printf("SHIT DOES NOT WORK!2\n");
-        }*/
+        
+        if (GSV == B) {
+            printf("Shared memory GSV thing works! %s\n", msg);
+            printf("SHIT DO WORK! %d\n", GSV);
+        }
         // while (1) {
         //  pthread_create(&T1, NULL, /*Function*/, (void*)&sock);
         //  pthread_create(&T2, NULL, /*Function*/, (void*)&sock);
