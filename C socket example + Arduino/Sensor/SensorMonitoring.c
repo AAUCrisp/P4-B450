@@ -46,6 +46,7 @@ int main() {
         if (b != 0) {
             perror("pthread_create failed");
         }*/
+        sleep(2);
         printf("Count: %d\n", count);
         if (count == 30) {
             exit(0);
