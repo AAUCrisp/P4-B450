@@ -44,13 +44,13 @@ int main() {
     /* Shared memory object variables */
     const char* GSV_KEY = "GSV_KEY";
     const char* msg;
-    char * Both = "B";
-    char * LTE = "L";
-    char * WiFi = "W";
+    char * shit1 = "B";
+    char * shit2 = "L";
+    char * shit3 = "W";
    
-    printf("Both : %s\n", Both);
-    printf("LTE : %s\n", LTE);
-    printf("WiFi : %s\n", WiFi);
+    printf("Both : %s\n", shit1);
+    printf("LTE : %s\n", shit2);
+    printf("WiFi : %s\n", shit3);
 
 
     /* Create child process */
@@ -68,7 +68,7 @@ int main() {
         msg = shm_read(10, GSV_KEY);
         printf("GSV from shared memory: %s\n", msg);
 
-        if (msg == Both) {
+        if (msg == shit1) {
             printf("Shared memory GSV thing works!2 %s\n", msg);
             printf("SHIT DOES NOT WORK!2\n");
         }
