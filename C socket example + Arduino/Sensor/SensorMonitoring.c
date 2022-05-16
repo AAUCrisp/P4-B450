@@ -40,7 +40,13 @@ int main() {
 
     while (1) {
         printf("Do I reach this? Line 43:");
-        // pthread_create(&T1, NULL, receiveLTE, NULL);
-        // pthread_create(&T2, NULL, receiveWiFi, NULL);
+        int a = pthread_create(&T1, NULL, receiveLTE, NULL);
+        if (a != 0) {
+            perror("pthread_create failed");
+        }
+        int b = pthread_create(&T2, NULL, receiveWiFi, NULL);
+        if (b != 0) {
+            perror("pthread_create failed");
+        }
     }
 }
