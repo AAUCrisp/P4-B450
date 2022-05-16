@@ -180,7 +180,7 @@ void *receiveWiFi(void *socket) {
     } else {
         printf("WIFI || Timediff not available? %d\n\n", timediff);
     }
-    */
+    
     receive = malloc(sizeof(receive));
     receive = message;
     return (void *)receive;
