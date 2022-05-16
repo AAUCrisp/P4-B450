@@ -23,8 +23,8 @@
 /* Main running code */
 int main() {
     /* Initialize PORT & INTERFACE*/
-    uint PORT_LTE = 9002;
-    uint PORT_WiFi = 9003;
+    uint PORT_LTE = 9000;
+    uint PORT_WiFi = 9001;
     const char* LTE = "wwan0";
     const char* WiFi = "wlan0";
     /* Misc */
