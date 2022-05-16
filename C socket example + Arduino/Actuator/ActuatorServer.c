@@ -106,7 +106,7 @@ void  *ReceiveCoordinateWiFi() {
     inet_ntop(remote_addr.ss_family,get_in_addr((struct sockaddr *)&remote_addr), s, sizeof s)); // Prints out the remote sockets address
     printf("Actuator_WiFi: packet is %d bytes long\n", rc_WiFi);
     printf("Actuator_WiFi: packet contains \"%s\"\n", ActuatorBuffer);
-    returnedArr = processData(ActuatorBuffer);
+    returnedArr = process_Data(ActuatorBuffer);
     printf("Actuator_WiFi: robot movement on x-axis: %d", returnedArr[0]);
     printf("Actuator_WiFi: robot movement on y-axis: %d", returnedArr[1]);    
 
@@ -126,7 +126,7 @@ void *ReceiveCoordinateLTE() {
     printf("Actuator_LTE: packet is %d bytes long\n", rc_LTE);
     printf("Actuator_LTE: packet contains \"%s\"\n", ActuatorBuffer);
     printf("Actuator_LTE: packet contains \"%s\"\n", ActuatorBuffer);
-    returnedArr = processData(ActuatorBuffer);
+    returnedArr = process_Data(ActuatorBuffer);
     printf("Actuator_LTE: robot movement on x-axis: %d", returnedArr[0]);
     printf("Actuator_LTE: robot movement on y-axis: %d", returnedArr[1]);
     pthread_exit(NULL);
