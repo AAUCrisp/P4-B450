@@ -92,6 +92,7 @@ void Sockets_Transmitter(Sockets *sock, const char *IP, uint PORT_LTE, uint PORT
 void *receiveLTE(void *socket) {
     const char *GSV;
     const char *GSV_KEY = "GSV_KEY";
+    
     Sockets *sock = (Sockets *)socket;
     int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
     RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);

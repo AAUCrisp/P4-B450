@@ -25,5 +25,20 @@
 
 #ifndef SOCKET_FUNCTIONS
 #define SOCKET_FUNCTIONS
+
+typedef struct _sockets {
+    /* Receiver sockets*/
+    int sockLTE_RECEIVER;
+    int sockWiFi_RECEIVER;
+    struct sockaddr_in ServerLTE_RECEIVER;
+    struct sockaddr_in ServerWiFi_RECEIVER;
+
+    /* Transmitter sockets*/
+    int sockLTE_TRANSMITTER;
+    int sockWiFi_TRANSMITTER;
+    struct sockaddr_in ClientLTE_TRANSMITTER;
+    struct sockaddr_in ClientWiFi_TRANSMITTER;
+} Sockets;
+
 #include "Headers/SocketFunctions.h"
 #endif
