@@ -3,6 +3,23 @@
 #include "../Libraries.c"  // File with all our includes
 #endif
 
+#ifndef SOCKET_STRUCT
+#define SOCKET_STRUCT
+typedef struct _sockets {
+    /* Receiver sockets*/
+    int sockLTE_RECEIVER;
+    int sockWiFi_RECEIVER;
+    struct sockaddr_in ServerLTE_RECEIVER;
+    struct sockaddr_in ServerWiFi_RECEIVER;
+
+    /* Transmitter sockets*/
+    int sockLTE_TRANSMITTER;
+    int sockWiFi_TRANSMITTER;
+    struct sockaddr_in ClientLTE_TRANSMITTER;
+    struct sockaddr_in ClientWiFi_TRANSMITTER;
+} Sockets;
+#endif
+
 /* Define buffers & PORT number */
 #define BUFFER 1024
 char message[BUFFER];
@@ -13,6 +30,8 @@ char *receive;
 int bindLTE, bindWiFi;
 int RX_LTE, RX_WiFi;
 int TX_LTE, TX_WiFi;
+
+
 
 /* Function to bind sockets */
 void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
