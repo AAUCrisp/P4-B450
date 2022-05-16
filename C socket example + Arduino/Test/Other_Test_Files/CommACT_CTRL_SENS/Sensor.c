@@ -114,8 +114,8 @@ int main() {
     bindWiFi_RECEIVE = bind(sockWiFi_RECEIVE, (struct sockaddr *)&ServerWiFi_RECEIVE, sizeof(struct sockaddr));
     printf("Bind to sockWiFi_RECEIVE was successful\n");
 
-    char buf[] = "THIS IS LTE! SENSOR";
-    char buf2[] = "THIS IS WIFI! SENSOR";
+    char buf[] = "THIS IS LTE! SENSOR!!!!!!!!!!!!!!!!!!!!!";
+    char buf2[] = "THIS IS WIFI! SENSOR!!!!!!!!!!!!!!!!!!!!!!!";
 
     while (1) {
         // usleep(500000);
