@@ -78,7 +78,7 @@ int main() {
                 /*printf("Shared memory GSV thing works! %s\n", msg);
                 printf("SHIT DO WORK! %d\n", GSV);*/
                 Timestamp();
-                sprintf(rand_int, "%s", generate(0, 2500));
+                sprintf(rand_int, "%d", generate(0, 2500));
                 printf("Random int to char: %s\n", rand_int);
                 shm_write(rand_int, 10, RAND_KEY);
                 pthread_create(&T1, NULL, transmitLTE, (void*)&sock);
@@ -86,7 +86,7 @@ int main() {
 
             if (GSV == B || GSV == W) {
                 Timestamp();
-                sprintf(rand_int, "%s", generate(0, 2500));
+                sprintf(rand_int, "%d", generate(0, 2500));
                 shm_write(rand_int, 10, RAND_KEY);
                 printf("Random int to char: %s\n", rand_int);
                 pthread_create(&T2, NULL, transmitWiFi, (void*)&sock);
