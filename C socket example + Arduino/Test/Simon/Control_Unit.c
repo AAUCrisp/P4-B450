@@ -7,7 +7,7 @@
 int main() {
     /* Initialize PORT & INTERFACE*/
     uint PORT_LTE = 6666;
-    uint PORT_WiFi = 6666;
+    uint PORT_WiFi = 6667;
     uint PORT_LTE_TRANS = 9000;
     uint PORT_WiFi_TRANS = 9001;
     const char* LTE = "wwan0";
