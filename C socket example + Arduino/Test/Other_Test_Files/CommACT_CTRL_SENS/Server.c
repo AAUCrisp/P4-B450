@@ -143,8 +143,8 @@ int main() {
     char msg2[] = "Hello back from WiFi! Control Unit";
 
     while (1) {
-        pthread_create(&T1, NULL, receiveLTE, NULL);
-        pthread_create(&T2, NULL, receiveWiFi, NULL);
+        //pthread_create(&T1, NULL, receiveLTE, NULL);
+        //pthread_create(&T2, NULL, receiveWiFi, NULL);
         pthread_create(&T3, NULL, transmitLTE, msg);
         pthread_create(&T4, NULL, transmitWiFi, msg2);
 
