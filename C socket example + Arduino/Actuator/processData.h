@@ -2,8 +2,6 @@
 //char string_coordinates[] = "499:2";
 int bytes_read;
 int x, y;
-int arr[2];
-int returnedArr[2];
 int last_x_coordinate;
 int last_y_coordinate;
 char tempx [buffer];
