@@ -14,63 +14,37 @@ int bindLTE, bindWiFi;
 int RX_LTE, RX_WiFi;
 int TX_LTE, TX_WiFi;
 
-/* Function to bind sockets */
-void Create_Bind_Sockets(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, uint PORT_LTE_TRANS, uint PORT_WiFi_TRANS, const char *LTE, const char *WiFi) {
+void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
     /* Create socket receiver */
-    sock->sockLTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    sock->sockWiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-
-    /* Create socket transmitter */
-    sock->sockLTE_transmit = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    sock->sockWiFi_transmit = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    sock->sockLTE_RECEIVER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    sock->sockWiFi_RECEIVER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
     /* Setting up socket options & specifying interface for receiver */
-    setsockopt(sock->sockLTE, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
-    setsockopt(sock->sockWiFi, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
-
-    /* Setting up socket options & specifying interface for transmitter */
-    setsockopt(sock->sockLTE_transmit, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
-    setsockopt(sock->sockWiFi_transmit, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
+    setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
+    setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
 
     /* Error checking */
-    if (sock->sockLTE == -1) {
+    if (sock->sockLTE_RECEIVER == -1) {
         perror("Failed to create sockLTE");
         exit(0);
     }
-    if (sock->sockWiFi == -1) {
+    if (sock->sockWiFi_RECEIVER == -1) {
         perror("Failed to create sockLTE");
-        exit(0);
-    }
-    if (sock->sockLTE_transmit == -1) {
-        perror("Failed to create sockLTE_transmit");
-        exit(0);
-    }
-    if (sock->sockWiFi_transmit == -1) {
-        perror("Failed to create sockLTE_transmit");
         exit(0);
     }
 
     /* Configure settings to communicate with remote UDP client for receiver */
-    sock->ServerLTE.sin_family = AF_INET;
-    sock->ServerLTE.sin_port = htons(PORT_LTE);
-    sock->ServerLTE.sin_addr.s_addr = INADDR_ANY;
+    sock->ServerLTE_RECEIVER.sin_family = AF_INET;
+    sock->ServerLTE_RECEIVER.sin_port = htons(PORT_LTE);
+    sock->ServerLTE_RECEIVER.sin_addr.s_addr = INADDR_ANY;
 
-    sock->ServerWiFi.sin_family = AF_INET;
-    sock->ServerWiFi.sin_port = htons(PORT_WiFi);
-    sock->ServerWiFi.sin_addr.s_addr = INADDR_ANY;
-
-    /* Configure settings to communicate with remote UDP client for transmitter */
-    sock->ServerLTE_transmit.sin_family = AF_INET;
-    sock->ServerLTE_transmit.sin_port = htons(PORT_LTE_TRANS);
-    sock->ServerLTE_transmit.sin_addr.s_addr = inet_addr("10.20.0.10");
-
-    sock->ServerWiFi_transmit.sin_family = AF_INET;
-    sock->ServerWiFi_transmit.sin_port = htons(PORT_WiFi_TRANS);
-    sock->ServerWiFi_transmit.sin_addr.s_addr = inet_addr("192.168.1.160");
+    sock->ServerWiFi_RECEIVER.sin_family = AF_INET;
+    sock->ServerWiFi_RECEIVER.sin_port = htons(PORT_WiFi);
+    sock->ServerWiFi_RECEIVER.sin_addr.s_addr = INADDR_ANY;
 
     /* Bind to socket */
-    bindLTE = bind(sock->sockLTE, (struct sockaddr *)&sock->ServerLTE, sizeof(struct sockaddr));
-    bindWiFi = bind(sock->sockWiFi, (struct sockaddr *)&sock->ServerWiFi, sizeof(struct sockaddr));
+    bindLTE = bind(sock->sockLTE_RECEIVER, (struct sockaddr *)&sock->ServerLTE_RECEIVER, sizeof(struct sockaddr));
+    bindWiFi = bind(sock->sockWiFi_RECEIVER, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, sizeof(struct sockaddr));
 
     /* Error checking */
     if (bindLTE == -1) {
@@ -82,6 +56,35 @@ void Create_Bind_Sockets(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, uint PORT
         exit(0);
     }
     printf("Bind was succesful!\n");
+}
+
+void Sockets_Transmitter(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
+    /* Create socket receiver */
+    sock->sockLTE_TRANSMITTER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    sock->sockWiFi_TRANSMITTER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+
+    /* Setting up socket options & specifying interface for receiver */
+    setsockopt(sock->sockLTE_TRANSMITTER, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
+    setsockopt(sock->sockWiFi_TRANSMITTER, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
+
+    /* Error checking */
+    if (sock->sockLTE_TRANSMITTER == -1) {
+        perror("Failed to create sockLTE");
+        exit(0);
+    }
+    if (sock->sockWiFi_TRANSMITTER == -1) {
+        perror("Failed to create sockLTE");
+        exit(0);
+    }
+
+    /* Configure settings to communicate with remote UDP client for receiver */
+    sock->ClientLTE_TRANSMITTER.sin_family = AF_INET;
+    sock->ClientLTE_TRANSMITTER.sin_port = htons(PORT_LTE);
+    sock->ClientLTE_TRANSMITTER.sin_addr.s_addr = inet_addr(IP_LTE);
+
+    sock->ClientWiFi_TRANSMITTER.sin_family = AF_INET;
+    sock->ClientWiFi_TRANSMITTER.sin_port = htons(PORT_WiFi);
+    sock->ClientWiFi_TRANSMITTER.sin_addr.s_addr = inet_addr(IP_WiFi);
 }
 
 /* Function to receive LTE packets */
