@@ -35,8 +35,9 @@ int main() {
     Sockets_Receiver(&sock, PORT_LTE, PORT_WiFi, LTE, WiFi);
     printf("sockLTE_RECEIVER: %d\n", sock.sockLTE_TRANSMITTER);
     printf("sockWiFi_RECEIVER: %d\n", sock.sockWiFi_TRANSMITTER);
-
+    int count = 0;
     while (1) {
+        count++;
         int a = pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
         int b = pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
         /*if (a != 0) {
@@ -45,5 +46,10 @@ int main() {
         if (b != 0) {
             perror("pthread_create failed");
         }*/
+        if (count == 30)
+        {
+            exit(0);
+        }
+        
     }
 }
