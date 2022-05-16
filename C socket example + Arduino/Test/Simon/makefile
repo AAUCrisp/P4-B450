@@ -1,4 +1,7 @@
-all: ClientStart ServerStart SignalMonitoring
+all: Git ClientStart ServerStart SignalMonitoring
+
+Git:
+	git pull
 
 ClientStart: ClientTest.c
 	gcc -pthread ClientTest.c -o ClientStart
