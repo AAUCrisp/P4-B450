@@ -66,7 +66,7 @@ int main() {
     } else {
         msg = shm_read(10, GSV_KEY);
         printf("GSV from shared memory: %s\n", msg);
-        memcpy(GSV, msg, sizeof(msg));
+        memcpy(GSV, msg, strlen(msg)+1);
         printf("const char* = typecast to char*: %s\n", GSV);
 
         if (GSV == "B" || GSV == "NONE") {
