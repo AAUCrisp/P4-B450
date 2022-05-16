@@ -44,7 +44,7 @@ int main() {
     /* Shared memory object variables */
     const char* GSV_KEY = "GSV_KEY";
     const char* msg;
-    int* GSV;
+    char* GSV;
     printf("GSV NONE : %s\n", GSV);
 
     if (GSV == "B" || GSV == "NONE") {
