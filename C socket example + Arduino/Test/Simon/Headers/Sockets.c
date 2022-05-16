@@ -157,7 +157,7 @@ void *transmitLTE(void *socket) {
     TX_LTE = sendto(sock->sockLTE_transmit, GSV, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_transmit, LenLTE);
     // printf("LTE-Thread id = %ld\n", pthread_self());
     //  printf("%s\n", GSV);
-    printf("Message from LTE transmitted at: %s\n\n", curr_time);
+    printf("Message from LTE transmitted at: %s\n", curr_time);
     pthread_exit(NULL);
 }
 
@@ -171,7 +171,7 @@ void *transmitWiFi(void *socket) {
     TX_WiFi = sendto(sock->sockWiFi_transmit, GSV, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_transmit, LenWiFi);
     // printf("WiFi-Thread id = %ld\n", pthread_self());
     //  printf("%s\n", GSV);
-    printf("Message from WiFi transmitted at: %s\n\n", curr_time);
+    printf("Message from WiFi transmitted at: %s\n", curr_time);
     pthread_exit(NULL);
 }
 
