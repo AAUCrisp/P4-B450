@@ -103,6 +103,7 @@ void logData(char msg[256], int* arr)
     out = fopen("MovementCommands.txt", "w");
     sprintf(temp, "Movement on x and y axis:  x = %d, y = %d \n \n", arr[0], arr[1]);
     fwrite(temp, sizeof(char), strlen(temp), out);
+    
 }
 
 
