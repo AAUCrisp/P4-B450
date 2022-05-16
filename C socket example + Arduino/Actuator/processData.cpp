@@ -5,7 +5,7 @@
 //int movement_x;
 //int movement_y;
 
-int update_last_coordinate(int number1, int number2);
+int update_last_coordinate(int number1, int number2)
 {
     last_x_coordinate = number1;
     last_y_coordinate = number2;
