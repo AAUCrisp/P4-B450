@@ -27,8 +27,8 @@ int main() {
     uint PORT_WiFi = 9001;
     const char* LTE = "wwan0";
     const char* WiFi = "wlan0";
-    const char* IP_LTE = "10.20.0.16";
-    const char* IP_WiFi = "192.168.1.136";
+    const char* IP_LTE = "10.20.0.10";
+    const char* IP_WiFi = "192.168.1.160";
 
     /* Misc */
     pthread_t T1, T2;
@@ -38,7 +38,7 @@ int main() {
 
     /* Create sockets */
     Sockets sock;
-    Sockets_Transmitter(&sock, IP_LTE, IP_WiFi, PORT_LTE, PORT_WiFi, LTE, WiFi);
+    Sockets_Receiver(&sock, PORT_LTE, PORT_WiFi, LTE, WiFi);
     printf("sockLTE_TRANSMITTER: %d\n", sock.sockLTE_TRANSMITTER);
     printf("sockWiFi_TRANSMITTER: %d\n", sock.sockWiFi_TRANSMITTER);
 

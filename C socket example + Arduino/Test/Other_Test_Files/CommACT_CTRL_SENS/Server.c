@@ -22,8 +22,8 @@ char Message[BUFFER];
 uint PORT_LTE1 = 9002;   // Receiver LTE
 uint PORT_WiFi1 = 9003;  // Receiver WiFi
 
-uint PORT_LTE2 = 6666;   // Transmitter LTE
-uint PORT_WiFi2 = 6667;  // Transmitter WiFi
+uint PORT_LTE2 = 9000;   // Transmitter LTE
+uint PORT_WiFi2 = 9001;  // Transmitter WiFi
 
 /* Specify LTE & WiFi interface */
 const char *LTE = "wwan0";
