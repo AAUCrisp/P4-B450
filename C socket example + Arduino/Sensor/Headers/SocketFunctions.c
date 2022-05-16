@@ -153,7 +153,7 @@ void *transmitWiFi(void *socket) {
     Sockets *sock = (Sockets *)socket;
     int LenWiFi = sizeof(sock->ClientLTE_TRANSMITTER);
     RAND_INT = shm_read(10, RAND_KEY);
-    printf("RAND_INT WiFi: %s\n", (char *)RAND_INT);
+    printf("RAND_INT WiFi: %s\n", RAND_INT);
     TX_WiFi = sendto(sock->sockWiFi_TRANSMITTER, RAND_INT, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, LenWiFi);
     printf("WiFi-Thread id = %ld\n", pthread_self());
     // printf("%s\n", GSV);
