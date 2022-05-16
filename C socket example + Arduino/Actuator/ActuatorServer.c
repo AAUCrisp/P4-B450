@@ -1,6 +1,7 @@
 #include "ActuatorServer.h"
-#include "coordinates.c"
-#include "processData.h"
+//#include "coordinates.c"
+//#include "processData.h"
+#include "processData.c"
 
 
 struct addrinfo ServerLTE, *res1;   // a socket struct design to be used with IPv4
@@ -110,7 +111,7 @@ void  *ReceiveCoordinateWiFi() {
     returnedArr = processData(ActuatorBuffer);
     printf("Actuator_WiFi: robot movement on x-axis: %d", returnedArr[0]);
     printf("Actuator_WiFi: robot movement on y-axis: %d", returnedArr[1]);    
-    
+
     //tx_WiFI = sendto(sockWiFi, result.feedback,strlen(result.feedback),0,get_in_addr((struct sockaddr *)&remote_addr), sizeof remote_addr);
     
 }
