@@ -1,6 +1,9 @@
 #include "Headers/SocketFunctions.h"
 #include "Headers/shm_write_read.h"
+#ifndef LIBRARIES
+#define LIBRARIES
 #include "Libraries.c"
+#endif
 
 int main() {
     /* Initialize PORT & INTERFACE*/

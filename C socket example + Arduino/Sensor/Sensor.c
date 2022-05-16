@@ -1,6 +1,10 @@
 #include "Headers/SocketFunctions.h"
 #include "Headers/shm_write_read.h"
+
+#ifndef LIBRARIES
+#define LIBRARIES
 #include "Libraries.c"
+#endif
 
 int generate(int Min, int Max) {
     int number = (rand() % ((Max + 1) - Min)) + Min;
