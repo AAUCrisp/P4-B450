@@ -19,8 +19,7 @@
 
 #include "Headers/SocketFunctions.h"
 #include "Headers/shm_write_read.h"
-//
-int main
+
 
 int main() {
     /* Initialize PORT & INTERFACE*/
