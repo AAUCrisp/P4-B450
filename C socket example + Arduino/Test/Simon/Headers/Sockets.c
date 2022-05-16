@@ -106,15 +106,12 @@ void Sockets_Transmitter(Sockets *sock, const char *IP_LTE, const char *IP_WiFi,
 
 /* Function to receive LTE packets */
 void *receiveLTE(void *socket) {
-    const char *GSV_KEY = "GSV_KEY";
     Sockets *sock = (Sockets *)socket;
     int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
     RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
     printf("LTE || LTE-Thread id = %ld\n", pthread_self());
     printf("LTE || Message from LTE received at: %s\n", curr_time);
-    printf("LTE || Message: %s\n Sensor", message);
-    int test1 = atoi(message);
-    shm_write(test1, 10, GSV_KEY);
+    printf("LTE || Message: %s\n Control Unit", message);
     pthread_exit(NULL);
 }
 /*void *receiveLTE(void *socket) {
@@ -149,15 +146,13 @@ void *receiveLTE(void *socket) {
 
 /* Function to receive WiFi packets */
 void *receiveWiFi(void *socket) {
-    const char *GSV_KEY = "GSV_KEY";
+    
     Sockets *sock = (Sockets *)socket;
     int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
     RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
     printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
     printf("WiFi || Message from WiFi received at: %s \n", curr_time);
-    printf("WiFi || Message: %s\n Sensor", message);
-    int test2 = atoi(message);
-    shm_write(test2, 10, GSV_KEY);
+    printf("WiFi || Message: %s\n Control Unit", message);
     pthread_exit(NULL);
 }
 /*
