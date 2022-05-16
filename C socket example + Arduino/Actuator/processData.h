@@ -8,7 +8,7 @@ int last_y_coordinate;
 //char tempx [buffer];
 //char tempy [buffer];
 
-std::string tempx
-std::string tempy
+std::string tempx;
+std::string tempy;
 int movement_x;
 int movement_y;

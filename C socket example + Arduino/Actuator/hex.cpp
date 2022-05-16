@@ -31,7 +31,7 @@ int hex_to_int(string data) {
 }
 
 
-int main()
+int main2()
 {
     int data = 75;      // Test data variable
     cout << "Inserted data is: " << data << endl;       // Print out the integer being converted
