@@ -38,14 +38,16 @@ int main() {
     int count = 0;
     while (1) {
         count++;
-        int a = pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
-        int b = pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
+        pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
+        pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
         /*if (a != 0) {
             perror("pthread_create failed");
         }
         if (b != 0) {
             perror("pthread_create failed");
         }*/
+        sleep(2);
+        printf("Count: %d\n", count);
         if (count == 30) {
             exit(0);
         }

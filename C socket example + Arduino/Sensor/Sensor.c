@@ -57,7 +57,7 @@ int main() {
         printf("Parent process ID: %d \n", getppid());
         printf("Sensor monitoring process ID is: %d \n", getpid());
         char path[] = "./SensorMonitoring";
-        char* args[] = {"./SensorMonitoring&", NULL};
+        char* args[] = {"./SensorMonitoring", NULL};
         execv(path, args);
 
     } else {
@@ -67,8 +67,8 @@ int main() {
         printf("GSV: %d\n", GSV);
 
         while (1) {
-            sleep(5);
-            if (GSV == B) {
+            sleep(2);
+            if (GSV == B || GSV == L || GSV == W) {
                 printf("Shared memory GSV thing works! %s\n", msg);
                 printf("SHIT DO WORK! %d\n", GSV);
             }
