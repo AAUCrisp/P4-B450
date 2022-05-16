@@ -8,7 +8,7 @@ struct sockaddr_in ClientWiFi, *res3;
 struct sockaddr_in ClientLTE;
 int sockWiFi, lenWiFi = sizeof(ClientWiFi);
 int sockLTE, lenLTE = sizeof(ClientLTE);
-int tx_WiFi; rx_WiFi;
+int tx_WiFi, rx_WiFi;
 int tx_LTE; 
 int bindWiFi;
 

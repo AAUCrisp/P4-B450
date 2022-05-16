@@ -1,6 +1,4 @@
 #include "ActuatorServer.h"
-//#include "coordinates.c"
-//#include "processData.h"
 #include "processData.c"
 
 
