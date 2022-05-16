@@ -106,6 +106,18 @@ void Sockets_Transmitter(Sockets *sock, const char *IP_LTE, const char *IP_WiFi,
 
 /* Function to receive LTE packets */
 void *receiveLTE(void *socket) {
+    const char *GSV_KEY = "GSV_KEY";
+    Sockets *sock = (Sockets *)socket;
+    int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
+    RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
+    printf("LTE || LTE-Thread id = %ld\n", pthread_self());
+    printf("LTE || Message from LTE received at: %s\n", curr_time);
+    printf("LTE || Message: %s\n Sensor", message);
+    int test1 = atoi(message);
+    shm_write(test1, 10, GSV_KEY);
+    pthread_exit(NULL);
+}
+/*void *receiveLTE(void *socket) {
     time_struct time1;
     time_struct time2;
     int timediff;
@@ -117,7 +129,7 @@ void *receiveLTE(void *socket) {
     printf("LTE || LTE-Thread id = %ld\n", pthread_self());
     printf("LTE || Message from LTE received at: %s\n", curr_time);
     printf("LTE || Message from LTE: %s\n", message);
-    /*
+    
     sscanf(curr_time, "%c %d %c %d %c %d %c %d", voidChar, &time1.hour, voidChar, &time1.minute, voidChar, &time1.second, voidChar, &time1.millis);
     sscanf(message, "%c %d %c %d %c %d %c %d", voidChar, &time2.hour, voidChar, &time2.minute, voidChar, &time2.second, voidChar, &time2.millis);
     sscanf(message, "%s %s %[^\n]", voidChar, voidChar, messageRecieved);
@@ -128,14 +140,27 @@ void *receiveLTE(void *socket) {
     } else {
         printf("LTE || Timediff not available? %d\n\n", timediff);
     }
-    */
+    
     receive = malloc(sizeof(receive));
     receive = message;
     return (void *)receive;
     ;
-}
+}*/
 
 /* Function to receive WiFi packets */
+void *receiveWiFi(void *socket) {
+    const char *GSV_KEY = "GSV_KEY";
+    Sockets *sock = (Sockets *)socket;
+    int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
+    RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
+    printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
+    printf("WiFi || Message from WiFi received at: %s \n", curr_time);
+    printf("WiFi || Message: %s\n Sensor", message);
+    int test2 = atoi(message);
+    shm_write(test2, 10, GSV_KEY);
+    pthread_exit(NULL);
+}
+/*
 void *receiveWiFi(void *socket) {
     time_struct time1;
     time_struct time2;
@@ -148,7 +173,7 @@ void *receiveWiFi(void *socket) {
     printf("WIFI || WiFi-Thread id = %ld\n", pthread_self());
     printf("WIFI || Message from WiFi received at: %s \n", curr_time);
     printf("WIFI || Message from WiFi: %s \n", message);
-    /*
+    
     sscanf(curr_time, "%c %d %c %d %c %d %c %d", voidChar, &time1.hour, voidChar, &time1.minute, voidChar, &time1.second, voidChar, &time1.millis);
     sscanf(message, "%c %d %c %d %c %d %c %d", voidChar, &time2.hour, voidChar, &time2.minute, voidChar, &time2.second, voidChar, &time2.millis);
     sscanf(message, "%s %s %[^\n]", voidChar, voidChar, messageRecieved);
@@ -165,7 +190,7 @@ void *receiveWiFi(void *socket) {
     receive = message;
     return (void *)receive;
     ;
-}
+}*/
 
 // Function to transmit GSV via LTE
 void *transmitLTE(void *socket) {
