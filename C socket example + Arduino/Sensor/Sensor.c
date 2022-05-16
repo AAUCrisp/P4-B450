@@ -54,6 +54,7 @@ int main() {
         char path[] = "./SensorMonitoring";
         char* args[] = {"./SensorMonitoring&", NULL};
         execv(path, args);
+        printf("Do I reach this?");
     } else {
         while (1) {
             printf("Do I reach this?");
