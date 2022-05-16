@@ -19,17 +19,17 @@
 /* Define buffers & PORT number */
 #define BUFFER 128
 char Message[BUFFER];
-uint PORT_LTE1 = 9002; // Receiver LTE
-uint PORT_WiFi1 = 9003; // Receiver WiFi
+uint PORT_LTE1 = 9002;   // Receiver LTE
+uint PORT_WiFi1 = 9003;  // Receiver WiFi
 
-uint PORT_LTE2 = 6666; // Transmitter LTE
-uint PORT_WiFi2 = 6667; // Transmitter WiFi
+uint PORT_LTE2 = 6666;   // Transmitter LTE
+uint PORT_WiFi2 = 6667;  // Transmitter WiFi
 
 /* Specify LTE & WiFi interface */
 const char *LTE = "wwan0";
 const char *WiFi = "wlan0";
 const char *IP_LTE = "10.20.0.16";
-const char *IP_WiFi = "192.168.1.136";
+const char *IP_WiFi = "192.168.1.131";
 
 /* Misc */
 struct sockaddr_in ServerLTE1;
