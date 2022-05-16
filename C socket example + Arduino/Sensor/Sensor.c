@@ -58,7 +58,7 @@ int main() {
         printf("Sensor monitoring process ID is: %d \n", getpid());
         char path[] = "./SensorMonitoring";
         char* args[] = {"./SensorMonitoring", NULL};
-        // execv(path, args);
+        execv(path, args);
 
     } else {
         msg = shm_read(10, GSV_KEY);
@@ -67,13 +67,13 @@ int main() {
         printf("GSV: %d\n", GSV);
 
         
+        while (1) {
         if (GSV == B) {
             printf("Shared memory GSV thing works! %s\n", msg);
             printf("SHIT DO WORK! %d\n", GSV);
         }
-        // while (1) {
         //  pthread_create(&T1, NULL, /*Function*/, (void*)&sock);
         //  pthread_create(&T2, NULL, /*Function*/, (void*)&sock);
-        //}
+        }
     }
 }
