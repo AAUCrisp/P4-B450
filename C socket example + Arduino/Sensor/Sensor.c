@@ -44,7 +44,9 @@ int main() {
     /* Shared memory object variables */
     const char* GSV_KEY = "GSV_KEY";
     const char* msg;
-    char testlort;
+    char * B = "B";
+    char * L = "L";
+    char * W = "W";
     /*
     printf("GSV NONE : %s\n", GSV);
 
@@ -67,13 +69,9 @@ int main() {
     } else {
         msg = shm_read(10, GSV_KEY);
         printf("GSV from shared memory: %s\n", msg);
-        //GSV = msg;
-        //GSV = atoi(msg);
-        strcpy(testlort, msg);
-        printf("const char* = typecast to char*: %s\n", testlort);
 
-        if (testlort == "B") {
-            printf("Shared memory GSV thing works!2 %s\n", testlort);
+        if (msg == B) {
+            printf("Shared memory GSV thing works!2 %s\n", msg);
             printf("SHIT DOES NOT WORK!2\n");
         }
         // while (1) {
