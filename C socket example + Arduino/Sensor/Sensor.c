@@ -31,19 +31,25 @@ int main() {
     uint PORT_WiFi = 9001;
     const char* LTE = "wwan0";
     const char* WiFi = "wlan0";
+    const char* IP_LTE = "10.20.0.16";
+    const char* IP_WiFi = "192.168.1.136";
 
     /* Misc */
     pthread_t T1, T2;
 
     /* Create sockets */
     Sockets sock;
-    Sockets_Receiver(&sock, PORT_LTE, PORT_WiFi, LTE, WiFi);
+    Sockets_Transmitter(&sock, IP_LTE, IP_WiFi, PORT_LTE, PORT_WiFi, LTE, WiFi);
     printf("sockLTE_TRANSMITTER: %d\n", sock.sockLTE_TRANSMITTER);
     printf("sockWiFi_TRANSMITTER: %d\n", sock.sockWiFi_TRANSMITTER);
 
     /* Shared memory object variables */
     const char* GSV_KEY = "GSV_KEY";
     const char* msg;
+
+    const char* RAND_KEY = "RAND_KEY";
+    const char* rand_int;
+
     int GSV;
     int B = 0;
     int W = 1;
@@ -62,18 +68,31 @@ int main() {
 
     } else {
         msg = shm_read(10, GSV_KEY);
-        printf("GSV from shared memory: %s\n", msg);
         GSV = atoi(msg);
-        printf("GSV: %d\n", GSV);
+        printf("GSV from shared memory: %s\n", msg);
+        printf("GSV converted: %d\n", GSV);
 
         while (1) {
             sleep(2);
-            if (GSV == B || GSV == L || GSV == W) {
-                printf("Shared memory GSV thing works! %s\n", msg);
-                printf("SHIT DO WORK! %d\n", GSV);
+            if (GSV == B || GSV == L) {
+                /*printf("Shared memory GSV thing works! %s\n", msg);
+                printf("SHIT DO WORK! %d\n", GSV);*/
+                Timestamp();
+                int int_1 = generate(0, 2500);
+                char* itoa(int_1, rand_int, 10);
+                printf("Random int to char: %s\n", rand_int);
+                shm_write(rand_int, 10, RAND_KEY);
+                pthread_create(&T1, NULL, transmitLTE, (void*)&sock);
             }
-            //  pthread_create(&T1, NULL, /*Function*/, (void*)&sock);
-            //  pthread_create(&T2, NULL, /*Function*/, (void*)&sock);
+
+            if (GSV == B || GSV == W) {
+                Timestamp();
+                int int_2 = generate(0, 2500);
+                char* itoa(int_2, rand_int, 10);
+                shm_write(rand_int, 10, RAND_KEY);
+                printf("Random int to char: %s\n", rand_int);
+                pthread_create(&T2, NULL, transmitWiFi, (void*)&sock);
+            }
         }
     }
 }

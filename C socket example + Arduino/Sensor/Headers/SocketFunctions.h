@@ -19,12 +19,20 @@ typedef struct _sockets {
 void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi);
 
 /* Function to create transmitter socket */
-void Sockets_Transmitter(Sockets *sock, const char *IP, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi);
+void Sockets_Transmitter(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi);
 
 /* Function to receive LTE packets */
 void *receiveLTE(void *socket);
 
 /* Function to receive WiFi packets */
 void *receiveWiFi(void *socket);
+
+/* Function to transmit LTE packets */
+void *transmitLTE(void *socket);
+
+/* Function to transmit WiFi packets */
+void *transmitWiFi(void *socket);
+
+char *Timestamp();
 
 #endif
