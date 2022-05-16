@@ -33,11 +33,11 @@ pthread_t T1, T2, T3, T4;
 const char *LTE = "wwan0";
 const char *WiFi = "wlan0";
 
-uint LTE_PORT_RECEIVE = 9002;
-uint WiFi_PORT_RECEIVE = 9003;
+uint LTE_PORT_RECEIVE = 9000;
+uint WiFi_PORT_RECEIVE = 9001;
 
-#define LTE_PORT 9000
-#define WiFi_PORT 9001
+#define LTE_PORT 9002
+#define WiFi_PORT 9003
 
 #define LTE_ip "10.20.0.16"
 #define WiFi_ip "192.168.1.136"
@@ -125,9 +125,9 @@ int main() {
         // printf("Data from WiFi\n \n");
 
         pthread_create(&T1, NULL, receiveLTE, NULL);
-        //pthread_join(T1, NULL);
+        // pthread_join(T1, NULL);
         pthread_create(&T2, NULL, receiveWiFi, NULL);
-        //pthread_join(T2, NULL);
+        // pthread_join(T2, NULL);
 
         // rc_LTE = recvfrom(sockLTE, buf3, sizeof(buf3), 0, (struct sockaddr *)&ServerLTE, &lenLTE);
         // printf("From LTE: %s\n", buf3);
