@@ -56,16 +56,16 @@ int main() {
         char* args[] = {"./SensorMonitoring", NULL};
         execv(path, args);
     } else {
-        while (1) {
-            msg = shm_read(10, GSV_KEY);
-            printf("GSV from shared memory: %s\n", msg);
+        msg = shm_read(10, GSV_KEY);
+        printf("GSV from shared memory: %s\n", msg);
 
-            if (msg == "B") {
-                printf("Shared memory GSV thing works!");
-            }
-
-            // pthread_create(&T1, NULL, /*Function*/, (void*)&sock);
-            // pthread_create(&T2, NULL, /*Function*/, (void*)&sock);
+        if (msg == "B") {
+            printf("Shared memory GSV thing works!");
         }
+        // while (1) {
+
+        // pthread_create(&T1, NULL, /*Function*/, (void*)&sock);
+        // pthread_create(&T2, NULL, /*Function*/, (void*)&sock);
+        // }
     }
 }
