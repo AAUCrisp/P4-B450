@@ -1,5 +1,5 @@
 #include "ActuatorServer.h"
-#include "processData.cpp"
+#include <processData.cpp>
 
 
 struct addrinfo ServerLTE, *res1;   // a socket struct design to be used with IPv4
