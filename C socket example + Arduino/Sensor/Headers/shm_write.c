@@ -17,7 +17,7 @@
 #include <time.h>
 #include <unistd.h>
 
-void shm_write(char* message, const int SIZE, const char* name) {
+void shm_write(void* message, const int SIZE, const char* name) {
     /* shared memory file descriptor */
     int shm_fd;
 
