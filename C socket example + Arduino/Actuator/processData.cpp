@@ -4,8 +4,19 @@
 
 //int movement_x;
 //int movement_y;
+
+int update_last_coordinate(int number1, int number2);
+{
+    last_x_coordinate = number1;
+    last_y_coordinate = number2;
+}
+
+
 int * process_Data(char msg[buffer]) {
-    int* result = (int *) malloc(sizeof(int) * 3);
+    struct returnvalues {
+        int x, y;
+    };
+
     bytes_read = sscanf(msg, "%[^:]:%s:%s", tempx, tempy);
     x = hex_to_int(tempx);
     y = hex_to_int(tempy);
@@ -22,9 +33,10 @@ int * process_Data(char msg[buffer]) {
         int movement_y = y - last_y_coordinate;
     }
 
-    result[0] = movement_x;
-    result[1] = movement_y;
-
-    return result;
+    returnvalues.x = movement_x;
+    returnvalues.y = movement_y;
+    update_last_coordinate(x, y);
+    
+    return returnvalues;
 }
 

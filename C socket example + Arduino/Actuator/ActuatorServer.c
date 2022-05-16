@@ -16,6 +16,7 @@ int tx_LTE, tx_WiFI;
 pthread_t T1, T2;
 FILE* in;
 FILE* out;
+int x,y;
 
 char ActuatorBuffer[1024];
 char feedback[1024];
@@ -97,10 +98,10 @@ int initialize_Server() {
 
 }
 
-void logData(char msg[256], int* arr) 
+void logData(char msg[256], struct return) 
 {
     char temp[256];
-    sprintf(temp, "Movement on x and y axis:  x = %d, y = %d \n \n", arr[0], arr[1]);
+    sprintf(temp, "Movement on x and y axis:  x = %d, y = %d \n \n", return.x, return.y);
     fwrite(temp, sizeof(char), strlen(temp), out);
 
 }
@@ -138,9 +139,9 @@ void *ReceiveCoordinateLTE(void *) {
     inet_ntop(remote_addr.ss_family,get_in_addr((struct sockaddr *)&remote_addr), s, sizeof s)); // Prints out the remote sockets address
     //printf("Actuator_LTE: packet is %d bytes long\n", rc_LTE);
     printf("Actuator_LTE: packet contains \"%s\"\n", ActuatorBuffer);
-    
-    int* returnedArr = process_Data(ActuatorBuffer);
-    logData(ActuatorBuffer, returnedArr);
+    struct C;
+    C = process_Data(ActuatorBuffer);
+    logData(ActuatorBuffer, C);
     //printf("Actuator_LTE: robot movement on x-axis: %d\n", returnedArr[0]);
     //printf("Actuator_LTE: robot movement on y-axis: %d\n \n", returnedArr[1]);
     free(returnedArr);
