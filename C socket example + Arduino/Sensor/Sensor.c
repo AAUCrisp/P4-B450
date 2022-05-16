@@ -45,9 +45,9 @@ int main() {
     const char* GSV_KEY = "GSV_KEY";
     const char* msg;
     char * sut;
-    char * shit1 = "B";
-    char * shit2 = "L";
-    char * shit3 = "W";
+    const char * shit1 = "B";
+    const char * shit2 = "L";
+    const char * shit3 = "W";
    
     printf("Both : %s\n", shit1);
     printf("LTE : %s\n", shit2);
@@ -72,7 +72,7 @@ int main() {
         printf("sut: %s\n", sut);
 
 
-        if (sut == shit1) {
+        if (msg == shit1) {
             printf("Shared memory GSV thing works!2 %s\n", msg);
             printf("SHIT DOES NOT WORK!2\n");
         }
