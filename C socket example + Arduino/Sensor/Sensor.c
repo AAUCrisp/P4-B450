@@ -1,4 +1,7 @@
-#include "libraries.c"
+#ifndef LIBRARIES
+#define LIBRARIES
+#include "Libraries.c"  // File with all our includes
+#endif
 
 int generate(int Min, int Max) {
     int number = (rand() % ((Max + 1) - Min)) + Min;
