@@ -14,6 +14,8 @@ int lenWiFi = sizeof(ServerWiFi);
 int rc_LTE, rc_WiFi;
 int tx_LTE, tx_WiFI;
 pthread_t T1, T2;
+FILE* in;
+FILE* out;
 
 char ActuatorBuffer[1024];
 char feedback[1024];
@@ -95,6 +97,15 @@ int initialize_Server() {
 
 }
 
+void logData(char msg[256], int* arr[]) 
+{
+    char temp[256];
+    fopen(&out, "MovementCommands.dat", "w");
+    sprintf(temp, 256, "Movement on x and y axis:  x = %d, y = %d \n \n", arr[0], arr[1]);
+    fwrite(temp, sizeof(char), strlen(temp), out);
+}
+
+
 void  *ReceiveCoordinateWiFi() {
     fromlen = sizeof remote_addr;
     if(rc_WiFi = recvfrom(sockWiFi, ActuatorBuffer, sizeof(ActuatorBuffer), 0, (struct sockaddr *)&remote_addr, &fromlen) == -1)
@@ -104,11 +115,12 @@ void  *ReceiveCoordinateWiFi() {
     }
     printf("we got the buffer from %s\n",
     inet_ntop(remote_addr.ss_family,get_in_addr((struct sockaddr *)&remote_addr), s, sizeof s)); // Prints out the remote sockets address
-    printf("Actuator_WiFi: packet is %d bytes long\n", rc_WiFi);
+    //printf("Actuator_WiFi: packet is %d bytes long\n", rc_WiFi);
     printf("Actuator_WiFi: packet contains \"%s\"\n", ActuatorBuffer);
     int* returnedArr = process_Data(ActuatorBuffer);
-    printf("Actuator_WiFi: robot movement on x-axis: %d\n", returnedArr[0]);
-    printf("Actuator_WiFi: robot movement on y-axis: %d\n \n", returnedArr[1]);    
+    logData(ActuatorBuffer, returnedArr);
+    //printf("Actuator_WiFi: robot movement on x-axis: %d\n", returnedArr[0]);
+    //printf("Actuator_WiFi: robot movement on y-axis: %d\n \n", returnedArr[1]);    
     free (returnedArr);
     pthread_exit(NULL);
     //tx_WiFI = sendto(sockWiFi, result.feedback,strlen(result.feedback),0,get_in_addr((struct sockaddr *)&remote_addr), sizeof remote_addr);
@@ -124,13 +136,13 @@ void *ReceiveCoordinateLTE() {
     }
     printf("we got the buffer from %s\n",
     inet_ntop(remote_addr.ss_family,get_in_addr((struct sockaddr *)&remote_addr), s, sizeof s)); // Prints out the remote sockets address
-    printf("Actuator_LTE: packet is %d bytes long\n", rc_LTE);
-    printf("Actuator_LTE: packet contains \"%s\"\n", ActuatorBuffer);
+    //printf("Actuator_LTE: packet is %d bytes long\n", rc_LTE);
     printf("Actuator_LTE: packet contains \"%s\"\n", ActuatorBuffer);
     
     int* returnedArr = process_Data(ActuatorBuffer);
-    printf("Actuator_LTE: robot movement on x-axis: %d\n", returnedArr[0]);
-    printf("Actuator_LTE: robot movement on y-axis: %d\n \n", returnedArr[1]);
+    logData(ActuatorBuffer, returnedArr);
+    //printf("Actuator_LTE: robot movement on x-axis: %d\n", returnedArr[0]);
+    //printf("Actuator_LTE: robot movement on y-axis: %d\n \n", returnedArr[1]);
     free(returnedArr);
     pthread_exit(NULL);
 }
