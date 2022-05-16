@@ -1,4 +1,7 @@
-all: SensorStart SensorMonitoring
+all: Git SensorStart SensorMonitoring
+
+Git:
+	git pull
 
 SensorStart: Sensor.c SocketFunctions.o shm_write.o shm_read.o
 	gcc -pthread Sensor.c SocketFunctions.o shm_write.o shm_read.o -o SensorStart -lrt

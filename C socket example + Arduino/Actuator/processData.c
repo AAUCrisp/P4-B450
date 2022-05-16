@@ -1,11 +1,11 @@
 #include "processData.h"
-#include <mem.h>
+
 
 int movement_x;
 int movement_y;
 int * process_Data(char msg[buffer]) {
     int * result = malloc(sizeof(int) * 2);
-    bytes_read = sscanf(msg, "%[^:]:%s:%s", tempx, tempy);
+    bytes_read = sscanf(msg, "%[^:]:%s:%c", tempx, tempy);
     x = atoi(tempx);
     y = atoi(tempy);
 
