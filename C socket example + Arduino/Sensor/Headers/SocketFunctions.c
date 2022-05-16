@@ -1,24 +1,24 @@
-#ifndef LIBRARIES
-#define LIBRARIES
-#include "../Libraries.c"  // File with all our includes
-#endif
+#include <arpa/inet.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <netinet/in.h>
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/ipc.h>  //IPC thing
+#include <sys/mman.h>
+#include <sys/shm.h>  //SHM thing
+#include <sys/socket.h>
+#include <sys/stat.h>
+#include <sys/time.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <time.h>
+#include <unistd.h>
 
-#ifndef SOCKET_STRUCT
-#define SOCKET_STRUCT
-typedef struct _sockets {
-    /* Receiver sockets*/
-    int sockLTE_RECEIVER;
-    int sockWiFi_RECEIVER;
-    struct sockaddr_in ServerLTE_RECEIVER;
-    struct sockaddr_in ServerWiFi_RECEIVER;
-
-    /* Transmitter sockets*/
-    int sockLTE_TRANSMITTER;
-    int sockWiFi_TRANSMITTER;
-    struct sockaddr_in ClientLTE_TRANSMITTER;
-    struct sockaddr_in ClientWiFi_TRANSMITTER;
-} Sockets;
-#endif
+#include "SocketFunctions.h"
+#include "shm_write_read.h"
 
 /* Define buffers & PORT number */
 #define BUFFER 1024
@@ -30,8 +30,6 @@ char *receive;
 int bindLTE, bindWiFi;
 int RX_LTE, RX_WiFi;
 int TX_LTE, TX_WiFi;
-
-
 
 /* Function to bind sockets */
 void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
@@ -111,7 +109,6 @@ void Sockets_Transmitter(Sockets *sock, const char *IP, uint PORT_LTE, uint PORT
 void *receiveLTE(void *socket) {
     const char *GSV;
     const char *GSV_KEY = "GSV_KEY";
-    
     Sockets *sock = (Sockets *)socket;
     int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
     RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);

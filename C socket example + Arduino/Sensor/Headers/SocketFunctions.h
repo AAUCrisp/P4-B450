@@ -1,5 +1,5 @@
-#ifndef SOCKETS
-#define SOCKETS
+#ifndef SOCKET_FUNCTIONS_H
+#define SOCKETS_FUNCTIONS_H
 
 typedef struct _sockets {
     /* Receiver sockets*/
@@ -19,7 +19,7 @@ typedef struct _sockets {
 void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi);
 
 /* Function to create transmitter socket */
-void Sockets_Transmitter(Sockets *sock, const char * IP, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi);
+void Sockets_Transmitter(Sockets *sock, const char *IP, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi);
 
 /* Function to receive LTE packets */
 void *receiveLTE(void *socket);

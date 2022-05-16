@@ -1,7 +1,24 @@
-#ifndef LIBRARIES
-#define LIBRARIES
-#include "Libraries.c"  // File with all our includes
-#endif
+#include <arpa/inet.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <netinet/in.h>
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/ipc.h>  //IPC thing
+#include <sys/mman.h>
+#include <sys/shm.h>  //SHM thing
+#include <sys/socket.h>
+#include <sys/stat.h>
+#include <sys/time.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <time.h>
+#include <unistd.h>
+
+#include "Headers/SocketFunctions.h"
+#include "Headers/shm_write_read.h"
 
 int generate(int Min, int Max) {
     int number = (rand() % ((Max + 1) - Min)) + Min;
@@ -18,7 +35,6 @@ int main() {
     /* Misc */
     pthread_t T1, T2;
 
-
     /* Create sockets */
     Sockets sock;
     Sockets_Receiver(&sock, PORT_LTE, PORT_WiFi, LTE, WiFi);
@@ -28,7 +44,6 @@ int main() {
     /* Shared memory object variables */
     const char* GSV_KEY = "GSV_KEY";
     const char* msg;
-    
 
     /* Create child process */
     pid_t sensor_monitor;     // Prepare the process ID for monitoring
@@ -47,9 +62,9 @@ int main() {
             if (msg == "B") {
                 printf("Shared memory GSV thing works!");
             }
-            
-            //pthread_create(&T1, NULL, /*Function*/, (void*)&sock);
-            //pthread_create(&T2, NULL, /*Function*/, (void*)&sock);
+
+            // pthread_create(&T1, NULL, /*Function*/, (void*)&sock);
+            // pthread_create(&T2, NULL, /*Function*/, (void*)&sock);
         }
     }
 }
