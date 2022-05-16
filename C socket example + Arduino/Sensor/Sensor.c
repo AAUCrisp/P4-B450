@@ -56,6 +56,7 @@ int main() {
         execv(path, args);
     } else {
         while (1) {
+            printf("Do I reach this?");
             msg = shm_read(10, GSV_KEY);
             printf("GSV from shared memory: %s\n", msg);
 
