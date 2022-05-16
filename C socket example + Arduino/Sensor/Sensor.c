@@ -44,6 +44,7 @@ int main() {
     /* Shared memory object variables */
     const char* GSV_KEY = "GSV_KEY";
     const char* msg;
+    char * sut;
     char * shit1 = "B";
     char * shit2 = "L";
     char * shit3 = "W";
@@ -67,8 +68,9 @@ int main() {
     } else {
         msg = shm_read(10, GSV_KEY);
         printf("GSV from shared memory: %s\n", msg);
+        sut = msg;
 
-        if (msg == shit1) {
+        if (sut == shit1) {
             printf("Shared memory GSV thing works!2 %s\n", msg);
             printf("SHIT DOES NOT WORK!2\n");
         }
