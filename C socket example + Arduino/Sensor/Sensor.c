@@ -66,14 +66,14 @@ int main() {
         GSV = atoi(msg);
         printf("GSV: %d\n", GSV);
 
-        
         while (1) {
-        if (GSV == B) {
-            printf("Shared memory GSV thing works! %s\n", msg);
-            printf("SHIT DO WORK! %d\n", GSV);
-        }
-        //  pthread_create(&T1, NULL, /*Function*/, (void*)&sock);
-        //  pthread_create(&T2, NULL, /*Function*/, (void*)&sock);
+            sleep(5);
+            if (GSV == B) {
+                printf("Shared memory GSV thing works! %s\n", msg);
+                printf("SHIT DO WORK! %d\n", GSV);
+            }
+            //  pthread_create(&T1, NULL, /*Function*/, (void*)&sock);
+            //  pthread_create(&T2, NULL, /*Function*/, (void*)&sock);
         }
     }
 }

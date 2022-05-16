@@ -46,10 +46,8 @@ int main() {
         if (b != 0) {
             perror("pthread_create failed");
         }*/
-        if (count == 30)
-        {
+        if (count == 30) {
             exit(0);
         }
-        
     }
 }
