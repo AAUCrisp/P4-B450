@@ -65,7 +65,7 @@ void *transmitLTE(void *message) {
     char transmitBuffer[BUFFER];
     char *msg = message;
     sprintf(transmitBuffer, "%s", msg);
-    //printf("TransmiteLTE: %s\n", transmitBuffer);
+    // printf("TransmiteLTE: %s\n", transmitBuffer);
     sendto(sockLTE2, transmitBuffer, BUFFER, 0, (struct sockaddr *)&ServerLTE2, lenLTE2);
     // printf("LTE-Thread id = %ld\n\n", pthread_self());
     pthread_exit(NULL);
@@ -75,7 +75,7 @@ void *transmitWiFi(void *message) {
     char transmitBuffer[BUFFER];
     char *msg = message;
     sprintf(transmitBuffer, "%s", msg);
-    //printf("TransmiteLTE: %s\n", transmitBuffer);
+    // printf("TransmiteLTE: %s\n", transmitBuffer);
     sendto(sockWiFi2, transmitBuffer, BUFFER, 0, (struct sockaddr *)&ServerWiFi2, lenWiFi2);
     // printf("WiFi-Thread id = %ld\n\n", pthread_self());
     pthread_exit(NULL);
@@ -143,10 +143,12 @@ int main() {
     char msg2[] = "Hello back from WiFi! Control Unit";
 
     while (1) {
-        //pthread_create(&T1, NULL, receiveLTE, NULL);
-        //pthread_create(&T2, NULL, receiveWiFi, NULL);
-        pthread_create(&T3, NULL, transmitLTE, msg);
-        pthread_create(&T4, NULL, transmitWiFi, msg2);
+        // pthread_create(&T1, NULL, receiveLTE, NULL);
+        // pthread_create(&T2, NULL, receiveWiFi, NULL);
+        // pthread_create(&T3, NULL, transmitLTE, msg);
+        // pthread_create(&T4, NULL, transmitWiFi, msg2);
+        sendto(sockWiFi1, msg, BUFFER, 0, (struct sockaddr *)&ServerWiFi2, lenWiFi2);
+        sendto(sockLTE1, msg2, BUFFER, 0, (struct sockaddr *)&ServerLTE2, lenLTE2);
         printf("Just to make sure it prints");
         sleep(3);
 
@@ -160,8 +162,6 @@ int main() {
         // RX_WiFi1 = recvfrom(sockWiFi1, Message, BUFFER, 0, (struct sockaddr *)&ServerWiFi1, &lenWiFi1);
         // printf("From WiFi1: %s\n", Message);
 
-        // sendto(sockWiFi1, msg, BUFFER, 0, (struct sockaddr *)&ServerWiFi1, lenWiFi1);
-        // sendto(sockLTE1, msg2, BUFFER, 0, (struct sockaddr *)&ServerLTE1, lenLTE1);
         //  pthread_join(T1, NULL);
         //  pthread_join(T2, NULL);
     }
