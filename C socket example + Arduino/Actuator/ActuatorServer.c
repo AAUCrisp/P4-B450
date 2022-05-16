@@ -1,5 +1,5 @@
 #include "ActuatorServer.h"
-#include <processData.cpp>
+#include "processData.cpp"
 
 
 struct addrinfo ServerLTE, *res1;   // a socket struct design to be used with IPv4
@@ -16,6 +16,7 @@ int tx_LTE, tx_WiFI;
 pthread_t T1, T2;
 FILE* in;
 FILE* out;
+
 
 char ActuatorBuffer[1024];
 char feedback[1024];
@@ -97,16 +98,16 @@ int initialize_Server() {
 
 }
 
-void logData(char msg[256], int* arr) 
+void logData(char msg[256], struct ret) 
 {
     char temp[256];
-    sprintf(temp, "Movement on x and y axis:  x = %d, y = %d \n \n", arr[0], arr[1]);
+    sprintf(temp, "Movement on x and y axis:  x = %d, y = %d \n \n", ret.x, ret.y);
     fwrite(temp, sizeof(char), strlen(temp), out);
 
 }
 
 
-void  *ReceiveCoordinateWiFi() {
+void  *ReceiveCoordinateWiFi(void *) {
     fromlen = sizeof remote_addr;
     if(rc_WiFi = recvfrom(sockWiFi, ActuatorBuffer, sizeof(ActuatorBuffer), 0, (struct sockaddr *)&remote_addr, &fromlen) == -1)
     {
@@ -116,18 +117,18 @@ void  *ReceiveCoordinateWiFi() {
     printf("we got the buffer from %s\n",
     inet_ntop(remote_addr.ss_family,get_in_addr((struct sockaddr *)&remote_addr), s, sizeof s)); // Prints out the remote sockets address
     //printf("Actuator_WiFi: packet is %d bytes long\n", rc_WiFi);
-    printf("Actuator_WiFi: packet contains \"%s\"\n", ActuatorBuffer);
-    int* returnedArr = process_Data(ActuatorBuffer);
-    logData(ActuatorBuffer, returnedArr);
+    //printf("Actuator_WiFi: packet contains \"%s\"\n", ActuatorBuffer);
+    //int* returnedArr = process_Data(ActuatorBuffer);
+    //logData(ActuatorBuffer, returnedArr);
     //printf("Actuator_WiFi: robot movement on x-axis: %d\n", returnedArr[0]);
     //printf("Actuator_WiFi: robot movement on y-axis: %d\n \n", returnedArr[1]);    
-    free (returnedArr);
+    //free (returnedArr);
     pthread_exit(NULL);
     //tx_WiFI = sendto(sockWiFi, result.feedback,strlen(result.feedback),0,get_in_addr((struct sockaddr *)&remote_addr), sizeof remote_addr);
     
 }
 
-void *ReceiveCoordinateLTE() {
+void *ReceiveCoordinateLTE(void *) {
     fromlen = sizeof remote_addr;
     if(rc_LTE = recvfrom(sockLTE, ActuatorBuffer, sizeof(ActuatorBuffer), 0, (struct sockaddr *)&remote_addr, &fromlen) == -1)
     {
@@ -138,12 +139,12 @@ void *ReceiveCoordinateLTE() {
     inet_ntop(remote_addr.ss_family,get_in_addr((struct sockaddr *)&remote_addr), s, sizeof s)); // Prints out the remote sockets address
     //printf("Actuator_LTE: packet is %d bytes long\n", rc_LTE);
     printf("Actuator_LTE: packet contains \"%s\"\n", ActuatorBuffer);
-    
-    int* returnedArr = process_Data(ActuatorBuffer);
-    logData(ActuatorBuffer, returnedArr);
+    struct C;
+    C = process_Data(ActuatorBuffer);
+    logData(ActuatorBuffer, C);
     //printf("Actuator_LTE: robot movement on x-axis: %d\n", returnedArr[0]);
     //printf("Actuator_LTE: robot movement on y-axis: %d\n \n", returnedArr[1]);
-    free(returnedArr);
+    //free(returnedArr);
     pthread_exit(NULL);
 }
 
