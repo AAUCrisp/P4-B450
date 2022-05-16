@@ -100,7 +100,7 @@ int initialize_Server() {
 void logData(char msg[256], int* arr[]) 
 {
     char temp[256];
-    fopen(&out, "MovementCommands.dat", "w");
+    out = fopen("MovementCommands.txt", "w");
     sprintf(temp, 256, "Movement on x and y axis:  x = %d, y = %d \n \n", arr[0], arr[1]);
     fwrite(temp, sizeof(char), strlen(temp), out);
 }
@@ -118,7 +118,7 @@ void  *ReceiveCoordinateWiFi() {
     //printf("Actuator_WiFi: packet is %d bytes long\n", rc_WiFi);
     printf("Actuator_WiFi: packet contains \"%s\"\n", ActuatorBuffer);
     int* returnedArr = process_Data(ActuatorBuffer);
-    logData(ActuatorBuffer, returnedArr);
+    logData(ActuatorBuffer, *returnedArr);
     //printf("Actuator_WiFi: robot movement on x-axis: %d\n", returnedArr[0]);
     //printf("Actuator_WiFi: robot movement on y-axis: %d\n \n", returnedArr[1]);    
     free (returnedArr);
@@ -140,7 +140,7 @@ void *ReceiveCoordinateLTE() {
     printf("Actuator_LTE: packet contains \"%s\"\n", ActuatorBuffer);
     
     int* returnedArr = process_Data(ActuatorBuffer);
-    logData(ActuatorBuffer, returnedArr);
+    logData(ActuatorBuffer, *returnedArr);
     //printf("Actuator_LTE: robot movement on x-axis: %d\n", returnedArr[0]);
     //printf("Actuator_LTE: robot movement on y-axis: %d\n \n", returnedArr[1]);
     free(returnedArr);
