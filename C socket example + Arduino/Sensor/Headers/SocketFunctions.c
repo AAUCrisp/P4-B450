@@ -1,5 +1,3 @@
-#include "SocketFunctions.h"
-
 #include <arpa/inet.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -19,6 +17,7 @@
 #include <time.h>
 #include <unistd.h>
 
+#include "SocketFunctions.h"
 #include "shm_write_read.h"
 
 /* Define buffers & PORT number */

@@ -1,5 +1,5 @@
-#ifndef SOCKETS
-#define SOCKETS
+#ifndef SOCKET_FUNCTIONS_H
+#define SOCKETS_FUNCTIONS_H
 
 typedef struct _sockets {
     /* Receiver sockets*/
