@@ -1,3 +1,5 @@
+#include "SocketFunctions.h"
+
 #include <arpa/inet.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -17,7 +19,6 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "SocketFunctions.h"
 #include "shm_write_read.h"
 
 /* Define buffers & PORT number */
@@ -76,7 +77,7 @@ void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *
     printf("Bind was succesful!\n");
 }
 
-void Sockets_Transmitter(Sockets *sock, const char *IP_LTE, const char* IP_WiFi , uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
+void Sockets_Transmitter(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
     /* Create socket receiver */
     sock->sockLTE_TRANSMITTER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sock->sockWiFi_TRANSMITTER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -134,11 +135,11 @@ void *receiveWiFi(void *socket) {
 }
 
 void *transmitLTE(void *socket) {
-    const char *RAND_INT;
+    int RAND_INT;
     const char *RAND_KEY = "RAND_KEY";
     Sockets *sock = (Sockets *)socket;
     int LenLTE = sizeof(sock->ClientLTE_TRANSMITTER);
-    int RAND_INT = shm_read(10, RAND_KEY);
+    RAND_INT = shm_read(10, RAND_KEY);
     printf("RAND_INT LTE: %d\n" RAND_INT);
     TX_LTE = sendto(sock->sockLTE_TRANSMITTER, RAND_INT, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, LenLTE);
     printf("LTE-Thread id = %ld\n", pthread_self());
@@ -147,11 +148,11 @@ void *transmitLTE(void *socket) {
 }
 
 void *transmitWiFi(void *socket) {
-    const char *RAND_INT;
+    int RAND_INT;
     const char *RAND_KEY = "RAND_KEY";
     Sockets *sock = (Sockets *)socket;
     int LenWiFi = sizeof(sock->ClientLTE_TRANSMITTER);
-    int RAND_INT = shm_read(10, RAND_KEY);
+    RAND_INT = shm_read(10, RAND_KEY);
     printf("RAND_INT WiFi: %d\n" RAND_INT);
     TX_WiFi = sendto(sock->sockWiFi_TRANSMITTER, RAND_INT, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, LenWiFi);
     printf("WiFi-Thread id = %ld\n", pthread_self());
