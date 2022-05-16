@@ -140,7 +140,7 @@ void *transmitLTE(void *socket) {
     Sockets *sock = (Sockets *)socket;
     int LenLTE = sizeof(sock->ClientLTE_TRANSMITTER);
     RAND_INT = shm_read(10, RAND_KEY);
-    printf("RAND_INT LTE: %s\n"(char *)RAND_INT);
+    printf("RAND_INT LTE: %s\n", shm_read(10, RAND_KEY));
     TX_LTE = sendto(sock->sockLTE_TRANSMITTER, RAND_INT, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, LenLTE);
     printf("LTE-Thread id = %ld\n", pthread_self());
     printf("Message from LTE transmitted at: %s\n\n", curr_time);
