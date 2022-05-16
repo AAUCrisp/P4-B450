@@ -47,6 +47,11 @@ int main() {
     char* GSV = "NONE";
     printf("GSV NONE : %s\n", GSV);
 
+    if (GSV == "B" || GSV == "NONE") {
+        printf("Shared memory GSV thing works! %s\n", GSV);
+        printf("SHIT DOES NOT WORK!");
+    }
+
     /* Create child process */
     pid_t sensor_monitor;     // Prepare the process ID for monitoring
     sensor_monitor = fork();  // Starts new process
