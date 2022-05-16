@@ -98,11 +98,12 @@ int initialize_Server() {
 
 }
 
-void logData(char msg[256], int *arr) 
+void logData(char msg[256], int *arr, ofstream out) 
 {
     char temp[256];
     sprintf(temp, "Movement on x and y axis:  x = %d, y = %d \n \n", arr[0], arr[1]);
-    fwrite(temp, sizeof(char), strlen(temp), out);
+    //fwrite(temp, sizeof(char), strlen(temp), out);
+    out << temp;
 
 }
 
@@ -141,7 +142,7 @@ void *ReceiveCoordinateLTE(void *) {
     printf("Actuator_LTE: packet contains \"%s\"\n", ActuatorBuffer);
     
     int * returnedArr = process_Data(ActuatorBuffer);
-    logData(ActuatorBuffer, returnedArr);
+    logData(ActuatorBuffer, returnedArr, MyFile);
     //printf("Actuator_LTE: robot movement on x-axis: %d\n", returnedArr[0]);
     //printf("Actuator_LTE: robot movement on y-axis: %d\n \n", returnedArr[1]);
     free(returnedArr);
@@ -152,7 +153,8 @@ void *ReceiveCoordinateLTE(void *) {
 
 int main() {
     initialize_Server();
-    out = fopen("MovementCommands.txt", "w");
+    //out = fopen("MovementCommands.txt", "w");
+    ofstream MyFile("MovementCommands.txt");
     while (1)
     {
        pthread_create(&T1, NULL, ReceiveCoordinateLTE, NULL);
@@ -162,7 +164,8 @@ int main() {
       
         
     }
-    fclose(out);
+    //fclose(out);
+    MyFile.close();
     close(sockWiFi);
     close(sockLTE);
     
