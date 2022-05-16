@@ -60,8 +60,9 @@ int main() {
         while (1) {
             msg = shm_read(10, GSV_KEY);
             printf("GSV from shared memory: %s\n", msg);
+            GSV = (char*)msg;
 
-            if ((char*)msg == "B") {
+            if (GSV == "B") {
                 printf("Shared memory GSV thing works! %s\n", msg);
             }
             // pthread_create(&T1, NULL, /*Function*/, (void*)&sock);
