@@ -5,15 +5,15 @@ Git:
 
 ClientStart: ClientTest.c
 	gcc -pthread ClientTest.c -o ClientStart
-	touch ClientStart
+	touch ClientTest.c
 
 ServerStart: Control_Unit.c Sockets.o RSSI.o shm_write.o shm_read.o
 	gcc -pthread Control_Unit.c Sockets.o RSSI.o shm_write.o shm_read.o -o ServerStart -lrt
-	touch ServerStart
+	touch Control_Unit.c
 
 SignalMonitoring: SignalMonitoring.c RSSI.o shm_write.o shm_read.o Sockets.o
 	gcc -pthread SignalMonitoring.c RSSI.o shm_write.o shm_read.o Sockets.o -o SignalMonitoring -lrt
-	touch SignalMonitoring
+	touch SignalMonitoring.c
 
 Sockets.o: Headers/Sockets.c Headers/Sockets.h Headers/shm_write_read.h
 	gcc -c Headers/Sockets.c -lrt
