@@ -23,13 +23,10 @@
 /* Main running code */
 int main() {
     /* Initialize PORT & INTERFACE*/
-    uint PORT_LTE = 9000;
-    uint PORT_WiFi = 9001;
+    uint PORT_LTE = 9002;
+    uint PORT_WiFi = 9003;
     const char* LTE = "wwan0";
     const char* WiFi = "wlan0";
-    const char* IP_LTE = "10.20.0.10";
-    const char* IP_WiFi = "192.168.1.160";
-
     /* Misc */
     pthread_t T1, T2;
 
