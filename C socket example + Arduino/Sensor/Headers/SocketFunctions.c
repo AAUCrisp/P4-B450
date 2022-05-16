@@ -131,8 +131,7 @@ void *receiveWiFi(void *socket) {
     pthread_exit(NULL);
 }
 
-    
-void *transmitLTE(void *socket){
+void *transmitLTE(void *socket) {
     const char *RAND_INT;
     const char *RAND_KEY = "RAND_KEY";
     Sockets *sock = (Sockets *)socket;
@@ -144,7 +143,7 @@ void *transmitLTE(void *socket){
     pthread_exit(NULL);
 }
 
-void *transmitWiFi(void *socket){
+void *transmitWiFi(void *socket) {
     const char *RAND_INT;
     const char *RAND_KEY = "RAND_KEY";
     Sockets *sock = (Sockets *)socket;
@@ -155,7 +154,6 @@ void *transmitWiFi(void *socket){
     printf("Message from WiFi transmitted at: %s\n\n", curr_time);
     pthread_exit(NULL);
 }
-
 
 /* Function to timestamp packets */
 char *Timestamp() {
