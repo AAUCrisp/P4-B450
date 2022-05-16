@@ -64,7 +64,7 @@ int main() {
         GSV = (char*)msg;
         printf("const char* = typecast  to char*: %s\n", GSV);
 
-        if (GSV == "B") {
+        if (GSV == "B" || GSV == "NONE") {
             printf("Shared memory GSV thing works! %s\n", GSV);
             printf("SHIT DOES NOT WORK!");
         }
