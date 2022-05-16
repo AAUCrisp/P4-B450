@@ -44,10 +44,16 @@ int main() {
     /* Shared memory object variables */
     const char* GSV_KEY = "GSV_KEY";
     const char* msg;
+
+    const char* RAND_KEY = "RAND_KEY";
+    const char* random_int;
+
     int GSV;
     int B = 0;
     int W = 1;
     int L = 2;
+
+    shm_write(const char* message, const int SIZE, const char* name);
 
     /* Create child process */
     pid_t sensor_monitor;     // Prepare the process ID for monitoring
@@ -62,18 +68,29 @@ int main() {
 
     } else {
         msg = shm_read(10, GSV_KEY);
-        printf("GSV from shared memory: %s\n", msg);
         GSV = atoi(msg);
-        printf("GSV: %d\n", GSV);
+        printf("GSV from shared memory: %s\n", msg);
+        printf("GSV converted: %d\n", GSV);
 
         while (1) {
             sleep(2);
-            if (GSV == B || GSV == L || GSV == W) {
-                printf("Shared memory GSV thing works! %s\n", msg);
-                printf("SHIT DO WORK! %d\n", GSV);
+            if (GSV == B || GSV == L) {
+                /*printf("Shared memory GSV thing works! %s\n", msg);
+                printf("SHIT DO WORK! %d\n", GSV);*/
+                timestamp();
+                random_int = generate(0, 2500);
+                printf("Random int to char: %s\n", random_int);
+                shm_write(random_int, 10, RAND_KEY);
+                pthread_create(&T1, NULL, transmitLTE, (void*)&sock);
             }
-            //  pthread_create(&T1, NULL, /*Function*/, (void*)&sock);
-            //  pthread_create(&T2, NULL, /*Function*/, (void*)&sock);
+
+            if (GSV == B || GSV == W) {
+                timestamp();
+                random_int = generate(0, 2500);
+                shm_write(random_int, 10, RAND_KEY);
+                printf("Random int to char: %s\n", random_int);
+                pthread_create(&T2, NULL, transmitWiFi, (void*)&sock);
+            }
         }
     }
 }

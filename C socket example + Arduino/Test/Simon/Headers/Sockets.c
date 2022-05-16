@@ -154,7 +154,7 @@ void *transmitLTE(void *socket) {
     const char *GSV_KEY = "GSV_KEY";
     GSV = shm_read(10, GSV_KEY);
     TX_LTE = sendto(sock->sockLTE_transmit, GSV, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_transmit, LenLTE);
-    printf("WiFi-Thread id = %ld\n", pthread_self());
+    printf("LTE-Thread id = %ld\n", pthread_self());
     // printf("%s\n", GSV);
     printf("Message from LTE transmitted at: %s\n\n", curr_time);
     pthread_exit(NULL);

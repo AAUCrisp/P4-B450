@@ -27,4 +27,10 @@ void *receiveLTE(void *socket);
 /* Function to receive WiFi packets */
 void *receiveWiFi(void *socket);
 
+/* Function to transmit LTE packets */
+void *transmitLTE(void *socket);
+
+/* Function to transmit WiFi packets */
+void *transmitWiFi(void *socket);
+
 #endif

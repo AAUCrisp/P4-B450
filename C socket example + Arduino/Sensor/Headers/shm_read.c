@@ -29,7 +29,7 @@ void* shm_read(const int SIZE, const char* name) {
     // printf("This is shm_fd with shm_open: %d\n", shm_fd);
 
     /* memory map the shared memory object */
-    ptr = mmap(0 /*or NULL*/, SIZE, PROT_READ, MAP_SHARED, shm_fd, 0);
+    ptr = mmap(NULL, SIZE, PROT_READ, MAP_SHARED, shm_fd, 0);
 
     // printf("This is ptr memory map: %p\n", ptr);
 
