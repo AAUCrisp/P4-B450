@@ -1,10 +1,9 @@
-#include "SocketFunctions.h"
-
 #ifndef LIBRARIES
 #define LIBRARIES
 #include "../Libraries.c"
 #endif
 
+#include "SocketFunctions.h"
 #include "shm_write_read.h"
 
 /* Define buffers & PORT number */
