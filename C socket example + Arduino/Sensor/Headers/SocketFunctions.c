@@ -155,7 +155,7 @@ void *transmitWiFi(void *socket){
     printf("Message from WiFi transmitted at: %s\n\n", curr_time);
     pthread_exit(NULL);
 }
-}
+
 
 /* Function to timestamp packets */
 char *Timestamp() {
