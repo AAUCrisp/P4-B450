@@ -79,7 +79,7 @@ int main() {
                 printf("SHIT DO WORK! %d\n", GSV);*/
                 Timestamp();
                 int int_1 = generate(0, 2500);
-                char* test = int_1 +'0';
+                char* test = (char*)int_1 +'0';
                 printf("Random int to char: %s\n", test);
                 char* itoa(int_1, rand_int, 10);
                 printf("Random int to char: %s\n", rand_int);
