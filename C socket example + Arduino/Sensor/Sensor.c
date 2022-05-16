@@ -46,7 +46,7 @@ int main() {
     const char* msg;
 
     const char* RAND_KEY = "RAND_KEY";
-    const char* random_int;
+    char* random_int;
 
     int GSV;
     int B = 0;
