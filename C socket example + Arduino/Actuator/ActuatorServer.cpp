@@ -98,12 +98,12 @@ int initialize_Server() {
 
 }
 
-void logData(char msg[256], int *arr) 
+void logData(char msg[256], int *arr, ofstream out) 
 {
     char temp[256];
     sprintf(temp, "Movement on x and y axis:  x = %d, y = %d \n \n", arr[0], arr[1]);
     //fwrite(temp, sizeof(char), strlen(temp), out);
-    MyFile << temp;
+    out << temp;
 
 }
 
@@ -142,7 +142,7 @@ void *ReceiveCoordinateLTE(void *) {
     printf("Actuator_LTE: packet contains \"%s\"\n", ActuatorBuffer);
     
     int * returnedArr = process_Data(ActuatorBuffer);
-    logData(ActuatorBuffer, returnedArr);
+    logData(ActuatorBuffer, returnedArr, MyFile);
     //printf("Actuator_LTE: robot movement on x-axis: %d\n", returnedArr[0]);
     //printf("Actuator_LTE: robot movement on y-axis: %d\n \n", returnedArr[1]);
     free(returnedArr);
