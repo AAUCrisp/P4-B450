@@ -3,6 +3,8 @@
 #include "../Libraries.c"  // File with all our includes
 #endif
 
+#include "Headers/Sockets.h"
+
 /* Define buffers & PORT number */
 #define BUFFER 1024
 char message[BUFFER];
