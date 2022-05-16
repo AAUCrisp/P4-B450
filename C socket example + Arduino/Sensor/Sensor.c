@@ -59,7 +59,7 @@ int main() {
         msg = shm_read(10, GSV_KEY);
         printf("GSV from shared memory: %s\n", msg);
 
-        if (msg == "B") {
+        if (msg = "B") {
             printf("Shared memory GSV thing works!");
         }
         // while (1) {
