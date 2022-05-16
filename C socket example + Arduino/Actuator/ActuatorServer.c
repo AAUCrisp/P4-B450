@@ -1,5 +1,6 @@
 #include "ActuatorServer.h"
 #include "coordinates.c"
+#include "processData.h"
 
 
 struct addrinfo ServerLTE, *res1;   // a socket struct design to be used with IPv4
@@ -106,9 +107,10 @@ void  *ReceiveCoordinateWiFi() {
     inet_ntop(remote_addr.ss_family,get_in_addr((struct sockaddr *)&remote_addr), s, sizeof s)); // Prints out the remote sockets address
     printf("Actuator_WiFi: packet is %d bytes long\n", rc_WiFi);
     printf("Actuator_WiFi: packet contains \"%s\"\n", ActuatorBuffer);
-    result = parse_coordinates(ActuatorBuffer);
-    printf("the coordinates are x = %d and y = %d\n",result.current_x_coordinate, result.current_y_coordinate);
-    printf("The robot has moved this much over the x and y axis: %d:%d \n\n", result.movement_x, result.movement_y);
+    returnedArr = processData(ActuatorBuffer);
+    printf("Actuator_WiFi: robot movement on x-axis: %d", returnedArr[0]);
+    printf("Actuator_WiFi: robot movement on y-axis: %d", returnedArr[1]);    
+    
     //tx_WiFI = sendto(sockWiFi, result.feedback,strlen(result.feedback),0,get_in_addr((struct sockaddr *)&remote_addr), sizeof remote_addr);
     
 }
@@ -124,12 +126,11 @@ void *ReceiveCoordinateLTE() {
     inet_ntop(remote_addr.ss_family,get_in_addr((struct sockaddr *)&remote_addr), s, sizeof s)); // Prints out the remote sockets address
     printf("Actuator_LTE: packet is %d bytes long\n", rc_LTE);
     printf("Actuator_LTE: packet contains \"%s\"\n", ActuatorBuffer);
-    result = parse_coordinates(ActuatorBuffer);
-    printf("the coordinates are x = %d and y = %d\n",result.current_x_coordinate, result.current_y_coordinate);
-    printf("The robot has moved this much over the x and y axis: %d:%d \n\n", result.movement_x, result.movement_y);
-    //tx_WiFI = sendto(sockWiFi, result.feedback,strlen(result.feedback),0,get_in_addr((struct sockaddr *)&remote_addr), sizeof remote_addr);
-    //tx_WiFI = sendto(sockWiFi, result.feedback,strlen(result.feedback),0,get_in_addr((struct sockaddr *)&remote_addr), sizeof remote_addr);
-    
+    printf("Actuator_LTE: packet contains \"%s\"\n", ActuatorBuffer);
+    returnedArr = processData(ActuatorBuffer);
+    printf("Actuator_LTE: robot movement on x-axis: %d", returnedArr[0]);
+    printf("Actuator_LTE: robot movement on y-axis: %d", returnedArr[1]);
+    pthread_exit(NULL);
 }
 
 
