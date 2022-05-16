@@ -49,7 +49,7 @@ int main() {
 
     if (GSV == "B" || GSV == "NONE") {
         printf("Shared memory GSV thing works!1 %s\n", GSV);
-        printf("SHIT DOES NOT WORK!1");
+        printf("SHIT DOES NOT WORK!1\n");
     }
 
     /* Create child process */
@@ -71,7 +71,7 @@ int main() {
 
         if (GSV == "B" || GSV == "NONE") {
             printf("Shared memory GSV thing works!2 %s\n", GSV);
-            printf("SHIT DOES NOT WORK!2");
+            printf("SHIT DOES NOT WORK!2\n");
         }
         // while (1) {
         //  pthread_create(&T1, NULL, /*Function*/, (void*)&sock);
