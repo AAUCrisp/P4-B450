@@ -45,6 +45,7 @@ int main() {
     const char* GSV_KEY = "GSV_KEY";
     const char* msg;
     char* GSV = "NONE";
+    printf("GSV NONE : %s\n", GSV);
 
     /* Create child process */
     pid_t sensor_monitor;     // Prepare the process ID for monitoring
