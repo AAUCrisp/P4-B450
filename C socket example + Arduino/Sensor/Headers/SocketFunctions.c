@@ -114,8 +114,8 @@ void *receiveLTE(void *socket) {
     printf("LTE || LTE-Thread id = %ld\n", pthread_self());
     printf("LTE || Message from LTE received at: %s\n", curr_time);
     printf("LTE || Message: %s\n", message);
-    message = atoi(message);
-    shm_write(message, 10, GSV_KEY);
+    int test1 = atoi(message);
+    shm_write(test1, 10, GSV_KEY);
     pthread_exit(NULL);
 }
 
@@ -128,8 +128,8 @@ void *receiveWiFi(void *socket) {
     printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
     printf("WiFi || Message from WiFi received at: %s \n", curr_time);
     printf("WiFi || Message: %s\n", message);
-    message = atoi(message);
-    shm_write(message, 10, GSV_KEY);
+    int test2 = atoi(message);
+    shm_write(test2, 10, GSV_KEY);
     pthread_exit(NULL);
 }
 
