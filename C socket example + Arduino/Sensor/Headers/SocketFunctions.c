@@ -111,6 +111,7 @@ void *receiveLTE(void *socket) {
     const char *GSV_KEY = "GSV_KEY";
     Sockets *sock = (Sockets *)socket;
     int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
+    printf("sockLTE_RECEIVER: %d\n", sock.sockLTE_TRANSMITTER);
     RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
     printf("LTE || LTE-Thread id = %ld\n", pthread_self());
     printf("LTE || Message from LTE received at: %s\n", curr_time);
@@ -125,6 +126,7 @@ void *receiveWiFi(void *socket) {
     const char *GSV_KEY = "GSV_KEY";
     Sockets *sock = (Sockets *)socket;
     int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
+    printf("sockWiFi_RECEIVER: %d\n", sock.sockWiFi_TRANSMITTER);
     RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
     printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
     printf("WiFi || Message from WiFi received at: %s \n", curr_time);
