@@ -45,12 +45,13 @@ int main() {
     const char* GSV_KEY = "GSV_KEY";
     const char* msg;
     int GSV;
+    /*
     printf("GSV NONE : %s\n", GSV);
 
     if (GSV == "B" || GSV == "NONE") {
         printf("Shared memory GSV thing works!1 %s\n", GSV);
         printf("SHIT DOES NOT WORK!1\n");
-    }
+    }*/
 
     /* Create child process */
     pid_t sensor_monitor;     // Prepare the process ID for monitoring
