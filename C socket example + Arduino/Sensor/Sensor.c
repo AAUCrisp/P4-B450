@@ -62,7 +62,7 @@ int main() {
             printf("GSV from shared memory: %s\n", msg);
             GSV = msg;
 
-            if (GSV = "B") {
+            if (GSV == "B") {
                 printf("Shared memory GSV thing works! %s\n", msg);
             }
             // pthread_create(&T1, NULL, /*Function*/, (void*)&sock);
