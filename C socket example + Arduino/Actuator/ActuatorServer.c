@@ -106,7 +106,7 @@ void logData(char msg[256], int* arr)
 }
 
 
-void  *ReceiveCoordinateWiFi() {
+void  *ReceiveCoordinateWiFi(void *) {
     fromlen = sizeof remote_addr;
     if(rc_WiFi = recvfrom(sockWiFi, ActuatorBuffer, sizeof(ActuatorBuffer), 0, (struct sockaddr *)&remote_addr, &fromlen) == -1)
     {
@@ -127,7 +127,7 @@ void  *ReceiveCoordinateWiFi() {
     
 }
 
-void *ReceiveCoordinateLTE() {
+void *ReceiveCoordinateLTE(void *) {
     fromlen = sizeof remote_addr;
     if(rc_LTE = recvfrom(sockLTE, ActuatorBuffer, sizeof(ActuatorBuffer), 0, (struct sockaddr *)&remote_addr, &fromlen) == -1)
     {
