@@ -11,13 +11,32 @@ using namespace std;
 
 
 // -- Setup Area --
-int x_axis = 5;      // Length of the x-axis of the grid
-int y_axis = 5;      // Length of the y-axis of the grid
+int x_axis = 20;      // Length of the x-axis of the grid
+int y_axis = 20;      // Length of the y-axis of the grid
 int coordinates = x_axis*y_axis;
 string* grid = new string[coordinates]; // Don't forget to delete [] a; when you're done!
 
 
-/* Option to store the grid in memory and save processing power */
+/* --- Conversion from Integer to Hex-chars --- */
+string int_to_hex(int data, int back = 0) {
+    stringstream stream;    // Create hex-conversion object
+
+    stream << hex << data;    // Tell it to convert from int to hex-chars
+    string result( stream.str() );      // Do the conversion
+    cout << "Converted to Hex-chars is: " << result << endl;     // Print the result
+
+
+    /* -- Coversion back in same object, which already has the value -- */
+    if(back == 1) {
+        int x;
+        stream >> x;        // Write the coverted integer to the integer variable
+        cout << "Converted back is: " << x << endl;
+    }
+    return result;
+}
+
+
+/* --- Option to store the grid in memory and save processing power --- */
 void generate_grid(int x_axis, int y_axis) {
     int x_count = 1;
     int y_count = 1;
@@ -27,8 +46,10 @@ void generate_grid(int x_axis, int y_axis) {
 
     for (int i = 0; i < (x_axis * y_axis); i++) {
 
-        string x = to_string(x_count);
-        string y = to_string(y_count);
+        // string x = to_string(x_count);
+        string x = int_to_hex(x_count);
+        // string y = to_string(y_count);
+        string y = int_to_hex(y_count);
         grid[i] = x + ":" + y;      // Write coodinate to grid array
         
 
@@ -57,8 +78,10 @@ string convert_to_coordinate(int number) {
     int y = ((number) / x_axis)+1; 
 
 
-    string  str_x = to_string(x);
-    string str_y = to_string(y);
+    // string  str_x = to_string(x);
+    string  str_x = int_to_hex(x);
+    // string str_y = to_string(y);
+    string str_y = int_to_hex(y);
     string coordinate = str_x + ":" + str_y;
 
     return coordinate;

@@ -1,6 +1,6 @@
-#ifndef LIBRARIES 
+#ifndef LIBRARIES
 #define LIBRARIES
-#include "Libraries.c"      // File with all our includes
+#include "Libraries.c"  // File with all our includes
 #endif
 
 #define buffer 10
@@ -89,7 +89,7 @@ int main() {
         if (gsv == "1" || gsv == "0") {
             pthread_t wifi, lte;
             int threadWiFi = pthread_create(&wifi, NULL, transmitWiFi, (void*)&sock);
-            //pthread_join(wifi, NULL);
+            // pthread_join(wifi, NULL);
             if (threadWiFi == 0) {
                 printf("WiFi thread is running!\n");
             } else {
@@ -99,7 +99,7 @@ int main() {
         }
         if (gsv == "2" || gsv == "0") {
             int threadLTE = pthread_create(&lte, NULL, transmitLTE, (void*)&sock);
-            //pthread_join(lte, NULL);
+            // pthread_join(lte, NULL);
             if (threadLTE == 0) {
                 printf("LTE thread is running!\n");
             } else {
