@@ -35,7 +35,7 @@ void shm_write(int *message, const int SIZE, const char* name) {
 
     /* write to the shared memory object */
     //sprintf(ptr, "%s", message);
-    *((int*))ptr = message;
+    (int*)ptr = message;
     printf("shm_write int *message: %d\n", *message);
     printf("shm_write passed int: %d\n", ptr);
 
