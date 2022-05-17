@@ -43,8 +43,8 @@ int main() {
 
     while (1) {
         count++;
-        pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
-        pthread_join(T1, (void**)&msg);
+        //pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
+        //pthread_join(T1, (void**)&msg);
         pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
         pthread_join(T2, (void**)&msg);
         int test2 = atoi((char*)msg);
