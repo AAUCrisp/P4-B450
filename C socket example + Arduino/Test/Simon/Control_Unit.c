@@ -63,7 +63,7 @@ int main() {
             Timestamp();
             pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
             pthread_join(T2, (void**)&msg);
-            printf("THIS IS RECEIVED MESSAGE: %s\n", msg);
+            printf("THIS IS RECEIVED MESSAGE: %s\n", (char*)msg);
             sleep(2);
             // printf("==================\nMain Control Unit Process Started\n==================\n\n");
             /*

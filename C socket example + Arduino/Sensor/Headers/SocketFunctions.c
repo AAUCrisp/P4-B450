@@ -124,7 +124,7 @@ void *receiveLTE(void *socket) {
     // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
     printf("LTE || Message from LTE received at: %s\n", curr_time);
     printf("LTE || Message: %s\n Sensor", message);
-    receive = malloc(sizeof(receieve));
+    receive = malloc(sizeof(receive));
     receive = message;
     // int test1 = atoi(message);
     // shm_write(test1, 32, GSV_KEY);
