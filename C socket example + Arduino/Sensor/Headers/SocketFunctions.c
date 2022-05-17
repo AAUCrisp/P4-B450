@@ -23,6 +23,7 @@
 
 /* Time struct for socket timeout */
 struct timeval tv;
+tv.tv_sec = 0;
 tv.tv_usec = 500000;
 
 /* Define buffers & PORT number */
@@ -147,7 +148,7 @@ void *receiveWiFi(void *socket) {
     printf("WiFi || Message from WiFi received at: %s \n", curr_time);
     printf("WiFi || Message: %s Sensor \n", message);
     shm_write(message, 32, GSV_KEY);
-    pthread_exit(NULL);v 
+    pthread_exit(NULL);
 }
 
 void *transmitLTE(void *socket) {

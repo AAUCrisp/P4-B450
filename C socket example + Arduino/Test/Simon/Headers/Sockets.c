@@ -22,6 +22,7 @@
 
 /* Time struct for socket timeout */
 struct timeval tv;
+tv.tv_sec = 0;
 tv.tv_usec = 500000;
 
 /* Define buffers & PORT number */
