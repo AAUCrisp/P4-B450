@@ -144,10 +144,10 @@ void *receiveLTE(void *socket) {
     // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
     printf("LTE || Message from LTE received at: %s\n", curr_time);
     printf("LTE || Message: %s Control Unit\n", message_LTE);
-    receive_LTE = malloc(sizeof(receive_LTE));
-    receive_LTE = message_LTE;
-    printf("receiveLTE receive message: %s\n", receive_LTE);
-    return (void *)receive_LTE;
+    //receive_LTE = malloc(sizeof(receive_LTE));
+    //receive_LTE = message_LTE;
+    //printf("receiveLTE receive message: %s\n", receive_LTE);
+    return (void *)message_LTE;
 }
 /*void *receiveLTE(void *socket) {
     time_struct time1;
@@ -191,10 +191,10 @@ void *receiveWiFi(void *socket) {
     // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
     printf("WiFi || Message from WiFi received at: %s \n", curr_time);
     printf("WiFi || Message: %s Control Unit\n", message_WiFi);
-    receive_WiFi = malloc(sizeof(receive_WiFi));
-    receive_WiFi = message_WiFi;
-    printf("receiveWiFi receive message: %s\n", receive_WiFi);
-    return (void *)receive_WiFi;
+    //receive_WiFi = malloc(sizeof(receive_WiFi));
+    //receive_WiFi = message_WiFi;
+    //printf("receiveWiFi receive message: %s\n", receive_WiFi);
+    return (void *)message_WiFi;
 }
 /*
 void *receiveWiFi(void *socket) {
