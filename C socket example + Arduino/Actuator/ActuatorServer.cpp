@@ -1,6 +1,7 @@
 #include "ActuatorServer.h"
 #include "processData.cpp"
-
+#include <fstream>
+#include <sstream>
 
 struct addrinfo ServerLTE, *res1;   // a socket struct design to be used with IPv4
 struct addrinfo ServerWiFi, *res;  // a socket struct design to be used with IPv4
@@ -14,9 +15,9 @@ int lenWiFi = sizeof(ServerWiFi);
 int rc_LTE, rc_WiFi;
 int tx_LTE, tx_WiFI;
 pthread_t T1, T2;
-FILE* in;
-FILE* out;
-ofstream MyFile("MovementCommands.txt");
+
+std::ofstream file("MovementCommands.txt");
+
 
 char ActuatorBuffer[1024];
 char feedback[1024];
@@ -98,12 +99,14 @@ int initialize_Server() {
 
 }
 
-void logData(char msg[256], int *arr) 
+void logData(std::string temp, int *arr) 
 {
-    char temp[256];
-    sprintf(temp, "Movement on x and y axis:  x = %d, y = %d \n \n", arr[0], arr[1]);
+    
+    std::ostringstream out;
+    out << "\n\n movement on the x-axi:" << arr[0] << "\n movement on the y-axis:" << arr[1];;
+    //sprintf(temp, "Movement on x and y axis:  x = %d, y = %d \n \n", arr[0], arr[1]);
     //fwrite(temp, sizeof(char), strlen(temp), out);
-    MyFile << temp;
+    file << out.str();
 
 }
 
@@ -143,8 +146,8 @@ void *ReceiveCoordinateLTE(void *) {
     
     int * returnedArr = process_Data(ActuatorBuffer);
     logData(ActuatorBuffer, returnedArr);
-    //printf("Actuator_LTE: robot movement on x-axis: %d\n", returnedArr[0]);
-    //printf("Actuator_LTE: robot movement on y-axis: %d\n \n", returnedArr[1]);
+    printf("Actuator_LTE: robot movement on x-axis: %d\n", returnedArr[0]);
+    printf("Actuator_LTE: robot movement on y-axis: %d\n \n", returnedArr[1]);
     free(returnedArr);
     pthread_exit(NULL);
 }
@@ -155,17 +158,18 @@ int main() {
     initialize_Server();
     //out = fopen("MovementCommands.txt", "w");
     
+    
     while (1)
     {
        pthread_create(&T1, NULL, ReceiveCoordinateLTE, NULL);
-       pthread_create(&T2, NULL, ReceiveCoordinateWiFi, NULL); 
+       //pthread_create(&T2, NULL, ReceiveCoordinateWiFi, NULL); 
         //ReceiveCoordinateWiFi();
         //ReceiveCoordinateLTE();
       
         
     }
     //fclose(out);
-    MyFile.close();
+    file.close();
     close(sockWiFi);
     close(sockLTE);
     
