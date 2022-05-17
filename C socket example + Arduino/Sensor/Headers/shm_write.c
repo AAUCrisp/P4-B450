@@ -31,11 +31,11 @@ void shm_write(int *message, const int SIZE, const char* name) {
     ftruncate(shm_fd, SIZE);
 
     /* memory map the shared memory object */
-    sprintf(ptr, "%ls", message);
-    printf("shm_write int *message: %d\n", *message);
-    printf("shm_write passed int: %ls\n", (int*)ptr);
     ptr = mmap(NULL, SIZE, PROT_WRITE, MAP_SHARED, shm_fd, 0);
 
+    sprintf(ptr, "%ls", message);
+    printf("shm_write int *message: %d\n", *message);
+    printf("shm_write passed int: %ls\n", *(int*)ptr);
     /* write to the shared memory object */
     //(int*)ptr = message;
 
