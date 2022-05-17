@@ -16,8 +16,8 @@ int rc_LTE, rc_WiFi;
 int tx_LTE, tx_WiFI;
 pthread_t T1, T2;
 
-std::ofstream LTE_File ("LTE-log.txt", std::ofstream::out);
-std::ofstream WiFi_File ("WiFi-log.txt", std::ofstream::out);
+std::ofstream LTE_File;
+std::ofstream WiFi_File;
 
 
 char ActuatorBuffer[1024];
@@ -102,18 +102,22 @@ void initialize_Server() {
 
 void logData1(int *arr) 
 {
+    LTE_File.open("LTE-log.txt", std::ofstream::out | std::ofstream::app);
     //std::ostringstream out;
     //out << "\n\n movement on the x-axi:" << arr[0] << "\n movement on the y-axis:" << arr[1];
     //sprintf(temp, "Movement on x and y axis:  x = %d, y = %d \n \n", arr[0], arr[1]);
     //fwrite(temp, sizeof(char), strlen(temp), out);
     LTE_File << "\n\n movement on the x-axi:" << arr[0] << "\n movement on the y-axis:" << arr[1];
+    LTE_File.close();
 }
 
 void logData2(int *arr)
 {
+    WiFi_File.open("WiFi-log.txt", std::ofstream::out | std::ofstream::app);
     //std::ostringstream movement;
     //movement << "\n\n Movement on the x-axis:" << arr[0] << "\n movement on the y-axis:" << arr[1];
     WiFi_File << "\n\n Movement on the x-axis:" << arr[0] << "\n movement on the y-axis:" << arr[1];
+    WiFi_File.close();
 }
 
 
@@ -169,8 +173,6 @@ int main() {
         sleep(1);
     }
     //fclose(out);
-    LTE_File.close();
-    WiFi_File.close();
     close(sockWiFi);
     close(sockLTE);
 }

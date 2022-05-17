@@ -22,10 +22,10 @@
 
 /* Define buffers & PORT number */
 #define BUFFER 1024
-int message_LTE[BUFFER];
-int message_WiFi[BUFFER];
-int *receive_LTE;
-int *receive_WiFi;
+char message_LTE[BUFFER];
+char message_WiFi[BUFFER];
+char *receive_LTE;
+char *receive_WiFi;
 char curr_time[128];
 
 /* Misc */
@@ -139,15 +139,14 @@ void *receiveLTE(void *socket) {
 
     printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
     RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message_LTE, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
-    ntohl(message_LTE);
     Timestamp();
 
     // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
     printf("LTE || Message from LTE received at: %s\n", curr_time);
-    printf("LTE || Message: %d Control Unit\n", message_LTE);
+    printf("LTE || Message: %s Control Unit\n", message_LTE);
     receive_LTE = malloc(sizeof(receive_LTE));
     receive_LTE = message_LTE;
-    printf("receiveLTE receive message: %d\n", receive_LTE);
+    printf("receiveLTE receive message: %s\n", receive_LTE);
     return (void *)receive_LTE;
 }
 /*void *receiveLTE(void *socket) {
@@ -187,15 +186,14 @@ void *receiveWiFi(void *socket) {
 
     printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
     RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message_WiFi, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
-    ntohl(message_WiFi);
     Timestamp();
 
     // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
     printf("WiFi || Message from WiFi received at: %s \n", curr_time);
-    printf("WiFi || Message: %d Control Unit\n", message_WiFi);
+    printf("WiFi || Message: %s Control Unit\n", message_WiFi);
     receive_WiFi = malloc(sizeof(receive_WiFi));
     receive_WiFi = message_WiFi;
-    printf("receiveWiFi receive message: %d\n", receive_WiFi);
+    printf("receiveWiFi receive message: %s\n", receive_WiFi);
     return (void *)receive_WiFi;
 }
 /*
