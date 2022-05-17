@@ -37,8 +37,8 @@ int main() {
     /* Create sockets */
     Sockets sock;
     Sockets_Receiver(&sock, PORT_LTE_RECEIVER, PORT_WiFi_RECEIVER, LTE, WiFi);
-    printf("sockLTE_RECEIVER (OUTSIDE): %d\n", sock.sockLTE_TRANSMITTER);
-    printf("sockWiFi_RECEIVER (OUTSIDE): %d\n", sock.sockWiFi_TRANSMITTER);
+    printf("sockLTE_RECEIVER (OUTSIDE): %d\n", sock.sockLTE_RECEIVER);
+    printf("sockWiFi_RECEIVER (OUTSIDE): %d\n", sock.sockWiFi_RECEIVER);
     int count = 0;
 
     while (1) {
@@ -49,7 +49,7 @@ int main() {
         pthread_join(T2, (void**)&msg);
         int test2 = atoi((char*)msg);
         int *ptr2 = &test2;
-        printf("msg = %s\n", (char*)msg);
+        printf("msg = %s\n", msg);
         printf("test2 = %d\n", test2);
         printf("ptr2 = %s\n", (char*)ptr2);
         shm_write(ptr2, 32, GSV_KEY);
