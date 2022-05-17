@@ -1,4 +1,3 @@
-
 #include <arpa/inet.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -22,9 +21,10 @@
 #include "shm_write_read.h"
 
 /* Time struct for socket timeout */
-struct timeval tv;
-tv.tv_sec = 0;
-tv.tv_usec = 500000;
+struct timeval tv {
+    tv.tv_sec = 0;
+    tv.tv_usec = 500000;
+}
 
 /* Define buffers & PORT number */
 #define BUFFER 1024
