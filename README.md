@@ -31,6 +31,8 @@ Eth: 192.168.1.117
     - `git add -A`      To add new files to the commit  
     - `git commit`      Tell GitHub what changes you've made  
     - `git push`        Push the changes to GitHub  
+    
+    - `git mv 'dirname_nopath' 'newname_nopath'`        Renames the folder without removing file-history
 
     -  sudo nmcli c modify 4G apn mda.aau.i40                   Set apn, incase it doesn't work this can be done for a "reset"
     - `sudo ip route add 10.20.0.0/24 dev wwan0`                Add ip routing for wwan0
