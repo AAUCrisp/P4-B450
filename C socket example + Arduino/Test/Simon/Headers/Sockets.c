@@ -20,6 +20,10 @@
 #include "Sockets.h"
 #include "shm_write_read.h"
 
+/* Time struct for socket timeout */
+struct timeval tv;
+tv.tv_usec = 500000;
+
 /* Define buffers & PORT number */
 #define BUFFER 1024
 char message[BUFFER];
@@ -41,6 +45,8 @@ void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *
     /* Setting up socket options & specifying interface for receiver */
     setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
     setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
+    setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv,sizeof(tv));
+    setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, (const char *)&tv, sizeof(tv));
 
     /* Error checking */
     if (sock->sockLTE_RECEIVER == -1) {

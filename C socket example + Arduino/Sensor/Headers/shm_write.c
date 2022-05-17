@@ -17,7 +17,7 @@
 #include <time.h>
 #include <unistd.h>
 
-void shm_write(int* message, const int SIZE, const char* name) {
+void shm_write(const char* message, const int SIZE, const char* name) {
     /* shared memory file descriptor */
     int shm_fd;
 
@@ -33,12 +33,9 @@ void shm_write(int* message, const int SIZE, const char* name) {
     /* memory map the shared memory object */
     ptr = (int*)mmap(NULL, SIZE, PROT_WRITE, MAP_SHARED, shm_fd, 0);
 
-    sprintf(ptr, "%ls", message);
-    message = *ptr;
-    printf("shm_write int *message: %d\n", *message);
-    printf("shm_write passed int: %d\n", *(int*)ptr);
     /* write to the shared memory object */
-    //(int*)ptr = message;
+    sprintf(ptr, "%s", message);
+    printf("Wrote from shm_write: %s\n", (char*)ptr);
 
     // printf("This is ptr: %p\n", ptr);
     // printf("This is ptr char*: %s\n", (char*)ptr);

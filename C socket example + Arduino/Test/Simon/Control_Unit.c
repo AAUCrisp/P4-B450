@@ -51,8 +51,6 @@ int main() {
         execv("./SignalMonitoring", args);                                  // Tells the new process to "reset" and run a different code instead
         printf("ERROR: DIDN'T START THE NEW PROCESS!!\n");  // Should never get this far!
     } else {
-        
-
         while (1) {
             Timestamp();
             printf("Test, does this print?1\n");
@@ -63,7 +61,7 @@ int main() {
             Timestamp();
             pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
             pthread_join(T2, (void**)&msg);
-            printf("THIS IS RECEIVED MESSAGE: %s\n", (char*)msg);
+            printf("THIS IS RECEIVED MESSAGE: %s\n", *msg);
             sleep(2);
             // printf("==================\nMain Control Unit Process Started\n==================\n\n");
             /*
