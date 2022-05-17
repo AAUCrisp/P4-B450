@@ -3,7 +3,6 @@ from PIL import Image
 import matplotlib.pyplot as plt
 import numpy as np
 from numba import njit
-from scipy.fft import dctn, idctn
 
 def close_figure(event):
     """
@@ -236,3 +235,5 @@ if __name__ == '__main__':
     printBlock(blockPartitionRestored[0][0], blocksize)
     # Show restores image?
     show(fRestored, "Restored?")
+
+
