@@ -49,7 +49,7 @@ int main() {
         pthread_join(T2, (void**)&msg);
         int test2 = atoi((char*)msg);
         int *ptr2 = &test2;
-        printf("msg = %s\n", msg);
+        printf("msg = %s\n", *msg);
         printf("test2 = %d\n", test2);
         printf("ptr2 = %s\n", (char*)ptr2);
         shm_write(ptr2, 32, GSV_KEY);
