@@ -20,6 +20,8 @@
 #include "Headers/SocketFunctions.h"
 #include "Headers/shm_write_read.h"
 
+#define BUFFER 64
+
 int generate(int Min, int Max) {
     int number = (rand() % ((Max + 1) - Min)) + Min;
     return number;
@@ -36,6 +38,7 @@ int main() {
 
     /* Misc */
     pthread_t T1, T2;
+    char* curr_time;
 
     /* Create sockets */
     Sockets sock;
@@ -73,27 +76,28 @@ int main() {
             printf("GSV from shared memory: %s\n", msg);
             printf("GSV converted: %d\n", GSV);
             RAND_INT = generate(0, 2500);
-            
 
             if (GSV == B || GSV == L) {
-                Timestamp();
-                printf("Random int: %d\n", rand_int);
+                curr_time = Timestamp();
+                printf("Random int: %d\n", RAND_INT);
 
-                int LenLTE = sizeof(sock->ClientLTE_TRANSMITTER);
-                printf("transmitLTE socket: %d\n", sock->sockLTE_TRANSMITTER);
-                
-                sendto(sock->sockLTE_TRANSMITTER, RAND_INT, BUFFER, 0, (struct sockaddr*)&sock->ClientLTE_TRANSMITTER, LenLTE);
+                int LenLTE = sizeof(sock.ClientLTE_TRANSMITTER);
+                printf("transmitLTE socket: %d\n", sock.sockLTE_TRANSMITTER);
+
+                htonl(RAND_INT);
+                sendto(sock.sockLTE_TRANSMITTER, &RAND_INT, BUFFER, 0, (struct sockaddr*)&sock.ClientLTE_TRANSMITTER, LenLTE);
                 printf("Message from LTE transmitted at: %s\n", curr_time);
             }
 
             if (GSV == B || GSV == W) {
-                Timestamp();
-                printf("Random int: %d\n", rand_int);
+                curr_time = Timestamp();
+                printf("Random int: %d\n", RAND_INT);
 
-                int LenWiFi = sizeof(sock->ClientWiFi_TRANSMITTER);
-                printf("transmitLTE socket: %d\n", sock->sockWiFi_TRANSMITTER);
+                int LenWiFi = sizeof(sock.ClientWiFi_TRANSMITTER);
+                printf("transmitLTE socket: %d\n", sock.sockWiFi_TRANSMITTER);
 
-                sendto(sock->sockWiFi_TRANSMITTER, RAND_INT, BUFFER, 0, (struct sockaddr*)&sock->ClientWiFi_TRANSMITTER, LenWiFi);
+                htonl(RAND_INT);
+                sendto(sock.sockWiFi_TRANSMITTER, &RAND_INT, BUFFER, 0, (struct sockaddr*)&sock.ClientWiFi_TRANSMITTER, LenWiFi);
                 printf("Message from WiFi transmitted at: %s\n", curr_time);
             }
         }

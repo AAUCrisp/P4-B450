@@ -32,8 +32,8 @@ int main() {
     pthread_t T1, T2;
 
     /* Message char */
-    char* msg_LTE[32];
-    char* msg_WiFi[32];
+    int* msg_LTE[32];
+    int* msg_WiFi[32];
 
     /* Create sockets */
     Sockets sock;
@@ -47,22 +47,22 @@ int main() {
     if (signal_monitor == 0) {
         printf("Parent Process ID: %d \n", getppid());
         printf("Monitoring Process ID is: %d \n", getpid());
-        char path[] = "./SignalMonitoring";            // Path of the file for new process to run
-        char* args[] = {"./SignalMonitoring", NULL};  // Command for the function to execute, always ended on NULL argument
-        execv("./SignalMonitoring", args);                                  // Tells the new process to "reset" and run a different code instead
+        char path[] = "./SignalMonitoring";                 // Path of the file for new process to run
+        char* args[] = {"./SignalMonitoring", NULL};        // Command for the function to execute, always ended on NULL argument
+        execv("./SignalMonitoring", args);                  // Tells the new process to "reset" and run a different code instead
         printf("ERROR: DIDN'T START THE NEW PROCESS!!\n");  // Should never get this far!
     } else {
         while (1) {
-            //Timestamp();
+            // Timestamp();
             pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
             pthread_join(T1, (void**)&msg_LTE);
-            //Timestamp();
+            // Timestamp();
             pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
             pthread_join(T2, (void**)&msg_WiFi);
-            printf("THIS IS RECEIVED MESSAGE LTE: %s\n", *msg_LTE);
-            printf("THIS IS RECEIVED MESSAGE WIFI: %s\n", *msg_WiFi);
+            printf("THIS IS RECEIVED MESSAGE LTE: %d\n", *msg_LTE);
+            printf("THIS IS RECEIVED MESSAGE WIFI: %d\n", *msg_WiFi);
             sleep(2);
-            
+
             // printf("==================\nMain Control Unit Process Started\n==================\n\n");
             /*
             Timestamp();
