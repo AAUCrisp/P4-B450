@@ -41,7 +41,7 @@ void generate_grid(int x_axis, int y_axis, int hex = 1) {
     int x_count = 1;
     int y_count = 1;
     
-    cout << "  --- BUILDING GRID ---  " << endl;
+    cout << "\n\n  --- BUILDING GRID FOR MEMORY ---  " << endl;
     printf("\n0 Rows Done.");
 
     for (int i = 0; i < (x_axis * y_axis); i++) {
@@ -108,14 +108,19 @@ int main(int argc, char *argv[]){
     int hex = 1;
 
     if(argc > 1) {
-        cout << "\nArgument accepted." << endl;
+        cout << "\nArgument(s) accepted." << endl;
+        cout << "Inserted Sensor-data Number: " << argv[1] << endl;
         data_str = argv[1];
         data_int = atoi(argv[1]);
-        cout << "Third Argument?: " << argv[3] << endl;
     }
     if(argc == 3) {     // For enabling or disabling Hex-char output.
-        cout << "Hex argument received: " << argv[2] << endl;
         hex = atoi(argv[2]);
+        if(hex == 0){
+            cout << "Hex-char version disabled" << endl;
+        }
+        else{
+            cout << "Hex-char version enabled" << endl;
+        }
     }
 
     else {
