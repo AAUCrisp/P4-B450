@@ -48,9 +48,11 @@ int main() {
         pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
         pthread_join(T2, (void**)&msg);
         int test2 = atoi((char*)msg);
+        int *ptr2 = &test2;
         printf("msg = %s\n", (char*)msg);
         printf("test2 = %d\n", test2);
-        shm_write(test2, 32, GSV_KEY);
+        printf("ptr2 = %s\n", (char*)ptr2);
+        shm_write(ptr2, 32, GSV_KEY);
 
         /*if (a != 0) {
             perror("pthread_create failed");

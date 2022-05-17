@@ -83,7 +83,7 @@ int main() {
                 printf("SHIT DO WORK! %d\n", GSV);*/
                 Timestamp();
                 // char* itoa(int_1, rand_int, 10);
-                printf("Random int to char: %s\n", (char*)rand_int);
+                printf("Random int to char: %d\n",rand_int);
                 shm_write(ptr1, 32, RAND_KEY);
                 pthread_create(&T1, NULL, transmitLTE, (void*)&sock);
             }
@@ -93,7 +93,7 @@ int main() {
                 // int rand_int = generate(0, 2500);
                 // char* itoa(int_2, rand_int, 10);
                 shm_write(ptr1, 32, RAND_KEY);
-                printf("Random int to char: %s\n", (char*)rand_int);
+                printf("Random int to char: %d\n", rand_int);
                 pthread_create(&T2, NULL, transmitWiFi, (void*)&sock);
             }
         }
