@@ -24,8 +24,8 @@
 #define BUFFER 1024
 char message_LTE[BUFFER];
 char message_WiFi[BUFFER];
-int *receive_LTE;
-int *receive_WiFi;
+char *receive_LTE;
+char *receive_WiFi;
 char curr_time[128];
 
 /* Misc */
@@ -193,7 +193,7 @@ void *receiveWiFi(void *socket) {
     printf("WiFi || Message: %s Control Unit\n", message_WiFi);
     receive_WiFi = malloc(sizeof(receive_WiFi));
     receive_WiFi = message_WiFi;
-    printf("receiveWiFi receive message: %d\n", receive_WiFi);
+    printf("receiveWiFi receive message: %s\n", receive_WiFi);
     return (void *)receive_WiFi;
 }
 /*
