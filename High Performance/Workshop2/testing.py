@@ -151,7 +151,7 @@ def printBlock(block, blocksize):
 
 if __name__ == '__main__':
 
-    f = np.asarray(Image.open("AK.png").convert('L'), dtype='int16')        # Opens the image as an array with separate pixels, only with the lumen value, typecasted to int for processing
+    f = np.asarray(Image.open("test.png").convert('L'), dtype='int16')        # Opens the image as an array with separate pixels, only with the lumen value, typecasted to int for processing
     """
     pos = 0  # Starting position of conversion
     size = 256 # How many pixels (from start) to include
