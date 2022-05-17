@@ -20,7 +20,7 @@
 #include "Headers/Sockets.h"
 #include "Headers/shm_write_read.h"
 
-#define buffer 10
+#define buffer 32
 
 pthread_t wifi, lte;
 
@@ -28,11 +28,11 @@ char* gsv = "0";  // Global Signal Variable   W = WiFi   L = LTE    B = Both
 const char* GSV_KEY = "GSV_KEY";
 
 /* Signal Quality Settings */
+int lte_rsrp[buffer];
 int wifi_rssi[buffer];
 int rssi_sum;
-int rssi_average;
-int lte_rsrp[buffer];
 int rsrp_sum;
+int rssi_average;
 int rsrp_average;
 
 // WiFi
@@ -47,18 +47,18 @@ int rsrp_good = -80;
 
 int main() {
     /* Initialize PORT & INTERFACE*/
-    uint PORT_LTE = 9002;
-    uint PORT_WiFi = 9003;
-    const char* LTE = "wwan0";
-    const char* WiFi = "wlan0";
-    const char* IP_LTE = "10.20.0.10";
-    const char* IP_WiFi = "192.168.1.160";
+    uint PORT_LTE_TRANSMITTER = 9002;
+    uint PORT_WiFi_TRANSMITTER = 9003;
+    const char* LTE = "wwan0"; // Interface for 4G
+    const char* WiFi = "wlan0"; // Interface for WiFi
+    const char* IP_LTE = "10.20.0.10"; // IP of server
+    const char* IP_WiFi = "192.168.1.160"; // IP of server 
 
     /* Create sockets */
     Sockets sock;
-    Sockets_Transmitter(&sock, IP_LTE, IP_WiFi, PORT_LTE, PORT_WiFi, LTE, WiFi);
-    printf("sockLTE_RECEIVER: %d\n", sock.sockLTE_TRANSMITTER);
-    printf("sockWiFi_RECEIVER: %d\n", sock.sockWiFi_TRANSMITTER);
+    Sockets_Transmitter(&sock, IP_LTE, IP_WiFi, PORT_LTE_TRANSMITTER, PORT_WiFi_TRANSMITTER, LTE, WiFi);
+    printf("sockLTE_TRANSMITTER: %d\n", sock.sockLTE_TRANSMITTER);
+    printf("sockWiFi_TRANSMITTER: %d\n", sock.sockWiFi_TRANSMITTER);
 
     printf("==================\nMonitoring Process Started\n==================\n\n");
     int counter = 0;
@@ -100,8 +100,8 @@ int main() {
         }
         // else if( (rssi_average >= rssi_good && rsrp_average >= rsrp_good) || (rssi_average >= rssi_mid && rsrp_average >= rsrp_mid) ) {
         else {
-            gsv = "0";  // If no clear winner, set to send on both
-            printf("GSV: Both Selected\n");
+            gsv = "666";  // If no clear winner, set to send on both
+            printf("%s GSV: Both Selected\n", gsv);
         }
         shm_write(gsv, buffer, GSV_KEY);  // Write selected technology to shared memory
 
