@@ -57,8 +57,8 @@ int main() {
     /* Create sockets */
     Sockets sock;
     Sockets_Transmitter(&sock, IP_LTE, IP_WiFi, PORT_LTE_TRANSMITTER, PORT_WiFi_TRANSMITTER, LTE, WiFi);
-    printf("sockLTE_TRANSMITTER: %d\n", sock.sockLTE_TRANSMITTER);
-    printf("sockWiFi_TRANSMITTER: %d\n", sock.sockWiFi_TRANSMITTER);
+    printf("sockLTE_TRANSMITTER (OUTSIDE): %d\n", sock.sockLTE_TRANSMITTER);
+    printf("sockWiFi_TRANSMITTER (OUTSIDE): %d\n", sock.sockWiFi_TRANSMITTER);
 
     printf("==================\nMonitoring Process Started\n==================\n\n");
     int counter = 0;
@@ -100,7 +100,7 @@ int main() {
         }
         // else if( (rssi_average >= rssi_good && rsrp_average >= rsrp_good) || (rssi_average >= rssi_mid && rsrp_average >= rsrp_mid) ) {
         else {
-            gsv = "666";  // If no clear winner, set to send on both
+            gsv = "0";  // If no clear winner, set to send on both
             printf("%s GSV: Both Selected\n", gsv);
         }
         shm_write(gsv, buffer, GSV_KEY);  // Write selected technology to shared memory

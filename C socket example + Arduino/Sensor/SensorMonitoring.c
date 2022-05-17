@@ -29,18 +29,29 @@ int main() {
 
     /* Misc */
     pthread_t T1, T2;
+    const char* GSV_KEY = "GSV_KEY";
+
+    /* Message char */
+    char* msg[32];
 
     /* Create sockets */
     Sockets sock;
     Sockets_Receiver(&sock, PORT_LTE_RECEIVER, PORT_WiFi_RECEIVER, LTE, WiFi);
-    printf("sockLTE_RECEIVER: %d\n", sock.sockLTE_TRANSMITTER);
-    printf("sockWiFi_RECEIVER: %d\n", sock.sockWiFi_TRANSMITTER);
+    printf("sockLTE_RECEIVER (OUTSIDE): %d\n", sock.sockLTE_TRANSMITTER);
+    printf("sockWiFi_RECEIVER (OUTSIDE): %d\n", sock.sockWiFi_TRANSMITTER);
     int count = 0;
 
     while (1) {
         count++;
         pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
+        pthread_join(T1, (void**)&msg);
         pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
+        pthread_join(T2, (void**)&msg);
+        int test2 = atoi(msg);
+        printf("msg = %s\n", msg);
+        printf("test2 = %d\n", test2);
+        shm_write(test2, 32, GSV_KEY);
+
         /*if (a != 0) {
             perror("pthread_create failed");
         }

@@ -31,14 +31,14 @@ int main() {
     /* Misc */
     pthread_t T1, T2;
 
-    /* Struct for message & buffer size */
-    char* msg;
+    /* Message char */
+    char* msg[32];
 
     /* Create sockets */
     Sockets sock;
     Sockets_Receiver(&sock, PORT_LTE_RECEIVER, PORT_WiFi_RECEIVER, LTE, WiFi);
-    printf("sockLTE_RECEIVER: %d\n", sock.sockLTE_RECEIVER);
-    printf("sockWiFi_RECEIVER: %d\n", sock.sockWiFi_RECEIVER);
+    printf("sockLTE_RECEIVER (OUTSIDE): %d\n", sock.sockLTE_RECEIVER);
+    printf("sockWiFi_RECEIVER (OUTSIDE): %d\n", sock.sockWiFi_RECEIVER);
 
     /* Start signal monitoring process */
     pid_t signal_monitor;     // Prepare the process ID for monitoring
@@ -51,20 +51,20 @@ int main() {
         execv("./SignalMonitoring", args);                                  // Tells the new process to "reset" and run a different code instead
         printf("ERROR: DIDN'T START THE NEW PROCESS!!\n");  // Should never get this far!
     } else {
-        Timestamp();
-        printf("Test, does this print?1\n");
-        pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
-        printf("Test, does this print?2\n");
-        pthread_join(T1, (void**)&msg);
-        printf("Test, does this print?3\n");
-        Timestamp();
-        pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
-        pthread_join(T2, (void**)&msg);
-        printf("THIS IS RECEIVED MESSAGE: %s\n", msg);
+        
 
         while (1) {
-            printf("Stuck in loop");
-            sleep(10000);
+            Timestamp();
+            printf("Test, does this print?1\n");
+            pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
+            printf("Test, does this print?2\n");
+            pthread_join(T1, (void**)&msg);
+            printf("Test, does this print?3\n");
+            Timestamp();
+            pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
+            pthread_join(T2, (void**)&msg);
+            printf("THIS IS RECEIVED MESSAGE: %s\n", msg);
+            sleep(2);
             // printf("==================\nMain Control Unit Process Started\n==================\n\n");
             /*
             Timestamp();

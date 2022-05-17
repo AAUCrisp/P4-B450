@@ -35,8 +35,8 @@ void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *
     /* Create socket receiver */
     sock->sockLTE_RECEIVER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sock->sockWiFi_RECEIVER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    printf("Sockets_Receiver LTE: %d\n", sock->sockLTE_RECEIVER);
-    printf("Sockets_Receiver WiFi: %d\n", sock->sockWiFi_RECEIVER);
+    printf("Sockets_Receiver LTE (INSIDE): %d\n", sock->sockLTE_RECEIVER);
+    printf("Sockets_Receiver WiFi (INSIDE): %d\n", sock->sockWiFi_RECEIVER);
 
     /* Setting up socket options & specifying interface for receiver */
     setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
@@ -51,7 +51,7 @@ void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *
         perror("Failed to create sockLTE");
         exit(0);
     }
-    printf("Sockets sucessfully created\n");
+    printf("Sockets_RECEIVER sucessfully created\n");
 
     /* Configure settings to communicate with remote UDP client for receiver */
     sock->ServerLTE_RECEIVER.sin_family = AF_INET;
@@ -82,8 +82,8 @@ void Sockets_Transmitter(Sockets *sock, const char *IP_LTE, const char *IP_WiFi,
     /* Create socket receiver */
     sock->sockLTE_TRANSMITTER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sock->sockWiFi_TRANSMITTER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    printf("Sockets_Transmitter LTE: %d\n", sock->sockLTE_TRANSMITTER);
-    printf("Sockets_Transmitter WiFi: %d\n", sock->sockWiFi_TRANSMITTER);
+    printf("Sockets_Transmitter LTE (INSIDE): %d\n", sock->sockLTE_TRANSMITTER);
+    printf("Sockets_Transmitter WiFi (INSIDE): %d\n", sock->sockWiFi_TRANSMITTER);
 
     /* Setting up socket options & specifying interface for receiver */
     setsockopt(sock->sockLTE_TRANSMITTER, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
@@ -98,7 +98,7 @@ void Sockets_Transmitter(Sockets *sock, const char *IP_LTE, const char *IP_WiFi,
         perror("Failed to create sockLTE");
         exit(0);
     }
-    printf("Sockets sucessfully created\n");
+    printf("Sockets_TRANSMITTER sucessfully created\n");
 
     /* Configure settings to communicate with remote UDP client for receiver */
     sock->ClientLTE_TRANSMITTER.sin_family = AF_INET;
@@ -160,8 +160,10 @@ void *receiveLTE(void *socket) {
 void *receiveWiFi(void *socket) {
     Sockets *sock = (Sockets *)socket;
     int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
+
     printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
     RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
+
     //printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
     printf("WiFi || Message from WiFi received at: %s \n", curr_time);
     printf("WiFi || Message: %s\n Control Unit", message);

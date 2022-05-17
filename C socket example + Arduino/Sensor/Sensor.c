@@ -40,8 +40,8 @@ int main() {
     /* Create sockets */
     Sockets sock;
     Sockets_Transmitter(&sock, IP_LTE, IP_WiFi, PORT_LTE_TRANSMITTER, PORT_WiFi_TRANSMITTER, LTE, WiFi);
-    printf("sockLTE_TRANSMITTER: %d\n", sock.sockLTE_TRANSMITTER);
-    printf("sockWiFi_TRANSMITTER: %d\n", sock.sockWiFi_TRANSMITTER);
+    printf("sockLTE_TRANSMITTER (OUTSIDE): %d\n", sock.sockLTE_TRANSMITTER);
+    printf("sockWiFi_TRANSMITTER (OUTSIDE): %d\n", sock.sockWiFi_TRANSMITTER);
 
     /* Shared memory object variables */
     const char* GSV_KEY = "GSV_KEY";
