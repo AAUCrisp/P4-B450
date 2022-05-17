@@ -27,6 +27,7 @@ int main() {
     uint PORT_WiFi_RECEIVER = 9001;
     const char* LTE = "wwan0";
     const char* WiFi = "wlan0";
+    
     /* Misc */
     pthread_t T1, T2;
 
