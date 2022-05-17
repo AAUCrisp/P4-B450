@@ -27,7 +27,7 @@ int main() {
     uint PORT_WiFi_RECEIVER = 9001;
     const char* LTE = "wwan0";
     const char* WiFi = "wlan0";
-    
+
     /* Misc */
     pthread_t T1, T2;
 
@@ -52,11 +52,11 @@ int main() {
         printf("ERROR: DIDN'T START THE NEW PROCESS!!\n");  // Should never get this far!
     } else {
         Timestamp();
-        printf("Test, does this print?1");
+        printf("Test, does this print?1\n");
         pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
-        printf("Test, does this print?2");
+        printf("Test, does this print?2\n");
         pthread_join(T1, (void**)&msg);
-        printf("Test, does this print?3");
+        printf("Test, does this print?3\n");
         Timestamp();
         pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
         pthread_join(T2, (void**)&msg);
