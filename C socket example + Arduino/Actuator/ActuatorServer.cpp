@@ -162,7 +162,7 @@ int main() {
     while (1)
     {
        pthread_create(&T1, NULL, ReceiveCoordinateLTE, NULL);
-       //pthread_create(&T2, NULL, ReceiveCoordinateWiFi, NULL); 
+       pthread_create(&T2, NULL, ReceiveCoordinateWiFi, NULL); 
         //ReceiveCoordinateWiFi();
         //ReceiveCoordinateLTE();
       
