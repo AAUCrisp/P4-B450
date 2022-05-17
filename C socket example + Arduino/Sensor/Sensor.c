@@ -20,9 +20,9 @@
 #include "Headers/SocketFunctions.h"
 #include "Headers/shm_write_read.h"
 
-int generate(int Min, int Max) {
+int* generate(int Min, int Max) {
     int number = (rand() % ((Max + 1) - Min)) + Min;
-    return number;
+    return (int*) number;
 }
 
 int main() {
