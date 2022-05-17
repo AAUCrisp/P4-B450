@@ -38,7 +38,7 @@ int main() {
 
     /* Misc */
     pthread_t T1, T2;
-    char * curr_time[32];
+    char * curr_time[128];
 
     /* Create sockets */
     Sockets sock;
@@ -79,23 +79,25 @@ int main() {
             
 
             if (GSV == B || GSV == L) {
-                Timestamp();
+                curr_time = Timestamp();
                 printf("Random int: %d\n", RAND_INT);
 
                 int LenLTE = sizeof(sock.ClientLTE_TRANSMITTER);
                 printf("transmitLTE socket: %d\n", sock.sockLTE_TRANSMITTER);
                 
+                htonl(RAND_INT);
                 sendto(sock.sockLTE_TRANSMITTER, RAND_INT, BUFFER, 0, (struct sockaddr*)&sock.ClientLTE_TRANSMITTER, LenLTE);
                 printf("Message from LTE transmitted at: %s\n", curr_time);
             }
 
             if (GSV == B || GSV == W) {
-                Timestamp();
+                curr_time = Timestamp();
                 printf("Random int: %d\n", RAND_INT);
 
                 int LenWiFi = sizeof(sock.ClientWiFi_TRANSMITTER);
                 printf("transmitLTE socket: %d\n", sock.sockWiFi_TRANSMITTER);
 
+                htonl(RAND_INT);
                 sendto(sock.sockWiFi_TRANSMITTER, RAND_INT, BUFFER, 0, (struct sockaddr*)&sock.ClientWiFi_TRANSMITTER, LenWiFi);
                 printf("Message from WiFi transmitted at: %s\n", curr_time);
             }
