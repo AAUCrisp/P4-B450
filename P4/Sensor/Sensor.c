@@ -85,7 +85,7 @@ int main() {
                 printf("transmitLTE socket: %d\n", sock.sockLTE_TRANSMITTER);
 
                 char sendLTE[BUFFER];
-                itoa(RAND_INT, sendLTE, 10);
+                sprintf(sendLTE, "%d", RAND_INT);
                 printf("sendLTE: %s\n", sendLTE);
 
                 sendto(sock.sockLTE_TRANSMITTER, sendLTE, BUFFER, 0, (struct sockaddr*)&sock.ClientLTE_TRANSMITTER, LenLTE);
@@ -100,7 +100,7 @@ int main() {
                 printf("transmitLTE socket: %d\n", sock.sockWiFi_TRANSMITTER);
 
                 char sendWiFi[BUFFER];
-                itoa(RAND_INT, sendWiFi, 10);
+                sprintf(sendWiFi,"%d",RAND_INT);
                 printf("sendWiFi: %s\n", sendWiFi);
 
                 sendto(sock.sockWiFi_TRANSMITTER, sendWiFi, BUFFER, 0, (struct sockaddr*)&sock.ClientWiFi_TRANSMITTER, LenWiFi);
