@@ -123,7 +123,7 @@ void  *ReceiveCoordinateWiFi(void *) {
     //printf("Actuator_WiFi: packet is %d bytes long\n", rc_WiFi);
     printf("Actuator_WiFi: packet contains \"%s\"\n", ActuatorBuffer);
     int* returnedArr = process_Data(ActuatorBuffer);
-    logData(ActuatorBuffer, returnedArr);
+    logData(returnedArr);
     //printf("Actuator_WiFi: robot movement on x-axis: %d\n", returnedArr[0]);
     //printf("Actuator_WiFi: robot movement on y-axis: %d\n \n", returnedArr[1]);    
     free (returnedArr);
