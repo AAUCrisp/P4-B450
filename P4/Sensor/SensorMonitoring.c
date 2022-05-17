@@ -29,7 +29,6 @@ int main() {
 
     /* Misc */
     pthread_t T1, T2;
-    const char* GSV_KEY = "GSV_KEY";
 
     /* Message char */
     char* msg[32];
