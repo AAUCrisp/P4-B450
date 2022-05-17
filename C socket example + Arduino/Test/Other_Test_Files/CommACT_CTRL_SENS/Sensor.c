@@ -36,8 +36,8 @@ const char *WiFi = "wlan0";
 uint LTE_PORT_RECEIVE = 9002;
 uint WiFi_PORT_RECEIVE = 9003;
 
-#define LTE_PORT 9000
-#define WiFi_PORT 9001
+#define LTE_PORT 9000 // transmit
+#define WiFi_PORT 9001  // transmit
 
 #define LTE_ip "10.20.0.10"
 #define WiFi_ip "192.168.1.136"
