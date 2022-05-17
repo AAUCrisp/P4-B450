@@ -32,7 +32,8 @@ int main() {
     pthread_t T1, T2;
 
     /* Message char */
-    char* msg[32];
+    char* msg_LTE[32];
+    char* msg_WiFi[32];
 
     /* Create sockets */
     Sockets sock;
@@ -53,16 +54,15 @@ int main() {
     } else {
         while (1) {
             Timestamp();
-            printf("Test, does this print?1\n");
             pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
-            printf("Test, does this print?2\n");
-            pthread_join(T1, (void**)&msg);
-            printf("Test, does this print?3\n");
+            pthread_join(T1, (void**)&msg_LTE);
             Timestamp();
             pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
-            pthread_join(T2, (void**)&msg);
-            printf("THIS IS RECEIVED MESSAGE: %s\n", *msg);
+            pthread_join(T2, (void**)&msg_WiFi);
+            printf("THIS IS RECEIVED MESSAGE LTE: %s\n", *msg_LTE);
+            printf("THIS IS RECEIVED MESSAGE WIFI: %s\n", *msg_WiFi);
             sleep(2);
+            
             // printf("==================\nMain Control Unit Process Started\n==================\n\n");
             /*
             Timestamp();
