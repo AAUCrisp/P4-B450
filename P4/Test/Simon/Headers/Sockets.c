@@ -24,8 +24,8 @@
 #define BUFFER 1024
 char message_LTE[BUFFER];
 char message_WiFi[BUFFER];
-int *receive_LTE;
-int *receive_WiFi;
+char *receive_LTE;
+char *receive_WiFi;
 char curr_time[128];
 
 /* Misc */
