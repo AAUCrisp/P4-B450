@@ -1,4 +1,17 @@
-#include "Actuator/ActuatorServer.h"
+#include <stdio.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <netdb.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <pthread.h>
+#include <time.h>
+#include <stdlib.h>
+#include <errno.h>
+
+
 
 #define SERVERPORT 8000
 #define SERVERIP "192.168.1.143"
