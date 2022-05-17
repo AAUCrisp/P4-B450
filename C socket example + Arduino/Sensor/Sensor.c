@@ -31,8 +31,8 @@ int main() {
     uint PORT_WiFi_TRANSMITTER = 9001;
     const char* LTE = "wwan0";
     const char* WiFi = "wlan0";
-    const char* IP_LTE = "10.20.0.16"; // IP of server
-    const char* IP_WiFi = "192.168.1.136"; // IP of server
+    const char* IP_LTE = "10.20.0.16";      // IP of server
+    const char* IP_WiFi = "192.168.1.136";  // IP of server
 
     /* Misc */
     pthread_t T1, T2;
@@ -67,7 +67,9 @@ int main() {
         // execv(path, args);
 
     } else {
+        printf("Does it reach else?\n");
         while (1) {
+            printf("Does it reach while loop?\n");
             sleep(2);
             msg = shm_read(32, GSV_KEY);
             GSV = atoi(msg);
