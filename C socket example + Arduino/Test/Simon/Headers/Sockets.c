@@ -209,7 +209,7 @@ void *transmitLTE(void *socket) {
     const char *GSV;
     const char *GSV_KEY = "GSV_KEY";
     GSV = shm_read(32, GSV_KEY);
-    printf("transmitLTE socket: %d\n", sock->ClientLTE_TRANSMITTER);
+    printf("transmitLTE socket: %d\n", sock->sockLTE_TRANSMITTER);
     TX_LTE = sendto(sock->sockLTE_TRANSMITTER, GSV, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, LenLTE);
     // printf("LTE-Thread id = %ld\n", pthread_self());
     printf("Shared memory object LTE: %s\n", GSV);
