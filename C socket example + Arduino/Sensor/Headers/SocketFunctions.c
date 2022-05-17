@@ -145,13 +145,14 @@ void *receiveWiFi(void *socket) {
     // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
     printf("WiFi || Message from WiFi received at: %s \n", curr_time);
     printf("WiFi || Message: %s Sensor \n", message);
-    // int test2 = atoi(message);
+    int test2 = atoi(message);
+    printf("test2 shmo: %d\n", test2);
     // shm_write(test2, 32, GSV_KEY);
-    receive = malloc(sizeof(receive));
+    /*receive = malloc(sizeof(receive));
     receive = message;
     printf("receiveWiFi receive message: %s\n", receive);
-    return (void *)receive;
-    // pthread_exit(NULL);
+    return (void *)receive;*/
+    pthread_exit(NULL);
 }
 
 void *transmitLTE(void *socket) {
