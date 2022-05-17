@@ -16,8 +16,8 @@ int rc_LTE, rc_WiFi;
 int tx_LTE, tx_WiFI;
 pthread_t T1, T2;
 
-std::ofstream LTE_File("LTE_log.txt", std::ofstream::out);
-std::ofstream WiFi_File("WiFi_log.txt", std::ofstream::out);
+std::ofstream LTE_File("LTE-Log.txt", std::ofstream::out);
+std::ofstream WiFi_File("WiFi-Log.txt", std::ofstream::out);
 
 
 char ActuatorBuffer[1024];
@@ -115,7 +115,7 @@ void logData2(int *arr)
 {
     std::ostringstream out2;
     out2 << "\n\n Movement on the x-axis:" <<arr[0] <<"\n movement on the y-axis:" << arr[1];
-    WiFi_File <<out2.str();
+    WiFi_File << out2.str();
 }
 
 
@@ -131,6 +131,7 @@ void  *ReceiveCoordinateWiFi(void *) {
     printf("Actuator_WiFi: packet contains \"%s\"\n", ActuatorBuffer);
     int* returnedArr = process_Data(ActuatorBuffer);
     logData2(returnedArr);
+    printf("Logged WiFi data success");
     free (returnedArr);
     
     pthread_exit(NULL);
@@ -151,6 +152,7 @@ void *ReceiveCoordinateLTE(void *) {
     
     int * returnedArr = process_Data(ActuatorBuffer);
     logData1(returnedArr);
+    printf("Logged LTE data success");
     free(returnedArr);
     
     pthread_exit(NULL);
@@ -167,6 +169,7 @@ int main() {
        pthread_create(&T2, NULL, ReceiveCoordinateWiFi, NULL); 
         //ReceiveCoordinateWiFi();
         //ReceiveCoordinateLTE();
+        sleep(1);
     }
     //fclose(out);
     LTE_File.close();
