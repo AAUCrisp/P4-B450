@@ -1,4 +1,3 @@
-
 #include <arpa/inet.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -20,6 +19,12 @@
 
 #include "SocketFunctions.h"
 #include "shm_write_read.h"
+
+/* Time struct for socket timeout */
+struct timeval tv {
+    time_t tv_sec = 0;
+    suseconds_t tv_usec = 500000;
+};
 
 /* Define buffers & PORT number */
 #define BUFFER 1024
@@ -43,6 +48,8 @@ void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *
     /* Setting up socket options & specifying interface for receiver */
     setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
     setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
+    setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, (const char *)&tv, sizeof(tv));
+    setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, (const char *)&tv, sizeof(tv));
 
     /* Error checking */
     if (sock->sockLTE_RECEIVER == -1) {
@@ -115,7 +122,7 @@ void Sockets_Transmitter(Sockets *sock, const char *IP_LTE, const char *IP_WiFi,
 /* Function to receive LTE packets */
 void *receiveLTE(void *socket) {
     Sockets *sock = (Sockets *)socket;
-    // const char *GSV_KEY = "GSV_KEY";
+    const char *GSV_KEY = "GSV_KEY";
     int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
 
     printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
@@ -123,20 +130,15 @@ void *receiveLTE(void *socket) {
 
     // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
     printf("LTE || Message from LTE received at: %s\n", curr_time);
-    printf("LTE || Message: %s\n Sensor", message);
-    receive = malloc(sizeof(receive));
-    receive = message;
-    // int test1 = atoi(message);
-    // shm_write(test1, 32, GSV_KEY);
-    printf("receiveLTE receive message: %s\n", receive);
-    return (void *)receive;
-    // pthread_exit(NULL);
+    printf("LTE || Message: %s Sensor \n", message);
+    shm_write(message, 32, GSV_KEY);
+    pthread_exit(NULL);
 }
 
 /* Function to receive WiFi packets */
 void *receiveWiFi(void *socket) {
     Sockets *sock = (Sockets *)socket;
-    // const char *GSV_KEY = "GSV_KEY";
+    const char *GSV_KEY = "GSV_KEY";
     int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
 
     printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
@@ -144,13 +146,9 @@ void *receiveWiFi(void *socket) {
 
     // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
     printf("WiFi || Message from WiFi received at: %s \n", curr_time);
-    printf("WiFi || Message: %s\n Sensor", message);
-    // int test2 = atoi(message);
-    // shm_write(test2, 32, GSV_KEY);
-    receive = malloc(sizeof(receive));
-    receive = message;
-    return (void *)receive;
-    // pthread_exit(NULL);
+    printf("WiFi || Message: %s Sensor \n", message);
+    shm_write(message, 32, GSV_KEY);
+    pthread_exit(NULL);
 }
 
 void *transmitLTE(void *socket) {

@@ -17,7 +17,7 @@ int client_wifi_sock;
 int client_LTE_sock;
 int num_bytes;
 
-char Coordinates[] = "10:5000";
+char Coordinates[] = "10:50f";
 char feedback[1024];
 
 
@@ -80,6 +80,7 @@ int main(int argc, char *argv[])
 
         printf("The robot has moved: %s\n", feedback);
         */
+       sleep(1);
     }
     //printf("client: send %d bytes to %s\n", num_bytes, ClientWiFi.sin_addr.s_addr);
     close(client_wifi_sock); 

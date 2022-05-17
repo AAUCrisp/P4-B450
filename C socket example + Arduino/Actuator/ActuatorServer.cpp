@@ -36,7 +36,7 @@ void *get_in_addr(struct sockaddr *sa) {
 }
 
 
-int initialize_Server() {
+void initialize_Server() {
     //_______________________________________
     //                  Initializing WiFi socket
     memset(&ServerWiFi, 0, lenWiFi);
@@ -121,12 +121,13 @@ void  *ReceiveCoordinateWiFi(void *) {
     printf("we got the buffer from %s\n",
     inet_ntop(remote_addr.ss_family,get_in_addr((struct sockaddr *)&remote_addr), s, sizeof s)); // Prints out the remote sockets address
     //printf("Actuator_WiFi: packet is %d bytes long\n", rc_WiFi);
-    //printf("Actuator_WiFi: packet contains \"%s\"\n", ActuatorBuffer);
-    //int* returnedArr = process_Data(ActuatorBuffer);
-    //logData(ActuatorBuffer, returnedArr);
+    printf("Actuator_WiFi: packet contains \"%s\"\n", ActuatorBuffer);
+    int* returnedArr = process_Data(ActuatorBuffer);
+    logData(returnedArr);
     //printf("Actuator_WiFi: robot movement on x-axis: %d\n", returnedArr[0]);
     //printf("Actuator_WiFi: robot movement on y-axis: %d\n \n", returnedArr[1]);    
-    //free (returnedArr);
+    free (returnedArr);
+    
     pthread_exit(NULL);
     //tx_WiFI = sendto(sockWiFi, result.feedback,strlen(result.feedback),0,get_in_addr((struct sockaddr *)&remote_addr), sizeof remote_addr);
     
@@ -146,9 +147,10 @@ void *ReceiveCoordinateLTE(void *) {
     
     int * returnedArr = process_Data(ActuatorBuffer);
     logData(returnedArr);
-    printf("Actuator_LTE: robot movement on x-axis: %d\n", returnedArr[0]);
-    printf("Actuator_LTE: robot movement on y-axis: %d\n \n", returnedArr[1]);
+    //printf("Actuator_LTE: robot movement on x-axis: %d\n", returnedArr[0]);
+    //printf("Actuator_LTE: robot movement on y-axis: %d\n \n", returnedArr[1]);
     free(returnedArr);
+    
     pthread_exit(NULL);
 }
 
@@ -162,11 +164,11 @@ int main() {
     while (1)
     {
        pthread_create(&T1, NULL, ReceiveCoordinateLTE, NULL);
-       //pthread_create(&T2, NULL, ReceiveCoordinateWiFi, NULL); 
+       pthread_create(&T2, NULL, ReceiveCoordinateWiFi, NULL); 
         //ReceiveCoordinateWiFi();
         //ReceiveCoordinateLTE();
       
-        
+        sleep(1);
     }
     //fclose(out);
     file.close();

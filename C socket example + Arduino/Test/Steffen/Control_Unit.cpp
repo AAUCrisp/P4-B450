@@ -1,4 +1,4 @@
-#ifndef LIBRARIES 
+#ifndef LIBRARIES
 #define LIBRARIES
 #include "Libraries.cpp"      // File with all our includes
 #endif
@@ -6,11 +6,60 @@
 #define SOCKETS_CONT
 #include "Headers/Sockets.h"
 #endif
+#include "converter.cpp"
 
+/* -- Test Data Variable-- */
+int data_int = 1500000;     // Static Test Variable
+// string* grid = new string[coordinates]; // Don't forget to delete [] a; when you're done!
 
 /* Main running code */
-int main() {
-    /* Initialize PORT & INTERFACE*/
+int main(int argc, char *argv[]) {
+
+    /* ------------------------------
+    -------- Conversion Area --------
+    ------------- start ----------- */
+
+    string data_str = to_string(data_int);     // For "Firm" data
+    int hex = 1;
+
+    if(argc > 1) {      // If the program is run with arguments
+        cout << "\nArgument(s) accepted." << endl;
+        cout << "Inserted Sensor-data Number: " << argv[1] << endl;
+        data_str = argv[1];
+        data_int = atoi(argv[1]);
+    }
+    if(argc == 3) {     // For enabling or disabling Hex-char output.
+        hex = atoi(argv[2]);
+        if(hex == 0){
+            cout << "Hex-char version disabled" << endl;
+        }
+        else{
+            cout << "Hex-char version enabled" << endl;
+        }
+    }
+
+    else {
+        cout << "\nNo arguments inserted, running staticly." << endl;
+    }
+    
+    string* grid = generate_grid(x_axis, y_axis, hex);
+    
+    // print_grid(grid, coordinates);       // Printing each separate coordinate
+
+    string cpu_command = convert_to_coordinate(data_int, hex);      // Process & Create Coordinate via CPU
+
+    // -- Print out results -- 
+    cout << "\nSensor Data is: " << data_str << endl;               // The "Sensed" Data
+    cout << "\nRAM Command is: " << grid[data_int-1] << endl;       // Coordinate from RAM version
+    cout << "\nCPU Command is: " << cpu_command << endl;            // Coordinate from CPU version
+
+
+    /* ----------- end --------------
+    -------- Conversion Area --------
+    ------------------------------ */
+
+
+    /* -- Connection Setup -- */
     uint PORT_LTE = 6969;
     uint PORT_WiFi = 6968;
     uint PORT_LTE_TRANS = 9002;

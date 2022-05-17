@@ -30,7 +30,7 @@ int hex_to_int(string data) {
     return result;
 }
 
-
+/*
 int main2()
 {
     int data = 75;      // Test data variable
@@ -41,3 +41,4 @@ int main2()
 
    return 0;
 }
+*/

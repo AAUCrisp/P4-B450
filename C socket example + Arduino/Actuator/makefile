@@ -1,4 +1,7 @@
-all: ClientStart ServerStart
+all: git ClientStart ServerStart
+
+git: 
+	git pull
 
 ClientStart: ActuatorClient.c
 	gcc -pthread ActuatorClient.c -o ClientStart

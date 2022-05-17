@@ -33,7 +33,7 @@ void* shm_read(const int SIZE, const char* name) {
     // printf("This is ptr memory map: %p\n", ptr);
 
     /* read from the shared memory object */
-    // printf("Read from shm_read.c: %s\n", (char*)ptr);
+    printf("Read from shm_read: %s\n", (char*)ptr);
 
     /* remove the shared memory object */
     // shm_unlink(name);
