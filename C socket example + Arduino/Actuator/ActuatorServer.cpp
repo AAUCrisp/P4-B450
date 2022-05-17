@@ -127,7 +127,7 @@ void  *ReceiveCoordinateWiFi(void *) {
     //printf("Actuator_WiFi: robot movement on x-axis: %d\n", returnedArr[0]);
     //printf("Actuator_WiFi: robot movement on y-axis: %d\n \n", returnedArr[1]);    
     free (returnedArr);
-    sleep(1);
+    
     pthread_exit(NULL);
     //tx_WiFI = sendto(sockWiFi, result.feedback,strlen(result.feedback),0,get_in_addr((struct sockaddr *)&remote_addr), sizeof remote_addr);
     
@@ -150,7 +150,7 @@ void *ReceiveCoordinateLTE(void *) {
     //printf("Actuator_LTE: robot movement on x-axis: %d\n", returnedArr[0]);
     //printf("Actuator_LTE: robot movement on y-axis: %d\n \n", returnedArr[1]);
     free(returnedArr);
-    sleep(1);
+    
     pthread_exit(NULL);
 }
 
@@ -168,7 +168,7 @@ int main() {
         //ReceiveCoordinateWiFi();
         //ReceiveCoordinateLTE();
       
-        
+        sleep(1);
     }
     //fclose(out);
     file.close();
