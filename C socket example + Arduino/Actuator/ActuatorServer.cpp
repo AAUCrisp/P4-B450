@@ -16,7 +16,7 @@ int rc_LTE, rc_WiFi;
 int tx_LTE, tx_WiFI;
 pthread_t T1, T2;
 
-std::ofstream file("MovementCommands.txt");
+std::ofstream file("MovementCommands.txt", std::ofstream::out);
 
 
 char ActuatorBuffer[1024];
@@ -99,7 +99,7 @@ int initialize_Server() {
 
 }
 
-void logData(std::string temp, int *arr) 
+void logData(int *arr) 
 {
     
     std::ostringstream out;
@@ -145,7 +145,7 @@ void *ReceiveCoordinateLTE(void *) {
     printf("Actuator_LTE: packet contains \"%s\"\n", ActuatorBuffer);
     
     int * returnedArr = process_Data(ActuatorBuffer);
-    logData(ActuatorBuffer, returnedArr);
+    logData(returnedArr);
     printf("Actuator_LTE: robot movement on x-axis: %d\n", returnedArr[0]);
     printf("Actuator_LTE: robot movement on y-axis: %d\n \n", returnedArr[1]);
     free(returnedArr);
