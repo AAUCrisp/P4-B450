@@ -193,7 +193,7 @@ void *receiveWiFi(void *socket) {
     printf("WiFi || Message: %s Control Unit\n", message_WiFi);
     receive_WiFi = malloc(sizeof(receive_WiFi));
     receive_WiFi = message_WiFi;
-    printf("receiveWiFi receive message: %d\n", receive_WiFi);
+    printf("receiveWiFi receive message: %s\n", receive_WiFi);
     return (void *)receive_WiFi;
 }
 /*
