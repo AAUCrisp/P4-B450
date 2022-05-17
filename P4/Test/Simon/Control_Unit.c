@@ -32,8 +32,8 @@ int main() {
     pthread_t T1, T2;
 
     /* Message char */
-    char* msg_LTE[32];
-    char* msg_WiFi[32];
+    char* msg_LTE[128];
+    char* msg_WiFi[128];
 
     /* Create sockets */
     Sockets sock;
