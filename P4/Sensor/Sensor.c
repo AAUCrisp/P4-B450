@@ -38,7 +38,7 @@ int main() {
 
     /* Misc */
     pthread_t T1, T2;
-    char curr_time;
+    char* curr_time;
 
     /* Create sockets */
     Sockets sock;
