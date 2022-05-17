@@ -16,6 +16,8 @@ int * process_Data(char msg[buffer]) {
     int * result = (int *)malloc(sizeof(int) * 2);
 
     bytes_read = sscanf(msg, "%[^:%s]:%s:", tempx, tempy);
+    cout << "Temp X is: " << tempx << endl;
+    cout << "Temp Y is: " << tempy << endl;
     x = hex_to_int(tempx);
     y = hex_to_int(tempy);
 

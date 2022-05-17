@@ -18,6 +18,15 @@
 #include <unistd.h>
 
 
+// #ifndef VARIABLES
+// #define VARIABLES
+// /* -- Our General Variables -- */
+// int x_axis = 5000;      // Length of the x-axis of the grid
+// int y_axis = 5000;      // Length of the y-axis of the grid
+// int coordinates = x_axis*y_axis;
+
+// #endif
+
 // Own Libraries
 // #include "Headers/Sockets.h"
 // Sockets sock;

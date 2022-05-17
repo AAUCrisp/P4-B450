@@ -21,6 +21,7 @@
 
 pthread_t wifi, lte;
 
+// Both = 0     WiFi = 1        LTE = 2
 char* gsv =  (char*) "0";  // Global Signal Variable   W = WiFi   L = LTE    B = Both
 const char* GSV_KEY = "GSV_KEY";
 
