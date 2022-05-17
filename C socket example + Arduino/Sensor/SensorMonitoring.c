@@ -47,7 +47,7 @@ int main() {
         //pthread_join(T1, (void**)&msg);
         pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
         pthread_join(T2, (void**)&msg);
-        int test2 = atoi((char*)msg);
+        int test2 = atoi((char*)&msg);
         int *ptr2 = &test2;
         printf("msg = %s\n", *msg);
         printf("test2 = %d\n", test2);
