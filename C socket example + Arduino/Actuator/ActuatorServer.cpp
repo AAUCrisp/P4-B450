@@ -36,7 +36,7 @@ void *get_in_addr(struct sockaddr *sa) {
 }
 
 
-int initialize_Server() {
+void initialize_Server() {
     //_______________________________________
     //                  Initializing WiFi socket
     memset(&ServerWiFi, 0, lenWiFi);
