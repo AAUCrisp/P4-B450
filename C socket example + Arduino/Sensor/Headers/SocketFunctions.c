@@ -24,7 +24,7 @@
 struct timeval tv {
     time_t tv_sec = 0;
     suseconds_t tv_usec = 500000;
-}
+};
 
 /* Define buffers & PORT number */
 #define BUFFER 1024
