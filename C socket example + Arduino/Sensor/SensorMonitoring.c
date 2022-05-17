@@ -22,8 +22,8 @@
 
 int main() {
     /* Initialize PORT & INTERFACE*/
-    uint PORT_LTE = 9002;
-    uint PORT_WiFi = 9003;
+    uint PORT_LTE_RECEIVER = 9002;
+    uint PORT_WiFi_RECEIVER = 9003;
     const char* LTE = "wwan0";
     const char* WiFi = "wlan0";
 
@@ -32,10 +32,11 @@ int main() {
 
     /* Create sockets */
     Sockets sock;
-    Sockets_Receiver(&sock, PORT_LTE, PORT_WiFi, LTE, WiFi);
+    Sockets_Receiver(&sock, PORT_LTE_RECEIVER, PORT_WiFi_RECEIVER, LTE, WiFi);
     printf("sockLTE_RECEIVER: %d\n", sock.sockLTE_TRANSMITTER);
     printf("sockWiFi_RECEIVER: %d\n", sock.sockWiFi_TRANSMITTER);
     int count = 0;
+
     while (1) {
         count++;
         pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
@@ -48,7 +49,7 @@ int main() {
         }*/
         sleep(2);
         printf("Count: %d\n", count);
-        if (count == 30) {
+        if (count == 20) {
             exit(0);
         }
     }

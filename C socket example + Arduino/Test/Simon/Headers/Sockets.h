@@ -31,16 +31,16 @@ void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *
 void Sockets_Transmitter(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi);
 
 /* Function to receive LTE packets */
-void *receiveLTE(void* sockLTE);
+void *receiveLTE(void *socket);
 
 /* Function to receive WiFi packets */
-void *receiveWiFi(void* sockWiFi);
+void *receiveWiFi(void *socket);
 
 /* Function to transmit LTE packets */
-void *transmitLTE(void* sockLTE_transmit);
+void *transmitLTE(void *socket);
 
 /* Function to transmit WiFi packets */
-void *transmitWiFi(void* sockWiFi_transmit);
+void *transmitWiFi(void *socket);
 
 /* Function to timestamp packets */
 char *Timestamp();

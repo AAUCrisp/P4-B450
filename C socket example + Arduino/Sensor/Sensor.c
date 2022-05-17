@@ -27,19 +27,19 @@ int generate(int Min, int Max) {
 
 int main() {
     /* Initialize PORT & INTERFACE*/
-    uint PORT_LTE = 9000;
-    uint PORT_WiFi = 9001;
+    uint PORT_LTE_TRANSMITTER = 9000;
+    uint PORT_WiFi_TRANSMITTER = 9001;
     const char* LTE = "wwan0";
     const char* WiFi = "wlan0";
-    const char* IP_LTE = "10.20.0.16";
-    const char* IP_WiFi = "192.168.1.136";
+    const char* IP_LTE = "10.20.0.16"; // IP of server
+    const char* IP_WiFi = "192.168.1.136"; // IP of server
 
     /* Misc */
     pthread_t T1, T2;
 
     /* Create sockets */
     Sockets sock;
-    Sockets_Transmitter(&sock, IP_LTE, IP_WiFi, PORT_LTE, PORT_WiFi, LTE, WiFi);
+    Sockets_Transmitter(&sock, IP_LTE, IP_WiFi, PORT_LTE_TRANSMITTER, PORT_WiFi_TRANSMITTER, LTE, WiFi);
     printf("sockLTE_TRANSMITTER: %d\n", sock.sockLTE_TRANSMITTER);
     printf("sockWiFi_TRANSMITTER: %d\n", sock.sockWiFi_TRANSMITTER);
 
@@ -64,32 +64,32 @@ int main() {
         printf("Sensor monitoring process ID is: %d \n", getpid());
         char path[] = "./SensorMonitoring";
         char* args[] = {"./SensorMonitoring", NULL};
-        execv(path, args);
+        // execv(path, args);
 
     } else {
-        msg = shm_read(10, GSV_KEY);
-        GSV = atoi(msg);
-        printf("GSV from shared memory: %s\n", msg);
-        printf("GSV converted: %d\n", GSV);
-
         while (1) {
             sleep(2);
+            msg = shm_read(32, GSV_KEY);
+            GSV = atoi(msg);
+            printf("GSV from shared memory: %s\n", msg);
+            printf("GSV converted: %d\n", GSV);
             rand_int = generate(0, 2500);
+
             if (GSV == B || GSV == L) {
                 /*printf("Shared memory GSV thing works! %s\n", msg);
                 printf("SHIT DO WORK! %d\n", GSV);*/
                 Timestamp();
                 // char* itoa(int_1, rand_int, 10);
                 printf("Random int to char: %d\n", rand_int);
-                shm_write(rand_int, 10, RAND_KEY);
+                shm_write(rand_int, 32, RAND_KEY);
                 pthread_create(&T1, NULL, transmitLTE, (void*)&sock);
             }
 
             if (GSV == B || GSV == W) {
                 Timestamp();
-                //int rand_int = generate(0, 2500);
+                // int rand_int = generate(0, 2500);
                 // char* itoa(int_2, rand_int, 10);
-                shm_write(rand_int, 10, RAND_KEY);
+                shm_write(rand_int, 32, RAND_KEY);
                 printf("Random int to char: %d\n", rand_int);
                 pthread_create(&T2, NULL, transmitWiFi, (void*)&sock);
             }
