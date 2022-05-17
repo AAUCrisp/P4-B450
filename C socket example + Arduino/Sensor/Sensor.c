@@ -20,6 +20,8 @@
 #include "Headers/SocketFunctions.h"
 #include "Headers/shm_write_read.h"
 
+#define BUFFER 64
+
 int generate(int Min, int Max) {
     int number = (rand() % ((Max + 1) - Min)) + Min;
     return number;
@@ -36,6 +38,7 @@ int main() {
 
     /* Misc */
     pthread_t T1, T2;
+    char * curr_time[32];
 
     /* Create sockets */
     Sockets sock;
