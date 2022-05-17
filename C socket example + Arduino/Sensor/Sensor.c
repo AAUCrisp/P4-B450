@@ -20,9 +20,9 @@
 #include "Headers/SocketFunctions.h"
 #include "Headers/shm_write_read.h"
 
-int* generate(int Min, int Max) {
+int generate(int Min, int Max) {
     int number = (rand() % ((Max + 1) - Min)) + Min;
-    return (int*) number;
+    return number;
 }
 
 int main() {
@@ -75,7 +75,8 @@ int main() {
             GSV = atoi(msg);
             printf("GSV from shared memory: %s\n", msg);
             printf("GSV converted: %d\n", GSV);
-            rand_int = (int*)generate(0, 2500);
+            rand_int = generate(0, 2500);
+            int *ptr1 = &rand_int;
 
             if (GSV == B || GSV == L) {
                 /*printf("Shared memory GSV thing works! %s\n", msg);
@@ -83,7 +84,7 @@ int main() {
                 Timestamp();
                 // char* itoa(int_1, rand_int, 10);
                 printf("Random int to char: %s\n", (char*)rand_int);
-                shm_write(rand_int, 32, RAND_KEY);
+                shm_write(ptr1, 32, RAND_KEY);
                 pthread_create(&T1, NULL, transmitLTE, (void*)&sock);
             }
 
@@ -91,7 +92,7 @@ int main() {
                 Timestamp();
                 // int rand_int = generate(0, 2500);
                 // char* itoa(int_2, rand_int, 10);
-                shm_write(rand_int, 32, RAND_KEY);
+                shm_write(ptr1, 32, RAND_KEY);
                 printf("Random int to char: %s\n", (char*)rand_int);
                 pthread_create(&T2, NULL, transmitWiFi, (void*)&sock);
             }
