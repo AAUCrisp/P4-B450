@@ -75,14 +75,14 @@ int main() {
             GSV = atoi(msg);
             printf("GSV from shared memory: %s\n", msg);
             printf("GSV converted: %d\n", GSV);
-            rand_int = generate(0, 2500);
+            rand_int = (int*)generate(0, 2500);
 
             if (GSV == B || GSV == L) {
                 /*printf("Shared memory GSV thing works! %s\n", msg);
                 printf("SHIT DO WORK! %d\n", GSV);*/
                 Timestamp();
                 // char* itoa(int_1, rand_int, 10);
-                printf("Random int to char: %d\n", rand_int);
+                printf("Random int to char: %s\n", (char*)rand_int);
                 shm_write(rand_int, 32, RAND_KEY);
                 pthread_create(&T1, NULL, transmitLTE, (void*)&sock);
             }
@@ -92,7 +92,7 @@ int main() {
                 // int rand_int = generate(0, 2500);
                 // char* itoa(int_2, rand_int, 10);
                 shm_write(rand_int, 32, RAND_KEY);
-                printf("Random int to char: %d\n", rand_int);
+                printf("Random int to char: %s\n", (char*)rand_int);
                 pthread_create(&T2, NULL, transmitWiFi, (void*)&sock);
             }
         }
