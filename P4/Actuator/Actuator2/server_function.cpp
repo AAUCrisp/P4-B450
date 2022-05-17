@@ -1,31 +1,5 @@
-#include "ActuatorServer.h"
-#include "processData.cpp"
-#include <fstream>
-#include <sstream>
+#include "server_header.h"
 
-struct addrinfo ServerLTE, *res1;   // a socket struct design to be used with IPv4
-struct addrinfo ServerWiFi, *res;  // a socket struct design to be used with IPv4
-struct sockaddr_storage remote_addr;
-socklen_t fromlen;
-int rv, rl;
-int sockLTE, sockWiFi;
-int bindLTE, bindWiFi;
-int lenLTE = sizeof(ServerLTE);
-int lenWiFi = sizeof(ServerWiFi);
-int rc_LTE, rc_WiFi;
-int tx_LTE, tx_WiFI;
-pthread_t T1, T2;
-
-std::ofstream LTE_File;
-std::ofstream WiFi_File;
-
-
-char ActuatorBuffer[1024];
-char feedback[1024];
-
-const char *LTE = "wwan0";
-const char *WiFi = "wlan0";
-char s[INET_ADDRSTRLEN];
 
 void *get_in_addr(struct sockaddr *sa) {
     if (sa->sa_family == AF_INET)
@@ -35,7 +9,6 @@ void *get_in_addr(struct sockaddr *sa) {
 
     return&(((struct sockaddr_in6*)sa)->sin6_addr);
 }
-
 
 void initialize_Server() {
     //_______________________________________
@@ -100,27 +73,6 @@ void initialize_Server() {
 
 }
 
-void logData1(int *arr) 
-{
-    LTE_File.open("LTE-log.txt", std::ofstream::out | std::ofstream::app);
-    //std::ostringstream out;
-    //out << "\n\n movement on the x-axi:" << arr[0] << "\n movement on the y-axis:" << arr[1];
-    //sprintf(temp, "Movement on x and y axis:  x = %d, y = %d \n \n", arr[0], arr[1]);
-    //fwrite(temp, sizeof(char), strlen(temp), out);
-    LTE_File << "\n\n movement on the x-axi:" << arr[0] << "\n movement on the y-axis:" << arr[1];
-    LTE_File.close();
-}
-
-void logData2(int *arr)
-{
-    WiFi_File.open("WiFi-log.txt", std::ofstream::out | std::ofstream::app);
-    //std::ostringstream movement;
-    //movement << "\n\n Movement on the x-axis:" << arr[0] << "\n movement on the y-axis:" << arr[1];
-    WiFi_File << "\n\n Movement on the x-axis:" << arr[0] << "\n movement on the y-axis:" << arr[1];
-    WiFi_File.close();
-}
-
-
 void  *ReceiveCoordinateWiFi(void *) {
     fromlen = sizeof remote_addr;
     if(rc_WiFi = recvfrom(sockWiFi, ActuatorBuffer, sizeof(ActuatorBuffer), 0, (struct sockaddr *)&remote_addr, &fromlen) == -1)
@@ -131,10 +83,11 @@ void  *ReceiveCoordinateWiFi(void *) {
     printf("we got the buffer from %s\n",
     inet_ntop(remote_addr.ss_family,get_in_addr((struct sockaddr *)&remote_addr), s, sizeof s)); // Prints out the remote sockets address
     printf("Actuator_WiFi: packet contains \"%s\"\n", ActuatorBuffer);
-    int* returnedArr = process_Data(ActuatorBuffer);
-    logData2(returnedArr);
-    printf("Logged WiFi data success");
-    free (returnedArr);
+
+    received_message = ActuatorBuffer;
+    shm_write(received_message, sizeof(ActuatorBuffer), GSV_KEY);
+    printf("The buffer sent to shared memory: %s \n \n", received_message);
+    
     pthread_exit(NULL);
     
 }
@@ -149,29 +102,14 @@ void *ReceiveCoordinateLTE(void *) {
     printf("we got the buffer from %s\n",
     inet_ntop(remote_addr.ss_family,get_in_addr((struct sockaddr *)&remote_addr), s, sizeof s)); // Prints out the remote sockets address
     printf("Actuator_LTE: packet contains \"%s\"\n", ActuatorBuffer);
-    
-    int * returnedArr = process_Data(ActuatorBuffer);
-    logData1(returnedArr);
-    printf("Logged LTE data success");
-    free(returnedArr);
-    
+    received_message = ActuatorBuffer;
+    shm_write(received_message, sizeof(ActuatorBuffer), GSV_KEY);
+    printf("The buffer sent to shared memory: %s \n \n", received_message);
+        
     pthread_exit(NULL);
 }
 
 
 
-int main() {
-    initialize_Server();
-    //out = fopen("MovementCommands.txt", "w");   
-    while (1)
-    {
-       pthread_create(&T1, NULL, ReceiveCoordinateLTE, NULL);
-       pthread_create(&T2, NULL, ReceiveCoordinateWiFi, NULL); 
-        //ReceiveCoordinateWiFi();
-        //ReceiveCoordinateLTE();
-        sleep(1);
-    }
-    //fclose(out);
-    close(sockWiFi);
-    close(sockLTE);
-}
+
+

@@ -1,0 +1,6 @@
+make --dry-run --keep-going --print-directory
+make: Entering directory '/home/ubeyd/P4-B450/P4'
+make: Leaving directory '/home/ubeyd/P4-B450/P4'
+ 
+make: *** No targets specified and no makefile found.  Stop.
+
