@@ -16,8 +16,8 @@ int rc_LTE, rc_WiFi;
 int tx_LTE, tx_WiFI;
 pthread_t T1, T2;
 
-std::ofstream LTE_File("LTE-Log.txt", std::ofstream::out);
-std::ofstream WiFi_File("WiFi-Log.txt", std::ofstream::out);
+std::ofstream LTE_File ("LTE-Log.txt", std::ofstream::out);
+std::ofstream WiFi_File ("WiFi-Log.txt", std::ofstream::out);
 
 
 char ActuatorBuffer[1024];
@@ -100,22 +100,20 @@ void initialize_Server() {
 
 }
 
-void logData1(int *arr) 
+std logData1(int *arr) 
 {
-    
-    std::ostringstream out;
-    out << "\n\n movement on the x-axi:" << arr[0] << "\n movement on the y-axis:" << arr[1];
+    //std::ostringstream out;
+    //out << "\n\n movement on the x-axi:" << arr[0] << "\n movement on the y-axis:" << arr[1];
     //sprintf(temp, "Movement on x and y axis:  x = %d, y = %d \n \n", arr[0], arr[1]);
     //fwrite(temp, sizeof(char), strlen(temp), out);
-    LTE_File << out.str();
-
+    LTE_File << "\n\n movement on the x-axi:" << arr[0] << "\n movement on the y-axis:" << arr[1];
 }
 
-void logData2(int *arr)
+std logData2(int *arr)
 {
-    std::ostringstream out2;
-    out2 << "\n\n Movement on the x-axis:" <<arr[0] <<"\n movement on the y-axis:" << arr[1];
-    WiFi_File << out2.str();
+    //std::ostringstream movement;
+    //movement << "\n\n Movement on the x-axis:" << arr[0] << "\n movement on the y-axis:" << arr[1];
+    WiFi_File << "\n\n Movement on the x-axis:" << arr[0] << "\n movement on the y-axis:" << arr[1];
 }
 
 
@@ -133,7 +131,6 @@ void  *ReceiveCoordinateWiFi(void *) {
     logData2(returnedArr);
     printf("Logged WiFi data success");
     free (returnedArr);
-    
     pthread_exit(NULL);
   
     
