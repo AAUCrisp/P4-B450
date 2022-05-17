@@ -136,7 +136,7 @@ void *receiveLTE(void *socket) {
 /* Function to receive WiFi packets */
 void *receiveWiFi(void *socket) {
     Sockets *sock = (Sockets *)socket;
-    // const char *GSV_KEY = "GSV_KEY";
+    const char *GSV_KEY = "GSV_KEY";
     int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
 
     printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
@@ -147,7 +147,9 @@ void *receiveWiFi(void *socket) {
     printf("WiFi || Message: %s Sensor \n", message);
     int test2 = atoi(message);
     printf("test2 shmo: %d\n", test2);
-    // shm_write(test2, 32, GSV_KEY);
+    int *ptr2 = &test2;
+    printf("*ptr2 shmo: %d\n", *ptr2);
+    shm_write(ptr2, 32, GSV_KEY);
     /*receive = malloc(sizeof(receive));
     receive = message;
     printf("receiveWiFi receive message: %s\n", receive);
