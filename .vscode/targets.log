@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon May 16 17:41:28 2022
+# Make data base, printed on Tue May 17 10:14:56 2022
 
 # Variables
 
@@ -19,7 +19,7 @@ LC_ALL = C
 # environment
 NO_AT_BRIDGE = 1
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-116acd2f-ed1d-4af6-943e-1edfd76316cb.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-7a970cd8-c9df-46c2-8338-16197b980e61.sock
 # environment
 LC_NAME = en_DK.UTF-8
 # environment
@@ -55,7 +55,7 @@ VSCODE_LOG_STACK = false
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_CODE_CACHE_PATH = /home/bamse/.config/Code - OSS/CachedData/e18005f0f1b33c29e81d732535d8c0e47cafb0b5
+VSCODE_CODE_CACHE_PATH = /home/bamse/.config/Code - OSS/CachedData/57fd6d0195bb9b9d1b49f6da5db789060795de47
 # environment
 XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session0
 # environment
@@ -79,7 +79,7 @@ APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_AUTH_SOCK = /tmp/ssh-XXXXXXoCJ60R/agent.1368
+SSH_AUTH_SOCK = /tmp/ssh-XXXXXX5AQuV7/agent.1379
 # default
 .SHELLFLAGS := -c
 # environment
@@ -95,13 +95,13 @@ MAKEFILE_LIST :=
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 1703
+VSCODE_PID = 1682
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/BamseLinux:@/tmp/.ICE-unix/1317,unix/BamseLinux:/tmp/.ICE-unix/1317
+SESSION_MANAGER = local/BamseLinux:@/tmp/.ICE-unix/1328,unix/BamseLinux:/tmp/.ICE-unix/1328
 # automatic
 *F = $(notdir $*)
 # environment
@@ -177,7 +177,7 @@ MAKE_VERSION := 4.3
 # environment
 LC_MEASUREMENT = en_DK.UTF-8
 # environment
-SSH_AGENT_PID = 1369
+SSH_AGENT_PID = 1380
 # environment
 _ = /usr/bin/make
 # environment
@@ -195,9 +195,11 @@ HOME = /home/bamse
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-f0525173-1.66.0-main.sock
+VSCODE_IPC_HOOK = /run/user/1000/vscode-f0525173-1.67.0-main.sock
 # environment
 XDG_SESSION_ID = 2
+# environment
+PANEL_GDK_CORE_DEVICE_EVENTS = 0
 # default
 .RECIPEPREFIX := 
 # automatic
@@ -221,7 +223,7 @@ GDMSESSION = xfce
 # environment
 LC_IDENTIFICATION = en_DK.UTF-8
 # variable set hash-table stats:
-# Load=104/1024=10%, Rehash=0, Collisions=6/131=5%
+# Load=105/1024=10%, Rehash=0, Collisions=6/132=5%
 
 # Pattern-specific Variable Values
 
@@ -281,13 +283,13 @@ GNUmakefile:
 
 # No general ('VPATH' variable) search path.
 
+ 
 # strcache buffers: 1 (0) / strings = 23 / storage = 311 B / avg = 13 B
 # current buf: size = 8162 B / used = 311 B / count = 23 / avg = 13 B
 
 # strcache performance: lookups = 26 / hit rate = 11%
 # hash-table stats:
- 
 # Load=23/8192=0%, Rehash=0, Collisions=0/26=0%
-# Finished Make data base on Mon May 16 17:41:28 2022
+# Finished Make data base on Tue May 17 10:14:56 2022
 
  
