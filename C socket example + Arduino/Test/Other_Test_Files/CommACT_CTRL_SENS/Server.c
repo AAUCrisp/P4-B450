@@ -19,17 +19,17 @@
 /* Define buffers & PORT number */
 #define BUFFER 128
 char Message[BUFFER];
-uint PORT_LTE1 = 6969;
-uint PORT_WiFi1 = 6968;
+uint PORT_LTE1 = 9002;   // Receiver LTE
+uint PORT_WiFi1 = 9003;  // Receiver WiFi
 
-uint PORT_LTE2 = 6967;
-uint PORT_WiFi2 = 6966;
+uint PORT_LTE2 = 9000;   // Transmitter LTE
+uint PORT_WiFi2 = 9001;  // Transmitter WiFi
 
 /* Specify LTE & WiFi interface */
 const char *LTE = "wwan0";
 const char *WiFi = "wlan0";
-const char *IP_LTE = "10.20.0.13";
-const char *IP_WiFi = "192.168.1.143";
+const char *IP_LTE = "10.20.0.16";
+const char *IP_WiFi = "192.168.1.131";
 
 /* Misc */
 struct sockaddr_in ServerLTE1;
@@ -65,6 +65,7 @@ void *transmitLTE(void *message) {
     char transmitBuffer[BUFFER];
     char *msg = message;
     sprintf(transmitBuffer, "%s", msg);
+    // printf("TransmiteLTE: %s\n", transmitBuffer);
     sendto(sockLTE2, transmitBuffer, BUFFER, 0, (struct sockaddr *)&ServerLTE2, lenLTE2);
     // printf("LTE-Thread id = %ld\n\n", pthread_self());
     pthread_exit(NULL);
@@ -74,6 +75,7 @@ void *transmitWiFi(void *message) {
     char transmitBuffer[BUFFER];
     char *msg = message;
     sprintf(transmitBuffer, "%s", msg);
+    // printf("TransmiteLTE: %s\n", transmitBuffer);
     sendto(sockWiFi2, transmitBuffer, BUFFER, 0, (struct sockaddr *)&ServerWiFi2, lenWiFi2);
     // printf("WiFi-Thread id = %ld\n\n", pthread_self());
     pthread_exit(NULL);
@@ -143,21 +145,24 @@ int main() {
     while (1) {
         pthread_create(&T1, NULL, receiveLTE, NULL);
         pthread_create(&T2, NULL, receiveWiFi, NULL);
-        pthread_create(&T3, NULL, transmitLTE, msg);
-         pthread_create(&T4, NULL, transmitWiFi, msg2);
+        // pthread_create(&T3, NULL, transmitLTE, msg);
+        // pthread_create(&T4, NULL, transmitWiFi, msg2);
 
-       // sendto(sockLTE2, msg, BUFFER, 0, (struct sockaddr *)&ServerLTE2, lenLTE2);
-        //printf("Does it reach here? LTE");
-       // sendto(sockWiFi2, msg2, BUFFER, 0, (struct sockaddr *)&ServerWiFi2, lenWiFi2);
-        //printf("Does it reach here? WiFi");
+        sendto(sockWiFi2, msg, BUFFER, 0, (struct sockaddr *)&ServerWiFi2, lenWiFi2);
+        sendto(sockLTE2, msg2, BUFFER, 0, (struct sockaddr *)&ServerLTE2, lenLTE2);
+        printf("Just to make sure it prints\n");
+        sleep(1);
+
+        // sendto(sockLTE2, msg, BUFFER, 0, (struct sockaddr *)&ServerLTE2, lenLTE2);
+        // printf("Does it reach here? LTE");
+        // sendto(sockWiFi2, msg2, BUFFER, 0, (struct sockaddr *)&ServerWiFi2, lenWiFi2);
+        // printf("Does it reach here? WiFi");
 
         // RX_LTE1 = recvfrom(sockLTE1, Message, BUFFER, 0, (struct sockaddr *)&ServerLTE1, &lenLTE1);
         // printf("From LTE1: %s\n", Message);
         // RX_WiFi1 = recvfrom(sockWiFi1, Message, BUFFER, 0, (struct sockaddr *)&ServerWiFi1, &lenWiFi1);
         // printf("From WiFi1: %s\n", Message);
 
-        // sendto(sockWiFi1, msg, BUFFER, 0, (struct sockaddr *)&ServerWiFi1, lenWiFi1);
-        // sendto(sockLTE1, msg2, BUFFER, 0, (struct sockaddr *)&ServerLTE1, lenLTE1);
         //  pthread_join(T1, NULL);
         //  pthread_join(T2, NULL);
     }

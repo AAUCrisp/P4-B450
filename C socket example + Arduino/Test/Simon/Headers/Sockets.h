@@ -4,17 +4,18 @@
 /* Function declarations here: */
 
 typedef struct _sockets {
-        int sockLTE;
-        int sockWiFi;
-        struct sockaddr_in ServerLTE;
-        struct sockaddr_in ServerWiFi;
-        /* Transmit sockets */
-        int sockLTE_transmit;
-        int sockWiFi_transmit;
-        struct sockaddr_in ServerLTE_transmit;
-        struct sockaddr_in ServerWiFi_transmit;
+    /* Receiver sockets*/
+    int sockLTE_RECEIVER;
+    int sockWiFi_RECEIVER;
+    struct sockaddr_in ServerLTE_RECEIVER;
+    struct sockaddr_in ServerWiFi_RECEIVER;
 
-    }Sockets;
+    /* Transmitter sockets*/
+    int sockLTE_TRANSMITTER;
+    int sockWiFi_TRANSMITTER;
+    struct sockaddr_in ClientLTE_TRANSMITTER;
+    struct sockaddr_in ClientWiFi_TRANSMITTER;
+} Sockets;
 
 typedef struct _time_struct{
     int hour;
@@ -23,8 +24,11 @@ typedef struct _time_struct{
     int millis;
 } time_struct;
 
-/* Function to bind sockets */
-void Create_Bind_Sockets(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, uint PORT_LTE_TRANS, uint PORT_WiFi_TRANS, const char *LTE, const char *WiFi);
+/* Function to create receiver socket */
+void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi);
+
+/* Function to create transmitter socket */
+void Sockets_Transmitter(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi);
 
 /* Function to receive LTE packets */
 void *receiveLTE(void* sockLTE);
