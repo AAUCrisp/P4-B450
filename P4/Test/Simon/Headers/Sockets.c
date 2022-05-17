@@ -22,8 +22,8 @@
 
 /* Define buffers & PORT number */
 #define BUFFER 1024
-char message[BUFFER];
-char *receive;
+int message[BUFFER];
+int *receive;
 char curr_time[128];
 
 /* Misc */
@@ -187,7 +187,7 @@ void *receiveWiFi(void *socket) {
     RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
     ntohl(message);
     Timestamp();
-    
+
     // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
     printf("WiFi || Message from WiFi received at: %s \n", curr_time);
     printf("WiFi || Message: %s Control Unit\n", message);
