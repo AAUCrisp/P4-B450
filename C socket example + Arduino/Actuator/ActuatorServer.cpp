@@ -145,10 +145,10 @@ void *ReceiveCoordinateLTE(void *) {
     printf("Actuator_LTE: packet contains \"%s\"\n", ActuatorBuffer);
     
     int * returnedArr = process_Data(ActuatorBuffer);
-    //logData(returnedArr);
+    logData(returnedArr);
     printf("Actuator_LTE: robot movement on x-axis: %d\n", returnedArr[0]);
     printf("Actuator_LTE: robot movement on y-axis: %d\n \n", returnedArr[1]);
-    //free(returnedArr);
+    free(returnedArr);
     pthread_exit(NULL);
 }
 
