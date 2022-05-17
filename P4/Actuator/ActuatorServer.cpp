@@ -16,8 +16,8 @@ int rc_LTE, rc_WiFi;
 int tx_LTE, tx_WiFI;
 pthread_t T1, T2;
 
-std::ofstream LTE_File ("LTE-Log.txt", std::ofstream::out);
-std::ofstream WiFi_File ("WiFi-Log.txt", std::ofstream::out);
+std::ofstream LTE_File ("LTE-log.txt", std::ofstream::out);
+std::ofstream WiFi_File ("WiFi-log.txt", std::ofstream::out);
 
 
 char ActuatorBuffer[1024];
