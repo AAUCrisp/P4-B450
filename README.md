@@ -32,6 +32,7 @@ Eth: 192.168.1.117
     - `git commit`      Tell GitHub what changes you've made  
     - `git push`        Push the changes to GitHub  
 
+    -  sudo nmcli c modify 4G apn mda.aau.i40                   Set apn, incase it doesn't work this can be done for a "reset"
     - `sudo ip route add 10.20.0.0/24 dev wwan0`                Add ip routing for wwan0
     - `sudo ifconfig wwan0 [4G IP] netmask 255.255.255.0`       Add netmask for wwan0
     - `sudo sudo mmcli -m 0 --signal-setup=1`                   LTE refresh rate
