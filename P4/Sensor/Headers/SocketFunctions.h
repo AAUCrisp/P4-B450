@@ -31,11 +31,11 @@ void receiverWiFi();
 
 /* Function to transmit LTE packets */
 //void *transmitLTE(void *socket);
-void transmitLTE(void *socket);
+void transmitLTE();
 
 /* Function to transmit WiFi packets */
 //void *transmitWiFi(void *socket);
-void transmitWiFi(void *socket);
+void transmitWiFi();
 
 /* Function to generate timestamp */
 char *Timestamp();
