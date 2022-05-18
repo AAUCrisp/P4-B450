@@ -1,14 +1,14 @@
-all: ServerStart SignalMonitoring
+all: ControlUnit SignalMonitoring
 
 Git:
 	git pull
 
 Combined: combined.cpp
 
-ServerStart: Control_Unit.cpp Sockets.o RSSI.o shm_write.o shm_read.o
+ControlUnit: Control_Unit.cpp Sockets.o RSSI.o shm_write.o shm_read.o
 # ServerStart: Control_Unit.cpp Sockets.o RSSI.o
 #	g++ -pthread Control_Unit.cpp Sockets.o RSSI.o shm_write.o shm_read.o -o ServerStart -lrt
-	g++ -pthread Control_Unit.cpp Sockets.o RSSI.o -o ServerStart -lrt
+	g++ -pthread Control_Unit.cpp Sockets.o RSSI.o -o ControlUnit -lrt
 	touch Control_Unit.cpp
 
 SignalMonitoring: SignalMonitoring.cpp Sockets.o RSSI.o shm_write.o shm_read.o
@@ -60,6 +60,6 @@ test: Libraries.cpp $(Dependencies)
 
 
 clean:
-	rm -f ClientStart ServerStart SignalMonitoring
+	rm -f ControlUnit SignalMonitoring
 	rm *.o
 	@echo "clean completed!"
