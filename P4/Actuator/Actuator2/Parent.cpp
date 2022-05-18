@@ -1,7 +1,7 @@
 #include "server_function.cpp"
 //#include "Headers/shm_write_read.h"
 #include <cassert>
-
+#include <iostream>
 
 
 
@@ -32,6 +32,7 @@ int main()
         while (1) {
             pthread_create(&T1, NULL, ReceiveCoordinateLTE, NULL);
             pthread_create(&T2, NULL, ReceiveCoordinateWiFi, NULL);
+            usleep(100000);
         }
         //kill(getpid(), SIGKILL);
         close(sockWiFi);
