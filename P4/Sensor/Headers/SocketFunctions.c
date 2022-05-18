@@ -208,6 +208,7 @@ void *transmitLTE(void *socket) {
             printf("transmitLTE socket: %d\n", sock->sockLTE_TRANSMITTER);
             sendto(sock->sockLTE_TRANSMITTER, sendLTE, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, LenLTE);
             printf("Message from LTE transmitted at: %s\n", curr_time);
+            sleep(2);
         }
     }
 }
@@ -237,6 +238,7 @@ void *transmitWiFi(void *socket) {
             printf("transmitWiFi socket: %d\n", sock->sockWiFi_TRANSMITTER);
             sendto(sock->sockWiFi_TRANSMITTER, sendWiFi, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, LenWiFi);
             printf("Message from WiFi transmitted at: %s\n", curr_time);
+            sleep(2);
         }
     }
 }
