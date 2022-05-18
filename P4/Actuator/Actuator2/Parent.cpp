@@ -33,8 +33,9 @@ int main()
             pthread_create(&T1, NULL, ReceiveCoordinateLTE, NULL);
             pthread_create(&T2, NULL, ReceiveCoordinateWiFi, NULL);
         }
-        kill(getpid(), SIGKILL);
+        //kill(getpid(), SIGKILL);
         close(sockWiFi);
         close(sockLTE);
+        exit(1);
     }
 }
