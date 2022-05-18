@@ -10,12 +10,11 @@
 using namespace std;
 
 
-/* -- Test Data Variable-- */
-// int data_int = 1500000;     // Static Test Variable
+// -- Setup Area --
 int x_axis = 5000;      // Length of the x-axis of the grid
 int y_axis = 5000;      // Length of the y-axis of the grid
 int coordinates = x_axis*y_axis;
-// string* grid = new string[coordinates]; // Don't forget to delete [] a; when you're done!
+string* grid = new string[coordinates]; // Don't forget to delete [] a; when you're done!
 
 
 /* --- Conversion from Integer to Hex-chars --- */
@@ -38,11 +37,7 @@ string int_to_hex(int data, int back = 0) {
 
 
 /* --- Option to store the grid in memory and save processing power --- */
-string* generate_grid(int x_axis, int y_axis, int hex = 1) {
-    // int coor = x_axis * y_axis;
-    // string* grid = new string[coor]; // Don't forget to delete [] a; when you're done!
-    string* grid = new string[coordinates]; // Don't forget to delete [] a; when you're done!
-
+void generate_grid(int x_axis, int y_axis, int hex = 1) {
     int x_count = 1;
     int y_count = 1;
     
@@ -61,7 +56,7 @@ string* generate_grid(int x_axis, int y_axis, int hex = 1) {
             y = to_string(y_count);
         }
 
-        grid[i] = x + ":" + y;      // Write coordinate to grid array
+        grid[i] = x + ":" + y;      // Write coodinate to grid array
         
 
         if(x_count == (x_axis)){        // When the end of the x-axis has been reached
@@ -79,21 +74,11 @@ string* generate_grid(int x_axis, int y_axis, int hex = 1) {
     printf("\rAll Rows Done.\n\n");
 
 
-    return grid;
-}
-
-
-/* --- Print Grid Function --- */
-void print_grid(string* grid, int coordinates) {
-    /* --  Loop for printing out the grid coordinate... TROUBLESHOOTING  --  */
-    for (int i = 0; i < coordinates; i++) {
-            cout << "Sensor Data: " << i+1 << "   Becomes GRID Position   " << grid[i] << endl;
-    }
+    return;
 }
   
 
 /* Option for processing the coordinates instead of using memory */
-// string convert_to_coordinate(int number, int x_axis, int y_axis, int hex=1) {
 string convert_to_coordinate(int number, int hex=1) {
     // int x = (number % (x_axis+1));
     int x = ((number-1) % (x_axis))+1;
@@ -113,4 +98,47 @@ string convert_to_coordinate(int number, int hex=1) {
     string coordinate = str_x + ":" + str_y;
 
     return coordinate;
+}
+
+
+int main(int argc, char *argv[]){
+    // Test Variables
+    int data_int = 9;       // Static Test variable
+    string data_str = to_string(data_int);     // For "Firm" data
+    int hex = 1;
+
+    if(argc > 1) {
+        cout << "\nArgument(s) accepted." << endl;
+        cout << "Inserted Sensor-data Number: " << argv[1] << endl;
+        data_str = argv[1];
+        data_int = atoi(argv[1]);
+    }
+    if(argc == 3) {     // For enabling or disabling Hex-char output.
+        hex = atoi(argv[2]);
+        if(hex == 0){
+            cout << "Hex-char version disabled" << endl;
+        }
+        else{
+            cout << "Hex-char version enabled" << endl;
+        }
+    }
+
+    else {
+        cout << "\nNo arguments inserted, running staticly." << endl;
+    }
+    
+    generate_grid(x_axis, y_axis, hex);
+    
+    /* --  Loop for printing out the grid coordinate... TROUBLESHOOTING  --  */
+    // for (int i = 0; i < coordinates; i++) {
+    //         cout << "Sensor Data: " << i+1 << "   Becomes GRID Position   " << grid[i] << endl;
+    // }
+
+    string cpu_command = convert_to_coordinate(data_int, hex);
+
+    // -- Print out results -- 
+    cout << "\nSensor Data is: " << data_str << endl;
+    cout << "\nRAM Command is: " << grid[data_int-1] << endl;
+    cout << "\nCPU Command is: " << cpu_command << endl;
+
 }
