@@ -75,7 +75,7 @@ int main() {
             GSV = atoi(msg);
             printf("GSV from shared memory: %s\n", msg);
             printf("GSV converted: %d\n", GSV);
-            sprintf(buffer, "%s", generate(0, 2500));
+            sprintf(buffer, "%d", generate(0, 2500));
             shm_write(buffer, 32, RAND_INT_KEY);
 
             if (GSV == B || GSV == L) {
