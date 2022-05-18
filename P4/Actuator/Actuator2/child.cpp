@@ -39,6 +39,7 @@ int main()
 
     int* ra = process_Data(msg);
     logData1(ra);
+    sleep(1);
 
     }
     
