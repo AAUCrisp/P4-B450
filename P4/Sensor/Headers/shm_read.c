@@ -17,6 +17,8 @@
 #include <time.h>
 #include <unistd.h>
 
+extern int errno;
+
 void* shm_read(const int SIZE, const char* name) {
     /* shared memory file descriptor */
     int shm_fd;
@@ -30,7 +32,21 @@ void* shm_read(const int SIZE, const char* name) {
 
     /* memory map the shared memory object */
     ptr = mmap(NULL, SIZE, PROT_READ, MAP_SHARED, shm_fd, 0);
-    //printf("Read from shm_read: %s\n", (char*)ptr);
+
+    /* Initialize the semaphore . */
+    retval = sem_init(sp, 1, 1);
+    if (retval != 0) {
+        perror(" Couldn ’t initialize . ");
+        exit(3);
+    }
+    retval = sem_trywait(sp);
+    printf(" Did trywait . Returned %d >\n ", retval);
+    retval = sem_trywait(sp);
+    printf(" Did trywait . Returned %d >\n ", retval);
+    retval = sem_trywait(sp);
+    printf(" Did trywait . Returned %d >\n ", retval);
+
+    // printf("Read from shm_read: %s\n", (char*)ptr);
 
     // printf("This is ptr memory map: %p\n", ptr);
 
