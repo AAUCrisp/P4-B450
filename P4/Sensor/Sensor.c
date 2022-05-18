@@ -65,7 +65,7 @@ int main() {
         printf("Sensor monitoring process ID is: %d \n", getpid());
         char path[] = "./SensorMonitoring";
         char* args[] = {"./SensorMonitoring", NULL};
-        //execv(path, args);
+        // execv(path, args);
 
     } else {
         pthread_create(&T1, NULL, transmitLTE, (void*)&sock);
@@ -73,7 +73,7 @@ int main() {
         while (1) {
             sprintf(buffer, "%d", generate(0, 2500));
             shm_write(buffer, 32, RAND_INT_KEY);
+            sleep(3);
         }
-        sleep(3);
     }
 }
