@@ -23,7 +23,7 @@
 /* Define buffers & PORT number */
 #define BUFFER 1024
 char message[BUFFER];
-char curr_time[128];
+char *curr_time[128];
 char *receive;
 
 /* Misc */
