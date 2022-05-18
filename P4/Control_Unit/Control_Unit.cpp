@@ -22,28 +22,39 @@ int main(int argc, char *argv[]) {
 
     string data_str = to_string(data_int);     // For "Firm" data
     int hex = 1;
+    int use_grid = 1;
+    string* grid;
 
     if(argc > 1) {      // If the program is run with arguments
         cout << "\nArgument(s) accepted." << endl;
-        cout << "Inserted Sensor-data Number: " << argv[1] << endl;
         data_str = argv[1];
-        data_int = atoi(argv[1]);
-    }
-    if(argc == 3) {     // For enabling or disabling Hex-char output.
-        hex = atoi(argv[2]);
-        if(hex == 0){
-            cout << "Hex-char version disabled" << endl;
-        }
-        else{
-            cout << "Hex-char version enabled" << endl;
-        }
-    }
 
+        if(data_str == "no") {
+            cout << "=====  RAM Grid Disabled =====" << endl;
+            use_grid = 0;
+        }
+        else {
+            cout << "Inserted Sensor-data Number: " << argv[1] << endl;
+            data_int = atoi(argv[1]);
+        }
+        
+        if(argc == 3) {     // For enabling or disabling Hex-char output.
+            hex = atoi(argv[2]);
+            if(hex == 0){
+                cout << "Hex-char version disabled" << endl;
+            }
+            else{
+                cout << "Hex-char version enabled" << endl;
+            }
+        }
+    }
     else {
         cout << "\nNo arguments inserted, running staticly." << endl;
     }
-    
-    string* grid = generate_grid(x_axis, y_axis, hex);
+    if(use_grid == 1) {
+        cout << "Using RAM Grid!" << endl;
+        grid = generate_grid(x_axis, y_axis, hex);
+    }
     
     // print_grid(grid, coordinates);       // Printing each separate coordinate
 
@@ -51,7 +62,9 @@ int main(int argc, char *argv[]) {
 
     // -- Print out results -- 
     cout << "\nSensor Data is: " << data_str << endl;               // The "Sensed" Data
-    cout << "\nRAM Command is: " << grid[data_int-1] << endl;       // Coordinate from RAM version
+    if(use_grid == 1) {
+        cout << "\nRAM Command is: " << grid[data_int-1] << endl;       // Coordinate from RAM version
+    }
     cout << "\nCPU Command is: " << cpu_command << endl;            // Coordinate from CPU version
 
 

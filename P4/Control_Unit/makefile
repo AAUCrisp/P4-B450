@@ -6,14 +6,11 @@ Git:
 Combined: combined.cpp
 
 ControlUnit: Control_Unit.cpp Sockets.o RSSI.o shm_write.o shm_read.o
-# ServerStart: Control_Unit.cpp Sockets.o RSSI.o
-#	g++ -pthread Control_Unit.cpp Sockets.o RSSI.o shm_write.o shm_read.o -o ServerStart -lrt
 	g++ -pthread Control_Unit.cpp Sockets.o RSSI.o -o ControlUnit -lrt
 	touch Control_Unit.cpp
 
 SignalMonitoring: SignalMonitoring.cpp Sockets.o RSSI.o shm_write.o shm_read.o
 	g++ -pthread SignalMonitoring.cpp Sockets.o RSSI.o -o SignalMonitoring -lrt
-# 	 g++ -pthread SignalMonitoring.cpp RSSI.o shm_write.o shm_read.o Sockets.o -o SignalMonitoring -lrt
 	touch SignalMonitoring.cpp
 
 Sockets.o: Headers/Sockets.cpp Headers/Sockets.h Headers/shm_write_read.h
@@ -25,12 +22,10 @@ RSSI.o: Headers/RSSI.cpp Headers/Sockets.h
 	touch Headers/RSSI.cpp
 
 shm_write.o: Headers/shm_write.cpp
-# shm_write.o: Headers/shm_write.cpp Headers/shm_write_read.h
 	g++ -c Headers/shm_write.cpp -lrt
 	touch Headers/shm_write.cpp 
 
 shm_read.o: Headers/shm_read.cpp
-# shm_read.o: Headers/shm_read.cpp Headers/shm_write_read.h
 	g++ -c Headers/shm_read.cpp -lrt
 	touch Headers/shm_read.cpp 
 
