@@ -218,12 +218,3 @@ void transmitWiFi(void *socket) {
     printf("Message from WiFi transmitted at: %s\n", curr_time);
 }
 
-void receiverLTE() {
-    Sockets sock;
-    pthread_create(&T1, NULL, receiveLTE, &sock);
-}
-
-void receiverWiFi() {
-    Sockets sock;
-    pthread_create(&T2, NULL, receiveWiFi, &sock);
-}
