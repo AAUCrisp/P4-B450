@@ -61,8 +61,9 @@ int main(int argc, char *argv[]) {
 
     // -- Print out results -- 
     cout << "\nSensor Data is: " << data_str << endl;               // The "Sensed" Data
-    cout << "\nRAM Command is: " << grid[data_int-1] << endl;       // Coordinate from RAM version
-    cout << "\nCPU Command is: " << cpu_command << endl;            // Coordinate from CPU version
+    if(use_grid == 1) {
+        cout << "\nRAM Command is: " << grid[data_int-1] << endl;       // Coordinate from RAM version
+    }    cout << "\nCPU Command is: " << cpu_command << endl;            // Coordinate from CPU version
 
 
     /* ----------- end --------------
