@@ -33,8 +33,8 @@ int main() {
     uint PORT_WiFi_TRANSMITTER = 9001;
     const char* LTE = "wwan0";
     const char* WiFi = "wlan0";
-    const char* IP_LTE = "10.20.0.13";      // IP of server
-    const char* IP_WiFi = "192.168.1.143";  // IP of server
+    const char* IP_LTE = "10.20.0.16";      // IP of server
+    const char* IP_WiFi = "192.168.1.136";  // IP of server
 
     /* Misc */
     pthread_t T1, T2;

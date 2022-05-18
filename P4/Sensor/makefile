@@ -1,11 +1,11 @@
-all: Git SensorStart SensorMonitoring
+all: Git Sensor SensorMonitoring
 
 Git:
 	git pull
 
-SensorStart: Sensor.c SocketFunctions.o shm_write.o shm_read.o
-	gcc -pthread Sensor.c SocketFunctions.o shm_write.o shm_read.o -o SensorStart -lrt
-	touch SensorStart
+Sensor: Sensor.c SocketFunctions.o shm_write.o shm_read.o
+	gcc -pthread Sensor.c SocketFunctions.o shm_write.o shm_read.o -o Sensor -lrt
+	touch Sensor
 
 SensorMonitoring: SensorMonitoring.c shm_write.o shm_read.o SocketFunctions.o
 	gcc -pthread SensorMonitoring.c shm_write.o shm_read.o SocketFunctions.o -o SensorMonitoring -lrt
@@ -32,6 +32,6 @@ test: Libraries.c $(Dependencies)
 	touch Libraries.c
 
 clean:
-	rm -f SensorStart SensorMonitoring
+	rm -f Sensor SensorMonitoring
 	rm *.o
 	@echo "clean completed!"

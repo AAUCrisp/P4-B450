@@ -1,19 +1,15 @@
-all: Git ClientStart ServerStart SignalMonitoring
+all: Git ControlUnit SignalMonitoring
 
 Git:
 	git pull
 
-ClientStart: ClientTest.c
-	gcc -pthread ClientTest.c -o ClientStart
-	touch ClientTest.c
-
-ServerStart: Control_Unit.c Sockets.o RSSI.o shm_write.o shm_read.o
-	gcc -pthread Control_Unit.c Sockets.o RSSI.o shm_write.o shm_read.o -o ServerStart -lrt
-	touch Control_Unit.c
+ControlUnit: Control_Unit.c Sockets.o RSSI.o shm_write.o shm_read.o
+	gcc -pthread Control_Unit.c Sockets.o RSSI.o shm_write.o shm_read.o -o ControlUnit -lrt
+	touch ControlUnit
 
 SignalMonitoring: SignalMonitoring.c RSSI.o shm_write.o shm_read.o Sockets.o
 	gcc -pthread SignalMonitoring.c RSSI.o shm_write.o shm_read.o Sockets.o -o SignalMonitoring -lrt
-	touch SignalMonitoring.c
+	touch SignalMonitoring
 
 Sockets.o: Headers/Sockets.c Headers/Sockets.h Headers/shm_write_read.h
 	gcc -c Headers/Sockets.c -lrt
@@ -39,20 +35,7 @@ test: Libraries.c $(Dependencies)
 	gcc -c Libraries.c $(Dependencies) -lrt
 	touch Libraries.c
 
-
-# TESTING SHIT!
-# SignalMonitoring: SignalMonitoring.c $(Dependencies)
-#SignalMonitoring: SignalMonitoring.c RSSI.o shm_write.o shm_read.o Sockets.o
-	
-#   echo $(Dependencies)
-
-#	gcc -pthread $(Dependencies) SignalMonitoring.c  -o SignalMonitoring -lrt
-#	 gcc -pthread SignalMonitoring.c RSSI.o shm_write.o shm_read.o Sockets.o -o SignalMonitoring -lrt
-#	touch SignalMonitoring
-
-
-
 clean:
-	rm -f ClientStart ServerStart SignalMonitoring
+	rm -f ControlUnit SignalMonitoring
 	rm *.o
 	@echo "clean completed!"
