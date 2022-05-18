@@ -23,8 +23,8 @@ int main()
         printf("Child process ID : %d \n", getpid());
         
 
-        char path[] = "./Child";
-        const char* argv[] = {"./Child", NULL};
+        char path[] = "Child";
+        const char* argv[] = {"Child", NULL};
         execvp("./Child", argv);
         printf("ERROR: DID NOT START THE CHILD PROCESS \n \n");
     } else {
