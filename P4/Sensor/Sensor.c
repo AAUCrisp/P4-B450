@@ -36,6 +36,7 @@ int main() {
     /* Misc */
     pthread_t T1, T2;
     char* curr_time;
+    pthread_mutex_t mutex_lock;
 
     /* Create sockets */
     Sockets sock;
@@ -68,21 +69,11 @@ int main() {
         execv(path, args);
 
     } else {
+        pthread_create(&T1, NULL, transmitLTE, (void*)&sock);
+        pthread_create(&T2, NULL, transmitWiFi, (void*)&sock);
         while (1) {
-            msg = shm_read(32, GSV_KEY);
-            GSV = atoi(msg);
-            printf("GSV from shared memory: %s\n", msg);
-            printf("GSV converted: %d\n", GSV);
             sprintf(buffer, "%d", generate(0, 2500));
             shm_write(buffer, 32, RAND_INT_KEY);
-
-            if (GSV == B || GSV == L) {
-                transmitLTE(&sock);
-            }
-
-            if (GSV == B || GSV == W) {
-                transmitWiFi(&sock);
-            }
             sleep(3);
         }
     }

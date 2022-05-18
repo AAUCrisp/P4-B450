@@ -3,6 +3,7 @@
 #include <fcntl.h>
 #include <netinet/in.h>
 #include <pthread.h>
+#include <semaphore.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -18,6 +19,11 @@
 #include <unistd.h>
 
 void shm_write(const char* message, const int SIZE, const char* name) {
+    /* Semaphore variables */
+    sem_t* sp;
+    int retval;
+    int id, err;
+
     /* shared memory file descriptor */
     int shm_fd;
 
@@ -25,7 +31,8 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     void* ptr;
 
     /* create the shared memory object */
-    shm_fd = shm_open(name, O_CREAT | O_RDWR, 0666);
+    // shm_fd = shm_open(name, O_CREAT | O_RDWR, 0666); ORIGINAL
+    shm_fd = shm_open(name, O_CREAT | O_RDWR, 0644);
 
     /* configure the size of the shared memory object */
     ftruncate(shm_fd, SIZE);
@@ -35,7 +42,28 @@ void shm_write(const char* message, const int SIZE, const char* name) {
 
     /* write to the shared memory object */
     sprintf(ptr, "%s", message);
-    printf("Wrote from shm_write: %s\n", (char*)ptr);
+
+    /* semaphore code to lock the shared mem */
+    /* Initialize the semaphore . */
+
+    /*
+    retval = sem_init(sp, 1, 2);
+    if (retval != 0) {
+        perror(" Couldn ’t initialize . ");
+        exit(3);
+    }
+    retval = sem_trywait(sp);
+    printf(" Did trywait . Returned %d >\n ", retval);
+    retval = sem_trywait(sp);
+    printf(" Did trywait . Returned %d >\n ", retval);
+    retval = sem_trywait(sp);
+    printf(" Did trywait . Returned %d >\n ", retval);
+
+    sem_destroy(sp);*/
+
+    
+
+    // printf("Wrote from shm_write: %s\n", (char*)ptr);
 
     // printf("This is ptr: %p\n", ptr);
     // printf("This is ptr char*: %s\n", (char*)ptr);

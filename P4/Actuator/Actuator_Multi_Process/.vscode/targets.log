@@ -1,6 +1,4 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-make: *** No rule to make target 'all'.  Stop.
-
 # GNU Make 4.2.1
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2016 Free Software Foundation, Inc.
@@ -8,7 +6,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed May 18 16:00:41 2022
+# Make data base, printed on Wed May 18 13:09:36 2022
 
 # Variables
 
@@ -41,7 +39,7 @@ GDMSESSION = ubuntu
 # environment
 XMODIFIERS = @im=ibus
 # makefile
-CURDIR := /home/ubeyd/P4-B450/P4
+CURDIR := /home/ubeyd/P4-B450/P4/Actuator/Actuator2
 # makefile
 SHELL = /bin/sh
 # environment
@@ -54,12 +52,14 @@ VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupp
 JOURNAL_STREAM = 8:45996
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
+# makefile (from 'makefile', line 29)
+Dependencies = $(wildcard */*.c)
 # environment
 SNAP_INSTANCE_NAME = code
 # environment
 SNAP_ARCH = amd64
-# makefile
-MAKEFILE_LIST := 
+# makefile (from 'makefile', line 1)
+MAKEFILE_LIST :=  makefile
 # automatic
 @F = $(notdir $@)
 # environment
@@ -77,7 +77,7 @@ MANAGERPID = 1397
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
 # environment
-VSCODE_CWD = /home/ubeyd/P4-B450/P4
+VSCODE_CWD = /home/ubeyd/P4-B450
 # environment
 GSETTINGS_SCHEMA_DIR = /snap/code/96/usr/share/glib-2.0/schemas
 # default
@@ -125,7 +125,7 @@ VSCODE_PIPE_LOGGING = true
 # environment
 SNAP_INSTANCE_KEY = 
 # environment
-PWD = /home/ubeyd/P4-B450/P4
+PWD = /home/ubeyd/P4-B450/P4/Actuator/Actuator2
 # default
 .LOADED := 
 # environment
@@ -181,7 +181,7 @@ SHLVL = 1
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-c172520b-a7d8-4d9c-b736-40fbee912592.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-449e3f68-982f-46fc-95b7-99d7e6ada31a.sock
 # default
 MAKE_VERSION := 4.2.1
 # environment
@@ -189,7 +189,7 @@ USER = ubeyd
 # environment
 SNAP_REVISION = 96
 # makefile
-.DEFAULT_GOAL := 
+.DEFAULT_GOAL := all
 # environment
 XDG_CURRENT_DESKTOP = Unity
 # automatic
@@ -197,7 +197,7 @@ XDG_CURRENT_DESKTOP = Unity
 # default
 MAKE_COMMAND := make
 # environment
-OLDPWD = /home/ubeyd/P4-B450/P4/Actuator
+OLDPWD = /home/ubeyd
 # default
 .VARIABLES := 
 # automatic
@@ -209,6 +209,7 @@ VSCODE_IPC_HOOK = /run/user/1000/vscode-ced47ce8-1.67.1-main.sock
 # makefile
 MAKEFLAGS = pqrR
 # environment
+ 
 MFLAGS = -pqrR
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
@@ -218,8 +219,6 @@ MFLAGS = -pqrR
 GDK_BACKEND = x11
 # automatic
 +F = $(notdir $+)
-# environment
-NO_AT_BRIDGE = 1
 # environment
 QT_ACCESSIBILITY = 1
 # default
@@ -259,10 +258,9 @@ LANG = C
 # environment
 TERM = xterm-256color
 # environment
-VSCODE_PID = 6695
+VSCODE_PID = 3511
 # variable set hash-table stats:
- 
-# Load=124/1024=12%, Rehash=0, Collisions=15/146=10%
+# Load=124/1024=12%, Rehash=0, Collisions=15/153=10%
 
 # Pattern-specific Variable Values
 
@@ -270,9 +268,22 @@ VSCODE_PID = 6695
 
 # Directories
 
-# . (device 66309, inode 3153912): 9 files, no impossibilities.
+# shm_read.o (device 66309, inode 3153450): could not be opened.
+# Child (device 66309, inode 3153367): could not be opened.
+# . (device 66309, inode 3153113): 16 files, no impossibilities.
+# log.txt (device 66309, inode 3153333): could not be opened.
+# makefile (device 66309, inode 3153337): could not be opened.
+# child.cpp (device 66309, inode 3153327): could not be opened.
+# ServerStart (device 66309, inode 3153444): could not be opened.
+# server_function.cpp (device 66309, inode 3153328): could not be opened.
+# ClientStart (device 66309, inode 3153364): could not be opened.
+# Client.c (device 66309, inode 3153338): could not be opened.
+# shm_write.o (device 66309, inode 3153402): could not be opened.
+# ClientTest.c (device 66309, inode 3153358): could not be opened.
+# Headers (device 66309, inode 3153320): 8 files, no impossibilities.
+# Parent.cpp (device 66309, inode 3153247): could not be opened.
 
-# 9 files, no impossibilities in 1 directories.
+# 24 files, no impossibilities in 14 directories.
 
 # Implicit Rules
 
@@ -280,26 +291,111 @@ VSCODE_PID = 6695
 
 # Files
 
-# Not a target:
-all:
+all: ClientStart ServerStart Child
 #  Command line target.
 #  Implicit rule search has been done.
 #  File does not exist.
-#  File has not been updated.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/3=0%
 
 # Not a target:
-Makefile:
-#  Implicit rule search has been done.
-#  File does not exist.
-#  File has been updated.
-#  Failed to be updated.
+child.cpp:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+Git:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 4):
+	git pull
+
+# Not a target:
+.SUFFIXES:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+test: Libraries.c Headers/shm_read.c Headers/shm_write.c
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 32):
+	gcc -c Libraries.c $(Dependencies) -lrt
+	touch Libraries.c
+	
 
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
-#  File does not exist.
+#  Last modified 2022-05-18 10:39:35.88239618
 #  File has been updated.
-#  Failed to be updated.
+#  Successfully updated.
+
+ 
+# Not a target:
+Headers/shm_write_read.h:
+#  Implicit rule search has been done.
+#  Last modified 2022-05-18 10:44:02.819965975
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+Client.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-05-17 19:48:24.885361754
+#  File has been updated.
+#  Successfully updated.
+
+shm_write.o: Headers/shm_write.c Headers/shm_write_read.h
+#  Implicit rule search has not been done.
+#  Last modified 2022-05-18 11:30:28.696787941
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'makefile', line 20):
+	g++ -c Headers/shm_write.c -lrt
+	touch Headers/shm_write.c 
+
+# Not a target:
+Parent.cpp:
+#  Implicit rule search has been done.
+#  Last modified 2022-05-18 11:30:29.164783042
+#  File has been updated.
+#  Successfully updated.
+
+shm_read.o: Headers/shm_read.c Headers/shm_write_read.h
+#  Implicit rule search has not been done.
+#  Last modified 2022-05-18 10:49:20.094638715
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'makefile', line 24):
+	g++ -c Headers/shm_read.c -lrt
+	touch Headers/shm_read.c 
+
+Child: child.cpp shm_write.o shm_read.o
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 15):
+	g++ -pthread child.cpp shm_write.o shm_read.o -o Child -lrt
+	touch child.cpp
+
+# Not a target:
+Headers/shm_write.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-05-18 11:30:28.696787941
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+Headers/shm_read.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-05-18 10:49:20.094638715
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
 .DEFAULT:
@@ -307,27 +403,72 @@ makefile:
 #  Modification time never checked.
 #  File has not been updated.
 
-# Not a target:
-GNUmakefile:
-#  Implicit rule search has been done.
-#  File does not exist.
+clean:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 49):
+	rm -f ClientStart ServerStart child
+	rm *.o
+	@echo "clean completed!"
+
+ClientStart: Client.c
+#  Implicit rule search has not been done.
+#  Last modified 2022-05-18 10:49:19.93462633
 #  File has been updated.
-#  Failed to be updated.
+#  Successfully updated.
+#  recipe to execute (from 'makefile', line 7):
+	gcc -pthread Client.c -o ClientStart 
+	touch ClientTest.c
+
+ServerStart: Parent.cpp shm_write.o shm_read.o
+#  Implicit rule search has not been done.
+#  Implicit/static pattern stem: ''
+#  Last modified 2022-05-18 11:30:29.160783085
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# automatic
+# @ := ServerStart
+# automatic
+# % := 
+# automatic
+# * := 
+# automatic
+# + := Parent.cpp shm_write.o shm_read.o
+# automatic
+# | := 
+# automatic
+# < := Parent.cpp
+# automatic
+# ^ := Parent.cpp shm_write.o shm_read.o
+# automatic
+# ? := Parent.cpp
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=1/11=9%
+#  recipe to execute (from 'makefile', line 11):
+	g++ -pthread Parent.cpp shm_write.o shm_read.o -o ServerStart -lrt
+	touch Parent.cpp
+
+# Not a target:
+Libraries.c:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
 
 # files hash-table stats:
-# Load=6/1024=1%, Rehash=0, Collisions=0/15=0%
+# Load=19/1024=2%, Rehash=0, Collisions=1/53=2%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 17 / storage = 157 B / avg = 9 B
-# current buf: size = 8162 B / used = 157 B / count = 17 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 34 / storage = 378 B / avg = 11 B
+# current buf: size = 8162 B / used = 378 B / count = 34 / avg = 11 B
 
-# strcache performance: lookups = 20 / hit rate = 15%
+# strcache performance: lookups = 82 / hit rate = 58%
 # hash-table stats:
-# Load=17/8192=0%, Rehash=0, Collisions=1/20=5%
-# Finished Make data base on Wed May 18 16:00:41 2022
+# Load=34/8192=0%, Rehash=0, Collisions=2/82=2%
+# Finished Make data base on Wed May 18 13:09:36 2022
 
  

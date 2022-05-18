@@ -1,11 +1,7 @@
-all: ClientStart ServerStart Child
+all: ServerStart Child
 
 Git:
 	git pull
-
-ClientStart: Client.c
-	gcc -pthread Client.c -o ClientStart 
-	touch ClientTest.c
 
 ServerStart: Parent.cpp shm_write.o shm_read.o
 	g++ -pthread Parent.cpp shm_write.o shm_read.o -o ServerStart -lrt
@@ -46,6 +42,6 @@ test: Libraries.c $(Dependencies)
 
 
 clean:
-	rm -f ClientStart ServerStart child
+	rm -f ServerStart Child
 	rm *.o
 	@echo "clean completed!"
