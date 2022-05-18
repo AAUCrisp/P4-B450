@@ -31,6 +31,7 @@ int main(int argc, char *argv[]) {
         if(data_str == "no") {
             cout << "=====  RAM Grid Disabled =====" << endl;
             use_grid = 0;
+            data_str = to_string(data_int);
         }
         else {
             cout << "Inserted Sensor-data Number: " << argv[1] << endl;
