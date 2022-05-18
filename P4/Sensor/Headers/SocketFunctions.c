@@ -213,7 +213,6 @@ void *transmitLTE(void *socket) {
             sleep(2);
             pthread_mutex_unlock(&sock->mutex_lock);
         }
-        pthread_mutex_destroy(&sock->mutex_lock);
         /* else {
             usleep(10000);
         }*/
@@ -248,7 +247,6 @@ void *transmitWiFi(void *socket) {
             sleep(2);
             pthread_mutex_unlock(&sock->mutex_lock);
         }
-        pthread_mutex_destroy(&sock->mutex_lock);
         /* else {
             usleep(20000);
         }*/
