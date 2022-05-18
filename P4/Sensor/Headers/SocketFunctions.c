@@ -217,4 +217,3 @@ void transmitWiFi(void *socket) {
     sendto(sock->sockWiFi_TRANSMITTER, sendWiFi, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, sizeof(sock->ClientWiFi_TRANSMITTER));
     printf("Message from WiFi transmitted at: %s\n", curr_time);
 }
-
