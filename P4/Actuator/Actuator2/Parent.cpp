@@ -24,8 +24,8 @@ int main()
         
 
         char path[] = "./child";
-        const char* argv[] = {"./child", nullptr};
-        execvp("./child", argv);
+        const char* args[] = {"./child", nullptr};
+        execvp("./child", args);
         printf("ERROR: DID NOT START THE CHILD PROCESS \n \n");
     } else {
         initialize_Server();

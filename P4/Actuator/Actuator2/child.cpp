@@ -29,9 +29,10 @@ void logData2(int *arr)
 
 int main()
 {
+    printf("==================\nChild Process Started\n==================\n\n");
     while(1)
     {
-    printf("==================\nChild Process Started\n==================\n\n");
+    
     received_message = shm_read(1024, GSV_KEY);
 
     snprintf(msg, sizeof(msg), "%s" , received_message);
