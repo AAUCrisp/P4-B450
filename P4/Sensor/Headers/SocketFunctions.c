@@ -1,5 +1,3 @@
-#include "SocketFunctions.h"
-
 #include <arpa/inet.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -19,6 +17,7 @@
 #include <time.h>
 #include <unistd.h>
 
+#include "SocketFunctions.h"
 #include "shm_write_read.h"
 
 /* Define buffers & PORT number */
@@ -230,7 +229,7 @@ void transmitWiFi(void *socket) {
         if (GSV == B || GSV == W) {
             RAND_INT = shm_read(32, RAND_INT_KEY);
             printf("WiFi || Random int from shm: %s\n", RAND_INT);
-            
+
             curr_timeWiFi = Timestamp();
             sprintf(sendWiFi, "%s %s", RAND_INT, curr_time);
             printf("sendWiFi: %s\n", sendWiFi);
