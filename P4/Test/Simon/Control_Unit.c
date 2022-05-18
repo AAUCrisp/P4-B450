@@ -53,10 +53,10 @@ int main() {
         printf("ERROR: DIDN'T START THE NEW PROCESS!!\n");  // Should never get this far!
     } else {
         while (1) {
-            Timestamp();
+            //Timestamp();
             pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
             pthread_join(T1, (void**)&msg_LTE);
-            Timestamp();
+            //Timestamp();
             pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
             pthread_join(T2, (void**)&msg_WiFi);
             printf("THIS IS RECEIVED MESSAGE LTE: %s\n", *msg_LTE);
