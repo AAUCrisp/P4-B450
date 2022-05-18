@@ -1,15 +1,22 @@
-#include <stdio.h>
-#include <string.h>
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <netdb.h>
-#include <netinet/in.h>
 #include <arpa/inet.h>
-#include <unistd.h>
-#include <pthread.h>
-#include <time.h>
-#include <stdlib.h>
 #include <errno.h>
+#include <fcntl.h>
+#include <netinet/in.h>
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/ipc.h>  //IPC thing
+#include <sys/mman.h>
+#include <sys/shm.h>  //SHM thing
+#include <sys/socket.h>
+#include <sys/stat.h>
+#include <sys/time.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <time.h>
+#include <unistd.h>
+#include <netdb.h>
 
 struct addrinfo ServerLTE, *res1;   // a socket struct design to be used with IPv4
 struct addrinfo ServerWiFi, *res;  // a socket struct design to be used with IPv4

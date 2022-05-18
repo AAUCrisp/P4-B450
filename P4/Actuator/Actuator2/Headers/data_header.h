@@ -2,7 +2,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>
-
+#include "hex.cpp"
 
 
 
@@ -23,7 +23,7 @@ std::ofstream File;
 int movement_x;
 int movement_y;
 
-#include "hex.cpp"
+
 
 
 //int movement_x;
