@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed May 18 10:31:43 2022
+# Make data base, printed on Wed May 18 10:44:02 2022
 
 # Variables
 
@@ -138,7 +138,6 @@ GTK_MODULES = gail:atk-bridge
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
 HOME = /home/ubeyd
- 
 # environment
 LESSCLOSE = /usr/bin/lesspipe %s %s
 # environment
@@ -179,6 +178,7 @@ QT_IM_MODULE = ibus
 SNAP_USER_DATA = /home/ubeyd/snap/code/96
 # environment
 SHLVL = 1
+ 
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
@@ -270,6 +270,7 @@ VSCODE_PID = 54320
 
 # Directories
 
+ 
 # . (device 66309, inode 3152966): 9 files, no impossibilities.
 
 # 9 files, no impossibilities in 1 directories.
@@ -301,11 +302,11 @@ makefile:
 #  File has been updated.
 #  Failed to be updated.
 
- 
 # Not a target:
 .DEFAULT:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
+ 
 #  File has not been updated.
 
 # Not a target:
@@ -329,6 +330,6 @@ GNUmakefile:
 # strcache performance: lookups = 20 / hit rate = 15%
 # hash-table stats:
 # Load=17/8192=0%, Rehash=0, Collisions=1/20=5%
-# Finished Make data base on Wed May 18 10:31:43 2022
+# Finished Make data base on Wed May 18 10:44:02 2022
 
  
