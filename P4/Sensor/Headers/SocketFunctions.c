@@ -211,7 +211,7 @@ void *transmitLTE(void *socket) {
             printf("Message from LTE transmitted at: %s\n", curr_time);
             sleep(2);
         } else {
-            usleep(10000);
+            //usleep(10000);
         }
     }
 }
@@ -243,7 +243,7 @@ void *transmitWiFi(void *socket) {
             printf("Message from WiFi transmitted at: %s\n", curr_time);
             sleep(2);
         } else {
-            usleep(10000);
+            //usleep(10000);
         }
     }
 }
