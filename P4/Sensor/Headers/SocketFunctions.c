@@ -212,7 +212,8 @@ void *transmitLTE(void *socket) {
             printf("Message from LTE transmitted at: %s\n", curr_time);
             sleep(2);
             pthread_mutex_unlock(&sock->mutex_lock);
-        } 
+        }
+        pthread_mutex_destroy(&sock->mutex_lock);
         /* else {
             usleep(10000);
         }*/
@@ -246,7 +247,8 @@ void *transmitWiFi(void *socket) {
             printf("Message from WiFi transmitted at: %s\n", curr_time);
             sleep(2);
             pthread_mutex_unlock(&sock->mutex_lock);
-        } 
+        }
+        pthread_mutex_destroy(&sock->mutex_lock);
         /* else {
             usleep(20000);
         }*/

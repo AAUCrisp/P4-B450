@@ -71,7 +71,6 @@ int main() {
     } else {
         pthread_create(&T1, NULL, transmitLTE, (void*)&sock);
         pthread_create(&T2, NULL, transmitWiFi, (void*)&sock);
-        pthread_mutex_destroy(&sock.mutex_lock);
         while (1) {
             sprintf(buffer, "%d", generate(0, 2500));
             shm_write(buffer, 32, RAND_INT_KEY);
