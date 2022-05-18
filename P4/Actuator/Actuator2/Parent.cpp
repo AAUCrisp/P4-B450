@@ -23,9 +23,9 @@ int main()
         printf("Child process ID : %d \n", getpid());
         
 
-        char path[] = "./child";
-        const char* args[] = {"./child", nullptr};
-        execvp("./child", args);
+        char path[] = "./Child";
+        const char* args[] = {"./Child", nullptr};
+        execvp(path, args);
         printf("ERROR: DID NOT START THE CHILD PROCESS \n \n");
     } else {
         initialize_Server();
