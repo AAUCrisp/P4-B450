@@ -31,9 +31,6 @@ int bindLTE, bindWiFi;
 int RX_LTE, RX_WiFi;
 int TX_LTE, TX_WiFi;
 
-/* Define threads */
-pthread_t T1, T2;
-
 /* Function to create receiver sockets */
 void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
     /* Time struct for socket timeout */
@@ -128,83 +125,72 @@ int generate(int Min, int Max) {
 }
 
 /* Function to receive LTE packets */
-void *receiveLTE() {
-    while (1) {
-        Sockets *sock = (Sockets *)socket;
-        const char *GSV_KEY = "GSV_KEY";
-        int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
+void *receiveLTE(void *socket) {
+    Sockets *sock = (Sockets *)socket;
+    const char *GSV_KEY = "GSV_KEY";
+    int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
 
-        printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
-        RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
-        Timestamp();
+    printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
+    RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
+    Timestamp();
 
-        // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
-        printf("LTE || Message from LTE received at: %s\n", curr_time);
-        printf("LTE || Message: %s Sensor \n", message);
-        shm_write(message, 32, GSV_KEY);
-    }
+    // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
+    printf("LTE || Message from LTE received at: %s\n", curr_time);
+    printf("LTE || Message: %s Sensor \n", message);
+    shm_write(message, 32, GSV_KEY);
+    pthread_exit(NULL);
 }
 
 /* Function to receive WiFi packets */
-void *receiveWiFi() {
-    while (1) {
-        Sockets *sock = (Sockets *)socket;
-        const char *GSV_KEY = "GSV_KEY";
-        int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
+void *receiveWiFi(void *socket) {
+    Sockets *sock = (Sockets *)socket;
+    const char *GSV_KEY = "GSV_KEY";
+    int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
 
-        printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
-        RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
-        Timestamp();
+    printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
+    RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
+    Timestamp();
 
-        // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
-        printf("WiFi || Message from WiFi received at: %s \n", curr_time);
-        printf("WiFi || Message: %s Sensor \n", message);
-        shm_write(message, 32, GSV_KEY);
-    }
+    // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
+    printf("WiFi || Message from WiFi received at: %s \n", curr_time);
+    printf("WiFi || Message: %s Sensor \n", message);
+    shm_write(message, 32, GSV_KEY);
+    pthread_exit(NULL);
 }
 
-void transmitLTE(void *socket) {
-    const char *RAND_INT_KEY = "RAND_INT_KEY";
-    const char *RAND_INT;
-    char sendLTE[BUFFER];
+void *transmitLTE(void *socket) {
+    Sockets *sock = (Sockets *)socket;
+    const char *RAND_KEY = "RAND_KEY";
+    char *RAND_INT;
+    int LenLTE = sizeof(sock->ClientLTE_TRANSMITTER);
 
-    // int LenLTE = sizeof(sock.ClientLTE_TRANSMITTER);
-    printf("transmitLTE socket: %d\n", sock.sockLTE_TRANSMITTER);
+    RAND_INT = shm_read(32, RAND_KEY);
+    printf("RAND_INT LTE: %s\n", RAND_INT);
 
-    RAND_INT = shm_read(32, RAND_INT_KEY);
-    printf("LTE || Random int from shm: %s\n", RAND_INT);
+    printf("transmitLTE socket: %d\n", sock->sockLTE_TRANSMITTER);
+    char test1[] = "test1";
+    TX_LTE = sendto(sock->sockLTE_TRANSMITTER, test1, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, LenLTE);
 
-    curr_time = Timestamp();
-    sprintf(sendLTE, "%d %s", RAND_INT, curr_time);
-    printf("sendLTE: %s\n", sendLTE);
-
-    sendto(sock.sockLTE_TRANSMITTER, sendLTE, BUFFER, 0, (struct sockaddr *)&sock.ClientLTE_TRANSMITTER, sizeof(sock.sockLTE_TRANSMITTER));
-    printf("Message from LTE transmitted at: %s\n", curr_time);
+    // printf("LTE-Thread id = %ld\n", pthread_self());
+    printf("Message from LTE transmitted at: %s\n\n", curr_time);
+    pthread_exit(NULL);
 }
 
-void transmitWiFi(void *socket) {
-    const char *RAND_INT_KEY = "RAND_INT_KEY";
-    const char *RAND_INT;
-    char sendWiFi[BUFFER];
+void *transmitWiFi(void *socket) {
+    Sockets *sock = (Sockets *)socket;
+    const char *RAND_KEY = "RAND_KEY";
+    char *RAND_INT;
+    int LenWiFi = sizeof(sock->ClientWiFi_TRANSMITTER);
 
-    // int LenWiFi = sizeof(sock.ClientWiFi_TRANSMITTER);
-    printf("transmitWiFi socket: %d\n", sock.sockWiFi_TRANSMITTER);
+    RAND_INT = shm_read(32, RAND_KEY);
+    printf("RAND_INT WiFi: %s\n", RAND_INT);
 
-    RAND_INT = shm_read(32, RAND_INT_KEY);
-    printf("LTE || Random int from shm: %s\n", RAND_INT);
+    printf("transmitLTE socket: %d\n", sock->sockWiFi_TRANSMITTER);
+    char test2[] = "test2";
+    TX_WiFi = sendto(sock->sockWiFi_TRANSMITTER, test2, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, LenWiFi);
 
-    curr_time = Timestamp();
-    sprintf(sendWiFi, "%d %s", RAND_INT, curr_time);
-    printf("sendWiFi: %s\n", sendWiFi);
-
-    sendto(sock.sockWiFi_TRANSMITTER, sendWiFi, BUFFER, 0, (struct sockaddr *)&sock.ClientWiFi_TRANSMITTER, sizeof(sock.ClientWiFi_TRANSMITTER));
-    printf("Message from WiFi transmitted at: %s\n", curr_time);
+    // printf("WiFi-Thread id = %ld\n", pthread_self());
+    printf("Message from WiFi transmitted at: %s\n\n", curr_time);
+    pthread_exit(NULL);
 }
 
-void receiverLTE() {
-    pthread_create(&T1, NULL, receiveLTE, NULL);
-}
-
-void receiverWiFi() {
-    pthread_create(&T2, NULL, receiveWiFi, NULL);
-}

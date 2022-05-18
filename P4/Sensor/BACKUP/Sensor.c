@@ -22,11 +22,12 @@
 
 #define BUFFER 64
 
-
+int generate(int Min, int Max) {
+    int number = (rand() % ((Max + 1) - Min)) + Min;
+    return number;
+}
 
 int main() {
-    printf("==================\nSensor Process Started\n==================\n\n");
-
     /* Initialize PORT & INTERFACE*/
     uint PORT_LTE_TRANSMITTER = 9000;
     uint PORT_WiFi_TRANSMITTER = 9001;
@@ -47,11 +48,9 @@ int main() {
 
     /* Shared memory object variables */
     const char* GSV_KEY = "GSV_KEY";
-    const char* RAND_INT_KEY = "RAND_INT_KEY";
-    const char* RAND_INT;
     const char* msg;
 
-    char buffer[BUFFER];
+    int RAND_INT;
 
     int GSV;
     int B = 0;
@@ -70,20 +69,43 @@ int main() {
         execv(path, args);
 
     } else {
+        
         while (1) {
+            sleep(2);
             msg = shm_read(32, GSV_KEY);
             GSV = atoi(msg);
             printf("GSV from shared memory: %s\n", msg);
             printf("GSV converted: %d\n", GSV);
-            sprintf(buffer, "%s", generate(0, 2500));
-            shm_write(buffer, 32, RAND_INT_KEY);
+            RAND_INT = generate(0, 2500);
 
             if (GSV == B || GSV == L) {
-                transmitLTE();
+                printf("Random int: %d\n", RAND_INT);
+
+                int LenLTE = sizeof(sock.ClientLTE_TRANSMITTER);
+                printf("transmitLTE socket: %d\n", sock.sockLTE_TRANSMITTER);
+
+                char sendLTE[BUFFER];
+                curr_time = Timestamp();
+                sprintf(sendLTE, "%d %s", RAND_INT, curr_time);
+                printf("sendLTE: %s\n", sendLTE);
+
+                sendto(sock.sockLTE_TRANSMITTER, sendLTE, BUFFER, 0, (struct sockaddr*)&sock.ClientLTE_TRANSMITTER, LenLTE);
+                printf("Message from LTE transmitted at: %s\n", curr_time);
             }
 
             if (GSV == B || GSV == W) {
-                transmitWiFi();
+                printf("Random int: %d\n", RAND_INT);
+
+                int LenWiFi = sizeof(sock.ClientWiFi_TRANSMITTER);
+                printf("transmitLTE socket: %d\n", sock.sockWiFi_TRANSMITTER);
+
+                char sendWiFi[BUFFER];
+                curr_time = Timestamp();
+                sprintf(sendWiFi,"%d %s",RAND_INT, curr_time);
+                printf("sendWiFi: %s\n", sendWiFi);
+
+                sendto(sock.sockWiFi_TRANSMITTER, sendWiFi, BUFFER, 0, (struct sockaddr*)&sock.ClientWiFi_TRANSMITTER, LenWiFi);
+                printf("Message from WiFi transmitted at: %s\n", curr_time);
             }
         }
     }

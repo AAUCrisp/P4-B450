@@ -21,8 +21,6 @@
 #include "Headers/shm_write_read.h"
 
 int main() {
-    printf("==================\nSensor Monitoring Process Started\n==================\n\n");
-
     /* Initialize PORT & INTERFACE*/
     uint PORT_LTE_RECEIVER = 9002;
     uint PORT_WiFi_RECEIVER = 9003;
@@ -42,6 +40,17 @@ int main() {
     printf("sockWiFi_RECEIVER (OUTSIDE): %d\n", sock.sockWiFi_RECEIVER);
     int count = 0;
 
-    receiverLTE();
-    receiveWiFi();
+    while (1) {
+        count++;
+        Timestamp();
+        pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
+        Timestamp();
+        pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
+
+        sleep(2);
+        printf("Count: %d\n", count);
+        if (count == 20) {
+            exit(0);
+        }
+    }
 }

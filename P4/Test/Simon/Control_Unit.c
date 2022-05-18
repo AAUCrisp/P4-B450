@@ -22,6 +22,8 @@
 
 /* Main running code */
 int main() {
+    printf("==================\nControl Unit Process Started\n==================\n\n");
+
     /* Initialize PORT & INTERFACE*/
     uint PORT_LTE_RECEIVER = 9000;
     uint PORT_WiFi_RECEIVER = 9001;

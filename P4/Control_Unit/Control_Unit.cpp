@@ -14,6 +14,7 @@ int data_int = 1500000;     // Static Test Variable
 
 /* Main running code */
 int main(int argc, char *argv[]) {
+    printf("==================\nControl Unit Process Started\n==================\n\n");
 
     /* ------------------------------
     -------- Conversion Area --------

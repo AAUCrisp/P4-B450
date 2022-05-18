@@ -46,6 +46,8 @@ int rsrp_mid = -85;
 int rsrp_good = -80;
 
 int main() {
+    printf("==================\nSignal Monitoring Process Started\n==================\n\n");
+
     /* Initialize PORT & INTERFACE*/
     uint PORT_LTE_TRANSMITTER = 9002;
     uint PORT_WiFi_TRANSMITTER = 9003;
@@ -60,7 +62,6 @@ int main() {
     printf("sockLTE_TRANSMITTER (OUTSIDE): %d\n", sock.sockLTE_TRANSMITTER);
     printf("sockWiFi_TRANSMITTER (OUTSIDE): %d\n", sock.sockWiFi_TRANSMITTER);
 
-    printf("==================\nMonitoring Process Started\n==================\n\n");
     int counter = 0;
 
     while (1) {
