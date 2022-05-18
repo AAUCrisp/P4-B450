@@ -1,3 +1,5 @@
+#include "SocketFunctions.h"
+
 #include <arpa/inet.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -17,7 +19,6 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "SocketFunctions.h"
 #include "shm_write_read.h"
 
 /* Define buffers & PORT number */
@@ -32,6 +33,10 @@ char *receive;
 int bindLTE, bindWiFi;
 int RX_LTE, RX_WiFi;
 int TX_LTE, TX_WiFi;
+int GSV;
+int B = 0;
+int W = 1;
+int L = 2;
 
 /* Define threads */
 pthread_t T1, T2;
@@ -42,7 +47,7 @@ void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *
     struct timeval tv2;
     tv2.tv_sec = 0;
     tv2.tv_usec = 500000;
-    
+
     /* Create socket receiver */
     sock->sockLTE_RECEIVER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sock->sockWiFi_RECEIVER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -52,8 +57,8 @@ void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *
     /* Setting up socket options & specifying interface for receiver */
     setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
     setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
-    //setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
-    //setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
+    // setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
+    // setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
 
     /* Error checking */
     if (sock->sockLTE_RECEIVER == -1) {
@@ -183,19 +188,28 @@ void transmitLTE(void *socket) {
     const char *RAND_INT_KEY = "RAND_INT_KEY";
     const char *RAND_INT;
     char sendLTE[BUFFER];
+    const char *GSV_KEY = "GSV_KEY";
+    const char *msg;
 
     // int LenLTE = sizeof(sock.ClientLTE_TRANSMITTER);
     printf("transmitLTE socket: %d\n", sock->sockLTE_TRANSMITTER);
 
-    RAND_INT = shm_read(32, RAND_INT_KEY);
-    printf("LTE || Random int from shm: %s\n", RAND_INT);
+    while (1) {
+        msg = shm_read(32, GSV_KEY);
+        GSV = atoi(msg);
 
-    curr_timeLTE = Timestamp();
-    sprintf(sendLTE, "%s %s", RAND_INT, curr_time);
-    printf("sendLTE: %s\n", sendLTE);
+        if (GSV == B || GSV == L) {
+            RAND_INT = shm_read(32, RAND_INT_KEY);
+            printf("LTE || Random int from shm: %s\n", RAND_INT);
 
-    sendto(sock->sockLTE_TRANSMITTER, sendLTE, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, sizeof(sock->sockLTE_TRANSMITTER));
-    printf("Message from LTE transmitted at: %s\n", curr_time);
+            curr_timeLTE = Timestamp();
+            sprintf(sendLTE, "%s %s", RAND_INT, curr_time);
+            printf("sendLTE: %s\n", sendLTE);
+
+            sendto(sock->sockLTE_TRANSMITTER, sendLTE, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, sizeof(sock->sockLTE_TRANSMITTER));
+            printf("Message from LTE transmitted at: %s\n", curr_time);
+        }
+    }
 }
 
 void transmitWiFi(void *socket) {
@@ -203,17 +217,26 @@ void transmitWiFi(void *socket) {
     const char *RAND_INT_KEY = "RAND_INT_KEY";
     const char *RAND_INT;
     char sendWiFi[BUFFER];
+    const char *GSV_KEY = "GSV_KEY";
+    const char *msg;
 
     // int LenWiFi = sizeof(sock.ClientWiFi_TRANSMITTER);
     printf("transmitWiFi socket: %d\n", sock->sockWiFi_TRANSMITTER);
 
-    RAND_INT = shm_read(32, RAND_INT_KEY);
-    printf("LTE || Random int from shm: %s\n", RAND_INT);
+    while (1) {
+        msg = shm_read(32, GSV_KEY);
+        GSV = atoi(msg);
 
-    curr_timeWiFi = Timestamp();
-    sprintf(sendWiFi, "%s %s", RAND_INT, curr_time);
-    printf("sendWiFi: %s\n", sendWiFi);
+        if (GSV == B || GSV == W) {
+            RAND_INT = shm_read(32, RAND_INT_KEY);
+            printf("WiFi || Random int from shm: %s\n", RAND_INT);
+            
+            curr_timeWiFi = Timestamp();
+            sprintf(sendWiFi, "%s %s", RAND_INT, curr_time);
+            printf("sendWiFi: %s\n", sendWiFi);
 
-    sendto(sock->sockWiFi_TRANSMITTER, sendWiFi, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, sizeof(sock->ClientWiFi_TRANSMITTER));
-    printf("Message from WiFi transmitted at: %s\n", curr_time);
+            sendto(sock->sockWiFi_TRANSMITTER, sendWiFi, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, sizeof(sock->sockWiFi_TRANSMITTER));
+            printf("Message from WiFi transmitted at: %s\n", curr_time);
+        }
+    }
 }
