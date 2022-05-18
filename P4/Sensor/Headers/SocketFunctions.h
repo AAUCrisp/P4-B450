@@ -23,11 +23,11 @@ void Sockets_Transmitter(Sockets *sock, const char *IP_LTE, const char *IP_WiFi,
 
 /* Function to receive LTE packets */
 void *receiveLTE(void *socket);
-void receiverLTE();
+void receiverLTE(Sockets *sock);
 
 /* Function to receive WiFi packets */
 void *receiveWiFi(void *socket);
-void receiverWiFi();
+void receiverWiFi(Sockets *sock);
 
 /* Function to transmit LTE packets */
 //void *transmitLTE(void *socket);

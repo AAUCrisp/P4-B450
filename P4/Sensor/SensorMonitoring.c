@@ -42,7 +42,7 @@ int main() {
     printf("sockWiFi_RECEIVER (OUTSIDE): %d\n", sock.sockWiFi_RECEIVER);
     int count = 0;
 
-    receiverLTE();
-    receiverWiFi();
+    receiverLTE(&sock);
+    receiverWiFi(&sock);
     sleep(3);
 }
