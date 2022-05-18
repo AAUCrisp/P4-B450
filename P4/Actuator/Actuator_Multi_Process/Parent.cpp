@@ -1,10 +1,10 @@
 #include "server_function.cpp"
-//#include "Headers/shm_write_read.h"
 #include <cassert>
-#include <iostream>
 
 
 
+
+// THIS FUNCTION OPENS CHILD PROGRAM!!!
 template <std::size_t N>
 int execvp(const char* file, const char* const (&argv)[N])
 {
@@ -19,13 +19,11 @@ int main()
     pid_t signal_monitor;
     signal_monitor = fork();
     if(signal_monitor == 0) {
-        printf("parent process ID: %d \n", getppid());
-        printf("Child process ID : %d \n", getpid());
-        
-
-        char path[] = "./Child";
-        const char* argv[] = {"./Child", NULL};
-        execvp("./Child", argv);
+        printf("parent process ID: %d \n", getppid()); // get parent id
+        printf("Child process ID : %d \n", getpid()); // get child id
+        char path[] = "./Child"; //specify path to child program
+        const char* argv[] = {"./Child", NULL}; // list over programs and their parameters
+        execvp("./Child", argv); // opens child program
         printf("ERROR: DID NOT START THE CHILD PROCESS \n \n");
     } else {
         initialize_Server();
@@ -34,7 +32,6 @@ int main()
             pthread_create(&T2, NULL, ReceiveCoordinateWiFi, NULL);
             usleep(100000);
         }
-        //kill(getpid(), SIGKILL);
         close(sockWiFi);
         close(sockLTE);
         exit(1);

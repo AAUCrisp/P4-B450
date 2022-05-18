@@ -1,7 +1,5 @@
 #include "Headers/shm_write_read.h"
 #include "Headers/Actuator_header.h"
-#include <iostream>
-#include <unistd.h>
 
 
 char msg[1024];
@@ -22,11 +20,11 @@ int main()
     while(1)
     {
     
-    received_message = shm_read(1024, GSV_KEY);
+    received_message = shm_read(1024, GSV_KEY); // READS DATA FROM SHARED MEMORY
 
-    snprintf(msg, sizeof(msg), "%s" , received_message);
+    snprintf(msg, sizeof(msg), "%s" , received_message); // PRINTS THE DATA FROM SHARED MEMORY TO THE CHAR ARRAY MSG
 
-    int* ra = process_Data(msg);
+    int* ra = process_Data(msg); //PROCESS DATA RECEIVED DATA
     logData1(ra);
     usleep(100000);
     }
