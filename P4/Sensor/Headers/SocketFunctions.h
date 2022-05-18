@@ -23,16 +23,24 @@ void Sockets_Transmitter(Sockets *sock, const char *IP_LTE, const char *IP_WiFi,
 
 /* Function to receive LTE packets */
 void *receiveLTE(void *socket);
+void receiverLTE();
 
 /* Function to receive WiFi packets */
 void *receiveWiFi(void *socket);
+void receiverWiFi();
 
 /* Function to transmit LTE packets */
-void *transmitLTE(void *socket);
+//void *transmitLTE(void *socket);
+void transmitLTE(void *socket);
 
 /* Function to transmit WiFi packets */
-void *transmitWiFi(void *socket);
+//void *transmitWiFi(void *socket);
+void transmitWiFi(void *socket);
 
+/* Function to generate timestamp */
 char *Timestamp();
+
+/* Function to generate random int */
+int generate(int Min, int Max);
 
 #endif
