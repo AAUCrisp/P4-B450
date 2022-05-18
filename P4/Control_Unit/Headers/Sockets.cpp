@@ -74,6 +74,11 @@ char *Timestamp() {
     return curr_time;
 }
 
+
+/* -------------------------
+------- RECEIVE AREA -------
+---------- start ---------*/
+
 void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
     /* Time struct for socket timeout */
     struct timeval tv2;
@@ -89,8 +94,8 @@ void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *
     /* Setting up socket options & specifying interface for receiver */
     setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
     setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
-    setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
-    setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
+    // setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
+    // setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
 
     /* Error checking */
     if (sock->sockLTE_RECEIVER == -1) {
@@ -128,6 +133,51 @@ void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *
     printf("Bind was succesful!\n");
 }
 
+
+/* Function to receive LTE packets */
+void *receiveLTE(void *socket) {
+    Sockets *sock = (Sockets *)socket;
+    int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
+
+    printf("\n\nreceiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
+    RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message_LTE, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, (unsigned int*)&LenLTE);
+    Timestamp();
+
+    // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
+    printf("\nLTE || Message from LTE received at: %s\n", curr_time);
+    printf("LTE || Message: %s Control Unit\n\n", message_LTE);
+    //receive_LTE = malloc(sizeof(receive_LTE));
+    //receive_LTE = message_LTE;
+    //printf("receiveLTE receive message: %s\n", receive_LTE);
+    return (void *)message_LTE;
+}
+
+/* Function to receive WiFi packets */
+void *receiveWiFi(void *socket) {
+    Sockets *sock = (Sockets *)socket;
+    int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
+
+    printf("\n\nreceiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
+    RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message_WiFi, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, (unsigned int*)&LenWiFi);
+    Timestamp();
+
+    // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
+    printf("\nWiFi || Message from WiFi received at: %s \n", curr_time);
+    printf("WiFi || Message: %s Control Unit\n\n", message_WiFi);
+    //receive_WiFi = malloc(sizeof(receive_WiFi));
+    //receive_WiFi = message_WiFi;
+    //printf("receiveWiFi receive message: %s\n", receive_WiFi);
+    return (void *)message_WiFi;
+}
+
+/* -------- end ------------
+------- RECEIVE AREA -------
+--------------------------*/
+
+/* -------------------------
+------ TRANSMIT AREA -------
+---------- start ---------*/
+
 void Sockets_Transmitter(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
     /* Create socket receiver */
     sock->sockLTE_TRANSMITTER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -160,101 +210,6 @@ void Sockets_Transmitter(Sockets *sock, const char *IP_LTE, const char *IP_WiFi,
     sock->ClientWiFi_TRANSMITTER.sin_addr.s_addr = inet_addr(IP_WiFi);
 }
 
-/* Function to receive LTE packets */
-void *receiveLTE(void *socket) {
-    Sockets *sock = (Sockets *)socket;
-    int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
-
-    printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
-    RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message_LTE, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, (unsigned int*)&LenLTE);
-    Timestamp();
-
-    // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
-    printf("LTE || Message from LTE received at: %s\n", curr_time);
-    printf("LTE || Message: %s Control Unit\n", message_LTE);
-    //receive_LTE = malloc(sizeof(receive_LTE));
-    //receive_LTE = message_LTE;
-    //printf("receiveLTE receive message: %s\n", receive_LTE);
-    return (void *)message_LTE;
-}
-/*void *receiveLTE(void *socket) {
-    time_struct time1;
-    time_struct time2;
-    int timediff;
-    char voidChar[128];
-    char messageRecieved[128];
-    Sockets *sock = (Sockets *)socket;
-    int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
-    RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
-    printf("LTE || LTE-Thread id = %ld\n", pthread_self());
-    printf("LTE || Message from LTE received at: %s\n", curr_time);
-    printf("LTE || Message from LTE: %s\n", message);
-
-    sscanf(curr_time, "%c %d %c %d %c %d %c %d", voidChar, &time1.hour, voidChar, &time1.minute, voidChar, &time1.second, voidChar, &time1.millis);
-    sscanf(message, "%c %d %c %d %c %d %c %d", voidChar, &time2.hour, voidChar, &time2.minute, voidChar, &time2.second, voidChar, &time2.millis);
-    sscanf(message, "%s %s %[^\n]", voidChar, voidChar, messageRecieved);
-    printf("LTE || The message received was: %s \n", messageRecieved);
-    timediff = (((time1.hour * 3600000) + (time1.minute * 60000) + (time1.second * 1000) + (time1.millis)) - ((time2.hour * 3600000) + (time2.minute * 60000) + (time2.second * 1000) + (time2.millis)));
-    if (timediff >= 0) {
-        printf("LTE || Time difference: %d milliseconds \n\n", timediff);
-    } else {
-        printf("LTE || Timediff not available? %d\n\n", timediff);
-    }
-
-    receive = malloc(sizeof(receive));
-    receive = message;
-    return (void *)receive;
-    ;
-}*/
-
-/* Function to receive WiFi packets */
-void *receiveWiFi(void *socket) {
-    Sockets *sock = (Sockets *)socket;
-    int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
-
-    printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
-    RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message_WiFi, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, (unsigned int*)&LenWiFi);
-    Timestamp();
-
-    // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
-    printf("WiFi || Message from WiFi received at: %s \n", curr_time);
-    printf("WiFi || Message: %s Control Unit\n", message_WiFi);
-    //receive_WiFi = malloc(sizeof(receive_WiFi));
-    //receive_WiFi = message_WiFi;
-    //printf("receiveWiFi receive message: %s\n", receive_WiFi);
-    return (void *)message_WiFi;
-}
-/*
-void *receiveWiFi(void *socket) {
-    time_struct time1;
-    time_struct time2;
-    int timediff;
-    char voidChar[128];
-    char messageRecieved[128];
-    Sockets *sock = (Sockets *)socket;
-    int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
-    RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
-    printf("WIFI || WiFi-Thread id = %ld\n", pthread_self());
-    printf("WIFI || Message from WiFi received at: %s \n", curr_time);
-    printf("WIFI || Message from WiFi: %s \n", message);
-
-    sscanf(curr_time, "%c %d %c %d %c %d %c %d", voidChar, &time1.hour, voidChar, &time1.minute, voidChar, &time1.second, voidChar, &time1.millis);
-    sscanf(message, "%c %d %c %d %c %d %c %d", voidChar, &time2.hour, voidChar, &time2.minute, voidChar, &time2.second, voidChar, &time2.millis);
-    sscanf(message, "%s %s %[^\n]", voidChar, voidChar, messageRecieved);
-    printf("WIFI || The message recieved was: %s \n", messageRecieved);
-    timediff = (((time1.hour * 3600000) + (time1.minute * 60000) + (time1.second * 1000) + (time1.millis)) - ((time2.hour * 3600000) + (time2.minute * 60000) + (time2.second * 1000) + (time2.millis)));
-    if (timediff >= 0) {
-        printf("WIFI || Time difference: %d milliseconds \n\n", timediff);
-
-    } else {
-        printf("WIFI || Timediff not available? %d\n\n", timediff);
-    }
-
-    receive = malloc(sizeof(receive));
-    receive = message;
-    return (void *)receive;
-    ;
-}*/
 
 // Function to transmit GSV via LTE
 void *transmitLTE(void *socket) {
@@ -285,3 +240,8 @@ void *transmitWiFi(void *socket) {
     printf("Message from WiFi transmitted at: %s\n", curr_time);
     pthread_exit(NULL);
 }
+
+
+/* -------- end ------------
+------ TRANSMIT AREA -------
+--------------------------*/
