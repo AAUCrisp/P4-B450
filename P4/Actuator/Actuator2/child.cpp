@@ -1,5 +1,6 @@
 #include "Headers/shm_write_read.h"
 #include "Headers/data_header.h"
+#include <iostream>
 
 const char *received_message;
 const char *GSV_KEY = "GSV_KEY";
@@ -39,7 +40,7 @@ int main()
 
     int* ra = process_Data(msg);
     logData1(ra);
-    sleep(1);
+    usleep(100000);
 
     }
     
