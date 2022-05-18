@@ -79,11 +79,11 @@ int main() {
             shm_write(buffer, 32, RAND_INT_KEY);
 
             if (GSV == B || GSV == L) {
-                transmitLTE();
+                transmitLTE(&sock);
             }
 
             if (GSV == B || GSV == W) {
-                transmitWiFi();
+                transmitWiFi(&sock);
             }
         }
     }
