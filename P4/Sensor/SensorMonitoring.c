@@ -41,7 +41,7 @@ int main() {
     printf("sockLTE_RECEIVER (OUTSIDE): %d\n", sock.sockLTE_RECEIVER);
     printf("sockWiFi_RECEIVER (OUTSIDE): %d\n", sock.sockWiFi_RECEIVER);
     int count = 0;
-
+    sleep(5);
     receiverLTE(&sock);
     receiverWiFi(&sock);
     sleep(3);

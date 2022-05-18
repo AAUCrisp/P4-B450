@@ -22,8 +22,6 @@
 
 #define BUFFER 64
 
-
-
 int main() {
     printf("==================\nSensor Process Started\n==================\n\n");
 
@@ -77,7 +75,7 @@ int main() {
             printf("GSV converted: %d\n", GSV);
             sprintf(buffer, "%d", generate(0, 2500));
             shm_write(buffer, 32, RAND_INT_KEY);
-
+            sleep(5);
             if (GSV == B || GSV == L) {
                 transmitLTE();
             }
