@@ -74,6 +74,7 @@ int main() {
         while (1) {
             sprintf(buffer, "%d", generate(0, 2500));
             shm_write(buffer, 32, RAND_INT_KEY);
+            pthread_mutex_destroy(&sock->mutex_lock);
             sleep(3);
         }
     }
