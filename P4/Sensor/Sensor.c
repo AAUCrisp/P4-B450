@@ -65,7 +65,7 @@ int main() {
         printf("Sensor monitoring process ID is: %d \n", getpid());
         char path[] = "./SensorMonitoring";
         char* args[] = {"./SensorMonitoring", NULL};
-        //execv(path, args);
+        execv(path, args);
 
     } else {
         while (1) {
