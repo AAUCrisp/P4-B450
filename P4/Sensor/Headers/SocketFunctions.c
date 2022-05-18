@@ -219,11 +219,11 @@ void transmitWiFi() {
 }
 
 void receiverLTE(Sockets *sock) {
-    sock = (Sockets *)socket;
+    Sockets sock;
     pthread_create(&T1, NULL, receiveLTE, &sock);
 }
 
 void receiverWiFi(Sockets *sock) {
-    sock = (Sockets *)socket;
+    Sockets sock;
     pthread_create(&T2, NULL, receiveWiFi, &sock);
 }
