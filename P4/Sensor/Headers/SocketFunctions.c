@@ -209,6 +209,8 @@ void *transmitLTE(void *socket) {
             sendto(sock->sockLTE_TRANSMITTER, sendLTE, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, LenLTE);
             printf("Message from LTE transmitted at: %s\n", curr_time);
             sleep(2);
+        } else {
+            usleep(10000);
         }
     }
 }
@@ -223,7 +225,7 @@ void *transmitWiFi(void *socket) {
 
     int LenWiFi = sizeof(sock->ClientWiFi_TRANSMITTER);
 
-    while (1) {
+    while (1) {}
         msg = shm_read(32, GSV_KEY);
         GSV = atoi(msg);
 
@@ -239,6 +241,8 @@ void *transmitWiFi(void *socket) {
             sendto(sock->sockWiFi_TRANSMITTER, sendWiFi, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, LenWiFi);
             printf("Message from WiFi transmitted at: %s\n", curr_time);
             sleep(2);
+        } else {
+            usleep(10000);
         }
     }
 }
