@@ -29,6 +29,8 @@ void logData2(int *arr)
 
 int main()
 {
+    while(1)
+    {
     printf("==================\nChild Process Started\n==================\n\n");
     received_message = shm_read(1024, GSV_KEY);
 
@@ -37,5 +39,7 @@ int main()
     int* ra = process_Data(msg);
     logData1(ra);
 
+    }
+    
 }
 
