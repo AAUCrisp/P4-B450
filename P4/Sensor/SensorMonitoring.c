@@ -44,4 +44,5 @@ int main() {
 
     receiverLTE();
     receiverWiFi();
+    sleep(3);
 }

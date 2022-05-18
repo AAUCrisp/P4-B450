@@ -85,6 +85,7 @@ int main() {
             if (GSV == B || GSV == W) {
                 transmitWiFi();
             }
+            sleep(3);
         }
     }
 }
