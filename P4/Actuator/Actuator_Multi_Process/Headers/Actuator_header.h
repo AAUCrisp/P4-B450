@@ -1,4 +1,55 @@
-//#include "server_header.h"
+#include <arpa/inet.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <netinet/in.h>
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/ipc.h>  //IPC thing
+#include <sys/mman.h>
+#include <sys/shm.h>  //SHM thing
+#include <sys/socket.h>
+#include <sys/stat.h>
+#include <sys/time.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <time.h>
+#include <unistd.h>
+#include <netdb.h>
+#include <string>
+#include <fstream>
+#include <sstream>
+#include "hex.cpp"
+#include <iostream>
+
+
+#define buffer 1024
+/* Variables used to create and bind sockets, receive from sockets, and error handle on sockets*/
+struct addrinfo ServerLTE, *res1;   
+struct addrinfo ServerWiFi, *res;  
+struct sockaddr_storage remote_addr;
+socklen_t fromlen;
+int rv, rl;
+int sockLTE, sockWiFi;
+int bindLTE, bindWiFi;
+int lenLTE = sizeof(ServerLTE);
+int lenWiFi = sizeof(ServerWiFi);
+int rc_LTE, rc_WiFi;
+pthread_t T1, T2;
+
+const char *LTE = "wwan0";
+const char *WiFi = "wlan0";
+char s[INET_ADDRSTRLEN];
+char ActuatorBuffer[1024];
+char feedback[1024];
+
+
+
+/* Variables used by the shared memory functions: shm_read and shm_write*/
+char *received_message;
+const char* GSV_KEY = "GSV_KEY";
+
 
 
 /*Variables used to process data*/
@@ -49,4 +100,5 @@ int * process_Data(char msg[buffer]) {
     
     return result;                                      // returns the array containing movement over the x and y axis. 
 }
+
 
