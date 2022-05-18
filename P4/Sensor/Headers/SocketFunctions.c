@@ -41,6 +41,7 @@ int L = 2;
 
 /* Define threads */
 pthread_t T1, T2;
+pthread_mutex_t mutex_lock;
 
 /* Function to create receiver sockets */
 void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
@@ -193,7 +194,7 @@ void *transmitLTE(void *socket) {
     const char *msg;
 
     int LenLTE = sizeof(sock->ClientLTE_TRANSMITTER);
-
+    pthread_mutex_lock(&mutex_lock);
     while (1) {
         msg = shm_read(32, GSV_KEY);
         GSV = atoi(msg);
@@ -210,9 +211,11 @@ void *transmitLTE(void *socket) {
             sendto(sock->sockLTE_TRANSMITTER, sendLTE, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, LenLTE);
             printf("Message from LTE transmitted at: %s\n", curr_time);
             sleep(2);
-        } else {
+            pthread_mutex_unlock(&mutex_lock);
+        } 
+        /* else {
             usleep(10000);
-        }
+        }*/
     }
 }
 
@@ -225,7 +228,7 @@ void *transmitWiFi(void *socket) {
     const char *msg;
 
     int LenWiFi = sizeof(sock->ClientWiFi_TRANSMITTER);
-
+    pthread_mutex_lock(&mutex_lock);
     while (1) {
         msg = shm_read(32, GSV_KEY);
         GSV = atoi(msg);
@@ -242,8 +245,10 @@ void *transmitWiFi(void *socket) {
             sendto(sock->sockWiFi_TRANSMITTER, sendWiFi, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, LenWiFi);
             printf("Message from WiFi transmitted at: %s\n", curr_time);
             sleep(2);
-        } else {
+            pthread_mutex_unlock(&mutex_lock);
+        } 
+        /* else {
             usleep(20000);
-        }
+        }*/
     }
 }
