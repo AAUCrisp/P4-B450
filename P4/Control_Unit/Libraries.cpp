@@ -17,6 +17,11 @@
 #include <time.h>
 #include <unistd.h>
 
+#include<iomanip>
+#include <cstdio>
+#include<iostream>
+#include <cstring>
+using namespace std;
 
 // #ifndef VARIABLES
 // #define VARIABLES

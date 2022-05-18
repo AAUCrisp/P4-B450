@@ -1,19 +1,20 @@
-all: ControlUnit SignalMonitoring
+all: SignalMonitoring ControlUnit
 
-Git:
+git:
 	git pull
+	make
 
-Combined: combined.cpp
-
-ControlUnit: Control_Unit.cpp Sockets.o RSSI.o shm_write.o shm_read.o
-	g++ -pthread Control_Unit.cpp Sockets.o RSSI.o -o ControlUnit -lrt
+# ControlUnit: Control_Unit.cpp Sockets.o RSSI.o Headers/shm_write_read.h
+ControlUnit: Control_Unit.cpp Sockets.o shm_read.o 
+# ControlUnit: Control_Unit.cpp Sockets.o RSSI.o shm_write.o shm_read.o
+	g++ -pthread Control_Unit.cpp Sockets.o -o ControlUnit -lrt
 	touch Control_Unit.cpp
 
 SignalMonitoring: SignalMonitoring.cpp Sockets.o RSSI.o shm_write.o shm_read.o
 	g++ -pthread SignalMonitoring.cpp Sockets.o RSSI.o -o SignalMonitoring -lrt
 	touch SignalMonitoring.cpp
 
-Sockets.o: Headers/Sockets.cpp Headers/Sockets.h Headers/shm_write_read.h
+Sockets.o: Headers/Sockets.cpp Headers/Sockets.h shm_read.o shm_write.o
 	g++ -c Headers/Sockets.cpp -lrt
 	touch Headers/Sockets.cpp
 
@@ -29,9 +30,9 @@ shm_read.o: Headers/shm_read.cpp
 	g++ -c Headers/shm_read.cpp -lrt
 	touch Headers/shm_read.cpp 
 
-SMH.o: Headers/shm_write_read.h Headers/shm_write.cpp Headers/shm_read.cpp
+shm.o: Headers/shm_write.cpp Headers/shm_read.cpp Headers/shm_write_read.h 
 	g++ -c Headers/shm_write.cpp Headers/shm_read.cpp
-	touch Headers/shm_write.cpp
+	touch Headers/shm_write.cpp Headers/shm_read.cpp
 
 
 # Dependencies 
