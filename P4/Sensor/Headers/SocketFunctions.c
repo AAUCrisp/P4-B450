@@ -1,4 +1,5 @@
 
+
 #include <arpa/inet.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -225,7 +226,7 @@ void *transmitWiFi(void *socket) {
 
     int LenWiFi = sizeof(sock->ClientWiFi_TRANSMITTER);
 
-    while (1) {}
+    while (1) {
         msg = shm_read(32, GSV_KEY);
         GSV = atoi(msg);
 
