@@ -197,6 +197,7 @@ void *transmitLTE(void *socket) {
     while (1) {
         pthread_mutex_lock(&sock->mutex_lock);  
         msg = shm_read(32, GSV_KEY);
+        pthread_mutex_unlock(&sock->mutex_lock);
         GSV = atoi(msg);
 
         if (GSV == B || GSV == L) {
@@ -211,7 +212,6 @@ void *transmitLTE(void *socket) {
             sendto(sock->sockLTE_TRANSMITTER, sendLTE, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, LenLTE);
             printf("Message from LTE transmitted at: %s\n", curr_time);
             sleep(2);
-            pthread_mutex_unlock(&sock->mutex_lock);
         }
         /* else {
             usleep(10000);
@@ -231,6 +231,7 @@ void *transmitWiFi(void *socket) {
     pthread_mutex_lock(&sock->mutex_lock);
     while (1) {
         msg = shm_read(32, GSV_KEY);
+        pthread_mutex_unlock(&sock->mutex_lock);
         GSV = atoi(msg);
 
         if (GSV == B || GSV == W) {
@@ -245,7 +246,6 @@ void *transmitWiFi(void *socket) {
             sendto(sock->sockWiFi_TRANSMITTER, sendWiFi, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, LenWiFi);
             printf("Message from WiFi transmitted at: %s\n", curr_time);
             sleep(2);
-            pthread_mutex_unlock(&sock->mutex_lock);
         }
         /* else {
             usleep(20000);
