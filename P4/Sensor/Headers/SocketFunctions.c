@@ -23,7 +23,9 @@
 /* Define buffers & PORT number */
 #define BUFFER 1024
 char message[BUFFER];
-char *curr_time[128];
+char curr_time[128];
+char *curr_timeLTE
+char *curr_timeWiFi;
 char *receive;
 
 /* Misc */
@@ -175,7 +177,7 @@ void transmitLTE() {
     RAND_INT = shm_read(32, RAND_INT_KEY);
     printf("LTE || Random int from shm: %s\n", RAND_INT);
 
-    curr_time = Timestamp();
+    curr_timeLTE = Timestamp();
     sprintf(sendLTE, "%s %s", RAND_INT, curr_time);
     printf("sendLTE: %s\n", sendLTE);
 
@@ -195,7 +197,7 @@ void transmitWiFi() {
     RAND_INT = shm_read(32, RAND_INT_KEY);
     printf("LTE || Random int from shm: %s\n", RAND_INT);
 
-    curr_time = Timestamp();
+    curr_timeWiFi = Timestamp();
     sprintf(sendWiFi, "%s %s", RAND_INT, curr_time);
     printf("sendWiFi: %s\n", sendWiFi);
 
