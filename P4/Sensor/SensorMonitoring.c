@@ -43,5 +43,5 @@ int main() {
     int count = 0;
 
     receiverLTE();
-    receiveWiFi();
+    receiverWiFi();
 }
