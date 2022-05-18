@@ -1,3 +1,5 @@
+#include "SocketFunctions.h"
+
 #include <arpa/inet.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -17,7 +19,6 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "SocketFunctions.h"
 #include "shm_write_read.h"
 
 /* Define buffers & PORT number */
@@ -190,8 +191,7 @@ void *transmitLTE(void *socket) {
     const char *GSV_KEY = "GSV_KEY";
     const char *msg;
 
-    // int LenLTE = sizeof(sock.ClientLTE_TRANSMITTER);
-    printf("transmitLTE socket: %d\n", sock->sockLTE_TRANSMITTER);
+    int LenLTE = sizeof(sock.ClientLTE_TRANSMITTER);
 
     while (1) {
         msg = shm_read(32, GSV_KEY);
@@ -205,7 +205,8 @@ void *transmitLTE(void *socket) {
             sprintf(sendLTE, "%s %s", RAND_INT, curr_time);
             printf("sendLTE: %s\n", sendLTE);
 
-            sendto(sock->sockLTE_TRANSMITTER, sendLTE, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, sizeof(sock->sockLTE_TRANSMITTER));
+            printf("transmitLTE socket: %d\n", sock->sockLTE_TRANSMITTER);
+            sendto(sock->sockLTE_TRANSMITTER, sendLTE, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, &LenLTE);
             printf("Message from LTE transmitted at: %s\n", curr_time);
         }
     }
@@ -219,8 +220,7 @@ void *transmitWiFi(void *socket) {
     const char *GSV_KEY = "GSV_KEY";
     const char *msg;
 
-    // int LenWiFi = sizeof(sock.ClientWiFi_TRANSMITTER);
-    printf("transmitWiFi socket: %d\n", sock->sockWiFi_TRANSMITTER);
+    int LenWiFi = sizeof(sock.ClientWiFi_TRANSMITTER);
 
     while (1) {
         msg = shm_read(32, GSV_KEY);
@@ -234,7 +234,8 @@ void *transmitWiFi(void *socket) {
             sprintf(sendWiFi, "%s %s", RAND_INT, curr_time);
             printf("sendWiFi: %s\n", sendWiFi);
 
-            sendto(sock->sockWiFi_TRANSMITTER, sendWiFi, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, sizeof(sock->sockWiFi_TRANSMITTER));
+            printf("transmitWiFi socket: %d\n", sock->sockWiFi_TRANSMITTER);
+            sendto(sock->sockWiFi_TRANSMITTER, sendWiFi, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, &LenWiFi);
             printf("Message from WiFi transmitted at: %s\n", curr_time);
         }
     }
