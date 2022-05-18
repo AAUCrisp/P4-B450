@@ -20,6 +20,11 @@
 extern int errno;
 
 void* shm_read(const int SIZE, const char* name) {
+    /* Semaphore variables */
+    sem_t* sp;
+    int retval;
+    int id, err;
+
     /* shared memory file descriptor */
     int shm_fd;
 
