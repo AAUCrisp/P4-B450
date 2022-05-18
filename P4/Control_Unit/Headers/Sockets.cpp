@@ -5,9 +5,7 @@
 
 #ifndef SHM_READ
 #define SHM_READ
-
 #include "shm_read.cpp"
-
 #endif
 
 // #ifndef SHM_WRITE
@@ -20,8 +18,15 @@
 #define SOCKETS_NET
 #include "Sockets.h"
 #endif
-// #include "Sockets.h"
 
+// #ifndef CONVERTER
+// #define CONVERTER
+// #include "../converter.cpp"
+// #endif
+
+/* -------------------------
+-------- SETUP AREA --------
+---------- start ---------*/
 
 #ifndef SOCKET_STRUCT
 #define SOCKET_STRUCT
@@ -73,7 +78,9 @@ char *Timestamp() {
 
     return curr_time;
 }
-
+/* -------- end ------------
+-------- SETUP AREA --------
+--------------------------*/
 
 /* -------------------------
 ------- RECEIVE AREA -------
@@ -139,35 +146,38 @@ void *receiveLTE(void *socket) {
     Sockets *sock = (Sockets *)socket;
     int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
 
-    printf("\n\nreceiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
+    printf("\n\nLTE || Receive Socket: %d\n", sock->sockLTE_RECEIVER);
     RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message_LTE, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, (unsigned int*)&LenLTE);
     Timestamp();
 
     // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
-    printf("\nLTE || Message from LTE received at: %s\n", curr_time);
-    printf("LTE || Message: %s Control Unit\n\n", message_LTE);
-    //receive_LTE = malloc(sizeof(receive_LTE));
-    //receive_LTE = message_LTE;
-    //printf("receiveLTE receive message: %s\n", receive_LTE);
-    return (void *)message_LTE;
+    printf("LTE || Message from LTE received at: %s\n", curr_time);
+    printf("LTE || Message is: %s\n\n", message_LTE);
+    return message_LTE;
 }
+
+
 
 /* Function to receive WiFi packets */
 void *receiveWiFi(void *socket) {
     Sockets *sock = (Sockets *)socket;
     int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
 
-    printf("\n\nreceiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
+    printf("\n\nWiFi || Receive Socket: %d\n", sock->sockWiFi_RECEIVER);
     RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message_WiFi, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, (unsigned int*)&LenWiFi);
     Timestamp();
 
     // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
-    printf("\nWiFi || Message from WiFi received at: %s \n", curr_time);
-    printf("WiFi || Message: %s Control Unit\n\n", message_WiFi);
-    //receive_WiFi = malloc(sizeof(receive_WiFi));
-    //receive_WiFi = message_WiFi;
-    //printf("receiveWiFi receive message: %s\n", receive_WiFi);
-    return (void *)message_WiFi;
+    printf("WiFi || Message from WiFi received at: %s \n", curr_time);
+    printf("WiFi || Message is: %s\n\n", message_WiFi);
+
+    return message_WiFi;    
+}
+
+void* receive_data() {
+    Sockets *sock = (Sockets*)socket;
+    void* msg = receiveWiFi(&sock);
+    return msg;
 }
 
 /* -------- end ------------
@@ -191,11 +201,11 @@ void Sockets_Transmitter(Sockets *sock, const char *IP_LTE, const char *IP_WiFi,
 
     /* Error checking */
     if (sock->sockLTE_TRANSMITTER == -1) {
-        perror("Failed to create sockLTE");
+        perror("Failed to create LTE transmitter socket");
         exit(0);
     }
     if (sock->sockWiFi_TRANSMITTER == -1) {
-        perror("Failed to create sockLTE");
+        perror("Failed to create WiFi transmitter socket");
         exit(0);
     }
     printf("Sockets_TRANSMITTER sucessfully created\n");
@@ -218,11 +228,11 @@ void *transmitLTE(void *socket) {
     const char *GSV;
     const char *GSV_KEY = "GSV_KEY";
     GSV = shm_read(32, GSV_KEY);
-    printf("transmitLTE socket: %d\n", sock->sockLTE_TRANSMITTER);
+    printf("\n\nLTE || Transmit Socket: %d\n", sock->sockLTE_TRANSMITTER);
     TX_LTE = sendto(sock->sockLTE_TRANSMITTER, GSV, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, LenLTE);
     // printf("LTE-Thread id = %ld\n", pthread_self());
-    printf("Shared memory object LTE: %s\n", GSV);
-    printf("Message from LTE transmitted at: %s\n", curr_time);
+    printf("LTE || Shared memory object LTE: %s\n", GSV);
+    printf("LTE || Message from LTE transmitted at: %s\n\n", curr_time);
     pthread_exit(NULL);
 }
 
@@ -233,12 +243,64 @@ void *transmitWiFi(void *socket) {
     const char *GSV;
     const char *GSV_KEY = "GSV_KEY";
     GSV = shm_read(32, GSV_KEY);
-    printf("transmitWiFi socket: %d\n", sock->sockWiFi_TRANSMITTER);
+    printf("\n\nWiFi || Transmit Socket: %d\n", sock->sockWiFi_TRANSMITTER);
     TX_WiFi = sendto(sock->sockWiFi_TRANSMITTER, GSV, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, LenWiFi);
     // printf("WiFi-Thread id = %ld\n", pthread_self());
-    printf("Shared memory object WiFi: %s\n", GSV);
-    printf("Message from WiFi transmitted at: %s\n", curr_time);
+    printf("WiFi || Shared memory object WiFi: %s\n", GSV);
+    printf("WiFi || Message from WiFi transmitted at: %s\n\n", curr_time);
     pthread_exit(NULL);
+}
+
+
+
+
+
+
+// Function to transmit GSV via LTE
+void* transmit_command_LTE(void *socket, const char* message) {
+    
+    Sockets *sock = (Sockets *)socket;
+    int LenLTE = sizeof(sock->sockLTE_TRANSMITTER);
+    printf("\n\nLTE || Transmit Socket: %d\n", sock->sockLTE_TRANSMITTER);
+    // char* lort;
+    // strcpy(lort, message.c_str());
+    TX_LTE = sendto(sock->sockLTE_TRANSMITTER,(const void*) message, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, LenLTE);
+    // printf("LTE-Thread id = %ld\n", pthread_self());
+    printf("LTE || Sending Command to Actuator: %s\n", message);
+    printf("LTE || Message transmitted at: %s\n\n", curr_time);
+    pthread_exit(NULL);
+}
+
+// Function to transmit GSV via WiFi
+void* transmit_command_WiFi(void *socket, const char* message) {
+    
+    Sockets *sock = (Sockets *)socket;
+    int LenWiFi = sizeof(sock->ClientWiFi_TRANSMITTER);
+    const char *GSV;
+    const char *GSV_KEY = "GSV_KEY";
+    GSV = shm_read(32, GSV_KEY);
+    printf("\n\nWiFi || Transmit Socket: %d\n", sock->sockWiFi_TRANSMITTER);
+    TX_WiFi = sendto(sock->sockWiFi_TRANSMITTER, GSV, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, LenWiFi);
+    // printf("WiFi-Thread id = %ld\n", pthread_self());
+    printf("WiFi || Sending Command to Actuator: %s\n", GSV);
+    printf("WiFi || Message transmitted at: %s\n\n", curr_time);
+    pthread_exit(NULL);
+}
+
+// Function to transmit GSV via WiFi
+void* transmit_command(char* message) {
+    Sockets *sock = (Sockets *)socket;
+    int LenWiFi = sizeof(sock->ClientWiFi_TRANSMITTER);
+    const char *GSV;
+    const char *GSV_KEY = "GSV_KEY";
+    GSV = shm_read(32, GSV_KEY);
+    if(GSV == "0" || GSV == "1") {
+        transmit_command_WiFi(&sock, message);
+    }
+    if(GSV == "0" || GSV == "2") {
+        transmit_command_LTE(&sock, message);
+    }
+    return message;
 }
 
 

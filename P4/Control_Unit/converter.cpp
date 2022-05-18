@@ -10,12 +10,15 @@
 using namespace std;
 
 
+#ifndef CONVERT_VARIABLES
+#define CONVERT_VARIABLES
 /* -- Test Data Variable-- */
 // int data_int = 1500000;     // Static Test Variable
 int x_axis = 5000;      // Length of the x-axis of the grid
 int y_axis = 5000;      // Length of the y-axis of the grid
 int coordinates = x_axis*y_axis;
 // string* grid = new string[coordinates]; // Don't forget to delete [] a; when you're done!
+#endif
 
 
 /* --- Conversion from Integer to Hex-chars --- */

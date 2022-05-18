@@ -6,11 +6,48 @@
 #define SOCKETS_CONT
 #include "Headers/Sockets.h"
 #endif
+#ifndef CONVERTER
+#define CONVERTER
 #include "converter.cpp"
+#endif
+// #ifndef SHM_READ
+// #define SHM_READ
+// #include "Headers/shm_read.cpp"
+// #endif
+
+// #include<iomanip>
+// #include <cstdio>
+// #include<iostream>
+// using namespace std;
 
 /* -- Test Data Variable-- */
 int data_int = 1500000;     // Static Test Variable
 // string* grid = new string[coordinates]; // Don't forget to delete [] a; when you're done!
+
+void command(string tech) {
+    // Sockets sock;
+    if (tech == "WiFi") {
+        while(1) {
+            printf("\nI'm in WiFi\n\n");
+            void* message = receive_data();
+            cout << "WiFi || Message Parsed to MAIN is: " << message << "\n\n\n" << endl;
+            // printf((const char*)message);
+            // // void* message = receiveWiFi(&sock);
+            int data = atoi((const char*)message);
+            // string coordinate = convert_to_coordinate(data);
+            // char* msg;
+            // strcpy(msg, coordinate.c_str());
+            // transmit_command(msg);
+            sleep(4);
+        }
+    }
+    else if (tech == "LTE") {
+        while(1) {
+            
+        }
+    }
+}
+
 
 /* Main running code */
 int main(int argc, char *argv[]) {
@@ -19,7 +56,7 @@ int main(int argc, char *argv[]) {
     /* ------------------------------
     -------- Conversion Area --------
     ------------- start ----------- */
-
+/*
     string data_str = to_string(data_int);     // For "Firm" data
     int hex = 1;
     int use_grid = 1;
@@ -66,7 +103,7 @@ int main(int argc, char *argv[]) {
         cout << "\nRAM Command is: " << grid[data_int-1] << endl;       // Coordinate from RAM version
     }
     cout << "\nCPU Command is: " << cpu_command << endl;            // Coordinate from CPU version
-
+*/
 
     /* ----------- end --------------
     -------- Conversion Area --------
@@ -102,19 +139,16 @@ int main(int argc, char *argv[]) {
         char* args[] = { (char*)"./SignalMonitoring&", (char*) NULL};       // Command for the function to execute, always ended on NULL argument
         execv(path, args);                                  // Tells the new process to "reset" and run a different code instead
         printf("ERROR: DIDN'T START THE NEW PROCESS!!\n");  // Should never get this far!
-    } else {
-        while (1) {
-            // printf("==================\nMain Control Unit Process Started\n==================\n\n");
-            Timestamp();
-            pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
-            pthread_join(T1, (void**)&msg);
-            Timestamp();
-            pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
-            pthread_join(T2, (void**)&msg);
-            printf("%s\n", msg);
-            sleep(5);
-        }
+    } 
+
+    /* -- Main loop for command processing and forwarding -- */
+    else {
+        pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
+        command("WiFi");
+        // receiveWiFi(&sock);
+        printf("\nThis shouldn't print!!!\n");
     }
+
     close(sock.sockLTE_TRANSMITTER);
     close(sock.sockWiFi_TRANSMITTER);
 

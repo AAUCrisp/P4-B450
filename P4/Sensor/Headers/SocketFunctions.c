@@ -173,7 +173,7 @@ void *receiveWiFi(void *socket) {
         Sockets *sock = (Sockets *)socket;
         const char *GSV_KEY = "GSV_KEY";
         int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
-
+        
         printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
         Timestamp();

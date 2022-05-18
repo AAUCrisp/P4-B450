@@ -41,11 +41,23 @@ void *receiveLTE(void *socket);
 /* Function to receive WiFi packets */
 void *receiveWiFi(void *socket);
 
+/* Function to receive WiFi packets */
+void *receive_data();
+
 /* Function to transmit LTE packets */
 void *transmitLTE(void *socket);
 
 /* Function to transmit WiFi packets */
 void *transmitWiFi(void *socket);
+
+/* Function to transmit LTE packets */
+void *transmit_command_LTE(void *socket, const char* message);
+
+/* Function to transmit WiFi packets */
+void *transmit_command_WiFi(void *socke, const char* message);
+
+/* Function to transmit WiFi packets */
+void *transmit_command(const char* message);
 
 /* Function to timestamp packets */
 char *Timestamp();
