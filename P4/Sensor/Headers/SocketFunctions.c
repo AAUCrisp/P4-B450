@@ -1,4 +1,3 @@
-#include "SocketFunctions.h"
 
 #include <arpa/inet.h>
 #include <errno.h>
@@ -19,6 +18,7 @@
 #include <time.h>
 #include <unistd.h>
 
+#include "SocketFunctions.h"
 #include "shm_write_read.h"
 
 /* Define buffers & PORT number */
@@ -191,7 +191,7 @@ void *transmitLTE(void *socket) {
     const char *GSV_KEY = "GSV_KEY";
     const char *msg;
 
-    int LenLTE = sizeof(sock.ClientLTE_TRANSMITTER);
+    int LenLTE = sizeof(sock->ClientLTE_TRANSMITTER);
 
     while (1) {
         msg = shm_read(32, GSV_KEY);
@@ -220,7 +220,7 @@ void *transmitWiFi(void *socket) {
     const char *GSV_KEY = "GSV_KEY";
     const char *msg;
 
-    int LenWiFi = sizeof(sock.ClientWiFi_TRANSMITTER);
+    int LenWiFi = sizeof(sock->ClientWiFi_TRANSMITTER);
 
     while (1) {
         msg = shm_read(32, GSV_KEY);
