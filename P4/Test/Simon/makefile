@@ -36,6 +36,6 @@ test: Libraries.c $(Dependencies)
 	touch Libraries.c
 
 clean:
-	rm -f ServerStart SignalMonitoring
+	rm -f ControlUnit SignalMonitoring
 	rm *.o
 	@echo "clean completed!"
