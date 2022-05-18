@@ -128,7 +128,7 @@ int generate(int Min, int Max) {
 }
 
 /* Function to receive LTE packets */
-void *receiveLTE() {
+void *receiveLTE(void *socket) {
     while (1) {
         Sockets *sock = (Sockets *)socket;
         const char *GSV_KEY = "GSV_KEY";
@@ -146,7 +146,7 @@ void *receiveLTE() {
 }
 
 /* Function to receive WiFi packets */
-void *receiveWiFi() {
+void *receiveWiFi(void *socket) {
     while (1) {
         Sockets *sock = (Sockets *)socket;
         const char *GSV_KEY = "GSV_KEY";
