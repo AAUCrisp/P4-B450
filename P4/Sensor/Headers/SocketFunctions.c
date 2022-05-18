@@ -164,6 +164,7 @@ void *receiveWiFi(void *socket) {
 }
 
 void transmitLTE(void *socket) {
+    Sockets *sock = (Sockets *)socket;
     const char *RAND_INT_KEY = "RAND_INT_KEY";
     const char *RAND_INT;
     char sendLTE[BUFFER];
@@ -175,7 +176,7 @@ void transmitLTE(void *socket) {
     printf("LTE || Random int from shm: %s\n", RAND_INT);
 
     curr_time = Timestamp();
-    sprintf(sendLTE, "%d %s", RAND_INT, curr_time);
+    sprintf(sendLTE, "%s %s", RAND_INT, curr_time);
     printf("sendLTE: %s\n", sendLTE);
 
     sendto(sock.sockLTE_TRANSMITTER, sendLTE, BUFFER, 0, (struct sockaddr *)&sock.ClientLTE_TRANSMITTER, sizeof(sock.sockLTE_TRANSMITTER));
@@ -183,6 +184,7 @@ void transmitLTE(void *socket) {
 }
 
 void transmitWiFi(void *socket) {
+    Sockets *sock = (Sockets *)socket;
     const char *RAND_INT_KEY = "RAND_INT_KEY";
     const char *RAND_INT;
     char sendWiFi[BUFFER];
@@ -194,7 +196,7 @@ void transmitWiFi(void *socket) {
     printf("LTE || Random int from shm: %s\n", RAND_INT);
 
     curr_time = Timestamp();
-    sprintf(sendWiFi, "%d %s", RAND_INT, curr_time);
+    sprintf(sendWiFi, "%s %s", RAND_INT, curr_time);
     printf("sendWiFi: %s\n", sendWiFi);
 
     sendto(sock.sockWiFi_TRANSMITTER, sendWiFi, BUFFER, 0, (struct sockaddr *)&sock.ClientWiFi_TRANSMITTER, sizeof(sock.ClientWiFi_TRANSMITTER));
