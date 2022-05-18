@@ -164,13 +164,13 @@ void *receiveWiFi(void *socket) {
 }
 
 void transmitLTE() {
-    //Sockets *sock = (Sockets *)socket;
+    Sockets *sock = (Sockets *)socket;
     const char *RAND_INT_KEY = "RAND_INT_KEY";
     const char *RAND_INT;
     char sendLTE[BUFFER];
 
     // int LenLTE = sizeof(sock.ClientLTE_TRANSMITTER);
-    printf("transmitLTE socket: %d\n", sock.sockLTE_TRANSMITTER);
+    printf("transmitLTE socket: %d\n", sock->sockLTE_TRANSMITTER);
 
     RAND_INT = shm_read(32, RAND_INT_KEY);
     printf("LTE || Random int from shm: %s\n", RAND_INT);
@@ -179,18 +179,18 @@ void transmitLTE() {
     sprintf(sendLTE, "%s %s", RAND_INT, curr_time);
     printf("sendLTE: %s\n", sendLTE);
 
-    sendto(sock.sockLTE_TRANSMITTER, sendLTE, BUFFER, 0, (struct sockaddr *)&sock.ClientLTE_TRANSMITTER, sizeof(sock.sockLTE_TRANSMITTER));
+    sendto(sock->sockLTE_TRANSMITTER, sendLTE, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, sizeof(sock->sockLTE_TRANSMITTER));
     printf("Message from LTE transmitted at: %s\n", curr_time);
 }
 
 void transmitWiFi() {
-    //Sockets *sock = (Sockets *)socket;
+    Sockets *sock = (Sockets *)socket;
     const char *RAND_INT_KEY = "RAND_INT_KEY";
     const char *RAND_INT;
     char sendWiFi[BUFFER];
 
     // int LenWiFi = sizeof(sock.ClientWiFi_TRANSMITTER);
-    printf("transmitWiFi socket: %d\n", sock.sockWiFi_TRANSMITTER);
+    printf("transmitWiFi socket: %d\n", sock->sockWiFi_TRANSMITTER);
 
     RAND_INT = shm_read(32, RAND_INT_KEY);
     printf("LTE || Random int from shm: %s\n", RAND_INT);
@@ -199,7 +199,7 @@ void transmitWiFi() {
     sprintf(sendWiFi, "%s %s", RAND_INT, curr_time);
     printf("sendWiFi: %s\n", sendWiFi);
 
-    sendto(sock.sockWiFi_TRANSMITTER, sendWiFi, BUFFER, 0, (struct sockaddr *)&sock.ClientWiFi_TRANSMITTER, sizeof(sock.ClientWiFi_TRANSMITTER));
+    sendto(sock->sockWiFi_TRANSMITTER, sendWiFi, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, sizeof(sock->ClientWiFi_TRANSMITTER));
     printf("Message from WiFi transmitted at: %s\n", curr_time);
 }
 
