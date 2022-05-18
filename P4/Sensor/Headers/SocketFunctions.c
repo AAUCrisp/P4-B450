@@ -178,7 +178,7 @@ void *receiveWiFi(void *socket) {
     }
 }
 
-void transmitLTE() {
+void transmitLTE(void *socket) {
     Sockets *sock = (Sockets *)socket;
     const char *RAND_INT_KEY = "RAND_INT_KEY";
     const char *RAND_INT;
@@ -198,7 +198,7 @@ void transmitLTE() {
     printf("Message from LTE transmitted at: %s\n", curr_time);
 }
 
-void transmitWiFi() {
+void transmitWiFi(void *socket) {
     Sockets *sock = (Sockets *)socket;
     const char *RAND_INT_KEY = "RAND_INT_KEY";
     const char *RAND_INT;
@@ -218,12 +218,12 @@ void transmitWiFi() {
     printf("Message from WiFi transmitted at: %s\n", curr_time);
 }
 
-void receiverLTE(Sockets *sock) {
+void receiverLTE() {
     Sockets sock;
     pthread_create(&T1, NULL, receiveLTE, &sock);
 }
 
-void receiverWiFi(Sockets *sock) {
+void receiverWiFi() {
     Sockets sock;
     pthread_create(&T2, NULL, receiveWiFi, &sock);
 }

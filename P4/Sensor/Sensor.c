@@ -75,13 +75,12 @@ int main() {
             printf("GSV converted: %d\n", GSV);
             sprintf(buffer, "%d", generate(0, 2500));
             shm_write(buffer, 32, RAND_INT_KEY);
-            sleep(5);
             if (GSV == B || GSV == L) {
-                transmitLTE();
+                transmitLTE(&sock);
             }
 
             if (GSV == B || GSV == W) {
-                transmitWiFi();
+                transmitWiFi(&sock);
             }
             sleep(3);
         }
