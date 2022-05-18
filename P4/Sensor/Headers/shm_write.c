@@ -45,6 +45,8 @@ void shm_write(const char* message, const int SIZE, const char* name) {
 
     /* semaphore code to lock the shared mem */
     /* Initialize the semaphore . */
+
+    /*
     retval = sem_init(sp, 1, 2);
     if (retval != 0) {
         perror(" Couldn ’t initialize . ");
@@ -57,7 +59,7 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     retval = sem_trywait(sp);
     printf(" Did trywait . Returned %d >\n ", retval);
 
-    sem_destroy(sp);
+    sem_destroy(sp);*/
 
     
 

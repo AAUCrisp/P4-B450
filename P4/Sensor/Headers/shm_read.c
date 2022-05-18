@@ -40,6 +40,8 @@ void* shm_read(const int SIZE, const char* name) {
     ptr = mmap(NULL, SIZE, PROT_READ, MAP_SHARED, shm_fd, 0);
 
     /* Initialize the semaphore . */
+
+    /*
     retval = sem_init(sp, 1, 1);
     if (retval != 0) {
         perror(" Couldn ’t initialize . ");
@@ -50,7 +52,7 @@ void* shm_read(const int SIZE, const char* name) {
     retval = sem_trywait(sp);
     printf(" Did trywait . Returned %d >\n ", retval);
     retval = sem_trywait(sp);
-    printf(" Did trywait . Returned %d >\n ", retval);
+    printf(" Did trywait . Returned %d >\n ", retval); */
 
     // printf("Read from shm_read: %s\n", (char*)ptr);
 
