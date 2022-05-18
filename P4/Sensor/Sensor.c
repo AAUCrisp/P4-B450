@@ -36,6 +36,7 @@ int main() {
     /* Misc */
     pthread_t T1, T2;
     char* curr_time;
+    pthread_mutex_t mutex_lock;
 
     /* Create sockets */
     Sockets sock;
