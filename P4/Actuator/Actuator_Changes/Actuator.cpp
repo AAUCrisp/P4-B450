@@ -70,7 +70,7 @@ int main() {
         while (1) {
             sleep(2);
             printf("Do I reach while?");
-            COMMANDS = (char*)shm_read(32, COMMANDS_KEY);
+            //COMMANDS = (char*)shm_read(32, COMMANDS_KEY);
             printf("GSV from shared memory: %s\n", COMMANDS);
 
             snprintf(msg, sizeof(msg), "%s", COMMANDS);
