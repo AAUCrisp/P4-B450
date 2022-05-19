@@ -147,7 +147,7 @@ int generate(int Min, int Max) {
 void *receiveLTE(void *socket) {
     while (1) {
         Sockets *sock = (Sockets *)socket;
-        const char *GSV_KEY = "GSV_KEY";
+        const char *COMMANDS_KEY = "COMMANDS_KEY";
         int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
 
         printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
@@ -157,7 +157,7 @@ void *receiveLTE(void *socket) {
         // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
         printf("LTE || Message from LTE received at: %s\n", curr_time);
         printf("LTE || Message: %s from Control Unit \n\n", message);
-        shm_write(message, 32, GSV_KEY);
+        shm_write(message, 32, COMMANDS_KEY);
     }
 }
 
@@ -165,7 +165,7 @@ void *receiveLTE(void *socket) {
 void *receiveWiFi(void *socket) {
     while (1) {
         Sockets *sock = (Sockets *)socket;
-        const char *GSV_KEY = "GSV_KEY";
+        const char *COMMANDS_KEY = "COMMANDS_KEY";
         int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
         
         printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
@@ -175,7 +175,7 @@ void *receiveWiFi(void *socket) {
         // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
         printf("WiFi || Message from WiFi received at: %s \n", curr_time);
         printf("WiFi || Message: %s from Control Unit \n\n", message);
-        shm_write(message, 32, GSV_KEY);
+        shm_write(message, 32, COMMANDS_KEY);
     }
 }
 
