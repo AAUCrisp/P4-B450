@@ -39,6 +39,10 @@ int execvp(const char* file, const char* const (&argv)[N]) {
     return execvp(file, const_cast<char* const*>(argv));
 }
 
+void * DoSomething() {
+    pthread_exit(NULL);
+}
+
 int main() {
     printf("==================\nActuator Process Started\n==================\n\n");
 
@@ -68,6 +72,8 @@ int main() {
         printf("Do I reach else?");
         sleep(2);
         while (1) {
+            pthread_create(&T1, NULL, DoSomething, NULL);
+
             sleep(2);
             printf("Do I reach while?");
             COMMANDS = (char*)shm_read(32, COMMANDS_KEY);
