@@ -49,7 +49,7 @@ int main() {
     /* Misc */
     pthread_t T1, T2;
     char* curr_time;
-    int* process_data;
+    int* Processed_Data;
 
     /* Shared memory object variables */
     const char* COMMANDS_KEY = "COMMANDS_KEY";
@@ -75,8 +75,9 @@ int main() {
 
             snprintf(msg, sizeof(msg), "%s", COMMANDS);
 
-            process_data = processData(COMMANDS);
-            logData(process_data);
+            Processed_Data = processData(COMMANDS);
+            //printf("Processed_Data: %d\n%d", Processed_Data)
+            logData(Processed_Data);
             sleep(2);
         }
     }
