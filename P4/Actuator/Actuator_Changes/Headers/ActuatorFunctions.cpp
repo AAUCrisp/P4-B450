@@ -27,12 +27,6 @@ using namespace std;
 
 #include "ActuatorFunctions.h"
 
-void logData(int *arr) {
-    File.open("log.txt", std::ofstream::out | std::ofstream::app);
-    File << "\n\n movement on the x-axi:" << arr[0] << "\n movement on the y-axis:" << arr[1];
-    File.close();
-}
-
 /* Variables used to create and bind sockets, receive from sockets, and error handle on sockets */
 #define buffer 1024
 char ActuatorBuffer[1024];
@@ -50,6 +44,12 @@ char tempx[buffer];
 char tempy[buffer];
 
 std::ofstream File;
+
+void logData(int *arr) {
+    File.open("log.txt", std::ofstream::out | std::ofstream::app);
+    File << "\n\n movement on the x-axi:" << arr[0] << "\n movement on the y-axis:" << arr[1];
+    File.close();
+}
 
 /* This function updates the last coordinates, for next computation of finding movement over the X and Y axis */
 void update_last_coordinate(int number1, int number2) {
