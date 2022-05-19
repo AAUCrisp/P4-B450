@@ -30,7 +30,7 @@ void command(string tech) {
         while(1) {
             printf("\nI'm in WiFi\n\n");
             // void* message = receive_data();
-            void* message = receiveWiFi(&sock);
+            void* message = receiveWiFi((void*)&sock);
             cout << "WiFi || Message Parsed to MAIN is: " << message << "\n\n\n" << endl;
             // printf((const char*)message);
             // // void* message = receiveWiFi(&sock);
@@ -145,11 +145,10 @@ int main(int argc, char *argv[]) {
     /* -- Main loop for command processing and forwarding -- */
     else {
         pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
-        while(1) {
-            receiveWiFi((void*)&sock);
-        }
-        // command("WiFi");
-        // receiveWiFi(&sock);
+        // while(1) {
+        //     receiveWiFi((void*)&sock);
+        // }
+        command("WiFi");
         printf("\nThis shouldn't print!!!\n");
     }
 
