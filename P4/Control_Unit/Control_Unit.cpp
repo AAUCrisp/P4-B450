@@ -28,7 +28,7 @@ void command(string tech, Sockets sock) {
     if (tech == "WiFi") {
         printf("\nI'm in WiFi\n\n");
         void* message;
-        char msgDump[32];
+        char msgDump[16];
         int data;
         string coordinate;
         char* msg = (char*) malloc(9);
