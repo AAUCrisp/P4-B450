@@ -24,8 +24,8 @@
 int data_int = 1500000;     // Static Test Variable
 // string* grid = new string[coordinates]; // Don't forget to delete [] a; when you're done!
 
-void command(string tech) {
-    Sockets sock;
+void command(string tech, Sockets sock) {
+    // Sockets sock;
     if (tech == "WiFi") {
         while(1) {
             printf("\nI'm in WiFi\n\n");
@@ -148,7 +148,7 @@ int main(int argc, char *argv[]) {
         // while(1) {
         //     receiveWiFi((void*)&sock);
         // }
-        command("WiFi");
+        command("WiFi", sock);
         printf("\nThis shouldn't print!!!\n");
     }
 
