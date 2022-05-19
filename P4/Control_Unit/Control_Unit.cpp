@@ -41,6 +41,7 @@ void command(string tech, Sockets sock) {
             coordinate = convert_to_coordinate(data);
             cout << "WiFi || Coordinate for Actuator: " << coordinate << "\n\n\n" << endl;
             strcpy(msg, coordinate.c_str());
+            cout << "WORK!!!!" << endl;
             transmit_command(&sock, msg);
             sleep(2);
         }
