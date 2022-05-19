@@ -156,7 +156,7 @@ void *receiveLTE(void *socket) {
 
         // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
         printf("LTE || Message from LTE received at: %s\n", curr_time);
-        printf("LTE || Message: %s Sensor \n", message);
+        printf("LTE || Message: %s Sensor \n\n", message);
         shm_write(message, 32, GSV_KEY);
     }
 }
@@ -174,7 +174,7 @@ void *receiveWiFi(void *socket) {
 
         // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
         printf("WiFi || Message from WiFi received at: %s \n", curr_time);
-        printf("WiFi || Message: %s Sensor \n", message);
+        printf("WiFi || Message: %s Sensor \n\n", message);
         shm_write(message, 32, GSV_KEY);
     }
 }
@@ -193,10 +193,10 @@ void *transmitLTE(void *socket) {
 
     curr_timeLTE = Timestamp();
     sprintf(sendLTE, "%s %s", RAND_INT, curr_time);
-    printf("sendLTE: %s\n", sendLTE);
+    printf("LTE || sendLTE: %s\n", sendLTE);
 
     sendto(sock->sockLTE_TRANSMITTER, sendLTE, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, sizeof(sock->sockLTE_TRANSMITTER));
-    printf("Message from LTE transmitted at: %s\n", curr_time);
+    printf("Message from LTE transmitted at: %s\n\n", curr_time);
 }
 
 void *transmitWiFi(void *socket) {
@@ -209,12 +209,12 @@ void *transmitWiFi(void *socket) {
     printf("transmitWiFi socket: %d\n", sock->sockWiFi_TRANSMITTER);
 
     RAND_INT = shm_read(32, RAND_INT_KEY);
-    printf("LTE || Random int from shm: %s\n", RAND_INT);
+    printf("WiFi || Random int from shm: %s\n", RAND_INT);
 
     curr_timeWiFi = Timestamp();
     sprintf(sendWiFi, "%s %s", RAND_INT, curr_time);
-    printf("sendWiFi: %s\n", sendWiFi);
+    printf("WiFi || sendWiFi: %s\n", sendWiFi);
 
     sendto(sock->sockWiFi_TRANSMITTER, sendWiFi, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, sizeof(sock->ClientWiFi_TRANSMITTER));
-    printf("Message from WiFi transmitted at: %s\n", curr_time);
+    printf("Message from WiFi transmitted at: %s\n\n", curr_time);
 }

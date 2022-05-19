@@ -46,5 +46,4 @@ int main() {
     while (1) {
         receiveWiFi(&sock);
     }
-    sleep(3);
 }
