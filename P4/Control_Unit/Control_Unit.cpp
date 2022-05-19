@@ -31,7 +31,7 @@ void command(string tech, Sockets sock) {
         char msgDump[32];
         int data;
         string coordinate;
-        char* msg;
+        char* msg = (char*) malloc(64);
         
         while(1) {
             message = (void*)receiveWiFi((void*)&sock);
