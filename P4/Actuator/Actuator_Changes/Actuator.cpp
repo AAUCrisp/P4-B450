@@ -73,10 +73,10 @@ int main() {
             COMMANDS = (char*)shm_read(32, COMMANDS_KEY);
             printf("GSV from shared memory: %s\n", COMMANDS);
 
-            // snprintf(msg, sizeof(msg), "%s", COMMANDS);
+            snprintf(msg, sizeof(msg), "%s", COMMANDS);
 
-            // process_data = processData(COMMANDS);
-            // logData(process_data);
+            process_data = processData(COMMANDS);
+            logData(process_data);
         }
     }
 }
