@@ -18,7 +18,6 @@
 #include <unistd.h>
 
 #include "SocketFunctions.h"
-//#include "shm_write_read.h"
 #include "shm_write.c"
 
 /* Define buffers & PORT number */

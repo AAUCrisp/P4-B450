@@ -19,7 +19,6 @@
 
 #include "Headers/SocketFunctions.h"
 #include "Headers/shm_write_read.h"
-//#include "Headers/SocketFunctions.c"
 
 int main() {
     printf("==================\nActuator Monitoring Process Started\n==================\n\n");
