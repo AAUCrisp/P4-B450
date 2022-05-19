@@ -32,6 +32,8 @@ void command(string tech, Sockets sock) {
         int data;
         string coordinate;
         char* msg = (char*) malloc(9);
+        cout << "Main WiFi Socket: " <<sock.act_WiFi << endl;
+        cout << "Main LET Socket: " <<sock.act_LTE << endl;
         
         while(1) {
             message = (void*)receiveWiFi((void*)&sock);
@@ -138,6 +140,8 @@ int main(int argc, char *argv[]) {
     Sockets_Actuator(&sock, Actuator_IP_LTE, Actuator_IP_WiFi, PORT_LTE_ACTUATOR, PORT_WiFi_ACTUATOR, LTE, WiFi);
     printf("sockLTE_RECEIVER (OUTSIDE): %d\n", sock.sockLTE_RECEIVER);
     printf("sockWiFi_RECEIVER (OUTSIDE): %d\n", sock.sockWiFi_RECEIVER);
+    printf("Actuator LTE socket (OUTSIDE): %d\n", sock.act_LTE);
+    printf("Actuator WiFi socket (OUTSIDE): %d\n", sock.act_WiFi);
 
     /* Start signal monitoring process */
     pid_t signal_monitor;     // Prepare the process ID for monitoring

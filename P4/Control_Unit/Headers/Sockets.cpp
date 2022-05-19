@@ -300,7 +300,7 @@ void *transmitWiFi(void *socket) {
 void* transmit_command_LTE(void *socket, char* message) {
     Sockets *sock = (Sockets *)socket;
     int LenLTE = sizeof(sock->act_LTE);
-    printf("\n\nLTE || Actuator Socket: %d\n", sock->act_LTE);
+    printf("\n\nLTE Transmitter || Actuator Socket: %d\n", sock->act_LTE);
 
     TX_LTE = sendto(sock->act_LTE, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_LTE, LenLTE);
     // printf("LTE-Thread id = %ld\n", pthread_self());
@@ -314,7 +314,7 @@ void* transmit_command_LTE(void *socket, char* message) {
 void* transmit_command_WiFi(void *socket, char* message) {
     Sockets *sock = (Sockets *)socket;
     int LenWiFi = sizeof(sock->Client_act_WiFi);
-    printf("\n\nWiFi || Actuator Socket: %d\n", sock->act_WiFi);
+    printf("\n\nWiFi Transmitter || Actuator Socket: %d\n", sock->act_WiFi);
     TX_WiFi = sendto(sock->act_WiFi, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_WiFi, LenWiFi);
     // printf("WiFi-Thread id = %ld\n", pthread_self());
     printf("WiFi Transmitter || Sending Command to Actuator: %s\n", message);
@@ -336,11 +336,11 @@ void* transmit_command(void *socket, char* message) {
     cout << "Global Signal Variable is: " << GSV << endl;
     if((gsv == 0) || (gsv == 1)) {
         cout << "Sending command via WiFi" << endl;
-        // transmit_command_WiFi(&sock, message);
+        transmit_command_WiFi(&sock, message);
     }
     if((gsv == 0) || (gsv == 2)) {
         cout << "Sending command via LTE" << endl;
-        // transmit_command_LTE(&sock, message);
+        transmit_command_LTE(&sock, message);
     }
     cout << "\n======== end ==========\n==== SEND COMMAND ====\n======================\n" << endl;
     return message;
