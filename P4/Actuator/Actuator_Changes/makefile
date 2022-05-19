@@ -28,6 +28,6 @@ shm_read.o: Headers/shm_read.c Headers/shm_write_read.h
 	touch Headers/shm_read.c 
 
 clean:
-	rm -f Sensor SensorMonitoring
+	rm -f Actuator ActuatorMonitoring
 	rm *.o
 	@echo "clean completed!"
