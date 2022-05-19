@@ -289,7 +289,7 @@ void* transmit_command_WiFi(void *socket, char* message) {
 
 // Function to transmit GSV via WiFi
 void* transmit_command(void *socket, char* message) {
-    cout << "============\n==== SEND ====\n============\nMessage passed to the general transmit commmand\n" << endl;
+    cout << "============\n==== SEND ====\n============\nMessage passed to the general transmit commmand: \n" << message << endl;
     Sockets *sock = (Sockets *)socket;
     int LenWiFi = sizeof(sock->ClientWiFi_TRANSMITTER);
     const char *GSV;
