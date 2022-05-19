@@ -328,6 +328,8 @@ void* transmit_command(void *socket, char* message) {
     cout << "======================\n==== SEND COMMAND ====\n======= entry ========\n" << endl;
     cout << "Message passed to the general transmit commmand: \n" << message << endl;
     Sockets *sock = (Sockets *)socket;
+    printf("\n\nActuator WiFi || Sockets in Transmit Command: %d\n", sock->act_WiFi);
+    printf("\n\nActuator LTE || Sockets in Transmit Command: %d\n", sock->act_LTE);
     int LenWiFi = sizeof(sock->Client_act_WiFi);
     const char *GSV;
     const char *GSV_KEY = "GSV_KEY";
