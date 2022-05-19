@@ -258,7 +258,6 @@ void *transmitWiFi(void *socket) {
 
 // Function to transmit GSV via LTE
 void* transmit_command_LTE(void *socket, char* message) {
-
     Sockets *sock = (Sockets *)socket;
     int LenLTE = sizeof(sock->sockLTE_TRANSMITTER);
     printf("\n\nLTE || Transmit Socket: %d\n", sock->sockLTE_TRANSMITTER);
@@ -275,7 +274,6 @@ void* transmit_command_LTE(void *socket, char* message) {
 void* transmit_command_WiFi(void *socket, char* message) {
     Sockets *sock = (Sockets *)socket;
     int LenWiFi = sizeof(sock->ClientWiFi_TRANSMITTER);
-
     printf("\n\nWiFi || Transmit Socket: %d\n", sock->sockWiFi_TRANSMITTER);
     TX_WiFi = sendto(sock->sockWiFi_TRANSMITTER, message, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, LenWiFi);
     // printf("WiFi-Thread id = %ld\n", pthread_self());
@@ -304,7 +302,7 @@ void* transmit_command(void *socket, char* message) {
         cout << "Sending command via LTE" << endl;
         transmit_command_LTE(&sock, message);
     }
-    cout << "\n======== end ==========\n==== SEND COMMAND ====\n======================\n" << message << endl;
+    cout << "\n======== end ==========\n==== SEND COMMAND ====\n======================\n" << endl;
     return message;
 }
 
