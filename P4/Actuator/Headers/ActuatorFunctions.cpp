@@ -47,7 +47,7 @@ std::ofstream File;
 
 void logData(int *arr) {
     File.open("log.txt", std::ofstream::out | std::ofstream::app);
-    File << "\n\n movement on the x-axi:" << arr[0] << "\n movement on the y-axis:" << arr[1];
+    File << "\n\n Movement on the x-axis:" << arr[0] << "\n Movement on the y-axis:" << arr[1];
     File.close();
 }
 
