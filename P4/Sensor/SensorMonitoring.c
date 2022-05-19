@@ -39,7 +39,7 @@ int main() {
     Sockets sock;
     Sockets_Receiver(&sock, PORT_LTE_RECEIVER, PORT_WiFi_RECEIVER, LTE, WiFi);
     printf("sockLTE_RECEIVER (OUTSIDE): %d\n", sock.sockLTE_RECEIVER);
-    printf("sockWiFi_RECEIVER (OUTSIDE): %d\n", sock.sockWiFi_RECEIVER);
+    printf("sockWiFi_RECEIVER (OUTSIDE): %d\n\n", sock.sockWiFi_RECEIVER);
 
     pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
 
