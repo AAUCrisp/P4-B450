@@ -19,7 +19,6 @@
 // #include <cstdio>
 // #include<iostream>
 // using namespace std;
-
 /* -- Test Data Variable-- */
 int data_int = 1500000;     // Static Test Variable
 // string* grid = new string[coordinates]; // Don't forget to delete [] a; when you're done!
@@ -27,14 +26,16 @@ int data_int = 1500000;     // Static Test Variable
 void command(string tech, Sockets sock) {
     // Sockets sock;
     if (tech == "WiFi") {
+        void* message;
         while(1) {
             printf("\nI'm in WiFi\n\n");
             // void* message = receive_data();
-            void* message = receiveWiFi((void*)&sock);
-            string msg = (string) message;
+            message = (void*)receiveWiFi((void*)&sock);
+            // string msg = (string) message;
             cout << "WiFi || Message Parsed to MAIN is: " << message << "\n\n\n" << endl;
             // printf((const char*)message);
             // // void* message = receiveWiFi(&sock);
+            // int data = atoi((const char*)message);
             int data = atoi((const char*)message);
             // string coordinate = convert_to_coordinate(data);
             // char* msg;
