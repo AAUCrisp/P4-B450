@@ -68,7 +68,6 @@ int main() {
         execvp(path, args);
 
     } else {
-        ;
         while (1) {
             pthread_create(&T1, NULL, DoSomething, NULL);
             COMMANDS = (char*)shm_read(32, COMMANDS_KEY);
