@@ -32,7 +32,7 @@ void command(string tech, Sockets sock) {
             // void* message = receive_data();
             message = (void*)receiveWiFi((void*)&sock);
             // string msg = (string) message;
-            cout << "WiFi || Message Parsed to MAIN is: " << message << "\n\n\n" << endl;
+            cout << "WiFi || Message Parsed to MAIN is: " << (const char*)message << "\n\n\n" << endl;
             // printf((const char*)message);
             // // void* message = receiveWiFi(&sock);
             // int data = atoi((const char*)message);
