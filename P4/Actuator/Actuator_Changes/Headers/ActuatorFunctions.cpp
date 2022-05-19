@@ -25,7 +25,7 @@
 #include <string>
 using namespace std;
 
-#include "ActuatorFunctions.h"
+//#include "ActuatorFunctions.h"
 #include "hex.cpp"
 
 /* Variables used to create and bind sockets, receive from sockets, and error handle on sockets */
