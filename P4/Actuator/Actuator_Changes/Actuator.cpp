@@ -63,20 +63,20 @@ int main() {
         const char* args[] = {"./ActuatorMonitoring", NULL};
         // execvp(path, args);
 
-    }  // else {
-    sleep(2);
-    printf("Do I reach else?");
-    sleep(2);
-    while (1) {
+    } else {
         sleep(2);
-        printf("Do I reach while?");
-        // COMMANDS = (char*)shm_read(32, COMMANDS_KEY);
-        printf("GSV from shared memory: %s\n", COMMANDS);
+        printf("Do I reach else?");
+        sleep(2);
+        while (1) {
+            sleep(2);
+            printf("Do I reach while?");
+            COMMANDS = (char*)shm_read(32, COMMANDS_KEY);
+            printf("GSV from shared memory: %s\n", COMMANDS);
 
-        // snprintf(msg, sizeof(msg), "%s", COMMANDS);
+            // snprintf(msg, sizeof(msg), "%s", COMMANDS);
 
-        //process_data = processData(COMMANDS);
-        //logData(process_data);
+            // process_data = processData(COMMANDS);
+            // logData(process_data);
+        }
     }
 }
-//}
