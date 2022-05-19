@@ -231,34 +231,34 @@ void Sockets_Transmitter(Sockets *sock, const char *IP_LTE, const char *IP_WiFi,
 
 void Sockets_Actuator(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
     /* Create socket receiver */
-    sock->sockLTE_TRANSMITTER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    sock->sockWiFi_TRANSMITTER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    printf("Sockets_Transmitter LTE (INSIDE): %d\n", sock->sockLTE_TRANSMITTER);
-    printf("Sockets_Transmitter WiFi (INSIDE): %d\n", sock->sockWiFi_TRANSMITTER);
+    sock->act_LTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    sock->act_WiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    printf("Sockets_ACTUATOR LTE (INSIDE): %d\n", sock->act_LTE);
+    printf("Sockets_ACTUATOR WiFi (INSIDE): %d\n", sock->act_WiFi);
 
     /* Setting up socket options & specifying interface for receiver */
-    setsockopt(sock->sockLTE_TRANSMITTER, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
-    setsockopt(sock->sockWiFi_TRANSMITTER, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
+    setsockopt(sock->act_LTE, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
+    setsockopt(sock->act_WiFi, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
 
     /* Error checking */
-    if (sock->sockLTE_TRANSMITTER == -1) {
+    if (sock->act_LTE == -1) {
         perror("Failed to create LTE transmitter socket");
         exit(0);
     }
-    if (sock->sockWiFi_TRANSMITTER == -1) {
+    if (sock->act_WiFi == -1) {
         perror("Failed to create WiFi transmitter socket");
         exit(0);
     }
-    printf("Sockets_TRANSMITTER sucessfully created\n");
+    printf("Sockets_ACTUATOR sucessfully created\n");
 
     /* Configure settings to communicate with remote UDP client for receiver */
-    sock->ClientLTE_TRANSMITTER.sin_family = AF_INET;
-    sock->ClientLTE_TRANSMITTER.sin_port = htons(PORT_LTE);
-    sock->ClientLTE_TRANSMITTER.sin_addr.s_addr = inet_addr(IP_LTE);
+    sock->Client_act_LTE.sin_family = AF_INET;
+    sock->Client_act_LTE.sin_port = htons(PORT_LTE);
+    sock->Client_act_LTE.sin_addr.s_addr = inet_addr(IP_LTE);
 
-    sock->ClientWiFi_TRANSMITTER.sin_family = AF_INET;
-    sock->ClientWiFi_TRANSMITTER.sin_port = htons(PORT_WiFi);
-    sock->ClientWiFi_TRANSMITTER.sin_addr.s_addr = inet_addr(IP_WiFi);
+    sock->Client_act_WiFi.sin_family = AF_INET;
+    sock->Client_act_WiFi.sin_port = htons(PORT_WiFi);
+    sock->Client_act_WiFi.sin_addr.s_addr = inet_addr(IP_WiFi);
 }
 
 // Function to transmit GSV via LTE
@@ -299,10 +299,10 @@ void *transmitWiFi(void *socket) {
 // Function to transmit GSV via LTE
 void* transmit_command_LTE(void *socket, char* message) {
     Sockets *sock = (Sockets *)socket;
-    int LenLTE = sizeof(sock->sockLTE_TRANSMITTER);
-    printf("\n\nLTE || Transmit Socket: %d\n", sock->sockLTE_TRANSMITTER);
+    int LenLTE = sizeof(sock->act_LTE);
+    printf("\n\nLTE || Actuator Socket: %d\n", sock->act_LTE);
 
-    TX_LTE = sendto(sock->sockLTE_TRANSMITTER, message, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, LenLTE);
+    TX_LTE = sendto(sock->act_LTE, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_LTE, LenLTE);
     // printf("LTE-Thread id = %ld\n", pthread_self());
     printf("LTE Transmitter || Sending Command to Actuator: %s\n", message);
     printf("LTE Transmitter || Message transmitted at: %s\n\n", curr_time);
@@ -313,9 +313,9 @@ void* transmit_command_LTE(void *socket, char* message) {
 // Function to transmit GSV via WiFi
 void* transmit_command_WiFi(void *socket, char* message) {
     Sockets *sock = (Sockets *)socket;
-    int LenWiFi = sizeof(sock->ClientWiFi_TRANSMITTER);
-    printf("\n\nWiFi || Transmit Socket: %d\n", sock->sockWiFi_TRANSMITTER);
-    TX_WiFi = sendto(sock->sockWiFi_TRANSMITTER, message, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, LenWiFi);
+    int LenWiFi = sizeof(sock->Client_act_WiFi);
+    printf("\n\nWiFi || Actuator Socket: %d\n", sock->act_WiFi);
+    TX_WiFi = sendto(sock->act_WiFi, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_WiFi, LenWiFi);
     // printf("WiFi-Thread id = %ld\n", pthread_self());
     printf("WiFi Transmitter || Sending Command to Actuator: %s\n", message);
     printf("WiFi Transmitter || Message transmitted at: %s\n\n", curr_time);
@@ -328,7 +328,7 @@ void* transmit_command(void *socket, char* message) {
     cout << "======================\n==== SEND COMMAND ====\n======= entry ========\n" << endl;
     cout << "Message passed to the general transmit commmand: \n" << message << endl;
     Sockets *sock = (Sockets *)socket;
-    int LenWiFi = sizeof(sock->ClientWiFi_TRANSMITTER);
+    int LenWiFi = sizeof(sock->Client_act_WiFi);
     const char *GSV;
     const char *GSV_KEY = "GSV_KEY";
     GSV = shm_read(32, GSV_KEY);

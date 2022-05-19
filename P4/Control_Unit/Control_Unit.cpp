@@ -118,6 +118,10 @@ int main(int argc, char *argv[]) {
     /* -- Connection Setup -- */
     uint PORT_LTE_RECEIVER = 9000;
     uint PORT_WiFi_RECEIVER = 9001;
+    uint PORT_LTE_ACTUATOR = 9004;
+    uint PORT_WiFi_ACTUATOR = 9005;
+    const char* Actuator_IP_LTE = "10.20.0.13";
+    const char* Actuator_IP_WiFi = "192.168.1.143";
     const char* LTE = "wwan0";
     const char* WiFi = "wlan0";
 
@@ -130,6 +134,8 @@ int main(int argc, char *argv[]) {
     /* Create sockets */
     Sockets sock;
     Sockets_Receiver(&sock, PORT_LTE_RECEIVER, PORT_WiFi_RECEIVER, LTE, WiFi);
+    
+    Sockets_Actuator(&sock, Actuator_IP_LTE, Actuator_IP_WiFi, PORT_LTE_ACTUATOR, PORT_WiFi_ACTUATOR, LTE, WiFi);
     printf("sockLTE_RECEIVER (OUTSIDE): %d\n", sock.sockLTE_RECEIVER);
     printf("sockWiFi_RECEIVER (OUTSIDE): %d\n", sock.sockWiFi_RECEIVER);
 
