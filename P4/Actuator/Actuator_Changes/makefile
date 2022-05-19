@@ -3,8 +3,8 @@ all: Git Actuator ActuatorMonitoring
 Git:
 	git pull
 
-Actuator: Actuator.c SocketFunctions.o shm_write.o shm_read.o
-	g++ -pthread Actuator.c SocketFunctions.o shm_write.o shm_read.o -o Actuator -lrt
+Actuator: Actuator.cpp SocketFunctions.o shm_write.o shm_read.o
+	g++ -pthread Actuator.cpp SocketFunctions.o shm_write.o shm_read.o -o Actuator -lrt
 	touch Actuator
 
 ActuatorMonitoring: ActuatorMonitoring.c shm_write.o shm_read.o SocketFunctions.o
