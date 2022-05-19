@@ -32,14 +32,14 @@ void command(string tech, Sockets sock) {
         int data;
         string coordinate;
         char* msg = (char*) malloc(9);
-        cout << "Main WiFi Socket: " <<sock.act_WiFi << endl;
-        cout << "Main LET Socket: " <<sock.act_LTE << endl;
         
         while(1) {
             message = (void*)receiveWiFi((void*)&sock);
-            cout << "WiFi Receiver || Message Parsed to MAIN (data & timestamp) is: " << (const char*)message << endl;
+            cout << "WiFi Receiver || WiFi Socket: " <<sock.act_WiFi << endl;
+            cout << "WiFi Receiver || LTE Socket: " <<sock.act_LTE << endl;
+            cout << "WiFi Receiver || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
             sscanf((const char*)message, "%d %[^\n]", &data, msgDump);
-            cout << "WiFi Receiver || Message Parsed to MAIN as INT is: " << data << endl;
+            cout << "WiFi Receiver || Message Parsed from Sockets as INT is: " << data << endl;
             coordinate = convert_to_coordinate(data);
             cout << "WiFi Receiver || Coordinate for Actuator is: " << coordinate << "\n\n\n" << endl;
             // cout << "WiFi Receiver || Size of Coordinate is: " << sizeof(coordinate) << endl;;
@@ -138,8 +138,9 @@ int main(int argc, char *argv[]) {
     Sockets_Receiver(&sock, PORT_LTE_RECEIVER, PORT_WiFi_RECEIVER, LTE, WiFi);
     
     Sockets_Actuator(&sock, Actuator_IP_LTE, Actuator_IP_WiFi, PORT_LTE_ACTUATOR, PORT_WiFi_ACTUATOR, LTE, WiFi);
-    printf("sockLTE_RECEIVER (OUTSIDE): %d\n", sock.sockLTE_RECEIVER);
-    printf("sockWiFi_RECEIVER (OUTSIDE): %d\n", sock.sockWiFi_RECEIVER);
+
+    // printf("sockLTE_RECEIVER (OUTSIDE): %d\n", sock.sockLTE_RECEIVER);
+    // printf("sockWiFi_RECEIVER (OUTSIDE): %d\n", sock.sockWiFi_RECEIVER);
     printf("Actuator LTE socket (OUTSIDE): %d\n", sock.act_LTE);
     printf("Actuator WiFi socket (OUTSIDE): %d\n", sock.act_WiFi);
 
