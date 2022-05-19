@@ -19,7 +19,6 @@
 // #include <cstdio>
 // #include<iostream>
 // using namespace std;
-
 /* -- Test Data Variable-- */
 int data_int = 1500000;     // Static Test Variable
 // string* grid = new string[coordinates]; // Don't forget to delete [] a; when you're done!
@@ -27,20 +26,30 @@ int data_int = 1500000;     // Static Test Variable
 void command(string tech, Sockets sock) {
     // Sockets sock;
     if (tech == "WiFi") {
+        void* message;
+        char msgDump[32];
+        int data;
         while(1) {
             printf("\nI'm in WiFi\n\n");
             // void* message = receive_data();
-            void* message = receiveWiFi((void*)&sock);
-            string msg = (string) message;
-            cout << "WiFi || Message Parsed to MAIN is: " << message << "\n\n\n" << endl;
+            message = (void*)receiveWiFi((void*)&sock);
+            // string msg = (string) message;
+            cout << "WiFi || Message Parsed to MAIN (data & timestamp) is: " << (const char*)message << endl;
+
             // printf((const char*)message);
             // // void* message = receiveWiFi(&sock);
-            int data = atoi((const char*)message);
-            // string coordinate = convert_to_coordinate(data);
-            // char* msg;
-            // strcpy(msg, coordinate.c_str());
-            // transmit_command(msg);
-            sleep(4);
+            // int data = atoi((const char*)message);
+            sscanf((const char*)message, "%d %[^\n]", &data, msgDump);
+
+            // int data = atoi((const char*)message);
+            cout << "WiFi || Message Parsed to MAIN as INT is: " << data << endl;
+            string coordinate = convert_to_coordinate(data);
+            cout << "WiFi || Coordinate for Actuator: " << coordinate << "\n\n\n" << endl;
+
+            char* msg;
+            strcpy(msg, coordinate.c_str());
+            transmit_command(&sock, msg);
+            sleep(2);
         }
     }
     else if (tech == "LTE") {
