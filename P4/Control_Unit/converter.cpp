@@ -99,6 +99,7 @@ void print_grid(string* grid, int coordinates) {
 // string convert_to_coordinate(int number, int x_axis, int y_axis, int hex=1) {
 string convert_to_coordinate(int number, int hex=1) {
     // int x = (number % (x_axis+1));
+    cout << "\n\nIS THIS HERE? \n\n" << endl;
     int x = ((number-1) % (x_axis))+1;
     int y = ((number-1) / x_axis)+1; 
 
@@ -114,6 +115,7 @@ string convert_to_coordinate(int number, int hex=1) {
     }
 
     string coordinate = str_x + ":" + str_y;
+    cout << "\n\nTHIS IS THE END!! \n\n" << endl;
 
     return coordinate;
 }
