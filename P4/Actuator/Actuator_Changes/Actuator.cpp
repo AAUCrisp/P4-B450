@@ -25,17 +25,16 @@
 #include <sstream>
 #include <string>
 
-#include "Headers/SocketFunctions.h"
 #include "Headers/ActuatorFunctions.cpp"
+#include "Headers/SocketFunctions.h"
 #include "Headers/shm_read.c"
 
 using namespace std;
 
 // THIS FUNCTION OPENS CHILD PROGRAM!!!
 template <std::size_t N>
-int execvp(const char* file, const char* const (&argv)[N])
-{
-    assert((N > 0) && (argv[N -1] == nullptr));
+int execvp(const char* file, const char* const (&argv)[N]) {
+    assert((N > 0) && (argv[N - 1] == nullptr));
 
     return execvp(file, const_cast<char* const*>(argv));
 }
@@ -64,14 +63,10 @@ int main() {
         const char* args[] = {"./ActuatorMonitoring", NULL};
         execvp(path, args);
 
-        /*
-        char path[] = "./Child"; //specify path to child program
-        const char* argv[] = {"./Child", NULL}; // list over programs and their parameters
-        execvp("./Child", argv); // opens child program
-        */
-
     } else {
+        printf("Do I reach else?");
         while (1) {
+            printf("Do I reach while?");
             COMMANDS = (char*)shm_read(32, COMMANDS_KEY);
             printf("GSV from shared memory: %s\n", COMMANDS);
 
