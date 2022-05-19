@@ -23,6 +23,7 @@ int coordinates = x_axis*y_axis;
 
 /* --- Conversion from Integer to Hex-chars --- */
 string int_to_hex(int data, int back = 0) {
+    cout << "INT TO HEX" << endl;
     stringstream stream;    // Create hex-conversion object
 
     stream << hex << data;    // Tell it to convert from int to hex-chars
