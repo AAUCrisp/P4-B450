@@ -3,6 +3,6 @@
 
 void shm_write(const char *message, const int SIZE, const char* name);
 
-char* shm_read(const int SIZE, const char* name);
+void shm_read(const int SIZE, const char* name);
 
 #endif

@@ -20,7 +20,7 @@
 
 extern int errno;
 
-void* shm_read(const int SIZE, const char* name) {
+void shm_read(const int SIZE, const char* name) {
     /* Semaphore variables */
     sem_t* sp;
     int retval;
