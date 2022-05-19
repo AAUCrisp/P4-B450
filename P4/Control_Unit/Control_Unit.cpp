@@ -32,21 +32,12 @@ void command(string tech, Sockets sock) {
         printf("\nI'm in WiFi\n\n");
         
         while(1) {
-            // void* message = receive_data();
             message = (void*)receiveWiFi((void*)&sock);
-            // string msg = (string) message;
             cout << "WiFi || Message Parsed to MAIN (data & timestamp) is: " << (const char*)message << endl;
-
-            // printf((const char*)message);
-            // // void* message = receiveWiFi(&sock);
-            // int data = atoi((const char*)message);
             sscanf((const char*)message, "%d %[^\n]", &data, msgDump);
-
-            // int data = atoi((const char*)message);
             cout << "WiFi || Message Parsed to MAIN as INT is: " << data << endl;
             string coordinate = convert_to_coordinate(data);
             cout << "WiFi || Coordinate for Actuator: " << coordinate << "\n\n\n" << endl;
-
             char* msg;
             strcpy(msg, coordinate.c_str());
             transmit_command(&sock, msg);
@@ -155,7 +146,7 @@ int main(int argc, char *argv[]) {
 
     /* -- Main loop for command processing and forwarding -- */
     else {
-        pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
+        // pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
         // while(1) {
         //     receiveWiFi((void*)&sock);
         // }
