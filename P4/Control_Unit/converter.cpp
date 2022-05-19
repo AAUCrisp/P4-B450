@@ -23,7 +23,7 @@ int coordinates = x_axis*y_axis;
 
 /* --- Conversion from Integer to Hex-chars --- */
 string int_to_hex(int data, int back = 0) {
-    cout << "INT TO HEX" << endl;
+    // cout << "INT TO HEX" << endl;
     stringstream stream;    // Create hex-conversion object
 
     stream << hex << data;    // Tell it to convert from int to hex-chars
@@ -37,7 +37,7 @@ string int_to_hex(int data, int back = 0) {
         stream >> x;        // Write the coverted integer to the integer variable
         cout << "Converted back is: " << x << endl;
     }
-    cout << "INT TO HEX END" << endl;
+    // cout << "INT TO HEX END" << endl;
     return result;
 }
 
@@ -101,7 +101,7 @@ void print_grid(string* grid, int coordinates) {
 // string convert_to_coordinate(int number, int x_axis, int y_axis, int hex=1) {
 string convert_to_coordinate(int number, int hex=1) {
     // int x = (number % (x_axis+1));
-    cout << "\n\nIS THIS HERE? \n\n" << endl;
+    // cout << "\n\nIS THIS HERE? \n\n" << endl;
     int x = ((number-1) % (x_axis))+1;
     int y = ((number-1) / x_axis)+1; 
 
@@ -109,7 +109,7 @@ string convert_to_coordinate(int number, int hex=1) {
     string str_y;
     if(hex == 1) {
         str_x = int_to_hex(x);
-        cout << "Between HEX'es" << endl;
+        // cout << "Between HEX'es" << endl;
         str_y = int_to_hex(y);
     }
     else{
@@ -118,7 +118,7 @@ string convert_to_coordinate(int number, int hex=1) {
     }
 
     string coordinate = str_x + ":" + str_y;
-    cout << "\n\nTHIS IS THE END!! \n\n" << endl;
+    // cout << "\n\nTHIS IS THE END!! \n\n" << endl;
 
     return coordinate;
 }

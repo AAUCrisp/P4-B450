@@ -264,8 +264,8 @@ void* transmit_command_LTE(void *socket, char* message) {
 
     TX_LTE = sendto(sock->sockLTE_TRANSMITTER, message, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, LenLTE);
     // printf("LTE-Thread id = %ld\n", pthread_self());
-    printf("LTE || Sending Command to Actuator: %s\n", message);
-    printf("LTE || Message transmitted at: %s\n\n", curr_time);
+    printf("LTE Transmitter || Sending Command to Actuator: %s\n", message);
+    printf("LTE Transmitter || Message transmitted at: %s\n\n", curr_time);
     // pthread_exit(NULL);
     return 0;
 }
@@ -277,8 +277,8 @@ void* transmit_command_WiFi(void *socket, char* message) {
     printf("\n\nWiFi || Transmit Socket: %d\n", sock->sockWiFi_TRANSMITTER);
     TX_WiFi = sendto(sock->sockWiFi_TRANSMITTER, message, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, LenWiFi);
     // printf("WiFi-Thread id = %ld\n", pthread_self());
-    printf("WiFi || Sending Command to Actuator: %s\n", message);
-    printf("WiFi || Message transmitted at: %s\n\n", curr_time);
+    printf("WiFi Transmitter || Sending Command to Actuator: %s\n", message);
+    printf("WiFi Transmitter || Message transmitted at: %s\n\n", curr_time);
     // pthread_exit(NULL);
     return 0;
 }

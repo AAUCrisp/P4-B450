@@ -35,15 +35,16 @@ void command(string tech, Sockets sock) {
         
         while(1) {
             message = (void*)receiveWiFi((void*)&sock);
-            cout << "WiFi || Message Parsed to MAIN (data & timestamp) is: " << (const char*)message << endl;
+            cout << "WiFi Receiver || Message Parsed to MAIN (data & timestamp) is: " << (const char*)message << endl;
             sscanf((const char*)message, "%d %[^\n]", &data, msgDump);
-            cout << "WiFi || Message Parsed to MAIN as INT is: " << data << endl;
+            cout << "WiFi Receiver || Message Parsed to MAIN as INT is: " << data << endl;
             coordinate = convert_to_coordinate(data);
-            cout << "WiFi || Coordinate for Actuator: " << coordinate << "\n\n\n" << endl;
+            cout << "WiFi Receiver || Coordinate for Actuator is: " << coordinate << "\n\n\n" << endl;
+            cout << "WiFi Receiver || Size of Coordinate is: " << sizeof(coordinate) << endl;;
             strcpy(msg, coordinate.c_str());
-            cout << "WORK!!!!" << endl;
+            // cout << "WORK!!!!" << endl;
             transmit_command(&sock, msg);
-            sleep(2);
+            sleep(1);
         }
     }
     else if (tech == "LTE") {
