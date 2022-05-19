@@ -74,11 +74,12 @@ int *processData(char msg[buffer]) {
         int movement_x = x - last_x_coordinate;
         int movement_y = y - last_y_coordinate;
     }
+    int test[32];
+    test[0] = movement_x;
+    test[1] = movement_y;
 
-    result[0] = movement_x;
-    result[1] = movement_y;
-    printf("result[0]: %d\n", result[0]);
-    printf("result[1]: %d\n", result[1]);
+    printf("test[0]: %d\n", test[0]);
+    printf("test[1]: %d\n", test[1]);
     update_last_coordinate(x, y);
 
     return result;  // returns the array containing movement over the x and y axis.
