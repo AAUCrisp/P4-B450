@@ -75,8 +75,8 @@ int main() {
 
         // snprintf(msg, sizeof(msg), "%s", COMMANDS);
 
-        process_data = processData(COMMANDS);
-        logData(process_data);
+        //process_data = processData(COMMANDS);
+        //logData(process_data);
     }
 }
 //}
