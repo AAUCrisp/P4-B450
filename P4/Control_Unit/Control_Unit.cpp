@@ -24,13 +24,13 @@
 int data_int = 1500000;     // Static Test Variable
 // string* grid = new string[coordinates]; // Don't forget to delete [] a; when you're done!
 
-void command(string tech) {
-    Sockets sock;
+void command(string tech, Sockets sock) {
+    // Sockets sock;
     if (tech == "WiFi") {
         while(1) {
             printf("\nI'm in WiFi\n\n");
             // void* message = receive_data();
-            void* message = receiveWiFi(&sock);
+            void* message = receiveWiFi((void*)&sock);
             cout << "WiFi || Message Parsed to MAIN is: " << message << "\n\n\n" << endl;
             // printf((const char*)message);
             // // void* message = receiveWiFi(&sock);
@@ -145,8 +145,10 @@ int main(int argc, char *argv[]) {
     /* -- Main loop for command processing and forwarding -- */
     else {
         pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
-        command("WiFi");
-        // receiveWiFi(&sock);
+        // while(1) {
+        //     receiveWiFi((void*)&sock);
+        // }
+        command("WiFi", sock);
         printf("\nThis shouldn't print!!!\n");
     }
 
