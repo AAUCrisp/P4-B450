@@ -297,15 +297,15 @@ void* transmit_command(void *socket, char* message) {
     const char *GSV_KEY = "GSV_KEY";
     GSV = shm_read(32, GSV_KEY);
     cout << "Global Signal Variable is: " << GSV << endl;
-    if(GSV == "0" || GSV == "1") {
+    if((char*)GSV == "0" || (char*)GSV == "1") {
         cout << "Sending command via WiFi" << endl;
         transmit_command_WiFi(&sock, message);
     }
-    if(GSV == "0" || GSV == "2") {
+    if((char*)GSV == "0" || (char*)GSV == "2") {
         cout << "Sending command via LTE" << endl;
         transmit_command_LTE(&sock, message);
     }
-    cout << "======== end ==========\n==== SEND COMMAND ====\n======================\n" << message << endl;
+    cout << "\n======== end ==========\n==== SEND COMMAND ====\n======================\n" << message << endl;
     return message;
 }
 
