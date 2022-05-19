@@ -18,6 +18,7 @@
 #include <time.h>
 #include <unistd.h>
 
+#include <cassert>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -29,6 +30,15 @@
 #include "Headers/shm_write_read.h"
 
 using namespace std;
+
+// THIS FUNCTION OPENS CHILD PROGRAM!!!
+template <std::size_t N>
+int execvp(const char* file, const char* const (&argv)[N])
+{
+    assert((N > 0) && (argv[N -1] == nullptr));
+
+    return execvp(file, const_cast<char* const*>(argv));
+}
 
 int main() {
     printf("==================\nActuator Process Started\n==================\n\n");
@@ -44,15 +54,15 @@ int main() {
     char msg[1024];
 
     /* Create child process */
-    pid_t sensor_monitor;     // Prepare the process ID for monitoring
-    sensor_monitor = fork();  // Starts new process
+    pid_t Actuator_monitor;     // Prepare the process ID for monitoring
+    Actuator_monitor = fork();  // Starts new process
 
     if (sensor_monitor == 0) {
         printf("Parent process ID: %d \n", getppid());
         printf("Actuator monitoring process ID is: %d \n", getpid());
         char path[] = "./ActuatorMonitoring";
         char* args[] = {"./ActuatorMonitoring", NULL};
-        execv(path, args);
+        execvp(path, args);
 
     } else {
         while (1) {
