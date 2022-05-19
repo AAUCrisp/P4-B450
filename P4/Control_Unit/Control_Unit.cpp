@@ -26,11 +26,12 @@ int data_int = 1500000;     // Static Test Variable
 void command(string tech, Sockets sock) {
     // Sockets sock;
     if (tech == "WiFi") {
+        printf("\nI'm in WiFi\n\n");
         void* message;
         char msgDump[32];
         int data;
-        printf("\nI'm in WiFi\n\n");
         string coordinate;
+        char* msg;
         
         while(1) {
             message = (void*)receiveWiFi((void*)&sock);
@@ -39,8 +40,8 @@ void command(string tech, Sockets sock) {
             cout << "WiFi || Message Parsed to MAIN as INT is: " << data << endl;
             coordinate = convert_to_coordinate(data);
             cout << "WiFi || Coordinate for Actuator: " << coordinate << "\n\n\n" << endl;
-            char* msg;
             strcpy(msg, coordinate.c_str());
+            cout << "WORK!!!!" << endl;
             transmit_command(&sock, msg);
             sleep(2);
         }
