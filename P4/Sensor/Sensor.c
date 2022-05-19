@@ -70,12 +70,13 @@ int main() {
 
     } else {
         while (1) {
+            usleep(1000);
             msg = shm_read(32, GSV_KEY);
             GSV = atoi(msg);
             printf("GSV from shared memory: %s\n", msg);
             // printf("GSV converted: %d\n", GSV);
             sprintf(buffer, "%d", generate(0, 25000000));
-            
+            usleep(1000);
             shm_write(buffer, 32, RAND_INT_KEY);
 
             if (GSV == B || GSV == L) {
