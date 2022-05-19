@@ -30,13 +30,14 @@ void command(string tech, Sockets sock) {
         char msgDump[32];
         int data;
         printf("\nI'm in WiFi\n\n");
+        string coordinate;
         
         while(1) {
             message = (void*)receiveWiFi((void*)&sock);
             cout << "WiFi || Message Parsed to MAIN (data & timestamp) is: " << (const char*)message << endl;
             sscanf((const char*)message, "%d %[^\n]", &data, msgDump);
             cout << "WiFi || Message Parsed to MAIN as INT is: " << data << endl;
-            string coordinate = convert_to_coordinate(data);
+            coordinate = convert_to_coordinate(data);
             cout << "WiFi || Coordinate for Actuator: " << coordinate << "\n\n\n" << endl;
             char* msg;
             strcpy(msg, coordinate.c_str());
