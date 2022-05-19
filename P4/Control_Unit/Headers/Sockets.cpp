@@ -276,15 +276,14 @@ void* transmit_command_WiFi(void *socket, char* message) {
     
     Sockets *sock = (Sockets *)socket;
     int LenWiFi = sizeof(sock->ClientWiFi_TRANSMITTER);
-    const char *GSV;
-    const char *GSV_KEY = "GSV_KEY";
-    GSV = shm_read(32, GSV_KEY);
+
     printf("\n\nWiFi || Transmit Socket: %d\n", sock->sockWiFi_TRANSMITTER);
-    TX_WiFi = sendto(sock->sockWiFi_TRANSMITTER, GSV, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, LenWiFi);
+    TX_WiFi = sendto(sock->sockWiFi_TRANSMITTER, message, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, LenWiFi);
     // printf("WiFi-Thread id = %ld\n", pthread_self());
-    printf("WiFi || Sending Command to Actuator: %s\n", GSV);
+    printf("WiFi || Sending Command to Actuator: %s\n", message);
     printf("WiFi || Message transmitted at: %s\n\n", curr_time);
-    pthread_exit(NULL);
+    // pthread_exit(NULL);
+    return 0;
 }
 
 // Function to transmit GSV via WiFi
