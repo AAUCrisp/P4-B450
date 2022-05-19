@@ -31,6 +31,7 @@ void command(string tech, Sockets sock) {
             printf("\nI'm in WiFi\n\n");
             // void* message = receive_data();
             void* message = receiveWiFi((void*)&sock);
+            string msg = (string) message;
             cout << "WiFi || Message Parsed to MAIN is: " << message << "\n\n\n" << endl;
             // printf((const char*)message);
             // // void* message = receiveWiFi(&sock);
