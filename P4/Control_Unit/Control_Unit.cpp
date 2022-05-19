@@ -27,16 +27,21 @@ void command(string tech, Sockets sock) {
     // Sockets sock;
     if (tech == "WiFi") {
         void* message;
+        char msgDump[32];
         while(1) {
             printf("\nI'm in WiFi\n\n");
             // void* message = receive_data();
             message = (void*)receiveWiFi((void*)&sock);
             // string msg = (string) message;
             cout << "WiFi || Message Parsed to MAIN is: " << (const char*)message << "\n\n\n" << endl;
+
             // printf((const char*)message);
             // // void* message = receiveWiFi(&sock);
             // int data = atoi((const char*)message);
-            int data = atoi((const char*)message);
+            sscanf((const char*)message, "%d %[^\n]", &data, msgDump);
+
+            // int data = atoi((const char*)message);
+            cout << "WiFi || Message Parsed to MAIN as INT is: " << data << "\n\n\n" << endl;
             // string coordinate = convert_to_coordinate(data);
             // char* msg;
             // strcpy(msg, coordinate.c_str());
