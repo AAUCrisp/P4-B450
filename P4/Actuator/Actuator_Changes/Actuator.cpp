@@ -74,7 +74,7 @@ int main() {
 
     } else {
         while (1) {
-            COMMANDS = shm_read(32, COMMANDS_KEY);
+            COMMANDS = (char*)shm_read(32, COMMANDS_KEY);
             printf("GSV from shared memory: %s\n", COMMANDS);
 
             snprintf(msg, sizeof(msg), "%s", COMMANDS);
