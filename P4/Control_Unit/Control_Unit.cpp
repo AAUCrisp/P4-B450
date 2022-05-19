@@ -32,7 +32,6 @@ void command(string tech, Sockets sock) {
         int data;
         string coordinate;
         char* msg = (char*) malloc(9);
-        cout << "WiFi Receiver || Size of Coordinate is: " << sizeof(coordinate) << endl;;
         
         while(1) {
             message = (void*)receiveWiFi((void*)&sock);
@@ -43,7 +42,6 @@ void command(string tech, Sockets sock) {
             cout << "WiFi Receiver || Coordinate for Actuator is: " << coordinate << "\n\n\n" << endl;
             // cout << "WiFi Receiver || Size of Coordinate is: " << sizeof(coordinate) << endl;;
             strcpy(msg, coordinate.c_str());
-            // cout << "WORK!!!!" << endl;
             transmit_command(&sock, msg);
             sleep(1);
         }

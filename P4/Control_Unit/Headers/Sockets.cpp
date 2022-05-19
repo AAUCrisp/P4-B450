@@ -32,17 +32,24 @@
 #define SOCKET_STRUCT
 
 typedef struct _sockets {
-        int sockLTE;
-        int sockWiFi;
-        struct sockaddr_in ServerLTE;
-        struct sockaddr_in ServerWiFi;
-        /* Transmit sockets */
-        int sockLTE_transmit;
-        int sockWiFi_transmit;
-        struct sockaddr_in ServerLTE_transmit;
-        struct sockaddr_in ServerWiFi_transmit;
+    /* Receiver sockets*/
+    int sockLTE_RECEIVER;
+    int sockWiFi_RECEIVER;
+    struct sockaddr_in ServerLTE_RECEIVER;
+    struct sockaddr_in ServerWiFi_RECEIVER;
 
-    }Sockets;
+    /* Transmitter sockets*/
+    int sockLTE_TRANSMITTER;
+    int sockWiFi_TRANSMITTER;
+    struct sockaddr_in ClientLTE_TRANSMITTER;
+    struct sockaddr_in ClientWiFi_TRANSMITTER;
+
+    /* Actuator sockets*/
+    int act_LTE;
+    int act_WiFi;
+    struct sockaddr_in Client_act_LTE;
+    struct sockaddr_in Client_act_WiFi;
+} Sockets;
 
 typedef struct _time_struct{
     int hour;
@@ -50,6 +57,7 @@ typedef struct _time_struct{
     int second;
     int millis;
 } time_struct;
+
 #endif
 
 
@@ -220,6 +228,38 @@ void Sockets_Transmitter(Sockets *sock, const char *IP_LTE, const char *IP_WiFi,
     sock->ClientWiFi_TRANSMITTER.sin_addr.s_addr = inet_addr(IP_WiFi);
 }
 
+
+void Sockets_Actuator(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
+    /* Create socket receiver */
+    sock->sockLTE_TRANSMITTER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    sock->sockWiFi_TRANSMITTER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    printf("Sockets_Transmitter LTE (INSIDE): %d\n", sock->sockLTE_TRANSMITTER);
+    printf("Sockets_Transmitter WiFi (INSIDE): %d\n", sock->sockWiFi_TRANSMITTER);
+
+    /* Setting up socket options & specifying interface for receiver */
+    setsockopt(sock->sockLTE_TRANSMITTER, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
+    setsockopt(sock->sockWiFi_TRANSMITTER, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
+
+    /* Error checking */
+    if (sock->sockLTE_TRANSMITTER == -1) {
+        perror("Failed to create LTE transmitter socket");
+        exit(0);
+    }
+    if (sock->sockWiFi_TRANSMITTER == -1) {
+        perror("Failed to create WiFi transmitter socket");
+        exit(0);
+    }
+    printf("Sockets_TRANSMITTER sucessfully created\n");
+
+    /* Configure settings to communicate with remote UDP client for receiver */
+    sock->ClientLTE_TRANSMITTER.sin_family = AF_INET;
+    sock->ClientLTE_TRANSMITTER.sin_port = htons(PORT_LTE);
+    sock->ClientLTE_TRANSMITTER.sin_addr.s_addr = inet_addr(IP_LTE);
+
+    sock->ClientWiFi_TRANSMITTER.sin_family = AF_INET;
+    sock->ClientWiFi_TRANSMITTER.sin_port = htons(PORT_WiFi);
+    sock->ClientWiFi_TRANSMITTER.sin_addr.s_addr = inet_addr(IP_WiFi);
+}
 
 // Function to transmit GSV via LTE
 void *transmitLTE(void *socket) {

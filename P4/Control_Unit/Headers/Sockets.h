@@ -18,6 +18,12 @@ typedef struct _sockets {
     int sockWiFi_TRANSMITTER;
     struct sockaddr_in ClientLTE_TRANSMITTER;
     struct sockaddr_in ClientWiFi_TRANSMITTER;
+
+    /* Actuator sockets*/
+    int act_LTE;
+    int act_WiFi;
+    struct sockaddr_in Client_act_LTE;
+    struct sockaddr_in Client_act_WiFi;
 } Sockets;
 
 typedef struct _time_struct{
@@ -34,6 +40,8 @@ void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *
 
 /* Function to create transmitter socket */
 void Sockets_Transmitter(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi);
+
+void Sockets_Actuator(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi);
 
 /* Function to receive LTE packets */
 void *receiveLTE(void *socket);
