@@ -40,9 +40,8 @@ void command(string tech, Sockets sock) {
             cout << "WiFi Receiver || Message Parsed to MAIN as INT is: " << data << endl;
             coordinate = convert_to_coordinate(data);
             cout << "WiFi Receiver || Coordinate for Actuator is: " << coordinate << "\n\n\n" << endl;
-            cout << "WiFi Receiver || Size of Coordinate is: " << sizeof(coordinate) << endl;;
+            // cout << "WiFi Receiver || Size of Coordinate is: " << sizeof(coordinate) << endl;;
             strcpy(msg, coordinate.c_str());
-            // cout << "WORK!!!!" << endl;
             transmit_command(&sock, msg);
             sleep(1);
         }
