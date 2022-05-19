@@ -75,7 +75,7 @@ int main() {
             printf("GSV from shared memory: %s\n", msg);
             // printf("GSV converted: %d\n", GSV);
             //sprintf(buffer, "%d", generate(0, 2500));
-            buffer = 25000000;
+            buffer = "25000000";
             shm_write(buffer, 32, RAND_INT_KEY);
 
             if (GSV == B || GSV == L) {
