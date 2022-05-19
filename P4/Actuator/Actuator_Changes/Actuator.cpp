@@ -50,7 +50,7 @@ int main() {
 
     /* Shared memory object variables */
     const char* COMMANDS_KEY = "COMMANDS_KEY";
-    const char* COMMANDS;
+    char* COMMANDS;
     char msg[1024];
 
     /* Create child process */
@@ -63,7 +63,7 @@ int main() {
         char path[] = "./ActuatorMonitoring";
         const char* args[] = {"./ActuatorMonitoring", NULL};
         execvp(path, args);
-        
+
         /*
         char path[] = "./Child"; //specify path to child program
         const char* argv[] = {"./Child", NULL}; // list over programs and their parameters

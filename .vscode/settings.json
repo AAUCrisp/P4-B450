@@ -15,7 +15,8 @@
     "shm_write_read.h": "c",
     "*.tcc": "c",
     "fcntl.h": "c",
-    "sockets.h": "c"
+    "sockets.h": "c",
+    "iostream": "cpp"
   },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "/usr/bin/g++",
