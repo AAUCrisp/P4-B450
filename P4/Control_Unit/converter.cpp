@@ -37,6 +37,7 @@ string int_to_hex(int data, int back = 0) {
         stream >> x;        // Write the coverted integer to the integer variable
         cout << "Converted back is: " << x << endl;
     }
+    cout << "INT TO HEX END" << endl;
     return result;
 }
 
@@ -108,6 +109,7 @@ string convert_to_coordinate(int number, int hex=1) {
     string str_y;
     if(hex == 1) {
         str_x = int_to_hex(x);
+        cout << "Between HEX'es" << endl;
         str_y = int_to_hex(y);
     }
     else{
