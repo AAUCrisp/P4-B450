@@ -28,6 +28,8 @@
 #include "Headers/ActuatorFunctions.h"
 #include "Headers/SocketFunctions.h"
 #include "Headers/shm_write_read.h"
+#include "ActuatorFunctions.cpp"
+#include "shm_read.c"
 
 using namespace std;
 
