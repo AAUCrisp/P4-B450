@@ -70,9 +70,13 @@ int *processData(char msg[buffer]) {
     if (last_x_coordinate && last_y_coordinate == 0) {
         int movement_x = x;
         int movement_y = y;
+        printf("movement_x = x: %d\n", movement_x);
+        printf("movement_y = y: %d\n", movement_y);
     } else {
         int movement_x = x - last_x_coordinate;
         int movement_y = y - last_y_coordinate;
+        printf("movement_x = x - last_x: %d\n", movement_x);
+        printf("movement_y = y - last_y: %d\n", movement_y);
     }
     int test[32];
     test[0] = movement_x;
