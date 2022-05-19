@@ -262,18 +262,17 @@ void* transmit_command_LTE(void *socket, char* message) {
     Sockets *sock = (Sockets *)socket;
     int LenLTE = sizeof(sock->sockLTE_TRANSMITTER);
     printf("\n\nLTE || Transmit Socket: %d\n", sock->sockLTE_TRANSMITTER);
-    // char* lort;
-    // strcpy(lort, message.c_str());
-    TX_LTE = sendto(sock->sockLTE_TRANSMITTER,(const void*) message, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, LenLTE);
+
+    TX_LTE = sendto(sock->sockLTE_TRANSMITTER, message, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, LenLTE);
     // printf("LTE-Thread id = %ld\n", pthread_self());
     printf("LTE || Sending Command to Actuator: %s\n", message);
     printf("LTE || Message transmitted at: %s\n\n", curr_time);
-    pthread_exit(NULL);
+    // pthread_exit(NULL);
+    return 0;
 }
 
 // Function to transmit GSV via WiFi
 void* transmit_command_WiFi(void *socket, char* message) {
-    
     Sockets *sock = (Sockets *)socket;
     int LenWiFi = sizeof(sock->ClientWiFi_TRANSMITTER);
 
