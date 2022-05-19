@@ -296,12 +296,13 @@ void* transmit_command(void *socket, char* message) {
     const char *GSV;
     const char *GSV_KEY = "GSV_KEY";
     GSV = shm_read(32, GSV_KEY);
+    int gsv = atoi(GSV);
     cout << "Global Signal Variable is: " << GSV << endl;
-    if((char*)GSV == "0" || (char*)GSV == "1") {
+    if((gsv == 0) || (gsv == 1)) {
         cout << "Sending command via WiFi" << endl;
         transmit_command_WiFi(&sock, message);
     }
-    if((char*)GSV == "0" || (char*)GSV == "2") {
+    if((gsv == 0) || (gsv == 2)) {
         cout << "Sending command via LTE" << endl;
         transmit_command_LTE(&sock, message);
     }
