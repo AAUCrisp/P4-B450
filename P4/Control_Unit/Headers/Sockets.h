@@ -51,13 +51,13 @@ void *transmitLTE(void *socket);
 void *transmitWiFi(void *socket);
 
 /* Function to transmit LTE packets */
-void *transmit_command_LTE(void *socket, const char* message);
+void *transmit_command_LTE(void *socket, char* message);
 
 /* Function to transmit WiFi packets */
-void *transmit_command_WiFi(void *socke, const char* message);
+void *transmit_command_WiFi(void *socke, char* message);
 
 /* Function to transmit WiFi packets */
-void *transmit_command(const char* message);
+void *transmit_command(void *socket, char* message);
 
 /* Function to timestamp packets */
 char *Timestamp();
