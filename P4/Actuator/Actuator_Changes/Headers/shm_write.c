@@ -41,7 +41,7 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     ptr = mmap(NULL, SIZE, PROT_WRITE, MAP_SHARED, shm_fd, 0);
 
     /* write to the shared memory object */
-    sprintf(ptr, "%s", message);
+    sprintf((char*)ptr, "%s", message);
 
     // printf("Wrote from shm_write: %s\n", (char*)ptr);
 
