@@ -148,7 +148,7 @@ void *receiveLTE(void *socket) {
     while (1) {
         Sockets *sock = (Sockets *)socket;
         const char *COMMANDS_KEY = "COMMANDS_KEY";
-        int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
+        unsigned int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
 
         printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
         RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
@@ -166,7 +166,7 @@ void *receiveWiFi(void *socket) {
     while (1) {
         Sockets *sock = (Sockets *)socket;
         const char *COMMANDS_KEY = "COMMANDS_KEY";
-        int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
+        unsigned int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
         
         printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
