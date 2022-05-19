@@ -8,7 +8,7 @@ Actuator: Actuator.cpp SocketFunctions.o shm_write.o shm_read.o
 	touch Actuator
 
 ActuatorMonitoring: ActuatorMonitoring.c shm_write.o shm_read.o SocketFunctions.o
-	g++ -pthread ActuatorMonitoring.c shm_write.o shm_read SocketFunctions.o
+	g++ -pthread ActuatorMonitoring.c shm_write.o shm_read.o SocketFunctions.o
 	touch ActuatorMonitoring
 
 ActuatorFunctions.o: Headers/ActuatorFunctions.cpp Headers/ActuatorFunctions.h 
