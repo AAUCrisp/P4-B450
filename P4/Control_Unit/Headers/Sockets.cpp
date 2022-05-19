@@ -103,8 +103,8 @@ void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *
     /* Create socket receiver */
     sock->sockLTE_RECEIVER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sock->sockWiFi_RECEIVER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    printf("Sockets_Receiver LTE (INSIDE): %d\n", sock->sockLTE_RECEIVER);
-    printf("Sockets_Receiver WiFi (INSIDE): %d\n", sock->sockWiFi_RECEIVER);
+    // printf("Sockets_Receiver LTE (INSIDE): %d\n", sock->sockLTE_RECEIVER);
+    // printf("Sockets_Receiver WiFi (INSIDE): %d\n", sock->sockWiFi_RECEIVER);
 
     /* Setting up socket options & specifying interface for receiver */
     setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
@@ -200,8 +200,8 @@ void Sockets_Transmitter(Sockets *sock, const char *IP_LTE, const char *IP_WiFi,
     /* Create socket receiver */
     sock->sockLTE_TRANSMITTER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sock->sockWiFi_TRANSMITTER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    printf("Sockets_Transmitter LTE (INSIDE): %d\n", sock->sockLTE_TRANSMITTER);
-    printf("Sockets_Transmitter WiFi (INSIDE): %d\n", sock->sockWiFi_TRANSMITTER);
+    // printf("Sockets_Transmitter LTE (INSIDE): %d\n", sock->sockLTE_TRANSMITTER);
+    // printf("Sockets_Transmitter WiFi (INSIDE): %d\n", sock->sockWiFi_TRANSMITTER);
 
     /* Setting up socket options & specifying interface for receiver */
     setsockopt(sock->sockLTE_TRANSMITTER, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
@@ -233,8 +233,8 @@ void Sockets_Actuator(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, ui
     /* Create socket receiver */
     sock->act_LTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sock->act_WiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    printf("Sockets_ACTUATOR LTE (INSIDE): %d\n", sock->act_LTE);
-    printf("Sockets_ACTUATOR WiFi (INSIDE): %d\n", sock->act_WiFi);
+    // printf("Sockets_ACTUATOR LTE (INSIDE): %d\n", sock->act_LTE);
+    // printf("Sockets_ACTUATOR WiFi (INSIDE): %d\n", sock->act_WiFi);
 
     /* Setting up socket options & specifying interface for receiver */
     setsockopt(sock->act_LTE, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
