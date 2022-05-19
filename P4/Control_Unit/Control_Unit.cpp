@@ -28,6 +28,7 @@ void command(string tech, Sockets sock) {
     if (tech == "WiFi") {
         void* message;
         char msgDump[32];
+        int data;
         while(1) {
             printf("\nI'm in WiFi\n\n");
             // void* message = receive_data();
