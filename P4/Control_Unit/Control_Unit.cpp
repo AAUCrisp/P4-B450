@@ -32,6 +32,8 @@ void command(string tech, Sockets sock) {
         int data;
         string coordinate;
         char* msg = (char*) malloc(9);
+        cout << "Main WiFi Socket: " <<sock.act_WiFi << endl;
+        cout << "Main LET Socket: " <<sock.act_LTE << endl;
         
         while(1) {
             message = (void*)receiveWiFi((void*)&sock);
