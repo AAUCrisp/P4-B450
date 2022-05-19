@@ -39,7 +39,7 @@ int execvp(const char* file, const char* const (&argv)[N]) {
     return execvp(file, const_cast<char* const*>(argv));
 }
 
-void * DoSomething() {
+void* DoSomething(void * arg) {
     pthread_exit(NULL);
 }
 
