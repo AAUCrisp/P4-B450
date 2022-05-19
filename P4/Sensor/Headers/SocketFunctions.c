@@ -92,19 +92,6 @@ void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *
     printf("Bind was succesful!\n");
 }
 
-/* Function to timestamp packets */
-char *Timestamp() {
-    /* Timestamp format : [hh:mm:ss dd/mm/yy] */
-    struct tm *timeinfo;
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
-    timeinfo = localtime(&tv.tv_sec);
-
-    sprintf(curr_time, "[%d:%d:%d.%03ld %d/%d/%d]", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, tv.tv_usec / 1000, timeinfo->tm_mday, timeinfo->tm_mon + 1, timeinfo->tm_year + 1900);
-
-    return curr_time;
-}
-
 /* Function to create transmitter sockets */
 void Sockets_Transmitter(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
     /* Create socket receiver */
@@ -136,6 +123,19 @@ void Sockets_Transmitter(Sockets *sock, const char *IP_LTE, const char *IP_WiFi,
     sock->ClientWiFi_TRANSMITTER.sin_family = AF_INET;
     sock->ClientWiFi_TRANSMITTER.sin_port = htons(PORT_WiFi);
     sock->ClientWiFi_TRANSMITTER.sin_addr.s_addr = inet_addr(IP_WiFi);
+}
+
+/* Function to timestamp packets */
+char *Timestamp() {
+    /* Timestamp format : [hh:mm:ss dd/mm/yy] */
+    struct tm *timeinfo;
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    timeinfo = localtime(&tv.tv_sec);
+
+    sprintf(curr_time, "[%d:%d:%d.%03ld %d/%d/%d]", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, tv.tv_usec / 1000, timeinfo->tm_mday, timeinfo->tm_mon + 1, timeinfo->tm_year + 1900);
+
+    return curr_time;
 }
 
 int generate(int Min, int Max) {

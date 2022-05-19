@@ -43,26 +43,6 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     /* write to the shared memory object */
     sprintf(ptr, "%s", message);
 
-    /* semaphore code to lock the shared mem */
-    /* Initialize the semaphore . */
-
-    /*
-    retval = sem_init(sp, 1, 2);
-    if (retval != 0) {
-        perror(" Couldn ’t initialize . ");
-        exit(3);
-    }
-    retval = sem_trywait(sp);
-    printf(" Did trywait . Returned %d >\n ", retval);
-    retval = sem_trywait(sp);
-    printf(" Did trywait . Returned %d >\n ", retval);
-    retval = sem_trywait(sp);
-    printf(" Did trywait . Returned %d >\n ", retval);
-
-    sem_destroy(sp);*/
-
-    
-
     // printf("Wrote from shm_write: %s\n", (char*)ptr);
 
     // printf("This is ptr: %p\n", ptr);
