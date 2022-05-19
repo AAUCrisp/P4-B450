@@ -325,9 +325,9 @@ void* transmit_command_WiFi(void *socket, char* message) {
 
 // Function to transmit GSV via WiFi
 void* transmit_command(void *socket, char* message) {
+    Sockets *sock = (Sockets *)socket;
     cout << "======================\n==== SEND COMMAND ====\n======= entry ========\n" << endl;
     cout << "Message passed to the general transmit commmand: \n" << message << endl;
-    Sockets *sock = (Sockets *)socket;
     printf("\n\nActuator WiFi || Sockets in Transmit Command: %d\n", sock->act_WiFi);
     printf("\n\nActuator LTE || Sockets in Transmit Command: %d\n", sock->act_LTE);
     int LenWiFi = sizeof(sock->Client_act_WiFi);
@@ -338,11 +338,11 @@ void* transmit_command(void *socket, char* message) {
     cout << "Global Signal Variable is: " << GSV << endl;
     if((gsv == 0) || (gsv == 1)) {
         cout << "Sending command via WiFi" << endl;
-        transmit_command_WiFi(&sock, message);
+        transmit_command_WiFi(sock, message);
     }
     if((gsv == 0) || (gsv == 2)) {
         cout << "Sending command via LTE" << endl;
-        transmit_command_LTE(&sock, message);
+        transmit_command_LTE(sock, message);
     }
     cout << "\n======== end ==========\n==== SEND COMMAND ====\n======================\n" << endl;
     return message;
