@@ -57,12 +57,18 @@ int main() {
     pid_t Actuator_monitor;     // Prepare the process ID for monitoring
     Actuator_monitor = fork();  // Starts new process
 
-    if (sensor_monitor == 0) {
+    if (Actuator_monitor == 0) {
         printf("Parent process ID: %d \n", getppid());
         printf("Actuator monitoring process ID is: %d \n", getpid());
         char path[] = "./ActuatorMonitoring";
-        char* args[] = {"./ActuatorMonitoring", NULL};
+        const char* args[] = {"./ActuatorMonitoring", NULL};
         execvp(path, args);
+        
+        /*
+        char path[] = "./Child"; //specify path to child program
+        const char* argv[] = {"./Child", NULL}; // list over programs and their parameters
+        execvp("./Child", argv); // opens child program
+        */
 
     } else {
         while (1) {
