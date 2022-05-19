@@ -34,7 +34,7 @@ void command(string tech, Sockets sock) {
             // void* message = receive_data();
             message = (void*)receiveWiFi((void*)&sock);
             // string msg = (string) message;
-            cout << "WiFi || Message Parsed to MAIN is: " << (const char*)message << "\n\n\n" << endl;
+            cout << "WiFi || Message Parsed to MAIN is: " << (const char*)message << endl;
 
             // printf((const char*)message);
             // // void* message = receiveWiFi(&sock);
@@ -42,8 +42,9 @@ void command(string tech, Sockets sock) {
             sscanf((const char*)message, "%d %[^\n]", &data, msgDump);
 
             // int data = atoi((const char*)message);
-            cout << "WiFi || Message Parsed to MAIN as INT is: " << data << "\n\n\n" << endl;
-            // string coordinate = convert_to_coordinate(data);
+            cout << "WiFi || Message Parsed to MAIN as INT is: " << data << endl;
+            string coordinate = convert_to_coordinate(data);
+            cout << "WiFi || Coordinate for Actuator: " << coordinate << "\n\n\n" << endl;
             // char* msg;
             // strcpy(msg, coordinate.c_str());
             // transmit_command(msg);
