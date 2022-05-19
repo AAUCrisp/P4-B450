@@ -68,14 +68,9 @@ int main() {
         execvp(path, args);
 
     } else {
-        sleep(2);
-        printf("Do I reach else?");
-        sleep(2);
+        ;
         while (1) {
             pthread_create(&T1, NULL, DoSomething, NULL);
-
-            sleep(2);
-            printf("Do I reach while?");
             COMMANDS = (char*)shm_read(32, COMMANDS_KEY);
             printf("GSV from shared memory: %s\n", COMMANDS);
 
@@ -83,6 +78,7 @@ int main() {
 
             process_data = processData(COMMANDS);
             logData(process_data);
+            sleep(2);
         }
     }
 }
