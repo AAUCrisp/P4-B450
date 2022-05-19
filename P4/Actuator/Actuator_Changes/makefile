@@ -3,8 +3,8 @@ all: Git Actuator ActuatorMonitoring
 Git:
 	git pull
 
-Actuator: Actuator.cpp SocketFunctions.o 
-	g++ -pthread Actuator.cpp SocketFunctions.o -o Actuator -lrt
+Actuator: Actuator.cpp 
+	g++ -pthread Actuator.cpp -o Actuator -lrt
 	touch Actuator
 
 ActuatorMonitoring: ActuatorMonitoring.c  SocketFunctions.o

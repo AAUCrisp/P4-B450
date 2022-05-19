@@ -61,7 +61,7 @@ int main() {
         printf("Actuator monitoring process ID is: %d \n", getpid());
         char path[] = "./ActuatorMonitoring";
         const char* args[] = {"./ActuatorMonitoring", NULL};
-        execvp(path, args);
+        //execvp(path, args);
 
     } else {
         sleep(2);
