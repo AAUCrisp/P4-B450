@@ -76,8 +76,8 @@ void processData(char msg[buffer]) {
     } else {
         movement_x = x - last_x_coordinate;
         movement_y = y - last_y_coordinate;
-        printf("movement_x = x - last_x: %n\n", movement_x);
-        printf("movement_y = y - last_y: %n\n", movement_y);
+        printf("movement_x = x - last_x: %n\n", &movement_x);
+        printf("movement_y = y - last_y: %n\n", &movement_y);
     }
     printf("Movement_x: %n \n Movement_y: %n \n\n", &movement_x, &movement_y);
     File.open("log.txt", std::ofstream::out | std::ofstream::app);
