@@ -188,8 +188,8 @@ int main(int argc, char *argv[])
 	/* Message to send */
 	char TestMsg1[] = "This is LTE something test write this shit";
 	char TestMsg2[] = "This is WiFi something test write this shit";
-	char newMsg1[] = "LTE DOES THIS WORK LTE?";
-	char newMsg2[] = "WiFi DOES THIS WORK WiFi?";
+	char newMsg1[] = "SHIT LTE DOES THIS WORK LTE?";
+	char newMsg2[] = "FUCK WiFi DOES THIS WORK WiFi?";
 	
 	//printf("%s\n", newMsg1);
 	//printf("%s\n", newMsg2);
