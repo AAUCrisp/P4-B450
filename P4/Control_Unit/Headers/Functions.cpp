@@ -42,8 +42,8 @@ void* LTE_command(void* socket) {
     int data;
     string coordinate;
     char* LTEmsg = (char*) malloc(9);
-    
     printf("\n\n====================\nLTE Listener Started\n====================\n\n");
+    
     if(print_unimportant == 1) {
         cout << "LTE Command Function || LTE Sensor Socket: " << sock->sockLTE_RECEIVER << endl;
         cout << "LTE Command Function || WiFi Actuator Socket: " << sock->act_WiFi << endl;
