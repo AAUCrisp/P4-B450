@@ -125,7 +125,7 @@ int main(int argc, char* argv[]) {
                 printf("Buffer to send: %s\n", buffer);
                 sendto(sock.sockLTE_TRANSMITTER, buffer, sizeof(buffer), 0, (struct sockaddr*)&sock.ClientLTE_TRANSMITTER, sizeof(sock.sockLTE_TRANSMITTER));
                 */
-                pthread_create(&T1, NULL, transmitWiFi, (void*)&sock);
+                pthread_create(&T1, NULL, transmitLTE, (void*)&sock);
             }
             printf("Sensor || LTE sent, going to WiFi\n");
 
