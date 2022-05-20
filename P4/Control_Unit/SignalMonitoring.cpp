@@ -16,7 +16,7 @@
 
 #define buffer 32
 
-int print = 0;      // Enable/Disable prints for troubleshooting
+int print = 1;      // Enable/Disable prints for troubleshooting
 int both_tech = 1;      // Forces it to use both LTE & WiFi
 
 pthread_t wifi, lte;

@@ -28,7 +28,7 @@
 /* -- Trouble Shooting Setup -- */
 int print_sen_in = 1;       // Print incoming Sensor related things
 int print_act_out = 1;      // Print outgoing Actuator related things
-int print_GSV = 0;          // Print GSV related things
+int print_GSV = 1;          // Print GSV related things
 int force_both = 1;         // Troubleshooting with both technologies
 
 /* -------------------------
