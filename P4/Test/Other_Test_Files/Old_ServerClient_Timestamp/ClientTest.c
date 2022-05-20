@@ -10,14 +10,14 @@
 
 /* Define buffer size, PORT number and server IP */
 #define MAXBUF 4000
-#define PORT1 6000
-#define PORT2 6001
-#define IP1 "127.0.0.1"
-#define IP2 "127.0.0.1"
+#define PORT1 9000
+#define PORT2 9001
+#define IP1 "10.20.0.x"
+#define IP2 "192.168.1.x"
 
 /* Specify LTE / WiFi interface */
 const char *LTE = "wwan0";
-const char *WiFi = "lo";
+const char *WiFi = "wlan0";
 
 /* Misc */
 char message[MAXBUF];
@@ -93,7 +93,7 @@ void Create_Socket_WiFi()
 	ClientWiFi.sin_port = htons(PORT2);
 	ClientWiFi.sin_addr.s_addr = inet_addr(IP2);
 }
-
+/*
 void *Receive_Data_LTE()
 {
 	rc_LTE = recvfrom(sockLTE, Temp, MAXBUF, 0, (struct sockaddr *)&ClientLTE, &lenLTE);
@@ -123,7 +123,7 @@ void *Receive_Data_WiFi()
 		pthread_exit(NULL);
 	}
 }
-
+*/
 void *Send_Data_LTE(void *arg)
 {
 	char *text1 = arg;
@@ -143,9 +143,7 @@ void *Send_Data_WiFi(void *arg)
 {
 	char *text2 = arg;
 	printf("%s\n", text2);
-	char text3[] = "Fucked up shit";
-	printf("%s\n", text3);
-	int test2 = sendto(sockWiFi, text3, sizeof(MAXBUF), 0, (struct sockaddr *)&ClientWiFi, lenWiFi); // send the data to server
+	int test2 = sendto(sockWiFi, text2, sizeof(MAXBUF), 0, (struct sockaddr *)&ClientWiFi, lenWiFi); // send the data to server
 	if (test2)
 	{
 		printf("Message was successfully sent via WiFi\n");
@@ -175,17 +173,17 @@ int main()
 	while (1)
 	{
 		//pthread_create(&T1, NULL, Receive_Data_LTE, NULL);
-		pthread_create(&T2, NULL, Receive_Data_WiFi, NULL);
-		//pthread_create(&T3, NULL, Send_Data_LTE, &newMsg1);
+		//pthread_create(&T2, NULL, Receive_Data_WiFi, NULL);
+		pthread_create(&T3, NULL, Send_Data_LTE, &newMsg1);
 		//pthread_join(T3, NULL);
-		//pthread_create(&T4, NULL, Send_Data_WiFi, &newMsg2);
+		pthread_create(&T4, NULL, Send_Data_WiFi, &newMsg2);
 		//pthread_join(T4, NULL);
-		int test2 = sendto(sockWiFi, newMsg2, sizeof(MAXBUF), 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
+		//int test2 = sendto(sockWiFi, newMsg2, sizeof(MAXBUF), 0, (struct sockaddr *)&ClientWiFi, lenWiFi);
 
 		count++;
 		printf("Count is: %d\n", count);
 		sleep(1);
-		if (count == 10)
+		if (count == 50)
 		{
 			break;
 		}
