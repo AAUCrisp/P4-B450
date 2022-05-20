@@ -22,9 +22,9 @@
 
 #define BUFFER 64
 
-int both_tech = 1;
 
 int main() {
+    int both_tech = 1;  
     printf("==================\nSensor Process Started\n==================\n\n");
 
     /* Initialize PORT & INTERFACE*/
