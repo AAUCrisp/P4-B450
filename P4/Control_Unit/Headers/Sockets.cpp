@@ -163,6 +163,9 @@ void *receiveLTE(void *socket) {
         printf("\n\nSensor LTE || Receive Socket: %d\n", sock->sockLTE_RECEIVER);
     }
     RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message_LTE, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, (unsigned int*)&LenLTE);
+    if(print_sen_in == 1) {
+        printf("Sensor LTE || Before Timestamp\n");
+    }
     Timestamp();
 
     // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
@@ -184,6 +187,9 @@ void *receiveWiFi(void *socket) {
         printf("\n\nSensor WiFi || Receive Socket: %d\n", sock->sockWiFi_RECEIVER);
     }
     RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message_WiFi, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, (unsigned int*)&LenWiFi);
+    if(print_sen_in == 1) {
+        printf("Sensor WiFi || Before Timestamp\n");
+    }
     Timestamp();
 
     // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
