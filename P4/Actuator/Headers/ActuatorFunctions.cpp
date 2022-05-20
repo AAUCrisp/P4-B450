@@ -80,6 +80,7 @@ void processData(char msg[buffer]) {
     File.open("log.txt", std::ofstream::out | std::ofstream::app);
     File << "\n\n Movement on the x-axis:" << movement_x << "\n Movement on the y-axis:" << movement_y;
     File.close();
+    printf("Movement_x: %d , Movement_y: %d", movement_x, movement_y);
 
     update_last_coordinate(x, y);
 }
