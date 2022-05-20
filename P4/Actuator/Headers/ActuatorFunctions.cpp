@@ -71,8 +71,8 @@ void processData(char msg[buffer]) {
     if (last_x_coordinate == 0 && last_y_coordinate == 0) {
         movement_x = x;
         movement_y = y;
-        printf("movement_x = x: %n\n", movement_x);
-        printf("movement_y = y: %n\n", movement_y);
+        printf("movement_x = x: %n\n", &movement_x);
+        printf("movement_y = y: %n\n", &movement_y);
     } else {
         movement_x = x - last_x_coordinate;
         movement_y = y - last_y_coordinate;
