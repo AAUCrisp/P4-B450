@@ -25,6 +25,7 @@
 // using namespace std;
 /* -- Test Data Variable-- */
 int data_int = 1500000;     // Static Test Variable
+int monitor = 0;
 // string* grid = new string[coordinates]; // Don't forget to delete [] a; when you're done!
 
 
@@ -132,7 +133,9 @@ int main(int argc, char *argv[]) {
         char* path = (char*) "./SignalMonitoring";                 // Path of the file for new process to run
         // char path[] = "./SignalMonitoring";                 // Path of the file for new process to run
         char* args[] = { (char*)"./SignalMonitoring&", (char*) NULL};       // Command for the function to execute, always ended on NULL argument
-        execv(path, args);                                  // Tells the new process to "reset" and run a different code instead
+        if(monitor == 1) {
+            execv(path, args);                                  // Tells the new process to "reset" and run a different code instead
+        }
         printf("ERROR: DIDN'T START THE NEW PROCESS!!\n");  // Should never get this far!
     } 
 
