@@ -12,8 +12,8 @@
 #define MAXBUF 4000
 #define PORT1 9000
 #define PORT2 9001
-#define IP1 "10.20.0.x"
-#define IP2 "192.168.1.x"
+const char* IP1 = "10.20.0.16";			// Default Control Unit
+const char* IP2 = "192.168.1.136";		// Default Control Unit
 
 /* Specify LTE / WiFi interface */
 const char *LTE = "wwan0";
@@ -154,8 +154,33 @@ void *Send_Data_WiFi(void *arg)
 	}
 }
 
-int main()
+int main(int argc, char *argv[])
 {
+	 if(argc > 1) {      // If the program is run with arguments
+        printf("\nArgument(s) accepted.\n");
+
+        int aug1 = atoi(argv[1]);
+
+        if(aug1 == 0) {  // For disabling GSV Update
+            printf("\n=====  Control Unit IP =====\n");
+            IP1 = "10.20.0.16";
+			IP2 = "192.168.1.136";
+        }
+        if(aug1 == 1) {  // For disabling GSV Update
+            printf("\n=====  Sensor IP =====\n");
+            IP1 = "10.20.0.10";
+			IP2 = "192.168.1.160";
+        }
+        if(aug1 == 2) {  // For disabling GSV Update
+            printf("\n=====  Actuator IP =====\n");
+            IP1 = "10.20.0.13";
+			IP2 = "192.168.1.143";
+        }
+    }
+    else {
+        printf("\nNo arguments inserted, using Control Unit IPs.\n");
+    }
+
 	/* Create sockets*/
 	Create_Socket_LTE();
 	Create_Socket_WiFi();
