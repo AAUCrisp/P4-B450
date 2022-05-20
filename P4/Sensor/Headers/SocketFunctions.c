@@ -193,16 +193,12 @@ void *receiveWiFi(void *socket) {
 
 void *transmitLTE(void *socket, char* message) {
     Sockets *sock = (Sockets *)socket;
-    // const char *RAND_INT_KEY = "RAND_INT_KEY";
-    // const char *RAND_INT;
     char sendLTE[BUFFER];
 
-    // int LenLTE = sizeof(sock.ClientLTE_TRANSMITTER);
     if (print_out == 1) {
         printf("Sensor || LTE socket: %d\n", sock->sockLTE_TRANSMITTER);
     }
 
-    // RAND_INT = shm_read(32, RAND_INT_KEY);
     if (print_out == 1) {
         printf("Sensor || LTE || Random int from shm: %s\n", message);
     }
@@ -215,22 +211,18 @@ void *transmitLTE(void *socket, char* message) {
 
     sendto(sock->sockLTE_TRANSMITTER, sendLTE, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, sizeof(sock->sockLTE_TRANSMITTER));
     if (print_out == 1) {
-        printf("Sensor || LTE || Message transmitted at: %s\n\n", curr_time);
+        printf("Sensor || LTE || Message transmitted at %s\n\n", curr_time);
     }
 }
 
 void *transmitWiFi(void *socket, char* message) {
     Sockets *sock = (Sockets *)socket;
-    // const char *RAND_INT_KEY = "RAND_INT_KEY";
-    // const char *RAND_INT;
     char sendWiFi[BUFFER];
 
-    // int LenWiFi = sizeof(sock.ClientWiFi_TRANSMITTER);
     if (print_out == 1) {
         printf("Sensor || WiFi socket: %d\n", sock->sockWiFi_TRANSMITTER);
     }
 
-    // RAND_INT = shm_read(32, RAND_INT_KEY);
     if (print_out == 1) {
         printf("Sensor || WiFi || Random int from shm: %s\n", message);
     }
@@ -243,6 +235,6 @@ void *transmitWiFi(void *socket, char* message) {
 
     sendto(sock->sockWiFi_TRANSMITTER, sendWiFi, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, sizeof(sock->ClientWiFi_TRANSMITTER));
     if (print_out == 1) {
-        printf("Sensor || WiFi || Message transmitted at: %s\n\n", curr_time);
+        printf("Sensor || WiFi || Message transmitted at %s\n\n", curr_time);
     }
 }
