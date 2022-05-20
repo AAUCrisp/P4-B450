@@ -59,18 +59,18 @@ int main() {
     int W = 1;
     int L = 2;
 
-    /* Create child process */
-    pid_t sensor_monitor;     // Prepare the process ID for monitoring
-    sensor_monitor = fork();  // Starts new process
+    // /* Create child process */
+    // pid_t sensor_monitor;     // Prepare the process ID for monitoring
+    // sensor_monitor = fork();  // Starts new process
 
-    if (sensor_monitor == 0) {
-        printf("Parent process ID: %d \n", getppid());
-        printf("Sensor monitoring process ID is: %d \n", getpid());
-        char path[] = "./SensorMonitoring";
-        char* args[] = {"./SensorMonitoring", NULL};
-        execv(path, args);
-
-    } else {
+    // if (sensor_monitor == 0) {
+    //     printf("Parent process ID: %d \n", getppid());
+    //     printf("Sensor monitoring process ID is: %d \n", getpid());
+    //     char path[] = "./SensorMonitoring";
+    //     char* args[] = {"./SensorMonitoring", NULL};
+    //     execv(path, args);
+    // } 
+    // else {
         while (1) {
             usleep(1000);
             msg = shm_read(32, GSV_KEY);
@@ -93,5 +93,5 @@ int main() {
             }
             sleep(3);
         }
-    }
+    // }
 }
