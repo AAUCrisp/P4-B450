@@ -16,7 +16,7 @@
 
 #define buffer 32
 
-int print = 1;      // Enable/Disable prints for troubleshooting
+int print = 0;      // Enable/Disable prints for troubleshooting
 
 pthread_t wifi, lte;
 
