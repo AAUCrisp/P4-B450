@@ -207,7 +207,7 @@ int main(int argc, char *argv[])
 
 		count++;
 		printf("Count is: %d\n", count);
-		sleep(1);
+		sleep(5);
 		if (count == 50)
 		{
 			break;
