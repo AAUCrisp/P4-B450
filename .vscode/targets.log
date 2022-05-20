@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri May 20 09:06:21 2022
+# Make data base, printed on Fri May 20 14:21:02 2022
 
 # Variables
 
@@ -19,7 +19,7 @@ LC_ALL = C
 # environment
 NO_AT_BRIDGE = 1
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-c2a071f4-f6d9-4f2c-96db-6f9362d5f629.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-ad02aefb-890b-4d3b-9368-50bd8a1c949f.sock
 # environment
 LC_NAME = en_DK.UTF-8
 # environment
@@ -79,7 +79,7 @@ APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_AUTH_SOCK = /tmp/ssh-XXXXXXOINv6R/agent.1332
+SSH_AUTH_SOCK = /tmp/ssh-XXXXXXhtvQpS/agent.1319
 # default
 .SHELLFLAGS := -c
 # environment
@@ -95,13 +95,13 @@ MAKEFILE_LIST :=
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 1719
+VSCODE_PID = 1635
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/BamseLinux:@/tmp/.ICE-unix/1282,unix/BamseLinux:/tmp/.ICE-unix/1282
+SESSION_MANAGER = local/BamseLinux:@/tmp/.ICE-unix/1268,unix/BamseLinux:/tmp/.ICE-unix/1268
 # automatic
 *F = $(notdir $*)
 # environment
@@ -177,7 +177,7 @@ MAKE_VERSION := 4.3
 # environment
 LC_MEASUREMENT = en_DK.UTF-8
 # environment
-SSH_AGENT_PID = 1333
+SSH_AGENT_PID = 1320
 # environment
 _ = /usr/bin/make
 # environment
@@ -198,6 +198,8 @@ ELECTRON_RUN_AS_NODE = 1
 VSCODE_IPC_HOOK = /run/user/1000/vscode-f0525173-1.67.0-main.sock
 # environment
 XDG_SESSION_ID = 2
+# environment
+PANEL_GDK_CORE_DEVICE_EVENTS = 0
 # default
 .RECIPEPREFIX := 
 # automatic
@@ -221,7 +223,7 @@ GDMSESSION = xfce
 # environment
 LC_IDENTIFICATION = en_DK.UTF-8
 # variable set hash-table stats:
-# Load=104/1024=10%, Rehash=0, Collisions=6/131=5%
+# Load=105/1024=10%, Rehash=0, Collisions=6/132=5%
 
 # Pattern-specific Variable Values
 
@@ -282,12 +284,12 @@ GNUmakefile:
 # No general ('VPATH' variable) search path.
 
 # strcache buffers: 1 (0) / strings = 24 / storage = 301 B / avg = 12 B
-# current buf: size = 8162 B / used = 301 B / count = 24 / avg = 12 B
  
+# current buf: size = 8162 B / used = 301 B / count = 24 / avg = 12 B
 
 # strcache performance: lookups = 27 / hit rate = 11%
 # hash-table stats:
 # Load=24/8192=0%, Rehash=0, Collisions=0/27=0%
-# Finished Make data base on Fri May 20 09:06:21 2022
+# Finished Make data base on Fri May 20 14:21:02 2022
 
  

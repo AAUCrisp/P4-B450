@@ -23,9 +23,34 @@
 #define BUFFER 64
 
 
-int main() {
-    int both_tech = 1;  
-    printf("==================\nSensor Process Started\n==================\n\n");
+int main(int argc, char *argv[]) {
+    int both_tech = 0; 
+    int monitor = 1; 
+    
+    
+    printf("==================\nSensor Program Started\n==================\n\n");
+
+    if(argc > 1) {      // If the program is run with arguments
+        printf("\nArgument(s) accepted.\n");
+
+        int aug1 = atoi(argv[1]);
+        int aug2 = atoi(argv[2]);
+
+        printf("\nBefore Monitor Argument\n");
+        if(aug1 == 0) {  // For disabling GSV Update
+            printf("=====  Monitoring Disabled =====");
+            monitor = 0;
+        }
+        
+        printf("\nBefore Both Argument\n");
+        if(aug2 == 1) {     // For enabling using both LTE and WiFi.
+            printf("=====  Forced Both LTE & WiFi =====");
+            both_tech = 1;
+        }
+    }
+    else {
+        printf("\nNo arguments inserted, running staticly.");
+    }
 
     /* Initialize PORT & INTERFACE*/
     uint PORT_LTE_TRANSMITTER = 9000;
@@ -54,7 +79,7 @@ int main() {
 
     char buffer[BUFFER];
 
-    int GSV;
+    int GSV = 0;
     int B = 0;
     int W = 1;
     int L = 2;
@@ -68,15 +93,19 @@ int main() {
         printf("Sensor monitoring process ID is: %d \n", getpid());
         char path[] = "./SensorMonitoring";
         char* args[] = {"./SensorMonitoring", NULL};
-        execv(path, args);
+        if(monitor == 1) {   
+            execv(path, args);
+        }
     } 
     else {
         while (1) {
             usleep(1000);
-            msg = shm_read(32, GSV_KEY);
-            GSV = atoi(msg);
-            printf("Sensor || GSV from shared memory: %s\n", msg);
-            // printf("GSV converted: %d\n", GSV); //
+            if(monitor == 1) {   
+                msg = shm_read(32, GSV_KEY);
+                GSV = atoi(msg);
+                printf("Sensor || GSV from shared memory: %s\n", msg);
+                printf("GSV converted: %d\n", GSV); //
+            }
             sprintf(buffer, "%d", generate(0, 25000000));
             printf("Sensor || After Random Int Generation\n");
             usleep(1000);
