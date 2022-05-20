@@ -24,4 +24,5 @@ shm_read.o: Headers/shm_read.c Headers/shm_write_read.h
 clean:
 	rm -f Actuator ActuatorMonitoring
 	rm *.o
+	rm *.txt
 	@echo "clean completed!"
