@@ -103,7 +103,7 @@ void *Receive_Data_LTE() {
 }
 
 void *Receive_Data_WiFi() {
-    rc_WiFi = recvfrom(sockWiFi, ActuatorBuffer, sizeof(AcuatorBuffer), 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
+    rc_WiFi = recvfrom(sockWiFi, ActuatorBuffer, sizeof(ActuatorBuffer), 0, (struct sockaddr *)&ServerWiFi, &lenWiFi);
     // printf("WiFi-Thread id = %ld\n", pthread_self());
     if (rc_WiFi == -1) {
         perror("Failed to receive WiFi msg");
@@ -118,8 +118,8 @@ void *Receive_Data_WiFi() {
 /* No need to run sudo when running server*/
 int main() {
     /* Binding sockets to LTE/WiFi */
-    PORT1 = xxxx;
-    PORT2 = xxxx;
+    PORT1 = 9000;
+    PORT2 = 9001;
     Create_Bind_Socket_LTE();
     Create_Bind_Socket_WiFi();
     int count = 0;
