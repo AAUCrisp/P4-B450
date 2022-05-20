@@ -57,8 +57,12 @@ int main(int argc, char *argv[]) {
     uint PORT_WiFi_TRANSMITTER = 9001;
     const char* LTE = "wwan0";
     const char* WiFi = "wlan0";
-    const char* IP_LTE = "10.20.0.16";      // IP of server
-    const char* IP_WiFi = "192.168.1.136";  // IP of server
+    // const char* IP_LTE = "10.20.0.16";      // Default: IP of Control Unit
+    const char* IP_LTE = "10.20.0.13";      // IP of Actuator
+    // const char* IP_LTE = "10.20.0.10";      // IP of Sensor
+    // const char* IP_WiFi = "192.168.1.136";  // Default: IP of Control Unit
+    const char* IP_WiFi = "192.168.1.143";  // IP of Actuator
+    // const char* IP_WiFi = "192.168.1.160";  // IP of Sensor
 
     /* Misc */
     pthread_t T1, T2;
