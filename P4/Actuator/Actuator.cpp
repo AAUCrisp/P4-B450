@@ -58,13 +58,13 @@ int main() {
 
     /* Create child process */
     pid_t Actuator_monitor;  // Prepare the process ID for monitoring
-    // Actuator_monitor = fork();  // Starts new process
+    Actuator_monitor = fork();  // Starts new process
 
     if (Actuator_monitor == 0) {
         printf("Parent process ID: %d \n", getppid());
         printf("Actuator monitoring process ID is: %d \n", getpid());
         char path[] = "./ActuatorMonitoring";
-        const char* args[] = {"./ActuatorMonitoring&", NULL};
+        const char* args[] = {"./ActuatorMonitoring", NULL};
         execvp(path, args);
 
     } else {
