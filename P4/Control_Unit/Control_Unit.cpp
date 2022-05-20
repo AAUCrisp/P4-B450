@@ -134,10 +134,10 @@ int main(int argc, char *argv[]) {
     /* -- Main loop for command processing and forwarding -- */
     else {
         // pthread_create(&T1, NULL, LTE_command, (void*)&sock);
-        // WiFi_command(sock);
+        WiFi_command(sock);
         // LTE_command1(sock);     // Trouble Shooting
         while(1) {
-            receiveLTE(&sock);
+            // receiveLTE(&sock);
         }
         printf("\nThis shouldn't print!!!\n");
     }
