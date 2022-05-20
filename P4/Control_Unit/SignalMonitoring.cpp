@@ -92,19 +92,19 @@ int main() {
         if ((rssi_average >= rssi_good && rsrp_average < rsrp_good) || (rssi_average >= rssi_mid && rsrp_average < rsrp_mid)) {
             gsv =  (char*)"1";  // If WiFi has stronger signal, set WiFi
             if(print == 1 || only_message == 1) {
-                printf("GSV || WiFi Selected\n");
+                printf("GSV || WiFi Selected\n\n");
             }
         } 
         else if ((rssi_average < rssi_good && rsrp_average >= rsrp_good) || (rssi_average < rssi_mid && rsrp_average >= rsrp_mid)) {
             gsv =  (char*)"2";  // If LTE has stronger signal, set LTE
             if(print == 1 || only_message == 1) {
-                printf("GSV || LTE Selected\n");
+                printf("GSV || LTE Selected\n\n");
             }
         }
         else {
             gsv =  (char*)"0";  // If no clear winner, set to send on both
             if(print == 1 || only_message == 1) {
-                printf("GSV || Both Selected\n");
+                printf("GSV || Both Selected\n\n");
             }
         }
 
