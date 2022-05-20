@@ -100,7 +100,7 @@ int main(int argc, char* argv[]) {
     } else {
         while (1) {
             usleep(1000);
-            if (monitor == 1) {
+            if (monitor == 0) {
                 msg = shm_read(32, GSV_KEY);
                 GSV = atoi(msg);
                 printf("\nSensor || GSV from shared memory: %s\n", msg);
