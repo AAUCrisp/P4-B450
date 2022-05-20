@@ -13,7 +13,7 @@
 #include "Sockets.h"
 #endif
 
-int print = 0;
+int print_signal = 0;
 
 int RSSI_VAL() {
     // Get RSSI value from WiFi
@@ -28,7 +28,7 @@ int RSSI_VAL() {
         }
 
         pclose(pipe_WiFi);
-        if(print = 1) {
+        if(print_signal = 1) {
             printf("GSV || WiFi Strength: %d \n", signalWiFi);
         }
 
@@ -49,7 +49,7 @@ int RSRP_VAL() {
             }
         }
         pclose(pipe_LTE);
-        if(print = 1) {
+        if(print_signal = 1) {
             printf("GSV || LTE Strength: %d \n", signalLTE);
         }
 
