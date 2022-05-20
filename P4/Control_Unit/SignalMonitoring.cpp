@@ -16,7 +16,7 @@
 
 #define buffer 32
 
-int print = 1;      // Enable/Disable prints for troubleshooting
+int print = 0;      // Enable/Disable prints for troubleshooting
 int both_tech = 1;      // Forces it to use both LTE & WiFi
 
 pthread_t wifi, lte;
@@ -110,11 +110,11 @@ int main() {
                 printf("GSV || Both Selected\n");
             }
         }
-        shm_write(gsv, buffer, GSV_KEY);  // Write selected technology to shared memory
-
         if(both_tech == 1) {
             gsv = (char*)"0";
         }
+        shm_write(gsv, buffer, GSV_KEY);  // Write selected technology to shared memory
+
 
         if (gsv == "1" || gsv == "0") {
             if(print == 1) {
