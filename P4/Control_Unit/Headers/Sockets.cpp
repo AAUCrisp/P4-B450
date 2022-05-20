@@ -292,7 +292,7 @@ void Sockets_Actuator(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, ui
 // Function to transmit GSV via LTE
 void *transmit_GSV_LTE(void *socket) {
     Sockets *sock = (Sockets *)socket;
-    int LenLTE = sizeof(sock->sockLTE_TRANSMITTER);
+    int LenLTE = sizeof(sock->ClientLTE_TRANSMITTER);
     const char *GSV;
     const char *GSV_KEY = "GSV_KEY";
     GSV = shm_read(32, GSV_KEY);
@@ -335,7 +335,7 @@ void *transmit_GSV_WiFi(void *socket) {
 // Function to transmit GSV via LTE
 void* transmit_command_LTE(void *socket, char* message) {
     Sockets *sock = (Sockets *)socket;
-    int LenLTE = sizeof(sock->act_LTE);
+    int LenLTE = sizeof(sock->Client_act_LTE);
     if(print_act_out == 1) {
         printf("\n\nActuator LTE || Actuator Socket: %d\n", sock->act_LTE);
     }
