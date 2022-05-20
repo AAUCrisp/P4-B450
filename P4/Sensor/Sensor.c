@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
     int monitor = 1; 
     
     
-    printf("==================\nSensor Program Started\n==================\n\n");
+    printf("\n==================\nSensor Program Started\n==================\n\n");
 
     if(argc > 1) {      // If the program is run with arguments
         printf("\nArgument(s) accepted.\n");
@@ -38,18 +38,18 @@ int main(int argc, char *argv[]) {
 
         printf("\nBefore Monitor Argument\n");
         if(aug1 == 0) {  // For disabling GSV Update
-            printf("=====  Monitoring Disabled =====");
+            printf("\n=====  Monitoring Disabled =====\n");
             monitor = 0;
         }
         
         printf("\nBefore Both Argument\n");
         if(aug2 == 1) {     // For enabling using both LTE and WiFi.
-            printf("=====  Forced Both LTE & WiFi =====");
+            printf("\n=====  Forced Both LTE & WiFi =====\n");
             both_tech = 1;
         }
     }
     else {
-        printf("\nNo arguments inserted, running staticly.");
+        printf("\nNo arguments inserted, running staticly.\n");
     }
 
     /* Initialize PORT & INTERFACE*/
@@ -107,14 +107,14 @@ int main(int argc, char *argv[]) {
             if(monitor == 1) {   
                 msg = shm_read(32, GSV_KEY);
                 GSV = atoi(msg);
-                printf("Sensor || GSV from shared memory: %s\n", msg);
-                printf("GSV converted: %d\n", GSV); //
+                printf("\nSensor || GSV from shared memory: %s\n", msg);
+                printf("\nGSV converted: %d\n", GSV); //
             }
             sprintf(buffer, "%d", generate(0, 25000000));
-            printf("Sensor || After Random Int Generation\n");
+            printf("\nSensor || After Random Int Generation\n");
             usleep(1000);
             if(both_tech == 1) {
-                printf("Sensor || Troubleshooting for Both Technologies\n");
+                printf("\nSensor || Troubleshooting for Both Technologies\n");
                 GSV = 0;        // Troubleshooting for both
             }
 
