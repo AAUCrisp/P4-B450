@@ -45,11 +45,12 @@ char tempy[buffer];
 
 std::ofstream File;
 
+/*
 void logData(int *arr) {
     File.open("log.txt", std::ofstream::out | std::ofstream::app);
     File << "\n\n Movement on the x-axis:" << arr[0] << "\n Movement on the y-axis:" << arr[1];
     File.close();
-}
+}*/
 
 /* This function updates the last coordinates, for next computation of finding movement over the X and Y axis */
 void update_last_coordinate(int number1, int number2) {
@@ -58,9 +59,7 @@ void update_last_coordinate(int number1, int number2) {
 }
 
 /* This functions Parses the received message into a specified format. And finds the difference between the current and last coordinates. */
-int *processData(char msg[buffer]) {
-    static int result[2];  // creates an int pointer to the array containing movement over the x and y axis.
-
+void processData(char msg[buffer]) {
     bytes_read = sscanf(msg, "%[^:%s]:%s:", tempx, tempy);  // Parses the received char array, into two seperate char arrays
     cout << "Temp X is: " << tempx << endl;                 // prints out the char arrays containing x and y coordinates.
     cout << "Temp Y is: " << tempy << endl;
@@ -78,12 +77,9 @@ int *processData(char msg[buffer]) {
         printf("movement_x = x - last_x: %d\n", movement_x);
         printf("movement_y = y - last_y: %d\n", movement_y);
     }
-    result[0] = movement_x;
-    result[1] = movement_y;
+    File.open("log.txt", std::ofstream::out | std::ofstream::app);
+    File << "\n\n Movement on the x-axis:" << movement_x << "\n Movement on the y-axis:" << movement_y;
+    File.close();
 
-    printf("result[0]: %d\n", result[0]);
-    printf("result[1]: %d\n", result[1]);
     update_last_coordinate(x, y);
-
-    return result;  // returns the array containing movement over the x and y axis.
 }

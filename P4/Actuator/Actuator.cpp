@@ -75,9 +75,9 @@ int main() {
 
             snprintf(msg, sizeof(msg), "%s", COMMANDS);
 
-            Processed_Data = processData(COMMANDS);
+            processData(COMMANDS);
             //printf("Processed_Data: %d\n%d", Processed_Data)
-            logData(Processed_Data);
+            //logData(Processed_Data);
             sleep(2);
         }
     }

@@ -5,11 +5,11 @@
 #include <iomanip>
 using namespace std;
 
-void logData(int *Arr);
+//void logData(int *Arr);
 
 void update_last_coordinate(int number1, int number2);
 
-int *processData(char msg[]);
+void processData(char msg[]);
 
 string int_to_hex(int data, int back);
 
