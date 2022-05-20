@@ -50,6 +50,7 @@ int main() {
     const char* WiFi = "wlan0"; // Interface for WiFi
     const char* IP_LTE = "10.20.0.10"; // IP of server
     const char* IP_WiFi = "192.168.1.160"; // IP of server 
+    pthread_t wifi, lte;
 
     /* Create sockets */
     Sockets sock;
@@ -111,7 +112,7 @@ int main() {
         shm_write(gsv, buffer, GSV_KEY);  // Write selected technology to shared memory
 
         if (gsv == "1" || gsv == "0") {
-            pthread_t wifi, lte;
+            cout << "GSV || WiFi Selected, Creating Thread\n" << endl;
             int threadWiFi = pthread_create(&wifi, NULL, transmit_GSV_WiFi, (void*)&sock);
             //pthread_join(wifi, NULL);
             if (threadWiFi != 0) {
@@ -125,6 +126,7 @@ int main() {
             }
         }
         if (gsv == "2" || gsv == "0") {
+            cout << "GSV || LTE Selected, Creating Thread\n" << endl;
             int threadLTE = pthread_create(&lte, NULL, transmit_GSV_LTE, (void*)&sock);
             //pthread_join(lte, NULL);
             if (threadLTE != 0) {
