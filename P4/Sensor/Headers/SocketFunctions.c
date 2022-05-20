@@ -215,7 +215,6 @@ void *transmitLTE(void *socket, char* message) {
     if (print_out == 1) {
         printf("Sensor || LTE || Message transmitted at %s\n\n", curr_timeLTE);
     }
-    pthread_exit(NULL);
 }
 
 void *transmitWiFi(void *socket, char* message) {
