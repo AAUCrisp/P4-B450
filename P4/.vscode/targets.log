@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed May 18 16:00:41 2022
+# Make data base, printed on Fri May 20 08:54:48 2022
 
 # Variables
 
@@ -45,13 +45,13 @@ CURDIR := /home/ubeyd/P4-B450/P4
 # makefile
 SHELL = /bin/sh
 # environment
-SNAP_DATA = /var/snap/code/96
+SNAP_DATA = /var/snap/code/97
 # environment
 VTE_VERSION = 6003
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
 # environment
-JOURNAL_STREAM = 8:45996
+JOURNAL_STREAM = 8:46896
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # environment
@@ -73,13 +73,13 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-MANAGERPID = 1397
+MANAGERPID = 1348
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
 # environment
-VSCODE_CWD = /home/ubeyd/P4-B450/P4
+VSCODE_CWD = /home/ubeyd
 # environment
-GSETTINGS_SCHEMA_DIR = /snap/code/96/usr/share/glib-2.0/schemas
+GSETTINGS_SCHEMA_DIR = /snap/code/97/usr/share/glib-2.0/schemas
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
@@ -87,15 +87,15 @@ PATH = /home/ubeyd/miniforge3/bin:/home/ubeyd/.cargo/bin:/home/ubeyd/.local/bin:
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-SESSION_MANAGER = local/ubeyd-IdeaPad-L340-15IRH-Gaming:@/tmp/.ICE-unix/1613,unix/ubeyd-IdeaPad-L340-15IRH-Gaming:/tmp/.ICE-unix/1613
+SESSION_MANAGER = local/ubeyd-IdeaPad-L340-15IRH-Gaming:@/tmp/.ICE-unix/1565,unix/ubeyd-IdeaPad-L340-15IRH-Gaming:/tmp/.ICE-unix/1565
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
 GDK_PIXBUF_MODULE_FILE = /home/ubeyd/snap/code/common/.cache/gdk-pixbuf-loaders.cache
 # environment
-SNAP = /snap/code/96
+SNAP = /snap/code/97
 # environment
-SNAP_VERSION = da15b6fd
+SNAP_VERSION = c3511e6c
 # environment
 XDG_MENU_PREFIX = gnome-
 # environment
@@ -105,9 +105,9 @@ DISABLE_WAYLAND = 1
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = b4c6d4d556a14f8dbc3a7897fc901d1a
+INVOCATION_ID = 2678374e89724e1e89b3091fd0a68ae6
 # environment
-GDK_PIXBUF_MODULEDIR = /snap/code/96/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
+GDK_PIXBUF_MODULEDIR = /snap/code/97/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # environment
@@ -129,7 +129,7 @@ PWD = /home/ubeyd/P4-B450/P4
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 1574
+SSH_AGENT_PID = 1526
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -143,7 +143,7 @@ LESSCLOSE = /usr/bin/lesspipe %s %s
 # environment
 VSCODE_CLI = 1
 # environment
-VSCODE_CODE_CACHE_PATH = /home/ubeyd/.config/Code/CachedData/da15b6fd3ef856477bf6f4fb29ba1b7af717770d
+VSCODE_CODE_CACHE_PATH = /home/ubeyd/.config/Code/CachedData/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
 # environment
 LOGNAME = ubeyd
 # environment
@@ -175,19 +175,19 @@ MAKECMDGOALS := all
 # environment
 QT_IM_MODULE = ibus
 # environment
-SNAP_USER_DATA = /home/ubeyd/snap/code/96
+SNAP_USER_DATA = /home/ubeyd/snap/code/97
 # environment
 SHLVL = 1
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-c172520b-a7d8-4d9c-b736-40fbee912592.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-a6d78ea1-1566-40ae-a37f-91c40861b280.sock
 # default
 MAKE_VERSION := 4.2.1
 # environment
 USER = ubeyd
 # environment
-SNAP_REVISION = 96
+SNAP_REVISION = 97
 # makefile
 .DEFAULT_GOAL := 
 # environment
@@ -205,7 +205,7 @@ OLDPWD = /home/ubeyd/P4-B450/P4/Actuator
 # environment
 LANGUAGE = en_US:en
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-ced47ce8-1.67.1-main.sock
+VSCODE_IPC_HOOK = /run/user/1000/vscode-ced47ce8-1.67.2-main.sock
 # makefile
 MAKEFLAGS = pqrR
 # environment
@@ -218,8 +218,6 @@ MFLAGS = -pqrR
 GDK_BACKEND = x11
 # automatic
 +F = $(notdir $+)
-# environment
-NO_AT_BRIDGE = 1
 # environment
 QT_ACCESSIBILITY = 1
 # default
@@ -235,11 +233,11 @@ LC_ALL = C
 # environment
 GJS_DEBUG_TOPICS = JS ERROR;JS LOG
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/a92c7b77_4f00_47a4_bf3f_c52634d31b37
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/989456db_cf7a_4cad_aa02_6f933601fea6
 # automatic
 ^F = $(notdir $^)
 # environment
-GNOME_TERMINAL_SERVICE = :1.120
+GNOME_TERMINAL_SERVICE = :1.107
 # default
 SUFFIXES := 
 # environment
@@ -259,10 +257,9 @@ LANG = C
 # environment
 TERM = xterm-256color
 # environment
-VSCODE_PID = 6695
+VSCODE_PID = 4359
 # variable set hash-table stats:
- 
-# Load=124/1024=12%, Rehash=0, Collisions=15/146=10%
+# Load=123/1024=12%, Rehash=0, Collisions=15/145=10%
 
 # Pattern-specific Variable Values
 
@@ -288,6 +285,7 @@ all:
 #  File has not been updated.
 
 # Not a target:
+ 
 Makefile:
 #  Implicit rule search has been done.
 #  File does not exist.
@@ -328,6 +326,6 @@ GNUmakefile:
 # strcache performance: lookups = 20 / hit rate = 15%
 # hash-table stats:
 # Load=17/8192=0%, Rehash=0, Collisions=1/20=5%
-# Finished Make data base on Wed May 18 16:00:41 2022
+# Finished Make data base on Fri May 20 08:54:48 2022
 
  

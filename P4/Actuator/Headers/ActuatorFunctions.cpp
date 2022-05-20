@@ -67,7 +67,7 @@ int *processData(char msg[buffer]) {
     x = hex_to_int(tempx);  // Converts the hex-chars of the x coordinate to an int
     y = hex_to_int(tempy);  // Converts the hex-chars of the x coordinate to an int
 
-    if (last_x_coordinate && last_y_coordinate == 0) {
+    if (last_x_coordinate == 0 && last_y_coordinate == 0) {
         int movement_x = x;
         int movement_y = y;
         printf("movement_x = x: %d\n", movement_x);

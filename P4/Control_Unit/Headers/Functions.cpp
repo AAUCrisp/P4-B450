@@ -34,7 +34,7 @@ void* LTE_command(void* socket) {
     
     printf("\n\n==================\nLTE Listener Started\n==================\n\n");
     while(1) {
-        message = (void*)receiveLTE((void*)&sock);
+        message = (void*)receiveLTE((void*)sock);
         cout << "LTE Receiver || WiFi Actuator Socket: " << sock->act_WiFi << endl;
         // cout << "LTE Receiver || WiFi Actuator Socket: " << sock->act_WiFi << endl;
         cout << "LTE Receiver || LTE Actuator Socket: " << sock->act_LTE << endl; 
