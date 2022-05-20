@@ -8,26 +8,18 @@
 #include "shm_read.cpp"
 #endif
 
-// #ifndef SHM_WRITE
-// #define SHM_WRITE
-
-// #include "shm_write.cpp"
-
 // #endif
 #ifndef SOCKETS_NET
 #define SOCKETS_NET
 #include "Sockets.h"
 #endif
 
-// #ifndef CONVERTER
-// #define CONVERTER
-// #include "../converter.cpp"
-// #endif
 
 
 /* -- Trouble Shooting Setup -- */
-int print_sen_in = 1;       // Print incoming Sensor related things
-int print_act_out = 1;      // Print outgoing Actuator related things
+int message_only = 1;        // Print messages only
+int print_sen_in = 0;       // Print incoming Sensor related things
+int print_act_out = 0;      // Print outgoing Actuator related things
 int print_GSV = 0;          // Print GSV related things
 int force_both = 1;         // Troubleshooting with both technologies
 
@@ -110,14 +102,11 @@ void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *
     /* Create socket receiver */
     sock->sockLTE_RECEIVER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sock->sockWiFi_RECEIVER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    // printf("Sockets_Receiver LTE (INSIDE): %d\n", sock->sockLTE_RECEIVER);
-    // printf("Sockets_Receiver WiFi (INSIDE): %d\n", sock->sockWiFi_RECEIVER);
 
     /* Setting up socket options & specifying interface for receiver */
     setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
     setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
-    // setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
-    // setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
+
 
     /* Error checking */
     if (sock->sockLTE_RECEIVER == -1) {
@@ -164,13 +153,9 @@ void *receiveLTE(void *socket) {
         printf("\n\nSensor LTE || Receive Socket: %d\n", sock->sockLTE_RECEIVER);
     }
     RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message_LTE, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, (unsigned int*)&LenLTE);
-    if(print_sen_in == 1) {
-        printf("Sensor LTE || Before Timestamp\n");
-    }
     Timestamp();
 
-    // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
-    if(print_sen_in == 1) {
+    if(print_sen_in == 1 || message_only == 1) {
         printf("Sensor LTE || Message from LTE received at: %s\n", curr_time);
         printf("Sensor LTE || Message is: %s\n\n", message_LTE);
     }
@@ -188,13 +173,9 @@ void *receiveWiFi(void *socket) {
         printf("\n\nSensor WiFi || Receive Socket: %d\n", sock->sockWiFi_RECEIVER);
     }
     RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message_WiFi, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, (unsigned int*)&LenWiFi);
-    if(print_sen_in == 1) {
-        printf("Sensor WiFi || Before Timestamp\n");
-    }
     Timestamp();
 
-    // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
-    if(print_sen_in == 1) {
+    if(print_sen_in == 1 || message_only == 1) {
         printf("Sensor WiFi || Message from WiFi received at: %s \n", curr_time);
         printf("Sensor WiFi || Message is: %s\n\n", message_WiFi);
     }
@@ -220,8 +201,6 @@ void Sockets_GSV(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, uint PO
     /* Create socket receiver */
     sock->sockLTE_TRANSMITTER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sock->sockWiFi_TRANSMITTER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    // printf("Sockets_Transmitter LTE (INSIDE): %d\n", sock->sockLTE_TRANSMITTER);
-    // printf("Sockets_Transmitter WiFi (INSIDE): %d\n", sock->sockWiFi_TRANSMITTER);
 
     /* Setting up socket options & specifying interface for receiver */
     setsockopt(sock->sockLTE_TRANSMITTER, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
@@ -262,8 +241,6 @@ void Sockets_Actuator(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, ui
     /* Create socket receiver */
     sock->act_LTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sock->act_WiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    // printf("Sockets_ACTUATOR LTE (INSIDE): %d\n", sock->act_LTE);
-    // printf("Sockets_ACTUATOR WiFi (INSIDE): %d\n", sock->act_WiFi);
 
     /* Setting up socket options & specifying interface for receiver */
     setsockopt(sock->act_LTE, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
@@ -342,12 +319,11 @@ void* transmit_command_LTE(void *socket, char* message) {
     }
 
     TX_LTE = sendto(sock->act_LTE, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_LTE, LenLTE);
-    if(print_act_out == 1) {
-        // printf("LTE-Thread id = %ld\n", pthread_self());
+    if(print_act_out == 1 || message_only == 1) {
+
         printf("Actuator LTE || Sending Command to Actuator: %s\n", message);
         printf("Actuator LTE || Message transmitted at: %s\n\n", curr_time);
     }
-    // pthread_exit(NULL);
     return 0;
 }
 
@@ -359,12 +335,10 @@ void* transmit_command_WiFi(void *socket, char* message) {
         printf("\n\nActuator WiFi || Actuator Socket: %d\n", sock->act_WiFi);
     }
     TX_WiFi = sendto(sock->act_WiFi, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_WiFi, LenWiFi);
-    if(print_act_out == 1) {
-        // printf("WiFi-Thread id = %ld\n", pthread_self());
+    if(print_act_out == 1 || message_only == 1) {
         printf("Actuator WiFi || Sending Command to Actuator: %s\n", message);
         printf("Actuator WiFi || Message transmitted at: %s\n\n", curr_time);
     }
-    // pthread_exit(NULL);
     return 0;
 }
 

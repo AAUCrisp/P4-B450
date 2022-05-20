@@ -13,7 +13,7 @@
 #include "Sockets.h"
 #endif
 
-int print_signal = 0;
+int print_signal = 1;
 
 int RSSI_VAL() {
     // Get RSSI value from WiFi
