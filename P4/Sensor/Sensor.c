@@ -87,41 +87,37 @@ int main(int argc, char* argv[]) {
     pid_t sensor_monitor;     // Prepare the process ID for monitoring
     sensor_monitor = fork();  // Starts new process
 
-    //const char* RAND_INT_KEY = "RAND_INT_KEY";
 
     if (sensor_monitor == 0) {
         printf("Parent process ID: %d \n", getppid());
         printf("Sensor monitoring process ID is: %d \n", getpid());
         char path[] = "./SensorMonitoring";
         char* args[] = {"./SensorMonitoring", NULL};
-        if (monitor == 1) {
+        /*if (monitor == 1) {
             execv(path, args);
-        }
+        }*/
     } else {
         while (1) {
             usleep(1000);
-            if (monitor == 0) {
-                msg = shm_read(32, GSV_KEY);
-                GSV = atoi(msg);
-                printf("\nSensor || GSV from shared memory: %s\n", msg);
-                printf("\nGSV converted: %d\n", GSV);  //
-            }
+            msg = shm_read(32, GSV_KEY);
+            GSV = atoi(msg);
+            printf("\nSensor || GSV from shared memory: %s\n", msg);
+            printf("\nGSV converted: %d\n", GSV);
+            /*if (monitor == 1) {
+            }*/
             sprintf(buffer, "%d", generate(0, 25000000));
             printf("\nSensor || After Random Int Generation\n");
             usleep(1000);
 
-            //shm_write(buffer,1000, RAND_INT_KEY);
-
-            if (both_tech == 1) {
+            /*if (both_tech == 1) {
                 printf("\nSensor || Troubleshooting for Both Technologies\n");
                 GSV = 0;  // Troubleshooting for both
-            }
+            }*/
 
             printf("Sensor || Before Transmitting\n");
             if (GSV == B || GSV == L) {
                 transmitLTE(&sock, (char*)buffer);
             }
-            printf("Sensor || LTE sent, going to WiFi\n");
 
             if (GSV == B || GSV == W) {
                 transmitWiFi(&sock, (char*)buffer);
