@@ -191,7 +191,7 @@ void *receiveWiFi(void *socket) {
     }
 }
 
-void *transmitLTE(void *socket/*, char* message*/) {
+void *transmitLTE(void *socket) {
     Sockets *sock = (Sockets *)socket;
     char sendLTE[BUFFER];
     const char *RAND_INT_KEY = "RAND_INT_KEY";
