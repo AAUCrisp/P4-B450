@@ -156,8 +156,8 @@ void *receiveLTE(void *socket) {
     Timestamp();
 
     if(print_sen_in == 1 || message_only == 1) {
-        printf("Sensor LTE || Message from LTE received at: %s\n", curr_time);
         printf("Sensor LTE || Message is: %s\n\n", message_LTE);
+        printf("Sensor LTE || Message from LTE received at: %s\n", curr_time);
     }
     return message_LTE;
 }
@@ -176,8 +176,8 @@ void *receiveWiFi(void *socket) {
     Timestamp();
 
     if(print_sen_in == 1 || message_only == 1) {
-        printf("Sensor WiFi || Message from WiFi received at: %s \n", curr_time);
         printf("Sensor WiFi || Message is: %s\n\n", message_WiFi);
+        printf("Sensor WiFi || Message from WiFi received at: %s \n", curr_time);
     }
 
     return message_WiFi;    

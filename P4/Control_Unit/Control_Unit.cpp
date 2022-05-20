@@ -25,7 +25,7 @@
 // using namespace std;
 /* -- Test Data Variable-- */
 int data_int = 1500000;     // Static Test Variable
-int monitor = 1;
+int monitor = 0;        // Disable/Enable Start of Signal Monitoring
 
 // string* grid = new string[coordinates]; // Don't forget to delete [] a; when you're done!
 
