@@ -13,6 +13,8 @@
 #include "Sockets.h"
 #endif
 
+int print = 0;
+
 int RSSI_VAL() {
     // Get RSSI value from WiFi
     FILE* pipe_WiFi = popen("iwconfig wlan0 | grep -i --color quality", "r");
@@ -26,7 +28,9 @@ int RSSI_VAL() {
         }
 
         pclose(pipe_WiFi);
-        printf("GSV || WiFi Strength: %d \n", signalWiFi);
+        if(print = 1) {
+            printf("GSV || WiFi Strength: %d \n", signalWiFi);
+        }
 
         return signalWiFi;
     }
@@ -45,7 +49,9 @@ int RSRP_VAL() {
             }
         }
         pclose(pipe_LTE);
-        printf("GSV || LTE Strength: %d \n", signalLTE);
+        if(print = 1) {
+            printf("GSV || LTE Strength: %d \n", signalLTE);
+        }
 
         return signalLTE;
     }
