@@ -204,14 +204,14 @@ void *transmitLTE(void *socket, char* message) {
     }
 
     curr_timeLTE = Timestamp();
-    sprintf(sendLTE, "%s %s", message, curr_time);
+    sprintf(sendLTE, "%s %s", message, curr_timeLTE);
     if (print_out == 1) {
         printf("Sensor || LTE || sendLTE: %s\n", sendLTE);
     }
 
     sendto(sock->sockLTE_TRANSMITTER, sendLTE, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, sizeof(sock->sockLTE_TRANSMITTER));
     if (print_out == 1) {
-        printf("Sensor || LTE || Message transmitted at %s\n\n", curr_time);
+        printf("Sensor || LTE || Message transmitted at %s\n\n", curr_timeLTE);
     }
 }
 
@@ -228,13 +228,13 @@ void *transmitWiFi(void *socket, char* message) {
     }
 
     curr_timeWiFi = Timestamp();
-    sprintf(sendWiFi, "%s %s", message, curr_time);
+    sprintf(sendWiFi, "%s %s", message, curr_timeWiFi);
     if (print_out == 1) {
         printf("Sensor || WiFi || sendWiFi: %s\n", sendWiFi);
     }
 
     sendto(sock->sockWiFi_TRANSMITTER, sendWiFi, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, sizeof(sock->ClientWiFi_TRANSMITTER));
     if (print_out == 1) {
-        printf("Sensor || WiFi || Message transmitted at %s\n\n", curr_time);
+        printf("Sensor || WiFi || Message transmitted at %s\n\n", curr_timeWiFi);
     }
 }
