@@ -28,7 +28,7 @@ int RSSI_VAL() {
         }
 
         pclose(pipe_WiFi);
-        if(print_signal = 1) {
+        if(print_signal == 1) {
             printf("GSV || WiFi Strength: %d \n", signalWiFi);
         }
 
@@ -49,7 +49,7 @@ int RSRP_VAL() {
             }
         }
         pclose(pipe_LTE);
-        if(print_signal = 1) {
+        if(print_signal == 1) {
             printf("GSV || LTE Strength: %d \n", signalLTE);
         }
 
