@@ -29,6 +29,7 @@
 int print_sen_in = 1;       // 
 int print_act_out = 1;
 int print_GSV = 1;
+int force_both = 1;
 
 /* -------------------------
 -------- SETUP AREA --------
@@ -384,6 +385,10 @@ void* transmit_command(void *socket, char* message) {
     if(print_act_out == 1) {
         cout << "Global Signal Variable is: " << GSV << endl;
     }
+    if(force_both == 0) {
+        gsv = 0;
+    }
+
     if((gsv == 0) || (gsv == 1)) {
         if(print_act_out == 1) {
             cout << "Sending command via WiFi" << endl;
