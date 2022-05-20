@@ -126,7 +126,7 @@ int main(int argc, char *argv[]) {
         printf("Monitoring Process ID is: %d \n", getpid());
         char* path = (char*) "./SignalMonitoring";                 // Path of the file for new process to run
         // char path[] = "./SignalMonitoring";                 // Path of the file for new process to run
-        char* args[] = { (char*)"./SignalMonitoring&", (char*) NULL};       // Command for the function to execute, always ended on NULL argument
+        char* args[] = { (char*)"./SignalMonitoring", (char*) NULL};       // Command for the function to execute, always ended on NULL argument
         execv(path, args);                                  // Tells the new process to "reset" and run a different code instead
         printf("ERROR: DIDN'T START THE NEW PROCESS!!\n");  // Should never get this far!
     } 
