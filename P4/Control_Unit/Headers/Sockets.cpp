@@ -298,7 +298,6 @@ void *transmit_GSV_LTE(void *socket) {
     GSV = shm_read(32, GSV_KEY);
     if(print_GSV == 1) {
         printf("\n\nGSV LTE || Transmit Socket: %d\n", sock->sockLTE_TRANSMITTER);
-        cout << "GSV || LTE IP: " << sock->
     }
     TX_LTE = sendto(sock->sockLTE_TRANSMITTER, GSV, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, LenLTE);
     if(print_GSV == 1) {
