@@ -74,7 +74,6 @@ int main(int argc, char* argv[]) {
 
     /* Shared memory object variables */
     const char* GSV_KEY = "GSV_KEY";
-
     const char* msg;
 
     char buffer[BUFFER];
@@ -88,7 +87,7 @@ int main(int argc, char* argv[]) {
     pid_t sensor_monitor;     // Prepare the process ID for monitoring
     sensor_monitor = fork();  // Starts new process
 
-    const char* RAND_INT_KEY = "RAND_INT_KEY";
+    //const char* RAND_INT_KEY = "RAND_INT_KEY";
 
     if (sensor_monitor == 0) {
         printf("Parent process ID: %d \n", getppid());
@@ -111,7 +110,7 @@ int main(int argc, char* argv[]) {
             printf("\nSensor || After Random Int Generation\n");
             usleep(1000);
 
-            shm_write(buffer,1000, RAND_INT_KEY);
+            //shm_write(buffer,1000, RAND_INT_KEY);
 
             if (both_tech == 1) {
                 printf("\nSensor || Troubleshooting for Both Technologies\n");
@@ -120,12 +119,7 @@ int main(int argc, char* argv[]) {
 
             printf("Sensor || Before Transmitting\n");
             if (GSV == B || GSV == L) {
-                // transmitLTE(&sock, (char*)buffer);
-                /*printf("sockLTE_TRANSMITTER (IF): %d\n", sock.sockLTE_TRANSMITTER);
-                printf("Buffer to send: %s\n", buffer);
-                sendto(sock.sockLTE_TRANSMITTER, buffer, sizeof(buffer), 0, (struct sockaddr*)&sock.ClientLTE_TRANSMITTER, sizeof(sock.sockLTE_TRANSMITTER));
-                */
-                pthread_create(&T1, NULL, transmitLTE, (void*)&sock);
+                /transmitLTE(&sock, (char*)buffer);
             }
             printf("Sensor || LTE sent, going to WiFi\n");
 

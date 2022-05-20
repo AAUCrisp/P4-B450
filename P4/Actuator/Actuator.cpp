@@ -71,7 +71,7 @@ int main() {
         while (1) {
             pthread_create(&T1, NULL, DoSomething, NULL);
             COMMANDS = (char*)shm_read(32, COMMANDS_KEY);
-            printf("GSV from shared memory: %s\n", COMMANDS);
+            printf("COMMANDS from shared memory: %s\n", COMMANDS);
 
             snprintf(msg, sizeof(msg), "%s", COMMANDS);
 
