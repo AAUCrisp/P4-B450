@@ -16,7 +16,8 @@
     "*.tcc": "c",
     "fcntl.h": "c",
     "sockets.h": "c",
-    "iostream": "cpp"
+    "iostream": "cpp",
+    "iosfwd": "cpp"
   },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "/usr/bin/g++",
