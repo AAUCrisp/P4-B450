@@ -16,7 +16,8 @@
 
 #define buffer 32
 
-int print = 0;      // Enable/Disable prints for troubleshooting
+int print = 1;      // Enable/Disable prints for troubleshooting
+int both_tech = 1;      // Forces it to use both LTE & WiFi
 
 pthread_t wifi, lte;
 
@@ -111,8 +112,14 @@ int main() {
         }
         shm_write(gsv, buffer, GSV_KEY);  // Write selected technology to shared memory
 
+        if(both_tech == 1) {
+            gsv = (char*)"0";
+        }
+
         if (gsv == "1" || gsv == "0") {
-            cout << "GSV || WiFi Selected, Creating Thread\n" << endl;
+            if(print == 1) {
+                cout << "GSV || WiFi Selected, Creating Thread\n" << endl;
+            }
             int threadWiFi = pthread_create(&wifi, NULL, transmit_GSV_WiFi, (void*)&sock);
             //pthread_join(wifi, NULL);
             if (threadWiFi != 0) {
@@ -126,7 +133,9 @@ int main() {
             }
         }
         if (gsv == "2" || gsv == "0") {
-            cout << "GSV || LTE Selected, Creating Thread\n" << endl;
+            if(print == 1) {
+                cout << "GSV || LTE Selected, Creating Thread\n" << endl;
+            }
             int threadLTE = pthread_create(&lte, NULL, transmit_GSV_LTE, (void*)&sock);
             //pthread_join(lte, NULL);
             if (threadLTE != 0) {
