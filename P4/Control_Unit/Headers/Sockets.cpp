@@ -28,7 +28,7 @@
 /* -- Trouble Shooting Setup -- */
 int print_sen_in = 1;       // 
 int print_act_out = 1;
-int print_GSV = 0;
+int print_GSV = 1;
 
 /* -------------------------
 -------- SETUP AREA --------
@@ -241,10 +241,18 @@ void Sockets_GSV(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, uint PO
     sock->ClientLTE_TRANSMITTER.sin_family = AF_INET;
     sock->ClientLTE_TRANSMITTER.sin_port = htons(PORT_LTE);
     sock->ClientLTE_TRANSMITTER.sin_addr.s_addr = inet_addr(IP_LTE);
+    if(print_GSV == 1) {
+        cout << "GSV || LTE IP: " << IP_LTE << endl;
+    }
+
 
     sock->ClientWiFi_TRANSMITTER.sin_family = AF_INET;
     sock->ClientWiFi_TRANSMITTER.sin_port = htons(PORT_WiFi);
     sock->ClientWiFi_TRANSMITTER.sin_addr.s_addr = inet_addr(IP_WiFi);
+    if(print_GSV == 1) {
+        cout << "GSV || WiFi IP: " << IP_WiFi << endl;
+    }
+
 }
 
 
@@ -290,6 +298,7 @@ void *transmit_GSV_LTE(void *socket) {
     GSV = shm_read(32, GSV_KEY);
     if(print_GSV == 1) {
         printf("\n\nGSV LTE || Transmit Socket: %d\n", sock->sockLTE_TRANSMITTER);
+        cout << "GSV || LTE IP: " << sock->
     }
     TX_LTE = sendto(sock->sockLTE_TRANSMITTER, GSV, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, LenLTE);
     if(print_GSV == 1) {

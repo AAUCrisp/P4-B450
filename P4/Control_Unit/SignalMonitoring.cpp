@@ -54,8 +54,10 @@ int main() {
     /* Create sockets */
     Sockets sock;
     Sockets_GSV(&sock, IP_LTE, IP_WiFi, PORT_LTE_TRANSMITTER, PORT_WiFi_TRANSMITTER, LTE, WiFi);
-    // printf("sockLTE_TRANSMITTER (OUTSIDE): %d\n", sock.sockLTE_TRANSMITTER);
-    // printf("sockWiFi_TRANSMITTER (OUTSIDE): %d\n", sock.sockWiFi_TRANSMITTER);
+    if (print == 1){
+        printf("GSV || Socket LTE (OUTSIDE): %d\n", sock.sockLTE_TRANSMITTER);
+        printf("GSV || Socket WiFi (OUTSIDE): %d\n", sock.sockWiFi_TRANSMITTER);
+    }
 
     printf("\n\n==========================\nMonitoring Process Started\n==========================\n\n");
     int counter = 0;
