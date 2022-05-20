@@ -39,7 +39,7 @@ typedef struct _time_struct{
 void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi);
 
 /* Function to create transmitter socket */
-void Sockets_Transmitter(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi);
+void Sockets_GSV(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi);
 
 void Sockets_Actuator(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi);
 
@@ -53,10 +53,10 @@ void *receiveWiFi(void *socket);
 void *receive_data();
 
 /* Function to transmit LTE packets */
-void *transmitLTE(void *socket);
+void *transmit_GSV_LTE(void *socket);
 
 /* Function to transmit WiFi packets */
-void *transmitWiFi(void *socket);
+void *transmit_GSV_WiFi(void *socket);
 
 /* Function to transmit LTE packets */
 void *transmit_command_LTE(void *socket, char* message);
