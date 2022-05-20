@@ -1,20 +1,23 @@
-int print_unimportant = 0;
 
 void WiFi_command(Sockets sock) {
+    int print_unimportant = 0;      // Trouble Shooting Prints
+
     void* message;
     char msgDump[32];
     int data;
     string coordinate;
     char* WiFimsg = (char*) malloc(9);
 
-    printf("\n\n==================\nWiFi Listener Started\n==================\n\n");
+    printf("\n\n=====================\nWiFi Listener Started\n=====================\n\n");
     
+    if(print_unimportant == 1) {
+        cout << "WiFi Command Function || WiFi Sensor Socket: " <<sock.sockWiFi_RECEIVER << endl;
+        cout << "WiFi Command Function || WiFi Actuator Socket: " <<sock.act_WiFi << endl;
+        cout << "WiFi Command Function || LTE Actuator Socket: " <<sock.act_LTE << endl;
+    }
     while(1) {
+        message = (void*)receiveWiFi((void*)&sock);
         if(print_unimportant == 1) {
-            cout << "WiFi Command Function || WiFi Sensor Socket: " <<sock.sockWiFi_RECEIVER << endl;
-            message = (void*)receiveWiFi((void*)&sock);
-            cout << "WiFi Command Function || WiFi Actuator Socket: " <<sock.act_WiFi << endl;
-            cout << "WiFi Command Function || LTE Actuator Socket: " <<sock.act_LTE << endl;
             cout << "WiFi Command Function || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
         }
         sscanf((const char*)message, "%d %[^\n]", &data, msgDump);
@@ -29,7 +32,8 @@ void WiFi_command(Sockets sock) {
 }
 
 void* LTE_command1(Sockets sock) {
-    // Sockets sock;
+    int print_unimportant = 0;      // Trouble Shooting Prints
+
     void* message;
     char msgDump[32];
     int data;
@@ -39,11 +43,11 @@ void* LTE_command1(Sockets sock) {
     printf("\n\n====================\nLTE Listener Started\n====================\n\n");
     if(print_unimportant == 1) {
         cout << "LTE Command Function || LTE Sensor Socket: " << sock.sockLTE_RECEIVER << endl;
-        message = (void*)receiveLTE((void*)&sock);
         cout << "LTE Command Function || WiFi Actuator Socket: " << sock.act_WiFi << endl;
         cout << "LTE Command Function || LTE Actuator Socket: " << sock.act_LTE << endl; 
     }
     while(1) {
+        message = (void*)receiveLTE((void*)&sock);
         if(print_unimportant == 1) {
             cout << "LTE Command Function || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
         }
@@ -58,7 +62,8 @@ void* LTE_command1(Sockets sock) {
 }
 
 void* LTE_command(void* socket) {
-    // Sockets sock;
+    int print_unimportant = 0;      // Trouble Shooting Prints
+    
     Sockets *sock = (Sockets *)socket;
     void* message;
     char msgDump[32];
