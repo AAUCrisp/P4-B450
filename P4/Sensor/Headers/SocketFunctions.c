@@ -228,7 +228,7 @@ void *transmitWiFi(void *socket, char* message) {
     char sendWiFi[BUFFER];
 
     if (print_out == 1) {
-        printf("Sensor || WiFi socket: %d\n", sock->sockWiFi_TRANSMITTER);
+        printf("Sensor || WiFi socket: %d\n", sock->sockLTE_TRANSMITTER);
     }
 
     if (print_out == 1) {
@@ -241,7 +241,8 @@ void *transmitWiFi(void *socket, char* message) {
         printf("Sensor || WiFi || sendWiFi: %s\n", sendWiFi);
     }
 
-    sendto(sock->sockWiFi_TRANSMITTER, sendWiFi, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, sizeof(sock->ClientWiFi_TRANSMITTER));
+    sendto(sock->sockLTE_TRANSMITTER, sendWiFi, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, sizeof(sock->ClientLTE_TRANSMITTER));
+    printf("LTE was actually used lol");
     if (print_out == 1) {
         printf("Sensor || WiFi || Message transmitted at %s\n\n", curr_timeWiFi);
     }
