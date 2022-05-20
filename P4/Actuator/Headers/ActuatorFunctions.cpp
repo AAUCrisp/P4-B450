@@ -77,10 +77,11 @@ void processData(char msg[buffer]) {
         printf("movement_x = x - last_x: %d\n", movement_x);
         printf("movement_y = y - last_y: %d\n", movement_y);
     }
+    printf("Movement_x: %d , Movement_y: %d", movement_x, movement_y);
     File.open("log.txt", std::ofstream::out | std::ofstream::app);
     File << "\n\n Movement on the x-axis:" << movement_x << "\n Movement on the y-axis:" << movement_y;
     File.close();
-    printf("Movement_x: %d , Movement_y: %d", movement_x, movement_y);
+    
 
     update_last_coordinate(x, y);
 }
