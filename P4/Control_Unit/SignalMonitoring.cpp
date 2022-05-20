@@ -111,9 +111,7 @@ int main() {
         if(both_tech == 1) {
             gsv = (char*)"0";   // Force both technologies if enabled
         }
-        cout << "Signal Monitoring 114\nIs this the culprit?" << endl;
         shm_write(gsv, buffer, GSV_KEY);  // Write selected technology to shared memory
-        cout << "Signal Monitoring 116\nNope, it's fine" << endl;
 
         if (gsv == "1" || gsv == "0") {
             int threadWiFi = pthread_create(&wifi, NULL, transmit_GSV_WiFi, (void*)&sock);
