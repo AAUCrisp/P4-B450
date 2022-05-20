@@ -20,6 +20,11 @@
 #include "SocketFunctions.h"
 #include "shm_write_read.h"
 
+
+/* Troubleshooting Options */
+int print_GSV = 0;
+int print_out = 1;
+
 /* Define buffers & PORT number */
 #define BUFFER 1024
 char message[BUFFER];
@@ -58,14 +63,14 @@ void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *
 
     /* Error checking */
     if (sock->sockLTE_RECEIVER == -1) {
-        perror("Failed to create sockLTE");
+        perror("Failed to create LTE Socket");
         exit(0);
     }
     if (sock->sockWiFi_RECEIVER == -1) {
-        perror("Failed to create sockLTE");
+        perror("Failed to create WiFi Socket");
         exit(0);
     }
-    printf("Sockets_RECEIVER sucessfully created\n\n");
+    printf("Receiver Sockets sucessfully created\n\n");
 
     /* Configure settings to communicate with remote UDP client for receiver */
     sock->ServerLTE_RECEIVER.sin_family = AF_INET;
@@ -97,8 +102,8 @@ void Sockets_Transmitter(Sockets *sock, const char *IP_LTE, const char *IP_WiFi,
     /* Create socket receiver */
     sock->sockLTE_TRANSMITTER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sock->sockWiFi_TRANSMITTER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    printf("Sockets_Transmitter LTE (INSIDE): %d\n", sock->sockLTE_TRANSMITTER);
-    printf("Sockets_Transmitter WiFi (INSIDE): %d\n\n", sock->sockWiFi_TRANSMITTER);
+    printf("Transmit Socket LTE (INSIDE): %d\n", sock->sockLTE_TRANSMITTER);
+    printf("Transmit Socket WiFi (INSIDE): %d\n\n", sock->sockWiFi_TRANSMITTER);
 
     /* Setting up socket options & specifying interface for receiver */
     setsockopt(sock->sockLTE_TRANSMITTER, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
@@ -106,14 +111,14 @@ void Sockets_Transmitter(Sockets *sock, const char *IP_LTE, const char *IP_WiFi,
 
     /* Error checking */
     if (sock->sockLTE_TRANSMITTER == -1) {
-        perror("Failed to create sockLTE");
+        perror("Failed to create LTE Socket");
         exit(0);
     }
     if (sock->sockWiFi_TRANSMITTER == -1) {
-        perror("Failed to create sockLTE");
+        perror("Failed to create LTE Socket");
         exit(0);
     }
-    printf("Sockets_TRANSMITTER sucessfully created\n\n");
+    printf("Transmit Sockets sucessfully created\n\n");
 
     /* Configure settings to communicate with remote UDP client for receiver */
     sock->ClientLTE_TRANSMITTER.sin_family = AF_INET;
@@ -149,14 +154,17 @@ void *receiveLTE(void *socket) {
         Sockets *sock = (Sockets *)socket;
         const char *GSV_KEY = "GSV_KEY";
         int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
-
-        printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
+        if (print_GSV == 1) {
+            printf("GSV || LTE socket: %d\n", sock->sockLTE_RECEIVER);
+        }
         RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
         Timestamp();
 
-        // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
-        printf("LTE || Message from LTE received at: %s\n", curr_time);
-        printf("LTE || Message: %s from Control Unit \n\n", message);
+        if (print_GSV == 1) {
+            // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
+            printf("GSV || LTE || Message from LTE received at: %s\n", curr_time);
+            printf("GSV || LTE || Message: %s from Control Unit \n\n", message);
+        }
         shm_write(message, 32, GSV_KEY);
     }
 }
@@ -168,13 +176,17 @@ void *receiveWiFi(void *socket) {
         const char *GSV_KEY = "GSV_KEY";
         int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
         
-        printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
+        if (print_GSV == 1) {
+            printf("GSV || WiFi socket: %d\n", sock->sockWiFi_RECEIVER);
+        }
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
         Timestamp();
 
-        // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
-        printf("WiFi || Message from WiFi received at: %s \n", curr_time);
-        printf("WiFi || Message: %s from Control Unit \n\n", message);
+        if (print_GSV == 1) {
+            // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
+            printf("GSV || WiFi || Message from WiFi received at: %s \n", curr_time);
+            printf("GSV || WiFi || Message: %s from Control Unit \n\n", message);
+        }
         shm_write(message, 32, GSV_KEY);
     }
 }
@@ -186,17 +198,25 @@ void *transmitLTE(void *socket) {
     char sendLTE[BUFFER];
 
     // int LenLTE = sizeof(sock.ClientLTE_TRANSMITTER);
-    printf("transmitLTE socket: %d\n", sock->sockLTE_TRANSMITTER);
+    if (print_out == 1) {
+        printf("Sensor || LTE socket: %d\n", sock->sockLTE_TRANSMITTER);
+    }
 
     RAND_INT = shm_read(32, RAND_INT_KEY);
-    printf("LTE || Random int from shm: %s\n", RAND_INT);
+    if (print_out == 1) {
+        printf("Sensor || LTE || Random int from shm: %s\n", RAND_INT);
+    }
 
     curr_timeLTE = Timestamp();
     sprintf(sendLTE, "%s %s", RAND_INT, curr_time);
-    printf("LTE || sendLTE: %s\n", sendLTE);
+    if (print_out == 1) {
+        printf("Sensor || LTE || sendLTE: %s\n", sendLTE);
+    }
 
     sendto(sock->sockLTE_TRANSMITTER, sendLTE, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, sizeof(sock->sockLTE_TRANSMITTER));
-    printf("Message from LTE transmitted at: %s\n\n", curr_time);
+    if (print_out == 1) {
+        printf("Sensor || LTE || Message transmitted at: %s\n\n", curr_time);
+    }
 }
 
 void *transmitWiFi(void *socket) {
@@ -206,15 +226,23 @@ void *transmitWiFi(void *socket) {
     char sendWiFi[BUFFER];
 
     // int LenWiFi = sizeof(sock.ClientWiFi_TRANSMITTER);
-    printf("transmitWiFi socket: %d\n", sock->sockWiFi_TRANSMITTER);
+    if (print_out == 1) {
+        printf("Sensor || WiFi socket: %d\n", sock->sockWiFi_TRANSMITTER);
+    }
 
     RAND_INT = shm_read(32, RAND_INT_KEY);
-    printf("WiFi || Random int from shm: %s\n", RAND_INT);
+    if (print_out == 1) {
+        printf("Sensor || WiFi || Random int from shm: %s\n", RAND_INT);
+    }
 
     curr_timeWiFi = Timestamp();
     sprintf(sendWiFi, "%s %s", RAND_INT, curr_time);
-    printf("WiFi || sendWiFi: %s\n", sendWiFi);
+    if (print_out == 1) {
+        printf("Sensor || WiFi || sendWiFi: %s\n", sendWiFi);
+    }
 
     sendto(sock->sockWiFi_TRANSMITTER, sendWiFi, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, sizeof(sock->ClientWiFi_TRANSMITTER));
-    printf("Message from WiFi transmitted at: %s\n\n", curr_time);
+    if (print_out == 1) {
+        printf("Sensor || WiFi || Message transmitted at: %s\n\n", curr_time);
+    }
 }
