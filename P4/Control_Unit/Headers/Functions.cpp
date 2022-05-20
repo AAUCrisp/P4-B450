@@ -36,7 +36,7 @@ void* LTE_command(void* socket) {
     while(1) {
         cout << "LTE Receiver || WiFi Actuator Socket: " << sock->act_WiFi << endl;
         cout << "LTE Receiver || LTE Actuator Socket: " << sock->act_LTE << endl; 
-        message = (void*)receiveLTE((void*)sock);
+        message = (void*)receiveLTE((void*)&sock);
         cout << "LTE Receiver || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
         sscanf((const char*)message, "%d %[^\n]", &data, msgDump);
         cout << "LTE Receiver || Message Parsed from Sockets as INT is: " << data << endl;
