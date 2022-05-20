@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu May 19 14:21:22 2022
+# Make data base, printed on Fri May 20 09:06:21 2022
 
 # Variables
 
@@ -19,7 +19,7 @@ LC_ALL = C
 # environment
 NO_AT_BRIDGE = 1
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-ee89467e-ef23-4f25-9a56-6489bb51a206.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-c2a071f4-f6d9-4f2c-96db-6f9362d5f629.sock
 # environment
 LC_NAME = en_DK.UTF-8
 # environment
@@ -79,7 +79,7 @@ APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_AUTH_SOCK = /tmp/ssh-XXXXXXdXi7sP/agent.1351
+SSH_AUTH_SOCK = /tmp/ssh-XXXXXXOINv6R/agent.1332
 # default
 .SHELLFLAGS := -c
 # environment
@@ -95,13 +95,13 @@ MAKEFILE_LIST :=
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 1741
+VSCODE_PID = 1719
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/BamseLinux:@/tmp/.ICE-unix/1300,unix/BamseLinux:/tmp/.ICE-unix/1300
+SESSION_MANAGER = local/BamseLinux:@/tmp/.ICE-unix/1282,unix/BamseLinux:/tmp/.ICE-unix/1282
 # automatic
 *F = $(notdir $*)
 # environment
@@ -177,7 +177,7 @@ MAKE_VERSION := 4.3
 # environment
 LC_MEASUREMENT = en_DK.UTF-8
 # environment
-SSH_AGENT_PID = 1352
+SSH_AGENT_PID = 1333
 # environment
 _ = /usr/bin/make
 # environment
@@ -217,7 +217,6 @@ XDG_GREETER_DATA_DIR = /var/lib/lightdm-data/bamse
 # environment
 XDG_MENU_PREFIX = xfce-
 # environment
- 
 GDMSESSION = xfce
 # environment
 LC_IDENTIFICATION = en_DK.UTF-8
@@ -230,9 +229,9 @@ LC_IDENTIFICATION = en_DK.UTF-8
 
 # Directories
 
-# . (device 2050, inode 1312748): 15 files, no impossibilities.
+# . (device 2050, inode 1312748): 16 files, no impossibilities.
 
-# 15 files, no impossibilities in 1 directories.
+# 16 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -282,12 +281,13 @@ GNUmakefile:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 23 / storage = 287 B / avg = 12 B
-# current buf: size = 8162 B / used = 287 B / count = 23 / avg = 12 B
+# strcache buffers: 1 (0) / strings = 24 / storage = 301 B / avg = 12 B
+# current buf: size = 8162 B / used = 301 B / count = 24 / avg = 12 B
+ 
 
-# strcache performance: lookups = 26 / hit rate = 11%
+# strcache performance: lookups = 27 / hit rate = 11%
 # hash-table stats:
-# Load=23/8192=0%, Rehash=0, Collisions=0/26=0%
-# Finished Make data base on Thu May 19 14:21:22 2022
+# Load=24/8192=0%, Rehash=0, Collisions=0/27=0%
+# Finished Make data base on Fri May 20 09:06:21 2022
 
  
