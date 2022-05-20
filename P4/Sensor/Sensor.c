@@ -120,7 +120,9 @@ int main(int argc, char *argv[]) {
 
             printf("Sensor || Before Transmitting\n");
             if (GSV == B || GSV == L) {
-                transmitLTE(&sock, (char*)buffer);
+                //transmitLTE(&sock, (char*)buffer);
+                printf("sockLTE_TRANSMITTER (IF): %d\n", sock.sockLTE_TRANSMITTER);
+                sendto(sock.sockLTE_TRANSMITTER, buffer, sizeof(buffer), 0, (struct sockaddr*)&sock->ClientLTE.TRANSMITTER, sizeof(sock.sockLTE_TRANSMITTER));
             }
             printf("Sensor || LTE sent, going to WiFi\n");
 
