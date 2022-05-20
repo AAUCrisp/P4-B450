@@ -81,12 +81,15 @@ int main() {
             usleep(1000);
             shm_write(buffer, 32, RAND_INT_KEY);
             if(both_tech == 1) {
+                printf("Sensor || Troubleshooting for Both Technologies\n");
                 GSV = 0;        // Troubleshooting for both
             }
 
+            printf("Sensor || Before Transmitting\n");
             if (GSV == B || GSV == L) {
                 transmitLTE(&sock);
             }
+            printf("Sensor || LTE sent, going to WiFi\n");
 
             if (GSV == B || GSV == W) {
                 transmitWiFi(&sock);
