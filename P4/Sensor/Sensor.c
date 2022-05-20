@@ -119,7 +119,7 @@ int main(int argc, char* argv[]) {
 
             printf("Sensor || Before Transmitting\n");
             if (GSV == B || GSV == L) {
-                /transmitLTE(&sock, (char*)buffer);
+                transmitLTE(&sock, (char*)buffer);
             }
             printf("Sensor || LTE sent, going to WiFi\n");
 
