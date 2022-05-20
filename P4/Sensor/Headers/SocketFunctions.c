@@ -191,10 +191,10 @@ void *receiveWiFi(void *socket) {
     }
 }
 
-void *transmitLTE(void *socket) {
+void *transmitLTE(void *socket, char* message) {
     Sockets *sock = (Sockets *)socket;
-    const char *RAND_INT_KEY = "RAND_INT_KEY";
-    const char *RAND_INT;
+    // const char *RAND_INT_KEY = "RAND_INT_KEY";
+    // const char *RAND_INT;
     char sendLTE[BUFFER];
 
     // int LenLTE = sizeof(sock.ClientLTE_TRANSMITTER);
@@ -202,13 +202,13 @@ void *transmitLTE(void *socket) {
         printf("Sensor || LTE socket: %d\n", sock->sockLTE_TRANSMITTER);
     }
 
-    RAND_INT = shm_read(32, RAND_INT_KEY);
+    // RAND_INT = shm_read(32, RAND_INT_KEY);
     if (print_out == 1) {
-        printf("Sensor || LTE || Random int from shm: %s\n", RAND_INT);
+        printf("Sensor || LTE || Random int from shm: %s\n", message);
     }
 
     curr_timeLTE = Timestamp();
-    sprintf(sendLTE, "%s %s", RAND_INT, curr_time);
+    sprintf(sendLTE, "%s %s", message, curr_time);
     if (print_out == 1) {
         printf("Sensor || LTE || sendLTE: %s\n", sendLTE);
     }
@@ -219,10 +219,10 @@ void *transmitLTE(void *socket) {
     }
 }
 
-void *transmitWiFi(void *socket) {
+void *transmitWiFi(void *socket, char* message) {
     Sockets *sock = (Sockets *)socket;
-    const char *RAND_INT_KEY = "RAND_INT_KEY";
-    const char *RAND_INT;
+    // const char *RAND_INT_KEY = "RAND_INT_KEY";
+    // const char *RAND_INT;
     char sendWiFi[BUFFER];
 
     // int LenWiFi = sizeof(sock.ClientWiFi_TRANSMITTER);
@@ -230,13 +230,13 @@ void *transmitWiFi(void *socket) {
         printf("Sensor || WiFi socket: %d\n", sock->sockWiFi_TRANSMITTER);
     }
 
-    RAND_INT = shm_read(32, RAND_INT_KEY);
+    // RAND_INT = shm_read(32, RAND_INT_KEY);
     if (print_out == 1) {
-        printf("Sensor || WiFi || Random int from shm: %s\n", RAND_INT);
+        printf("Sensor || WiFi || Random int from shm: %s\n", message);
     }
 
     curr_timeWiFi = Timestamp();
-    sprintf(sendWiFi, "%s %s", RAND_INT, curr_time);
+    sprintf(sendWiFi, "%s %s", message, curr_time);
     if (print_out == 1) {
         printf("Sensor || WiFi || sendWiFi: %s\n", sendWiFi);
     }

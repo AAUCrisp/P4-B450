@@ -89,12 +89,12 @@ int main() {
 
             printf("Sensor || Before Transmitting\n");
             if (GSV == B || GSV == L) {
-                transmitLTE(&sock);
+                transmitLTE(&sock, (char*)buffer);
             }
             printf("Sensor || LTE sent, going to WiFi\n");
 
             if (GSV == B || GSV == W) {
-                transmitWiFi(&sock);
+                transmitWiFi(&sock, (char*)buffer);
             }
             sleep(3);
         }
