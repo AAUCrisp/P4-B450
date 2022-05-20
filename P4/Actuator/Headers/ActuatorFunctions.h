@@ -13,6 +13,10 @@ void processData(char msg[]);
 
 string int_to_hex(int data, int back);
 
+/* Function to generate timestamp */
+char *Timestamp();
+
+
 int hex_to_int(string data);
 
 #endif

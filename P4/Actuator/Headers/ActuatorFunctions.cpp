@@ -42,7 +42,7 @@ int movement_y;
 
 char tempx[buffer];
 char tempy[buffer];
-
+char curr_time[128];
 std::ofstream File;
 
 /*
@@ -51,6 +51,18 @@ void logData(int *arr) {
     File << "\n\n Movement on the x-axis:" << arr[0] << "\n Movement on the y-axis:" << arr[1];
     File.close();
 }*/
+
+char *Timestamp() {
+    /* Timestamp format : [hh:mm:ss dd/mm/yy] */
+    struct tm *timeinfo;
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    timeinfo = localtime(&tv.tv_sec);
+
+    sprintf(curr_time, "[%d:%d:%d.%03ld %d/%d/%d]", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, tv.tv_usec / 1000, timeinfo->tm_mday, timeinfo->tm_mon + 1, timeinfo->tm_year + 1900);
+
+    return curr_time;
+}
 
 /* This function updates the last coordinates, for next computation of finding movement over the X and Y axis */
 void update_last_coordinate(int number1, int number2) {
@@ -83,8 +95,9 @@ void processData(char msg[buffer]) {
     if (movement_x == 0 && movement_y == 0){
 
     }else{
+        Timestamp();
         File.open("log.txt", std::ofstream::out | std::ofstream::app);
-        File << "\n\n Movement on the x-axis:" << movement_x << "\n Movement on the y-axis:" << movement_y;
+        File << "\n\n" << curr_time << "\n Movement on the x-axis:" << movement_x << "\n Movement on the y-axis:" << movement_y;
         File.close();
     }
 
