@@ -60,20 +60,22 @@ void update_last_coordinate(int number1, int number2) {
 
 /* This functions Parses the received message into a specified format. And finds the difference between the current and last coordinates. */
 void processData(char msg[buffer]) {
+    int movement_x;
+    int movement_y;
     bytes_read = sscanf(msg, "%[^:%s]:%s:", tempx, tempy);  // Parses the received char array, into two seperate char arrays
     cout << "Temp X is: " << tempx << endl;                 // prints out the char arrays containing x and y coordinates.
     cout << "Temp Y is: " << tempy << endl;
-    x = hex_to_int(tempx);  // Converts the hex-chars of the x coordinate to an int
-    y = hex_to_int(tempy);  // Converts the hex-chars of the x coordinate to an int
+    int x = hex_to_int(tempx);  // Converts the hex-chars of the x coordinate to an int
+    int y = hex_to_int(tempy);  // Converts the hex-chars of the x coordinate to an int
 
     if (last_x_coordinate == 0 && last_y_coordinate == 0) {
-        int movement_x = x;
-        int movement_y = y;
+        movement_x = x;
+        movement_y = y;
         printf("movement_x = x: %d\n", movement_x);
         printf("movement_y = y: %d\n", movement_y);
     } else {
-        int movement_x = x - last_x_coordinate;
-        int movement_y = y - last_y_coordinate;
+        movement_x = x - last_x_coordinate;
+        movement_y = y - last_y_coordinate;
         printf("movement_x = x - last_x: %d\n", movement_x);
         printf("movement_y = y - last_y: %d\n", movement_y);
     }
