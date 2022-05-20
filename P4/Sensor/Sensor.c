@@ -106,7 +106,7 @@ int main(int argc, char* argv[]) {
             //printf("\nGSV converted: %d\n", GSV);
             /*if (monitor == 1) {
             }*/
-            sprintf(buffer, "%d", generate(0, 25000000));
+            sprintf(buffer, "%d", generate(1, 25000000));
             //printf("\nSensor || After Random Int Generation\n");
             usleep(1000);
 
