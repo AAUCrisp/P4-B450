@@ -110,11 +110,11 @@ int main() {
                 printf("GSV || Both Selected\n");
             }
         }
-        shm_write(gsv, buffer, GSV_KEY);  // Write selected technology to shared memory
-
         if(both_tech == 1) {
             gsv = (char*)"0";
         }
+        shm_write(gsv, buffer, GSV_KEY);  // Write selected technology to shared memory
+
 
         if (gsv == "1" || gsv == "0") {
             if(print == 1) {
