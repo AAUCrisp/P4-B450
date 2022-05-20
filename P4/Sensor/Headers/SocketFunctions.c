@@ -191,9 +191,11 @@ void *receiveWiFi(void *socket) {
     }
 }
 
-void *transmitLTE(void *socket, char* message) {
+void *transmitLTE(void *socket/*, char* message*/) {
     Sockets *sock = (Sockets *)socket;
     char sendLTE[BUFFER];
+    const char *RAND_INT_KEY = "RAND_INT_KEY";
+    const char *RAND_INT;
 
     if (print_out == 1) {
         printf("Sensor || LTE socket: %d\n", sock->sockLTE_TRANSMITTER);
@@ -204,15 +206,21 @@ void *transmitLTE(void *socket, char* message) {
     }
 
     curr_timeLTE = Timestamp();
-    sprintf(sendLTE, "%s %s", message, curr_timeLTE);
+    //sprintf(sendLTE, "%s %s", message, curr_timeLTE);
     if (print_out == 1) {
         printf("Sensor || LTE || sendLTE: %s\n", sendLTE);
     }
+
+    RAND_INT = shm_read(1000, RAND_INT_KEY);
+    printf("RAND_INT VALUE: %s\n", RAND_INT);
+    sprintf(sendLTE, "%s %s", RAND_INT, curr_timeLTE);
+    printf("sendLTE VALUE: %s\n", sendLTE);
 
     sendto(sock->sockLTE_TRANSMITTER, sendLTE, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, sizeof(sock->sockLTE_TRANSMITTER));
     if (print_out == 1) {
         printf("Sensor || LTE || Message transmitted at %s\n\n", curr_timeLTE);
     }
+    pthread_exit(NULL);
 }
 
 void *transmitWiFi(void *socket, char* message) {

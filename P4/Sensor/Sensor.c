@@ -22,33 +22,30 @@
 
 #define BUFFER 64
 
+int main(int argc, char* argv[]) {
+    int both_tech = 0;
+    int monitor = 1;
 
-int main(int argc, char *argv[]) {
-    int both_tech = 0; 
-    int monitor = 1; 
-    
-    
     printf("\n==================\nSensor Program Started\n==================\n\n");
 
-    if(argc > 1) {      // If the program is run with arguments
+    if (argc > 1) {  // If the program is run with arguments
         printf("\nArgument(s) accepted.\n");
 
         int aug1 = atoi(argv[1]);
         int aug2 = atoi(argv[2]);
 
         printf("\nBefore Monitor Argument\n");
-        if(aug1 == 0) {  // For disabling GSV Update
+        if (aug1 == 0) {  // For disabling GSV Update
             printf("\n=====  Monitoring Disabled =====\n");
             monitor = 0;
         }
-        
+
         printf("\nBefore Both Argument\n");
-        if(aug2 == 1) {     // For enabling using both LTE and WiFi.
+        if (aug2 == 1) {  // For enabling using both LTE and WiFi.
             printf("\n=====  Forced Both LTE & WiFi =====\n");
             both_tech = 1;
         }
-    }
-    else {
+    } else {
         printf("\nNo arguments inserted, running staticly.\n");
     }
 
@@ -57,7 +54,7 @@ int main(int argc, char *argv[]) {
     uint PORT_WiFi_TRANSMITTER = 9001;
     const char* LTE = "wwan0";
     const char* WiFi = "wlan0";
-    const char* IP_LTE = "10.20.0.16";      // Default: IP of Control Unit
+    const char* IP_LTE = "10.20.0.16";  // Default: IP of Control Unit
     // const char* IP_LTE = "10.20.0.13";      // IP of Actuator
     // const char* IP_LTE = "10.20.0.10";      // IP of Sensor
     const char* IP_WiFi = "192.168.1.136";  // Default: IP of Control Unit
@@ -77,8 +74,7 @@ int main(int argc, char *argv[]) {
 
     /* Shared memory object variables */
     const char* GSV_KEY = "GSV_KEY";
-    const char* RAND_INT_KEY = "RAND_INT_KEY";
-    const char* RAND_INT;
+
     const char* msg;
 
     char buffer[BUFFER];
@@ -92,38 +88,44 @@ int main(int argc, char *argv[]) {
     pid_t sensor_monitor;     // Prepare the process ID for monitoring
     sensor_monitor = fork();  // Starts new process
 
+    const char* RAND_INT_KEY = "RAND_INT_KEY";
+
     if (sensor_monitor == 0) {
         printf("Parent process ID: %d \n", getppid());
         printf("Sensor monitoring process ID is: %d \n", getpid());
         char path[] = "./SensorMonitoring";
         char* args[] = {"./SensorMonitoring", NULL};
-        if(monitor == 1) {   
+        if (monitor == 1) {
             execv(path, args);
         }
-    } 
-    else {
+    } else {
         while (1) {
             usleep(1000);
-            if(monitor == 1) {   
+            if (monitor == 1) {
                 msg = shm_read(32, GSV_KEY);
                 GSV = atoi(msg);
                 printf("\nSensor || GSV from shared memory: %s\n", msg);
-                printf("\nGSV converted: %d\n", GSV); //
+                printf("\nGSV converted: %d\n", GSV);  //
             }
             sprintf(buffer, "%d", generate(0, 25000000));
             printf("\nSensor || After Random Int Generation\n");
             usleep(1000);
-            if(both_tech == 1) {
+
+            shm_write(buffer,1000, RAND_INT_KEY);
+
+            if (both_tech == 1) {
                 printf("\nSensor || Troubleshooting for Both Technologies\n");
-                GSV = 0;        // Troubleshooting for both
+                GSV = 0;  // Troubleshooting for both
             }
 
             printf("Sensor || Before Transmitting\n");
             if (GSV == B || GSV == L) {
-                //transmitLTE(&sock, (char*)buffer);
-                printf("sockLTE_TRANSMITTER (IF): %d\n", sock.sockLTE_TRANSMITTER);
+                // transmitLTE(&sock, (char*)buffer);
+                /*printf("sockLTE_TRANSMITTER (IF): %d\n", sock.sockLTE_TRANSMITTER);
                 printf("Buffer to send: %s\n", buffer);
                 sendto(sock.sockLTE_TRANSMITTER, buffer, sizeof(buffer), 0, (struct sockaddr*)&sock.ClientLTE_TRANSMITTER, sizeof(sock.sockLTE_TRANSMITTER));
+                */
+                pthread_create(&T1, NULL, transmitWiFi, (void*)&sock);
             }
             printf("Sensor || LTE sent, going to WiFi\n");
 
