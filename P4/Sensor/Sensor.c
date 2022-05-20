@@ -102,11 +102,11 @@ int main(int argc, char* argv[]) {
             msg = shm_read(32, GSV_KEY);
             GSV = atoi(msg);
             printf("\nSensor || GSV from shared memory: %s\n", msg);
-            printf("\nGSV converted: %d\n", GSV);
+            //printf("\nGSV converted: %d\n", GSV);
             /*if (monitor == 1) {
             }*/
             sprintf(buffer, "%d", generate(0, 25000000));
-            printf("\nSensor || After Random Int Generation\n");
+            //printf("\nSensor || After Random Int Generation\n");
             usleep(1000);
 
             /*if (both_tech == 1) {
@@ -114,7 +114,7 @@ int main(int argc, char* argv[]) {
                 GSV = 0;  // Troubleshooting for both
             }*/
 
-            printf("Sensor || Before Transmitting\n");
+            //printf("Sensor || Before Transmitting\n");
             if (GSV == B || GSV == L) {
                 transmitLTE(&sock, (char*)buffer);
             }
