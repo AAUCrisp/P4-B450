@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
     /* ------------------------------
     -------- Conversion Area --------
     ------------- start ----------- */
-/*
+    /*
     string data_str = to_string(data_int);     // For "Firm" data
     int hex = 1;
     int use_grid = 1;
@@ -86,7 +86,7 @@ int main(int argc, char *argv[]) {
         cout << "\nRAM Command is: " << grid[data_int-1] << endl;       // Coordinate from RAM version
     }
     cout << "\nCPU Command is: " << cpu_command << endl;            // Coordinate from CPU version
-*/
+    */
 
     /* ----------- end --------------
     -------- Conversion Area --------
@@ -147,4 +147,10 @@ int main(int argc, char *argv[]) {
 
         printf("\nThis shouldn't print!!!\n");
     }
+
+    close(sock.sockLTE_TRANSMITTER);
+    close(sock.sockWiFi_TRANSMITTER);
+    close(sock.sockLTE_RECEIVER);
+    close(sock.sockWiFi_RECEIVER);
+    exit(0);
 }

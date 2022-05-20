@@ -17,10 +17,10 @@
 
 
 /* -- Trouble Shooting Setup -- */
-int message_only = 1;        // Print messages only
-int print_sen_in = 0;       // Print incoming Sensor related things
-int print_act_out = 0;      // Print outgoing Actuator related things
-int print_GSV = 0;          // Print GSV related things
+int message_only = 0;        // Print messages only
+int print_sen_in = 1;       // Print incoming Sensor related things
+int print_act_out = 1;      // Print outgoing Actuator related things
+int print_GSV = 1;          // Print GSV related things
 int force_both = 1;         // Troubleshooting with both technologies
 
 /* -------------------------
@@ -273,7 +273,9 @@ void *transmit_GSV_LTE(void *socket) {
     int LenLTE = sizeof(sock->ClientLTE_TRANSMITTER);
     const char *GSV;
     const char *GSV_KEY = "GSV_KEY";
+    cout << "SHM TROUBLESHOOTING || Sockets 276\nSHM TROUBLESHOOTING || Is this the culprit?" << endl;
     GSV = shm_read(32, GSV_KEY);
+    cout << "SHM TROUBLESHOOTING || Sockets 278\nSHM TROUBLESHOOTING || Nope, it's fine" << endl;
     if(print_GSV == 1) {
         printf("\n\nGSV LTE || Transmit Socket: %d\n", sock->sockLTE_TRANSMITTER);
     }
@@ -292,7 +294,9 @@ void *transmit_GSV_WiFi(void *socket) {
     int LenWiFi = sizeof(sock->ClientWiFi_TRANSMITTER);
     const char *GSV;
     const char *GSV_KEY = "GSV_KEY";
+    cout << "SHM TROUBLESHOOTING || Sockets 297\nSHM TROUBLESHOOTING || Is this the culprit?" << endl;
     GSV = shm_read(32, GSV_KEY);
+    cout << "SHM TROUBLESHOOTING || Sockets 299\nSHM TROUBLESHOOTING || Nope, it's fine" << endl;
     if(print_GSV == 1) {
         printf("\n\nGSV WiFi || Transmit Socket: %d\n", sock->sockWiFi_TRANSMITTER);
     }
@@ -354,7 +358,9 @@ void* transmit_command(void *socket, char* message) {
     int LenWiFi = sizeof(sock->Client_act_WiFi);
     const char *GSV;
     const char *GSV_KEY = "GSV_KEY";
+    cout << "SHM TROUBLESHOOTING || Sockets 361\nSHM TROUBLESHOOTING || Is this the culprit?" << endl;
     GSV = shm_read(32, GSV_KEY);
+    cout << "SHM TROUBLESHOOTING || Sockets 363\nSHM TROUBLESHOOTING || Nope, it's fine" << endl;
     int gsv = atoi(GSV);
     if(print_act_out == 1) {
         cout << "Global Signal Variable is: " << GSV << endl;
