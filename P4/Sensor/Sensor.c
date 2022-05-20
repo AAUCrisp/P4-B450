@@ -81,7 +81,7 @@ int main() {
             printf("Sensor || After Random Int Generation\n");
             usleep(1000);
             printf("Sensor || Before SHM Write\n");
-            shm_write(buffer, 32, RAND_INT_KEY);
+            // shm_write(buffer, 32, RAND_INT_KEY);
             if(both_tech == 1) {
                 printf("Sensor || Troubleshooting for Both Technologies\n");
                 GSV = 0;        // Troubleshooting for both
