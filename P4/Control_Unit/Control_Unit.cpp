@@ -137,7 +137,7 @@ int main(int argc, char *argv[]) {
         // WiFi_command(sock);
         // LTE_command1(sock);     // Trouble Shooting
         while(1) {
-            receiveWiFi(&sock);
+            receiveLTE(&sock);
         }
         printf("\nThis shouldn't print!!!\n");
     }
