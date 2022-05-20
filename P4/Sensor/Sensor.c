@@ -22,6 +22,8 @@
 
 #define BUFFER 64
 
+int both_tech = 1;
+
 int main() {
     printf("==================\nSensor Process Started\n==================\n\n");
 
@@ -78,6 +80,9 @@ int main() {
             sprintf(buffer, "%d", generate(0, 25000000));
             usleep(1000);
             shm_write(buffer, 32, RAND_INT_KEY);
+            if(both_tech == 1) {
+                GSV = 0;        // Troubleshooting for both
+            }
 
             if (GSV == B || GSV == L) {
                 transmitLTE(&sock);

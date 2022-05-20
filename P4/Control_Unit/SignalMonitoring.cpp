@@ -57,7 +57,7 @@ int main() {
     // printf("sockLTE_TRANSMITTER (OUTSIDE): %d\n", sock.sockLTE_TRANSMITTER);
     // printf("sockWiFi_TRANSMITTER (OUTSIDE): %d\n", sock.sockWiFi_TRANSMITTER);
 
-    printf("\n\n==================\nMonitoring Process Started\n==================\n\n");
+    printf("\n\n==========================\nMonitoring Process Started\n==========================\n\n");
     int counter = 0;
 
     while (1) {

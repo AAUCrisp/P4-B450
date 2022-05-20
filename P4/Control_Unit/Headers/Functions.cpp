@@ -32,13 +32,11 @@ void* LTE_command(void* socket) {
     string coordinate;
     char* LTEmsg = (char*) malloc(9);
     
-    printf("\n\n==================\nLTE Listener Started\n==================\n\n");
+    printf("\n\n====================\nLTE Listener Started\n====================\n\n");
     while(1) {
-        message = (void*)receiveLTE((void*)sock);
         cout << "LTE Receiver || WiFi Actuator Socket: " << sock->act_WiFi << endl;
-        // cout << "LTE Receiver || WiFi Actuator Socket: " << sock->act_WiFi << endl;
         cout << "LTE Receiver || LTE Actuator Socket: " << sock->act_LTE << endl; 
-        // cout << "LTE Receiver || LTE Actuator Socket: " << sock->act_LTE << endl; 
+        message = (void*)receiveLTE((void*)sock);
         cout << "LTE Receiver || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
         sscanf((const char*)message, "%d %[^\n]", &data, msgDump);
         cout << "LTE Receiver || Message Parsed from Sockets as INT is: " << data << endl;

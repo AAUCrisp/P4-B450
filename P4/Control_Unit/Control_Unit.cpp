@@ -115,8 +115,8 @@ int main(int argc, char *argv[]) {
 
     // printf("sockLTE_RECEIVER (OUTSIDE): %d\n", sock.sockLTE_RECEIVER);
     // printf("sockWiFi_RECEIVER (OUTSIDE): %d\n", sock.sockWiFi_RECEIVER);
-    printf("Actuator LTE socket (OUTSIDE): %d\n", sock.act_LTE);
-    printf("Actuator WiFi socket (OUTSIDE): %d\n", sock.act_WiFi);
+    printf("Actuator LTE socket from Main(): %d\n", sock.act_LTE);
+    printf("Actuator WiFi socket from Main(): %d\n", sock.act_WiFi);
 
     /* Start signal monitoring process */
     pid_t signal_monitor;     // Prepare the process ID for monitoring
