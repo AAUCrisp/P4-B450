@@ -26,6 +26,7 @@
 /* -- Test Data Variable-- */
 int data_int = 1500000;     // Static Test Variable
 int monitor = 1;
+
 // string* grid = new string[coordinates]; // Don't forget to delete [] a; when you're done!
 
 
