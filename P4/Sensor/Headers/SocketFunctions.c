@@ -216,7 +216,8 @@ void *transmitLTE(void *socket) {
     sprintf(sendLTE, "%s %s", RAND_INT, curr_timeLTE);
     printf("sendLTE VALUE: %s\n", sendLTE);
 
-    sendto(sock->sockLTE_TRANSMITTER, sendLTE, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, sizeof(sock->sockLTE_TRANSMITTER));
+    sendto(sock->sockLTE_TRANSMITTER, sendLTE, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, sizeof(sock->ClientLTE_TRANSMITTER));
+    printf("This is ACTUALLY LTE TOO!!!");
     if (print_out == 1) {
         printf("Sensor || LTE || Message transmitted at %s\n\n", curr_timeLTE);
     }
@@ -241,7 +242,7 @@ void *transmitWiFi(void *socket, char* message) {
         printf("Sensor || WiFi || sendWiFi: %s\n", sendWiFi);
     }
 
-    sendto(sock->sockLTE_TRANSMITTER, sendWiFi, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, sizeof(sock->ClientLTE_TRANSMITTER));
+    sendto(sock->sockWiFi_TRANSMITTER, sendWiFi, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, sizeof(sock->ClientWiFi_TRANSMITTER));
     printf("LTE was actually used lol");
     if (print_out == 1) {
         printf("Sensor || WiFi || Message transmitted at %s\n\n", curr_timeWiFi);
