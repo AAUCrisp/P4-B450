@@ -7,10 +7,10 @@ WiFi: 192.168.1.136
 LTE: 10.20.0.16  
 Eth: 192.168.1.185  
 
-## Sensor:
-Program Argument 1 is for Signal Monitor process            Insert 0 to disable
-Program Argument 2 is for sending on both technologies      Insert 1 to disable
-etc. `./Sensor 1 1`      This will ignore (enable) Signal Monitoring, and force to send on both technologies.
+## Sensor: 
+Program Argument 1 is for Signal Monitor process            Insert 0 to disable 
+Program Argument 2 is for sending on both technologies      Insert 1 to disable 
+etc. `./Sensor 1 1`      This will ignore (enable) Signal Monitoring, and force to send on both technologies. 
 
 WiFi: 192.168.1.160  
 LTE: 10.20.0.10  
