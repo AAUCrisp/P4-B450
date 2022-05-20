@@ -87,7 +87,6 @@ int main(int argc, char* argv[]) {
     pid_t sensor_monitor;     // Prepare the process ID for monitoring
     sensor_monitor = fork();  // Starts new process
 
-
     if (sensor_monitor == 0) {
         printf("Parent process ID: %d \n", getppid());
         printf("Sensor monitoring process ID is: %d \n", getpid());
@@ -98,31 +97,33 @@ int main(int argc, char* argv[]) {
         }*/
     } else {
         while (1) {
-            usleep(1000);
-            msg = shm_read(32, GSV_KEY);
-            GSV = atoi(msg);
-            printf("\nSensor || GSV from shared memory: %s\n", msg);
-            //printf("\nGSV converted: %d\n", GSV);
-            /*if (monitor == 1) {
-            }*/
-            sprintf(buffer, "%d", generate(0, 25000000));
-            //printf("\nSensor || After Random Int Generation\n");
-            usleep(1000);
+            while (1) {
+                usleep(1000);
+                msg = shm_read(32, GSV_KEY);
+                GSV = atoi(msg);
+                printf("\nSensor || GSV from shared memory: %s\n", msg);
+                // printf("\nGSV converted: %d\n", GSV);
+                /*if (monitor == 1) {
+                }*/
+                sprintf(buffer, "%d", generate(0, 25000000));
+                // printf("\nSensor || After Random Int Generation\n");
+                usleep(1000);
 
-            /*if (both_tech == 1) {
-                printf("\nSensor || Troubleshooting for Both Technologies\n");
-                GSV = 0;  // Troubleshooting for both
-            }*/
+                /*if (both_tech == 1) {
+                    printf("\nSensor || Troubleshooting for Both Technologies\n");
+                    GSV = 0;  // Troubleshooting for both
+                }*/
 
-            //printf("Sensor || Before Transmitting\n");
-            if (GSV == B || GSV == L) {
-                transmitLTE(&sock, (char*)buffer);
+                // printf("Sensor || Before Transmitting\n");
+                if (GSV == B || GSV == L) {
+                    transmitLTE(&sock, (char*)buffer);
+                }
+
+                if (GSV == B || GSV == W) {
+                    transmitWiFi(&sock, (char*)buffer);
+                }
+                sleep(3);
             }
-
-            if (GSV == B || GSV == W) {
-                transmitWiFi(&sock, (char*)buffer);
-            }
-            sleep(3);
         }
     }
 }
