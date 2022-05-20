@@ -143,17 +143,7 @@ int main(int argc, char *argv[]) {
     else {
         pthread_create(&T1, NULL, LTE_command, (void*)&sock);
         WiFi_command(sock);
-        // LTE_command1(sock);     // Trouble Shooting
-        while(1) {
-            // receiveLTE(&sock);
-        }
+
         printf("\nThis shouldn't print!!!\n");
     }
-
-    close(sock.sockLTE_TRANSMITTER);
-    close(sock.sockWiFi_TRANSMITTER);
-
-    close(sock.sockLTE_RECEIVER);
-    close(sock.sockWiFi_RECEIVER);
-    exit(0);
 }

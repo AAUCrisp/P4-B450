@@ -16,7 +16,8 @@
 
 #define buffer 32
 
-int print = 1;      // Enable/Disable prints for troubleshooting
+int print = 0;      // Enable/Disable prints for troubleshooting
+int only_message = 1;   // Only print Selection
 int both_tech = 1;      // Forces it to use both LTE & WiFi
 
 pthread_t wifi, lte;
@@ -90,19 +91,19 @@ int main() {
         /* Compare signals and select a technology */
         if ((rssi_average >= rssi_good && rsrp_average < rsrp_good) || (rssi_average >= rssi_mid && rsrp_average < rsrp_mid)) {
             gsv =  (char*)"1";  // If WiFi has stronger signal, set WiFi
-            if(print == 1) {
+            if(print == 1 || only_message == 1) {
                 printf("GSV || WiFi Selected\n");
             }
         } 
         else if ((rssi_average < rssi_good && rsrp_average >= rsrp_good) || (rssi_average < rssi_mid && rsrp_average >= rsrp_mid)) {
             gsv =  (char*)"2";  // If LTE has stronger signal, set LTE
-            if(print == 1) {
+            if(print == 1 || only_message == 1) {
                 printf("GSV || LTE Selected\n");
             }
         }
         else {
             gsv =  (char*)"0";  // If no clear winner, set to send on both
-            if(print == 1) {
+            if(print == 1 || only_message == 1) {
                 printf("GSV || Both Selected\n");
             }
         }
@@ -139,6 +140,6 @@ int main() {
             counter++;
         }
 
-        sleep(1);
+        sleep(3);
     }
 }
