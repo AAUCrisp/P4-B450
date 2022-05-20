@@ -1,9 +1,12 @@
-all: Ting
+all: Server Client
 
-Ting:
-	gcc -pthread ServerTest.c -o test
+Server:
+	gcc -pthread ServerTest.c -o Server
+
+Client:
+	gcc -pthread ClientTest.c -o Client
 
 clean:
-	rm -f Ting
-	rm test
+	rm -f Server Client
+	rm Server Client
 	@echo "clean completed!"
