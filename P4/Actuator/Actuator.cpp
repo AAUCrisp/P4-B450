@@ -49,7 +49,7 @@ int main() {
     /* Misc */
     pthread_t T1, T2;
     char* curr_time;
-    int* Processed_Data;
+    int *Processed_Data;
 
     /* Shared memory object variables */
     const char* COMMANDS_KEY = "COMMANDS_KEY";

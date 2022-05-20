@@ -1,7 +1,5 @@
-all: Git Actuator ActuatorMonitoring
+all: Actuator ActuatorMonitoring
 
-Git:
-	git pull
 
 Actuator: Actuator.cpp 
 	g++ -pthread Actuator.cpp -o Actuator -lrt
