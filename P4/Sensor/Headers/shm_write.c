@@ -26,8 +26,8 @@
 
 void shm_write(const char* message, const int SIZE, const char* name) {
     /* Semaphore variables */
-    sem_unlink(SEM_READ_FNAME);
-    sem_unlink(SEM_WRITE_FNAME);
+    // sem_unlink(SEM_READ_FNAME);
+    // sem_unlink(SEM_WRITE_FNAME);
 
     sem_t* SEM_WRITE = sem_open(SEM_WRITE_FNAME, IPC_CREAT, 0660, 0);
     if (SEM_WRITE == SEM_FAILED) {
@@ -55,7 +55,7 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     ftruncate(shm_fd, SIZE);
 
     sem_wait(SEM_WRITE);
-    
+
     /* memory map the shared memory object */
     ptr = mmap(NULL, SIZE, PROT_WRITE, MAP_SHARED, shm_fd, 0);
 
