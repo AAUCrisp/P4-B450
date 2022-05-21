@@ -20,6 +20,7 @@
 
 #include "Headers/SocketFunctions.h"
 #include "Headers/shm_write_read.h"
+#include "Headers/Functions.c"
 
 #define BUFFER 64
 
@@ -32,20 +33,22 @@ int main(int argc, char* argv[]) {
     if (argc > 1) {  // If the program is run with arguments
         printf("\nArgument(s) accepted.\n");
 
-        int aug1 = atoi(argv[1]);
-        int aug2 = atoi(argv[2]);
+        Argument_Setup(argc, argv);
 
-        printf("\nBefore Monitor Argument\n");
-        if (aug1 == 0) {  // For disabling GSV Update
-            printf("\n=====  Monitoring Disabled =====\n");
-            monitor = 0;
-        }
+        // int aug1 = atoi(argv[1]);
+        // int aug2 = atoi(argv[2]);
 
-        printf("\nBefore Both Argument\n");
-        if (aug2 == 1) {  // For enabling using both LTE and WiFi.
-            printf("\n=====  Forced Both LTE & WiFi =====\n");
-            both_tech = 1;
-        }
+        // printf("\nBefore Monitor Argument\n");
+        // if (aug1 == 0) {  // For disabling GSV Update
+        //     printf("\n=====  Monitoring Disabled =====\n");
+        //     monitor = 0;
+        // }
+
+        // printf("\nBefore Both Argument\n");
+        // if (aug2 == 1) {  // For enabling using both LTE and WiFi.
+        //     printf("\n=====  Forced Both LTE & WiFi =====\n");
+        //     both_tech = 1;
+        // }
     } else {
         printf("\nNo arguments inserted, running staticly.\n");
     }
