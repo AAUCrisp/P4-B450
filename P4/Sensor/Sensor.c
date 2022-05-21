@@ -67,7 +67,7 @@ int main(int argc, char* argv[]) {
     char* curr_time;
 
     /* Execution time variables */
-    int iter = 1000;
+    int iter = 10000;
     int fail_count = 0;
     double Execution_Time[iter];
     double Execution_Temp;
@@ -107,7 +107,7 @@ int main(int argc, char* argv[]) {
         }*/
     } else {
         // while (1) {
-        for (int i = 700; i < iter; i++) {
+        for (int i = 0; i < iter; i++) {
             // usleep(1000);
             // msg = shm_read(32, GSV_KEY);
             // GSV = atoi(msg);
@@ -146,19 +146,20 @@ int main(int argc, char* argv[]) {
                 Execution_Time[i] += Execution_Temp;
                 Execution_Sum += Execution_Time[i];
             }else {
+                fail_count++;
                 printf("Fail counter: %d\n", fail_count);
                 printf("isnan value: %d\n", isnan(Execution_Time[i]));
-                fail_count++;
             }
 
             printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
             printf("Execution_Sum = %f\n", Execution_Sum);
 
             // sleep(3);
-            usleep(10000);
+            //usleep(10000);
         }
         Execution_Average = Execution_Sum / iter;
-        printf("Execution average: %f\n", Execution_Average);
+        printf("Execution average: %f\n ms", Execution_Average);
+        printf("Total failed counts: %d\n", fail_count);
         //}
     }
 }
