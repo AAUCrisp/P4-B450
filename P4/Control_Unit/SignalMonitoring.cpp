@@ -18,8 +18,8 @@
 #define buffer 32
 
 // int print = 0;      // Enable/Disable prints for troubleshooting
-// int only_message = 1;   // Only print Selection
-// int both_tech = 1;      // Forces it to use both LTE & WiFi
+// int message_only = 1;   // Only print Selection
+// int force_both = 1;      // Forces it to use both LTE & WiFi
 
 pthread_t wifi, lte;
 
@@ -92,24 +92,24 @@ int main() {
         /* Compare signals and select a technology */
         if ((rssi_average >= rssi_good && rsrp_average < rsrp_good) || (rssi_average >= rssi_mid && rsrp_average < rsrp_mid)) {
             gsv =  (char*)"1";  // If WiFi has stronger signal, set WiFi
-            if(print == 1 || only_message == 1) {
+            if(troubleshooting_print == 1 || message_only == 1) {
                 printf("GSV || WiFi Selected\n\n");
             }
         } 
         else if ((rssi_average < rssi_good && rsrp_average >= rsrp_good) || (rssi_average < rssi_mid && rsrp_average >= rsrp_mid)) {
             gsv =  (char*)"2";  // If LTE has stronger signal, set LTE
-            if(print == 1 || only_message == 1) {
+            if(troubleshooting_print == 1 || message_only == 1) {
                 printf("GSV || LTE Selected\n\n");
             }
         }
         else {
             gsv =  (char*)"0";  // If no clear winner, set to send on both
-            if(print == 1 || only_message == 1) {
+            if(troubleshooting_print == 1 || message_only == 1) {
                 printf("GSV || Both Selected\n\n");
             }
         }
 
-        if(both_tech == 1) {
+        if(force_both == 1) {
             gsv = (char*)"0";   // Force both technologies if enabled
         }
         shm_write(gsv, buffer, GSV_KEY);  // Write selected technology to shared memory
@@ -120,7 +120,7 @@ int main() {
             if (threadWiFi != 0) {
                 perror("GSV || WiFi thread was not created");
             } 
-            if(print == 1) {
+            if(troubleshooting_print == 1) {
                 printf("GSV || Sent via WiFi\n");
             }
         }
@@ -129,7 +129,7 @@ int main() {
             if (threadLTE != 0) {
                 perror("GSV || LTE thread was not created");
             }
-            if(print == 1) {
+            if(troubleshooting_print == 1) {
                 printf("GSV || Sent via LTE\n");
             }
         }

@@ -26,42 +26,33 @@ using namespace std;
 
 #ifndef VARIABLES
 #define VARIABLES
-    // Control Unit
-    static int monitor = 0;        // Disable/Enable Start of Signal Monitoring
-    static int troubleshooting_print = 0;
-    static int use_grid = 0;
+    // General Settings
+    static int force_both = 0;      // Troubleshooting with both technologies
+    static int monitor = 0;         // Disable/Enable Start of Signal Monitoring
 
-    // Converter
-    static int x_axis = 5000;      // Length of the x-axis of the grid
-    static int y_axis = 5000;      // Length of the y-axis of the grid
-    static int coordinates = x_axis*y_axis;
-    static int use_hex = 1;
+    // Grid Settings
+    static int use_grid = 0;        // Usage of RAM Grid
+    static int x_axis = 5000;       // Length of the x-axis of the grid
+    static int y_axis = 5000;       // Length of the y-axis of the grid
+    static int coordinates = x_axis*y_axis;     // Complete amount of coordinates
+    
+    // Command Coversion
+    static int use_hex = 1;     // Coordinates as Hex-Chars
 
-    // Functions
-    static int print_unimportant = 0;
+    // Prints
+    static int message_only = 1;                // Print messages only
+    static int troubleshooting_print = 0;       // Print everything for troubleshooting
+    static int print_sen_in = 0;                // Print incoming Sensor related things
+    static int print_act_out = 0;               // Print outgoing Actuator related things
+    static int print_GSV = 0;                   // Print GSV related things
 
-    // Sockets
-    static int message_only = 1;        // Print messages only
-    static int print_sen_in = 0;       // Print incoming Sensor related things
-    static int print_act_out = 0;      // Print outgoing Actuator related things
-    static int print_GSV = 0;          // Print GSV related things
-    static int force_both = 0;         // Troubleshooting with both technologies
 
-    // Signal Monitoring
-    static int print = 0;      // Enable/Disable prints for troubleshooting
-    static int only_message = 1;   // Only print Selection
-    static int both_tech = 1;      // Forces it to use both LTE & WiFi
+    // -- DELETE THESE -- //
+
+    // static int troubleshooting_print = 0;
+    // static int print = 0;      // Enable/Disable prints for troubleshooting
+    // static int message_only = 1;   // Only print Selection
+    // static int force_both = 1;      // Forces it to use both LTE & WiFi
 
 
 #endif
-
-// Own Libraries
-// #include "Headers/Sockets.h"
-// Sockets sock;
-// #ifndef SHM_LIB 
-// #define SHM_LIB
-// #include "Headers/shm_write.cpp"
-// #include "Headers/shm_read.cpp"
-// #include "Headers/shm_write_read.h"
-// #endif
-

@@ -35,28 +35,18 @@
 
 /* Main running code */
 int main(int argc, char *argv[]) {
-    printf("==================\nControl Unit Process Started\n==================\n\n");
-
-    /* ------------------------------
-    -------- Conversion Area --------
-    ------------- start ----------- */
-    
-    // int hex = 1;
-    // int use_grid = 0;
     string* grid;
 
+    // If Arguments is inserted
     if(argc > 1) {      // If the program is run with arguments
-        cout << "\nArgument(s) accepted." << endl;
-
-        cout << "Number of arguments combinations: " << (argc - 1)/2 << endl;
-
         Argument_Setup(argc, argv);
     }
-    else {
+    else {  // Running without arguments
+        cout << "============================\nControl Unit Process Started\n============================\n\n" << endl;
         cout << "\nNo arguments inserted, running staticly." << endl;
     }
+
     if(use_grid == 1) {
-        cout << "Using RAM Grid!" << endl;
         cout << "X-axis size is: " << x_axis << "   & Y-axis size is: " << y_axis << endl;
         grid = generate_grid(x_axis, y_axis, use_hex);
     }
