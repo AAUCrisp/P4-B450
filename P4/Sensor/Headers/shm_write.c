@@ -18,11 +18,24 @@
 #include <time.h>
 #include <unistd.h>
 
+#include "shm_write_read.h"
+
 void shm_write(const char* message, const int SIZE, const char* name) {
     /* Semaphore variables */
-    sem_t* sp;
-    int retval;
-    int id, err;
+    sem_unlink(SEM_READ_FNAME);
+    sem_unlink(SEM_WRITE_FNAME);
+
+    sem_t* SEM_WRITE = sem_open(SEM_WRITE_FNAME, IPC_CREAT, 0660, 0);
+    if (SEM_WRITE == SEM_FAILED) {
+        perror("sem_open/SEM_WRITE");
+        exit(EXIT_FAILURE);
+    }
+
+    sem_t* SEM_READ = sem_open(SEM_READ_FNAME, IPC_CREAT, 0660, 0);
+    if (SEM_READ == SEM_FAILED) {
+        perror("sem_open/SEM_READ");
+        exit(EXIT_FAILURE);
+    }
 
     /* shared memory file descriptor */
     int shm_fd;
@@ -37,11 +50,16 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     /* configure the size of the shared memory object */
     ftruncate(shm_fd, SIZE);
 
+    sem_wait(SEM_WRITE);
+    
     /* memory map the shared memory object */
     ptr = mmap(NULL, SIZE, PROT_WRITE, MAP_SHARED, shm_fd, 0);
 
     /* write to the shared memory object */
     sprintf(ptr, "%s", message);
+    sem_post(SEM_READ);
+    sem_close(SEM_READ);
+    sem_close(SEM_WRITE);
 
     // printf("Wrote from shm_write: %s\n", (char*)ptr);
 

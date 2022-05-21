@@ -18,13 +18,21 @@
 #include <time.h>
 #include <unistd.h>
 
-extern int errno;
+#include "shm_write_read.h"
 
 void* shm_read(const int SIZE, const char* name) {
     /* Semaphore variables */
-    sem_t* sp;
-    int retval;
-    int id, err;
+    sem_t *SEM_WRITE = sem_open(SEM_WRITE_FNAME, 0);
+    if (SEM_WRITE == SEM_FAILED) {
+        perror("sem_open/SEM_WRITE");
+        exit(EXIT_FAILURE);
+    }
+
+    sem_t* SEM_READ = sem_open(SEM_READ_FNAME, 0);
+    if (SEM_READ == SEM_FAILED) {
+        perror("sem_open/SEM_READ");
+        exit(EXIT_FAILURE);
+    }
 
     /* shared memory file descriptor */
     int shm_fd;
@@ -32,12 +40,21 @@ void* shm_read(const int SIZE, const char* name) {
     /* pointer to shared memory object */
     void* ptr;
 
+    sem_wait(SEM_READ);
     /* open the shared memory object */
     shm_fd = shm_open(name, O_RDONLY, 0666);
     // printf("This is shm_fd with shm_open: %d\n", shm_fd);
 
     /* memory map the shared memory object */
     ptr = mmap(NULL, SIZE, PROT_READ, MAP_SHARED, shm_fd, 0);
+    sem_post(SEM_WRITE);
+    sem_close(SEM_READ);
+    sem_close(SEM_WRITE);
+
+
+
+
+
 
     // printf("Read from shm_read: %s\n", (char*)ptr);
 
