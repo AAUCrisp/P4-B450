@@ -4,11 +4,13 @@
 #include <math.h>
 #include <netinet/in.h>
 #include <pthread.h>
+#include <semaphore.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/ipc.h>  //IPC thing
 #include <sys/mman.h>
+#include <sys/sem.h>
 #include <sys/shm.h>  //SHM thing
 #include <sys/socket.h>
 #include <sys/stat.h>

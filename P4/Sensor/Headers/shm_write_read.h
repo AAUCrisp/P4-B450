@@ -1,6 +1,8 @@
 #ifndef SHM_WRITE_READ_H
 #define SHM_WRITE_READ_H
 
+#include "../Libraries.c"
+
 /* Semaphore Names */
 sem_t SEM_READ_FNAME "/SEM_READ"
 sem_t SEM_WRITE_FNAME "/SEM_WRITE"
