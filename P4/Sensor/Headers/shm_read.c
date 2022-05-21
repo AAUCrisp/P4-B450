@@ -55,14 +55,13 @@ void* shm_read(const int SIZE, const char* name) {
     }
     printf("Do I reach here 4\n");
     /* open the shared memory object */
-    shm_fd = shm_open(name, O_RDONLY , 0666);
+    shm_fd = shm_open(name, O_RDONLY, 0666);
     if (shm_fd == -1) {
         perror("shm_open failed");
         strerror(errno);
     }
     if (shm_fd == 1023) {
-        
-        printf("Success on overwrite!");
+                printf("Success on overwrite!");
     }
     // printf("This is shm_fd with shm_open: %d\n", shm_fd);
     printf("Do I reach here 5\n");
