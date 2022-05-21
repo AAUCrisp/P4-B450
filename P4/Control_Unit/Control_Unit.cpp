@@ -26,6 +26,7 @@
 /* -- Test Data Variable-- */
 int data_int = 1500000;     // Static Test Variable
 int monitor = 0;        // Disable/Enable Start of Signal Monitoring
+int troubleshooting_print = 0;
 
 // string* grid = new string[coordinates]; // Don't forget to delete [] a; when you're done!
 
@@ -39,10 +40,10 @@ int main(int argc, char *argv[]) {
     /* ------------------------------
     -------- Conversion Area --------
     ------------- start ----------- */
-    /*
+    
     string data_str = to_string(data_int);     // For "Firm" data
     int hex = 1;
-    int use_grid = 1;
+    int use_grid = 0;
     string* grid;
 
     if(argc > 1) {      // If the program is run with arguments
@@ -75,18 +76,6 @@ int main(int argc, char *argv[]) {
         cout << "Using RAM Grid!" << endl;
         grid = generate_grid(x_axis, y_axis, hex);
     }
-    
-    // print_grid(grid, coordinates);       // Printing each separate coordinate
-
-    string cpu_command = convert_to_coordinate(data_int, hex);      // Process & Create Coordinate via CPU
-
-    // -- Print out results -- 
-    cout << "\nSensor Data is: " << data_str << endl;               // The "Sensed" Data
-    if(use_grid == 1) {
-        cout << "\nRAM Command is: " << grid[data_int-1] << endl;       // Coordinate from RAM version
-    }
-    cout << "\nCPU Command is: " << cpu_command << endl;            // Coordinate from CPU version
-    */
 
     /* ----------- end --------------
     -------- Conversion Area --------
@@ -120,10 +109,12 @@ int main(int argc, char *argv[]) {
     
     Sockets_Actuator(&sock, Actuator_IP_LTE, Actuator_IP_WiFi, PORT_LTE_ACTUATOR, PORT_WiFi_ACTUATOR, LTE, WiFi);
 
-    printf("Sensor LTE socket from Main(): %d\n", sock.sockLTE_RECEIVER);
-    printf("Sensor WiFi socket from Main(): %d\n", sock.sockWiFi_RECEIVER);
-    printf("Actuator LTE socket from Main(): %d\n", sock.act_LTE);
-    printf("Actuator WiFi socket from Main(): %d\n", sock.act_WiFi);
+    if(troubleshooting_print == 1) {
+        printf("Sensor LTE socket from Main(): %d\n", sock.sockLTE_RECEIVER);
+        printf("Sensor WiFi socket from Main(): %d\n", sock.sockWiFi_RECEIVER);
+        printf("Actuator LTE socket from Main(): %d\n", sock.act_LTE);
+        printf("Actuator WiFi socket from Main(): %d\n", sock.act_WiFi);
+    }
 
     /* Start signal monitoring process */
     pid_t signal_monitor;     // Prepare the process ID for monitoring
@@ -137,7 +128,9 @@ int main(int argc, char *argv[]) {
         if(monitor == 1) {
             execv(path, args);                                  // Tells the new process to "reset" and run a different code instead
         }
-        printf("ERROR: DIDN'T START THE NEW PROCESS!!\n");  // Should never get this far!
+        else {
+            printf("ERROR: DIDN'T START THE MONITORING PROCESS!!\n");  // Should never get this far!
+        }
     } 
 
     /* -- Main loop for command processing and forwarding -- */
@@ -145,12 +138,6 @@ int main(int argc, char *argv[]) {
         pthread_create(&T1, NULL, LTE_command, (void*)&sock);
         WiFi_command(sock);
 
-        printf("\nThis shouldn't print!!!\n");
+        printf("\n!! -- !! -- !! -- !! -- !! -- !! -- !! -- !!\n!! -- !!  THIS SHOULD NEVER PRINT   !! -- !!\n!! -- !! -- !! -- !! -- !! -- !! -- !! -- !!");
     }
-
-    close(sock.sockLTE_TRANSMITTER);
-    close(sock.sockWiFi_TRANSMITTER);
-    close(sock.sockLTE_RECEIVER);
-    close(sock.sockWiFi_RECEIVER);
-    exit(0);
 }
