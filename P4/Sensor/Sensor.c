@@ -178,7 +178,7 @@ int main(int argc, char* argv[]) {
         }
         Time_Ended = clock();
 
-        int Elapsed_Time = (int)(Time_Ended - Time_Started);
+        long Elapsed_Time = (long)(Time_Ended - Time_Started);
 
         // Value chosen to be 1 hour, 1 minute, 1 second, and 1 millisecond
         //Elapsed_Time = 9999999999999;
