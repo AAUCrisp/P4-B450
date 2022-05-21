@@ -65,8 +65,8 @@ int main(int argc, char* argv[]) {
     pthread_t T1, T2;
     char* curr_time;
 
-
     /* Execution time variables */
+#define BILLION 1000000000.0
     int iter = 1000;
     struct timespec start, end;
     long double Execution_Time[iter];
@@ -107,19 +107,19 @@ int main(int argc, char* argv[]) {
     } else {
         // while (1) {
         for (int i = 0; i < iter; i++) {
-            //usleep(1000);
-            //msg = shm_read(32, GSV_KEY);
-            //GSV = atoi(msg);
-            //printf("\nSensor || GSV from shared memory: %s\n", msg);
+            // usleep(1000);
+            // msg = shm_read(32, GSV_KEY);
+            // GSV = atoi(msg);
+            // printf("\nSensor || GSV from shared memory: %s\n", msg);
 
             // printf("\nGSV converted: %d\n", GSV);
             /*if (monitor == 1) {
             }*/
-            //Clock_Start = clock();
+            // Clock_Start = clock();
             clock_gettime(CLOCK_REALTIME, &start);
             sprintf(buffer, "%d", generate(1, 25000000));
             // printf("\nSensor || After Random Int Generation\n");
-            //usleep(2000);
+            // usleep(2000);
 
             /*if (both_tech == 1) {
                 printf("\nSensor || Troubleshooting for Both Technologies\n");
@@ -135,10 +135,10 @@ int main(int argc, char* argv[]) {
                 transmitWiFi(&sock, (char*)buffer);
             }
             clock_gettime(CLOCK_REALTIME, &end);
-            //Clock_End = clock();
-            //Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
-            Execution_Time[i] += (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec);
-            
+            // Clock_End = clock();
+            // Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
+            Execution_Time[i] += (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / BILLION;
+
             printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
             Execution_Sum += Execution_Time[i];
             printf("Execution_Sum = %Lf\n", Execution_Sum);
