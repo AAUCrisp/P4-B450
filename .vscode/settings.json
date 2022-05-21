@@ -17,7 +17,10 @@
     "fcntl.h": "c",
     "sockets.h": "c",
     "iostream": "cpp",
-    "iosfwd": "cpp"
+    "iosfwd": "cpp",
+    "cmath": "c",
+    "chrono": "c",
+    "ratio": "c"
   },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "/usr/bin/g++",
