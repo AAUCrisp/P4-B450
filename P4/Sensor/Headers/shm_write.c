@@ -91,5 +91,5 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     // printf("This is shm_fd: %d\n", shm_fd);
     // printf("This is size of shared memory buffer: %d\n", SIZE);
     // printf("This is shared memory object name: %s\n", name);
-    close(shm_fd);
+    //close(shm_fd);
 }
