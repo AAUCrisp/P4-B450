@@ -27,6 +27,7 @@ int print_out = 1;
 
 /* Define buffers & PORT number */
 #define BUFFER 1024
+#define SHM_BUFFER 1000
 char message[BUFFER];
 char curr_time[128];
 char *curr_timeLTE;
@@ -164,7 +165,7 @@ void *receiveLTE(void *socket) {
             printf("GSV || LTE || Message from LTE received at: %s\n", curr_time);
             printf("GSV || LTE || Message: %s from Control Unit \n\n", message);
         }
-        shm_write(message, 32000, GSV_KEY);
+        shm_write(message, SHM_BUFFER, GSV_KEY);
     }
 }
 
@@ -186,7 +187,7 @@ void *receiveWiFi(void *socket) {
             printf("GSV || WiFi || Message from WiFi received at: %s \n", curr_time);
             printf("GSV || WiFi || Message: %s from Control Unit \n\n", message);
         }
-        shm_write(message, 32000, GSV_KEY);
+        shm_write(message, SHM_BUFFER, GSV_KEY);
     }
 }
 
