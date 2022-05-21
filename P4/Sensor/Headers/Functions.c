@@ -12,8 +12,9 @@ void Argument_Setup(int argc, char* argv[]) {
 
     printf("argv[0]: %s\n", argv[0]);
     printf("argv[1]: %s\n", argv[1]);
+    printf("argument: %s\n", argument);
 
-    int test1 = scanf("%10i", *argument);
+    //int test1 = scanf("%10i", *argument);
 
 
     printf("\n\n First Argument is: %d \n\n", test1);
