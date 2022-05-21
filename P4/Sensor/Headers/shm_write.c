@@ -24,6 +24,10 @@
 
 #define IPC_RESULT_ERROR (-1)
 
+/* Semaphore Names */
+#define SEM_READ_FNAME "../SEM_READ"
+#define SEM_WRITE_FNAME "../SEM_WRITE"
+
 void shm_write(const char* message, const int SIZE, const char* name) {
     /* Semaphore variables */
     // sem_unlink(SEM_READ_FNAME);
