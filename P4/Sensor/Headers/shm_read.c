@@ -55,7 +55,7 @@ void* shm_read(const int SIZE, const char* name) {
     }
     printf("Do I reach here 4\n");
     /* open the shared memory object */
-    shm_fd = shm_open(name, O_RDONLY | O_CREAT, 0666);
+    shm_fd = shm_open(name, O_RDONLY , 0666);
     if (shm_fd == -1) {
         perror("shm_open failed");
     }
@@ -73,6 +73,7 @@ void* shm_read(const int SIZE, const char* name) {
     ptr = mmap(NULL, SIZE, PROT_READ, MAP_SHARED, shm_fd, 0);
     if (ptr == MAP_FAILED) {
         perror("mmap failed");
+        printf(strerror(errno));
     }
     printf("Read from shm_read: %s\n", (char*)ptr);
     // munmap(ptr, SIZE);
