@@ -152,7 +152,7 @@ int main(int argc, char* argv[]) {
             printf("Execution_Sum = %f\n", Execution_Sum);
 
             // sleep(3);
-            usleep(1000000);
+            usleep(10000);
         }
         Execution_Average = Execution_Sum / iter;
         printf("Execution average: %f\n", Execution_Average);
