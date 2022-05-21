@@ -180,9 +180,9 @@ int main(int argc, char* argv[]) {
 
         double Elapsed_Time = (Time_Ended - Time_Started);
 
-        double sec = milliseconds / 1000.0;
-        double min = seconds / 60.0;
-        double hr = minutes / 60.0;
+        double sec = Elapsed_Time / 1000.0;
+        double min = sec / 60.0;
+        double hr = min / 60.0;
 
         Execution_Average = Execution_Sum / iter;
         printf("Execution average: %f ms\n", Execution_Average);
