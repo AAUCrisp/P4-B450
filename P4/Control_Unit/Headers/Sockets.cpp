@@ -165,7 +165,7 @@ void *receiveLTE(void *socket) {
     }
     sscanf(message_LTE, "%d %[^\n]", &sensor_int, msg_time);
     File.open("log.txt", std::ofstream::out | std::ofstream::app);
-    File << "\n\n" << sensor_int << "  ;  " << msg_time << "  ;  " << "LTE  ;  " << curr_time << "  ;  ";
+    File << "\n\n" << sensor_int << ";" << msg_time << ";" << "LTE Sensor;" << curr_time << "\n";
     File.close(); 
     return message_LTE;
 }
@@ -188,7 +188,7 @@ void *receiveWiFi(void *socket) {
         printf("Incoming || WiFi (Sensor) || Message received at: %s \n\n", curr_time);
     }
     File.open("log.txt", std::ofstream::out | std::ofstream::app);
-    File << "\n\n" << sensor_int << "  ;  " << msg_time << "  ;  " << "WiFi  ;  " << curr_time << "  ;  ";
+    File << "\n\n" << sensor_int << ";" << msg_time << ";" << "WiFi Sensor;" << curr_time << "\n";
     File.close();
     return message_WiFi;    
 }
@@ -332,7 +332,7 @@ void* transmit_command_LTE(void *socket, char* message) {
     send_time = Timestamp();
     
     File.open("log.txt", std::ofstream::out | std::ofstream::app);
-    File << ";  LTE  ;" << message << ";  Time" << "  ;  " << send_time << "\n \n";
+    File << "\n LTE Transmitting;" << message << "    ;Time;" << send_time << "\n \n";
     File.close();
 
     if(print_act_out == 1 || message_only == 1) {
@@ -353,7 +353,7 @@ void* transmit_command_WiFi(void *socket, char* message) {
     TX_WiFi = sendto(sock->act_WiFi, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_WiFi, LenWiFi);
     send_time = Timestamp();
     File.open("log.txt", std::ofstream::out | std::ofstream::app);
-    File << "WiFi; " << message << "Time  ;  " << send_time;
+    File << "WiFi Transmitting;" << message << "    ;Tiḿe;" << send_time;
     File.close();
     
     if(print_act_out == 1 || message_only == 1) {
