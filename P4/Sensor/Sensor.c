@@ -70,12 +70,8 @@ int main(int argc, char* argv[]) {
     long double Execution_Time[iter];
     long double Execution_Sum;
     long double Execution_Average;
-    // double Execution_Time = 0.0;
     clock_t Clock_Start;
     clock_t Clock_End;
-
-    time_t Time_Start;
-    time_t Time_Stop;
 
     /* Create sockets */
     Sockets sock;
@@ -117,8 +113,7 @@ int main(int argc, char* argv[]) {
             // printf("\nGSV converted: %d\n", GSV);
             /*if (monitor == 1) {
             }*/
-            //Clock_Start = clock();
-            Time_Start = time(NULL);
+            Clock_Start = clock();
             sprintf(buffer, "%d", generate(1, 25000000));
             // printf("\nSensor || After Random Int Generation\n");
             //usleep(2000);
@@ -136,17 +131,15 @@ int main(int argc, char* argv[]) {
             if (GSV == B || GSV == W) {
                 transmitWiFi(&sock, (char*)buffer);
             }
-            //Clock_End = clock();
-            Time_Stop = time(NULL);
-            //Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
+            Clock_End = clock();
+            Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
             ;
-            Execution_Time[i] += (Time_Stop - Time_Start);
             printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
             Execution_Sum += Execution_Time[i];
             printf("Execution_Sum = %Lf\n", Execution_Sum);
             // printf("Execution time: %f ms \n", Execution_Time);
             // sleep(3);
-            usleep(1000);
+            usleep(10000);
         }
         Execution_Average = Execution_Sum / iter;
         printf("Execution average: %Lf\n", Execution_Average);
