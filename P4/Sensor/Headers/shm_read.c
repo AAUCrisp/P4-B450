@@ -83,7 +83,7 @@ void* shm_read(const int SIZE, const char* name) {
 
     /* remove the shared memory object */
     shm_unlink(name);
-    close(shm_fd);
+    //close(shm_fd);
 
     return ptr;
 }
