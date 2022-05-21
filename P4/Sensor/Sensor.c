@@ -179,9 +179,9 @@ int main(int argc, char* argv[]) {
         Time_Ended = clock();
         double Total_Time_Elapsed = (Time_Ended - Time_Started);
 
-        int seconds = (int)(Total_Time_Elapsed / 1000) % 60;
-        int minutes = (int)((Total_Time_Elapsed / (1000 * 60)) % 60);
-        int hours = (int)((Total_Time_Elapsed / (1000 * 60 * 60)) % 24);
+        double seconds = (double)(Total_Time_Elapsed / 1000) % 60;
+        double minutes = (double)((Total_Time_Elapsed / (1000 * 60)) % 60);
+        double hours = (double)((Total_Time_Elapsed / (1000 * 60 * 60)) % 24);
 
         Execution_Average = Execution_Sum / iter;
         printf("Execution average: %f ms\n", Execution_Average);
