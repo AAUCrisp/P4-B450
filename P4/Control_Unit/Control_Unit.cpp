@@ -24,7 +24,6 @@
 // #include<iostream>
 // using namespace std;
 /* -- Test Data Variable-- */
-int data_int = 1500000;     // Static Test Variable
 int monitor = 0;        // Disable/Enable Start of Signal Monitoring
 int troubleshooting_print = 0;
 
@@ -41,22 +40,52 @@ int main(int argc, char *argv[]) {
     -------- Conversion Area --------
     ------------- start ----------- */
     
-    string data_str = to_string(data_int);     // For "Firm" data
     int hex = 1;
     int use_grid = 0;
     string* grid;
 
     if(argc > 1) {      // If the program is run with arguments
         cout << "\nArgument(s) accepted." << endl;
-        data_str = argv[1];
 
-        if(data_str == "no") {
-            cout << "=====  RAM Grid Disabled =====" << endl;
-            use_grid = 0;
-        }
-        else {
-            cout << "Inserted Sensor-data Number: " << argv[1] << endl;
-            data_int = atoi(argv[1]);
+        cout << "Number of arguments combinations: " << (argc - 1)/2 << endl;
+
+        for (int i = 1; i < argc; i++) {
+            // RAM Grid Argument
+            if((string) argv[i] == "-g" || (string) argv[i] == "-grid") {
+                if ( (string) argv[i+1] == "no" || (string) argv[i+1] == "0" || (string) argv[i+1] == "false") {
+                    cout << "=====  RAM Grid Disabled =====" << endl;
+                    use_grid = 0;
+                }
+                else if ( (string) argv[i+1] == "yes" || (string) argv[i+1] == "1" || (string) argv[i+1] == "true") {
+                    cout << "=====  RAM Grid Enabled =====" << endl;
+                    use_grid = 1;
+                }
+            }
+
+            // Signal Monitoring Process Argument
+            if((string) argv[i] == "-m" || (string) argv[i] == "-monitor" || (string) argv[i] == "-monitoring") {
+                if ( (string) argv[i+1] == "no" || (string) argv[i+1] == "0" || (string) argv[i+1] == "false") {
+                    cout << "=====  Signal Monitoring Process Creation Disabled =====" << endl;
+                    monitor = 0;
+                }
+                else if ( (string) argv[i+1] == "yes" || (string) argv[i+1] == "1" || (string) argv[i+1] == "true") {
+                    cout << "=====  Signal Monitoring Process Creation Enabled =====" << endl;
+                    monitor = 1;
+                }
+            }
+
+            // Verbose Argument
+            if((string) argv[i] == "-v" || (string) argv[i] == "-verbose") {
+                if ( (string) argv[i+1] == "no" || (string) argv[i+1] == "0" || (string) argv[i+1] == "false") {
+                    cout << "=====  Verbose Disabled =====" << endl;
+                    troubleshooting_print = 0;
+                }
+                else if ( (string) argv[i+1] == "yes" || (string) argv[i+1] == "1" || (string) argv[i+1] == "true") {
+                    cout << "=====  Verbose Enabled =====" << endl;
+                    troubleshooting_print = 1;
+                }
+            }
+
         }
         
         if(argc == 3) {     // For enabling or disabling Hex-char output.
@@ -127,8 +156,6 @@ int main(int argc, char *argv[]) {
         char* args[] = { (char*)"./SignalMonitoring&", (char*) NULL};       // Command for the function to execute, always ended on NULL argument
         if(monitor == 1) {
             execv(path, args);                                  // Tells the new process to "reset" and run a different code instead
-        }
-        else {
             printf("ERROR: DIDN'T START THE MONITORING PROCESS!!\n");  // Should never get this far!
         }
     } 

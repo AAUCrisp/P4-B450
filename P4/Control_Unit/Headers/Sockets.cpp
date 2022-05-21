@@ -310,7 +310,7 @@ void *transmit_GSV_WiFi(void *socket) {
 
 
 
-// Function to transmit GSV via LTE
+// Function to transmit command via LTE
 void* transmit_command_LTE(void *socket, char* message) {
     Sockets *sock = (Sockets *)socket;
     int LenLTE = sizeof(sock->Client_act_LTE);
@@ -327,7 +327,7 @@ void* transmit_command_LTE(void *socket, char* message) {
     return 0;
 }
 
-// Function to transmit GSV via WiFi
+// Function to transmit command via WiFi
 void* transmit_command_WiFi(void *socket, char* message) {
     Sockets *sock = (Sockets *)socket;
     int LenWiFi = sizeof(sock->Client_act_WiFi);
@@ -342,7 +342,7 @@ void* transmit_command_WiFi(void *socket, char* message) {
     return 0;
 }
 
-// Function to transmit GSV via WiFi
+// Function to check GSV and transfer via chosen technologies
 void* transmit_command(void *socket, char* message) {
     Sockets *sock = (Sockets *)socket;
     if(print_act_out == 1) {
