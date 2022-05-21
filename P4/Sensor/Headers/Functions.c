@@ -16,7 +16,7 @@ void Argument_Setup(int argc, char* argv[]) {
     printf("argv[1]: %s\n", argv[1]);
     printf("argument: %s\n", argument);
     if (strcmp(argument, test) == 0) {
-        printf("Actually reached inside if statement");
+        printf("Actually reached inside if statement\n");
     }
 
     // int test1 = scanf("%10i", *argument);
