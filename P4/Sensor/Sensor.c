@@ -106,7 +106,7 @@ int main(int argc, char* argv[]) {
     } else {
         // while (1) {
         for (int i = 0; i < iter; i++) {
-            usleep(1000);
+            //usleep(1000);
             //msg = shm_read(32, GSV_KEY);
             //GSV = atoi(msg);
             //printf("\nSensor || GSV from shared memory: %s\n", msg);
@@ -117,7 +117,7 @@ int main(int argc, char* argv[]) {
             Clock_Start = clock();
             sprintf(buffer, "%d", generate(1, 25000000));
             // printf("\nSensor || After Random Int Generation\n");
-            usleep(2000);
+            //usleep(2000);
 
             /*if (both_tech == 1) {
                 printf("\nSensor || Troubleshooting for Both Technologies\n");
@@ -137,6 +137,7 @@ int main(int argc, char* argv[]) {
             ;
             printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
             Execution_Sum += Execution_Time[i];
+            printf("Execution_Sum = %Lf\n", Execution_Sum);
             // printf("Execution time: %f ms \n", Execution_Time);
             // sleep(3);
         }
