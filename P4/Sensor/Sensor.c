@@ -155,18 +155,18 @@ int main(int argc, char* argv[]) {
                     Execution_Sum += Execution_Time[i];
                 } else {
                     fail_count++;
-                    printf("Fail counter: %d\n", fail_count);
-                    printf("Execution_Sum exceeded 10000000\n");
+                    //printf("Fail counter: %d\n", fail_count);
+                    //printf("Execution_Sum exceeded 10000000\n");
                 }
             } else {
                 fail_count++;
-                printf("Fail counter: %d\n", fail_count);
-                printf("isnan value: %d\n", isnan(Execution_Time[i]));
-                printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
+                //printf("Fail counter: %d\n", fail_count);
+                //printf("isnan value: %d\n", isnan(Execution_Time[i]));
+                //printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
             }
 
-            printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
-            printf("Execution_Sum = %f\n", Execution_Sum);
+            //printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
+            //printf("Execution_Sum = %f\n", Execution_Sum);
 
             // sleep(3);
             // usleep(10000);

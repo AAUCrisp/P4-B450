@@ -22,7 +22,7 @@
 
 
 /* Troubleshooting Options */
-int print_GSV = 1;
+int print_GSV = 0;
 int print_out = 1;
 
 /* Define buffers & PORT number */
@@ -52,8 +52,8 @@ void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *
     /* Create socket receiver */
     sock->sockLTE_RECEIVER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sock->sockWiFi_RECEIVER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    printf("Sockets_Receiver LTE (INSIDE): %d\n", sock->sockLTE_RECEIVER);
-    printf("Sockets_Receiver WiFi (INSIDE): %d\n\n", sock->sockWiFi_RECEIVER);
+    //printf("Sockets_Receiver LTE (INSIDE): %d\n", sock->sockLTE_RECEIVER);
+    //printf("Sockets_Receiver WiFi (INSIDE): %d\n\n", sock->sockWiFi_RECEIVER);
 
     /* Setting up socket options & specifying interface for receiver */
     setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
@@ -102,8 +102,8 @@ void Sockets_Transmitter(Sockets *sock, const char *IP_LTE, const char *IP_WiFi,
     /* Create socket receiver */
     sock->sockLTE_TRANSMITTER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sock->sockWiFi_TRANSMITTER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    printf("Transmit Socket LTE (INSIDE): %d\n", sock->sockLTE_TRANSMITTER);
-    printf("Transmit Socket WiFi (INSIDE): %d\n\n", sock->sockWiFi_TRANSMITTER);
+    //printf("Transmit Socket LTE (INSIDE): %d\n", sock->sockLTE_TRANSMITTER);
+    //printf("Transmit Socket WiFi (INSIDE): %d\n\n", sock->sockWiFi_TRANSMITTER);
 
     /* Setting up socket options & specifying interface for receiver */
     setsockopt(sock->sockLTE_TRANSMITTER, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
