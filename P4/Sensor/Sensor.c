@@ -65,15 +65,10 @@ int main(int argc, char* argv[]) {
     pthread_t T1, T2;
     char* curr_time;
 
-    struct timespec {
-        time_t tv_sec; // seconds
-        long tv_nsec; // nanoseconds
-    };
-
-    timespec start, end;
 
     /* Execution time variables */
     int iter = 1000;
+    struct timespec start, end;
     long double Execution_Time[iter];
     long double Execution_Sum;
     long double Execution_Average;
@@ -142,7 +137,7 @@ int main(int argc, char* argv[]) {
             clock_gettime(CLOCK_REALTIME, &end);
             //Clock_End = clock();
             //Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
-            Execution_Time[i] += end.tv_nsec - start.tv_nsec;
+            Execution_Time[i] += (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec);
             
             printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
             Execution_Sum += Execution_Time[i];
