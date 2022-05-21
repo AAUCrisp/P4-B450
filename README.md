@@ -10,6 +10,7 @@ Use `-help` for full info on arguments.
 If running Signal Monitoring on it's own it takes:  
 `-b` to force both LTE & WiFi  
 `-v`to print out shit... troubleshooting... get it?  
+`-s <int>` to set how often it monitors  
   
 WiFi: 192.168.1.136  
 LTE: 10.20.0.16  
