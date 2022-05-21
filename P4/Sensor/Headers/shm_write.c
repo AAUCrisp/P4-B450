@@ -67,6 +67,9 @@ void shm_write(const char* message, const int SIZE, const char* name) {
 
     /* memory map the shared memory object */
     ptr = mmap(NULL, SIZE, PROT_WRITE, MAP_SHARED, shm_fd, 0);
+    if (ptr == MAP_FAILED) {
+        perror("mmap failed");
+    }
     printf("Do I reach here 6\n");
     /* write to the shared memory object */
     sprintf(ptr, "%s", message);
