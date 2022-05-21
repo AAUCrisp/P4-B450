@@ -1,3 +1,4 @@
+
 #include <arpa/inet.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -20,7 +21,6 @@
 #include "SocketFunctions.h"
 #include "shm_write_read.h"
 
-
 /* Troubleshooting Options */
 int print_GSV = 1;
 int print_out = 1;
@@ -41,25 +41,24 @@ int TX_LTE, TX_WiFi;
 /* Define threads */
 pthread_t T1, T2;
 
-
 /* Function to create receiver sockets */
 void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
     /* Time struct for socket timeout */
     struct timeval tv2;
     tv2.tv_sec = 0;
     tv2.tv_usec = 500000;
-    
+
     /* Create socket receiver */
     sock->sockLTE_RECEIVER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sock->sockWiFi_RECEIVER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    //printf("Sockets_Receiver LTE (INSIDE): %d\n", sock->sockLTE_RECEIVER);
-    //printf("Sockets_Receiver WiFi (INSIDE): %d\n\n", sock->sockWiFi_RECEIVER);
+    // printf("Sockets_Receiver LTE (INSIDE): %d\n", sock->sockLTE_RECEIVER);
+    // printf("Sockets_Receiver WiFi (INSIDE): %d\n\n", sock->sockWiFi_RECEIVER);
 
     /* Setting up socket options & specifying interface for receiver */
     setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
     setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
-    //setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
-    //setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
+    // setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
+    // setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
 
     /* Error checking */
     if (sock->sockLTE_RECEIVER == -1) {
@@ -102,8 +101,8 @@ void Sockets_Transmitter(Sockets *sock, const char *IP_LTE, const char *IP_WiFi,
     /* Create socket receiver */
     sock->sockLTE_TRANSMITTER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sock->sockWiFi_TRANSMITTER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    //printf("Transmit Socket LTE (INSIDE): %d\n", sock->sockLTE_TRANSMITTER);
-    //printf("Transmit Socket WiFi (INSIDE): %d\n\n", sock->sockWiFi_TRANSMITTER);
+    // printf("Transmit Socket LTE (INSIDE): %d\n", sock->sockLTE_TRANSMITTER);
+    // printf("Transmit Socket WiFi (INSIDE): %d\n\n", sock->sockWiFi_TRANSMITTER);
 
     /* Setting up socket options & specifying interface for receiver */
     setsockopt(sock->sockLTE_TRANSMITTER, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
@@ -165,26 +164,7 @@ void *receiveLTE(void *socket) {
             printf("GSV || LTE || Message from LTE received at: %s\n", curr_time);
             printf("GSV || LTE || Message: %s from Control Unit \n\n", message);
         }
-        printf("Do I reach here 1");
-        printf("Do I reach here 1");
-        printf("Do I reach here 1");
-        printf("Do I reach here 1");
-        printf("Do I reach here 1");
-        printf("Do I reach here 1");
-        printf("Do I reach here 1");
-        printf("Do I reach here 1");
-        printf("Do I reach here 1");
-        printf("Do I reach here 1");
-        printf("Do I reach here 1");
-        printf("Do I reach here 1");
-        shm_write(message, 32, GSV_KEY);
-        printf("Do I reach here 2");
-        printf("Do I reach here 2");
-        printf("Do I reach here 2");
-        printf("Do I reach here 2");
-        printf("Do I reach here 2");
-        printf("Do I reach here 2");
-        printf("Do I reach here 2");
+        shm_write(message, 32000, GSV_KEY);
     }
 }
 
@@ -194,7 +174,7 @@ void *receiveWiFi(void *socket) {
         Sockets *sock = (Sockets *)socket;
         const char *GSV_KEY = "GSV_KEY";
         int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
-        
+
         if (print_GSV == 1) {
             printf("GSV || WiFi socket: %d\n", sock->sockWiFi_RECEIVER);
         }
@@ -206,14 +186,13 @@ void *receiveWiFi(void *socket) {
             printf("GSV || WiFi || Message from WiFi received at: %s \n", curr_time);
             printf("GSV || WiFi || Message: %s from Control Unit \n\n", message);
         }
-        shm_write(message, 32, GSV_KEY);
+        shm_write(message, 32000, GSV_KEY);
     }
 }
 
-void *transmitLTE(void *socket, char* message) {
+void *transmitLTE(void *socket, char *message) {
     Sockets *sock = (Sockets *)socket;
     char sendLTE[BUFFER];
-    
 
     if (print_out == 1) {
         printf("Sensor || LTE socket: %d\n", sock->sockLTE_TRANSMITTER);
@@ -229,14 +208,13 @@ void *transmitLTE(void *socket, char* message) {
         printf("Sensor || LTE || sendLTE: %s\n", sendLTE);
     }
 
-
     sendto(sock->sockLTE_TRANSMITTER, sendLTE, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, sizeof(sock->ClientLTE_TRANSMITTER));
     if (print_out == 1) {
         printf("Sensor || LTE || Message transmitted at %s\n\n", curr_timeLTE);
     }
 }
 
-void *transmitWiFi(void *socket, char* message) {
+void *transmitWiFi(void *socket, char *message) {
     Sockets *sock = (Sockets *)socket;
     char sendWiFi[BUFFER];
 

@@ -32,16 +32,16 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     // sem_unlink(SEM_READ_FNAME);
     // sem_unlink(SEM_WRITE_FNAME);
 
-    sem_t* SEM_WRITE = sem_init(SEM_WRITE_FNAME, O_CREAT, 0660, 0);
+    int sem_write = sem_init(&SEM_WRITE, 1, 1);
     printf("WHY NO WORK? 1\n");
-    if (SEM_WRITE == SEM_FAILED) {
+    if (sem_write == -1) {
         perror("shm_write = sem_open/SEM_WRITE");
         exit(EXIT_FAILURE);
     }
     printf("Do I reach here 2\n");
-    sem_t* SEM_READ = sem_init(SEM_READ_FNAME, O_CREAT, 0660, 0);
+    int sem_read = sem_init(&SEM_READ, 1, 1);
     printf("WHY NO WORK? 2\n");
-    if (SEM_READ == SEM_FAILED) {
+    if (sem_read == -1) {
         perror("shm_write = sem_open/SEM_READ");
         exit(EXIT_FAILURE);
     }
@@ -60,21 +60,34 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     ftruncate(shm_fd, SIZE);
 
     printf("Do I reach here 4\n");
-    // sem_wait(SEM_WRITE);
+    if (sem_wait(&SEM_WRITE) == -1) {
+        perror("SEM_WRITE sem_wait failed");
+    }
     printf("Do I reach here 5\n");
+
+    printf("SHM fd in WRITE: %d\n", shm_fd);
+    printf("SHM name in WRITE: %s\n", (char*)name);
+
 
     /* memory map the shared memory object */
     ptr = mmap(NULL, SIZE, PROT_WRITE, MAP_SHARED, shm_fd, 0);
+    if (ptr == MAP_FAILED) {
+        perror("mmap failed");
+    }
     printf("Do I reach here 6\n");
     /* write to the shared memory object */
     sprintf(ptr, "%s", message);
     printf("Wrote from shm_write: %s\n", (char*)ptr);
 
-    // sem_post(SEM_READ);
+    munmap(ptr, SIZE);
+
+    if (sem_post(&SEM_READ)) {
+        perror("SEM_WRITE sem_post failed");
+    }
     printf("Do I reach here 7\n");
-    // sem_close(SEM_READ);
+    // sem_close(&SEM_READ);
     printf("Do I reach here 8\n");
-    // sem_close(SEM_WRITE);
+    // sem_close(&SEM_WRITE);
     printf("Do I reach here 9\n");
 
     // printf("This is ptr: %p\n", ptr);
@@ -82,4 +95,5 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     // printf("This is shm_fd: %d\n", shm_fd);
     // printf("This is size of shared memory buffer: %d\n", SIZE);
     // printf("This is shared memory object name: %s\n", name);
+    //close(shm_fd);
 }
