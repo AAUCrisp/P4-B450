@@ -35,7 +35,7 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     int sem_write = sem_init(&SEM_WRITE, 1, 1);
     printf("WHY NO WORK? 1\n");
     
-    if (sem_write == SEM_FAILED) {
+    if (sem_write == -1) {
         perror("shm_write = sem_open/SEM_WRITE");
         exit(EXIT_FAILURE);
     }
@@ -43,7 +43,7 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     int sem_read = sem_init(&SEM_READ, 1, 1);
     printf("WHY NO WORK? 2\n");
     
-    if (sem_read == SEM_FAILED) {
+    if (sem_read == -1) {
         perror("shm_write = sem_open/SEM_READ");
         exit(EXIT_FAILURE);
     }
