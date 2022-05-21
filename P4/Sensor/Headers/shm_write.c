@@ -66,7 +66,7 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     printf("Wrote from shm_write: %s\n", (char*)ptr);
 
     sem_post(SEM_READ);
-    sem_close(SEM_READ);
+    //sem_close(SEM_READ);
     sem_close(SEM_WRITE);
 
     // printf("This is ptr: %p\n", ptr);
