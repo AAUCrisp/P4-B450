@@ -65,7 +65,7 @@ void* shm_read(const int SIZE, const char* name) {
         perror("mmap failed");
     }
     printf("Read from shm_read: %s\n", (char*)ptr);
-    munmap(ptr, SIZE);
+    //munmap(ptr, SIZE);
 
     if (sem_post(&SEM_WRITE)) {
         perror("SEM_WRITE sem_post failed");
