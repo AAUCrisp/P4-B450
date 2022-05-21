@@ -135,7 +135,8 @@ int main(int argc, char* argv[]) {
             }
             Clock_End = clock();
             Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
-            if (Execution_Time[i] != -nan || Execution_Time[i] != "-nan") {
+            double __cdecl -nan;
+            if (Execution_Time[i] != -nan) {
                 Execution_Sum += Execution_Time[i];
             }
 
