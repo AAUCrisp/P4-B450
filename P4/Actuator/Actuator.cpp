@@ -53,7 +53,6 @@ int main() {
     double Execution_Time = 0.0;
     clock_t Clock_Start;
     clock_t Clock_End;
-    double Time_Difference = (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
 
     /* Shared memory object variables */
     const char* COMMANDS_KEY = "COMMANDS_KEY";
@@ -84,7 +83,7 @@ int main() {
             Clock_End = clock();
             Execution_Time += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
             ;
-            printf("Execution time: %f ms \n", Execution_Time);
+            printf("Execution time: %f ms \n\n", Execution_Time);
 
             sleep(2);
         }

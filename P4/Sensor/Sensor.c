@@ -64,7 +64,9 @@ int main(int argc, char* argv[]) {
     /* Misc */
     pthread_t T1, T2;
     char* curr_time;
-    pthread_mutex_t mutex_lock;
+    double Execution_Time = 0.0;
+    clock_t Clock_Start;
+    clock_t Clock_End;
 
     /* Create sockets */
     Sockets sock;
@@ -106,6 +108,7 @@ int main(int argc, char* argv[]) {
             //printf("\nGSV converted: %d\n", GSV);
             /*if (monitor == 1) {
             }*/
+            Clock_Start = clock();
             sprintf(buffer, "%d", generate(1, 25000000));
             //printf("\nSensor || After Random Int Generation\n");
             usleep(1000);
@@ -123,6 +126,10 @@ int main(int argc, char* argv[]) {
             if (GSV == B || GSV == W) {
                 transmitWiFi(&sock, (char*)buffer);
             }
+            Clock_End = clock();
+            Execution_Time += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
+            ;
+            printf("Execution time: %f ms \n\n", Execution_Time);
             sleep(3);
         }
     }
