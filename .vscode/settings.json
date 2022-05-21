@@ -21,7 +21,9 @@
     "cmath": "c",
     "chrono": "c",
     "ratio": "c",
-    "types.h": "c"
+    "types.h": "c",
+    "socket": "c",
+    "fstream": "c"
   },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "/usr/bin/g++",

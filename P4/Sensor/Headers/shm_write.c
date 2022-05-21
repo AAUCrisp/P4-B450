@@ -28,25 +28,23 @@
 extern int errno;
 
 void shm_write(const char* message, const int SIZE, const char* name) {
-    printf("Do I reach here 1\n");
+
     /* Semaphore variables */
     // sem_unlink(SEM_READ_FNAME);
     // sem_unlink(SEM_WRITE_FNAME);
 
     int sem_write = sem_init(&SEM_WRITE, 1, 1);
-    printf("WHY NO WORK? 1\n");
     if (sem_write == -1) {
         perror("shm_write = sem_open/SEM_WRITE");
         exit(EXIT_FAILURE);
     }
-    printf("Do I reach here 2\n");
+   
     int sem_read = sem_init(&SEM_READ, 1, 1);
-    printf("WHY NO WORK? 2\n");
     if (sem_read == -1) {
         perror("shm_write = sem_open/SEM_READ");
         exit(EXIT_FAILURE);
     }
-    printf("Do I reach here 3\n");
+
 
     /* shared memory file descriptor */
     int shm_fd;
@@ -67,37 +65,32 @@ void shm_write(const char* message, const int SIZE, const char* name) {
 
     /* configure the size of the shared memory object */
     ftruncate(shm_fd, SIZE);
-
-    printf("Do I reach here 4\n");
     if (sem_wait(&SEM_WRITE) == -1) {
         perror("SEM_WRITE sem_wait failed");
     }
-    printf("Do I reach here 5\n");
-
-    printf("SHM fd in WRITE: %d\n", shm_fd);
-    printf("SHM name in WRITE: %s\n", (char*)name);
 
     /* memory map the shared memory object */
     ptr = mmap(NULL, SIZE, PROT_WRITE, MAP_SHARED, shm_fd, 0);
     if (ptr == MAP_FAILED) {
         perror("mmap failed");
     }
-    printf("Do I reach here 6\n");
+
     /* write to the shared memory object */
     sprintf(ptr, "%s", message);
     printf("Wrote from shm_write: %s\n", (char*)ptr);
 
     //munmap(ptr, SIZE);
+    printf("shm_fd value: %d\n", shm_fd);
     close(shm_fd);
 
     if (sem_post(&SEM_READ)) {
         perror("SEM_WRITE sem_post failed");
     }
-    printf("Do I reach here 7\n");
+
     // sem_close(&SEM_READ);
-    printf("Do I reach here 8\n");
+
     // sem_close(&SEM_WRITE);
-    printf("Do I reach here 9\n");
+
 
     // printf("This is ptr: %p\n", ptr);
     // printf("This is ptr char*: %s\n", (char*)ptr);

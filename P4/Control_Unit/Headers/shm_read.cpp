@@ -31,7 +31,7 @@ char* shm_read(const int SIZE, const char* name) {
 
     /* memory map the shared memory object */
     ptr = mmap(0 /*or NULL*/, SIZE, PROT_READ, MAP_SHARED, shm_fd, 0);
-    printf("SHM fd in READ: %d\n", shm_fd);
+    printf("shm_fd value: %d\n", shm_fd);
     close(shm_fd);
 
     // printf("This is ptr memory map: %p\n", ptr);

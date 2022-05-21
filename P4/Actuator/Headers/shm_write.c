@@ -42,7 +42,8 @@ void shm_write(const char* message, const int SIZE, const char* name) {
 
     /* write to the shared memory object */
     sprintf((char*)ptr, "%s", message);
-
+    printf("shm_fd value: %d\n", shm_fd);
+    close(shm_fd);
     // printf("Wrote from shm_write: %s\n", (char*)ptr);
 
     // printf("This is ptr: %p\n", ptr);
