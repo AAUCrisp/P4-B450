@@ -68,6 +68,7 @@ int main(int argc, char* argv[]) {
 
     /* Execution time variables */
     int iter = 1000;
+    int fail_count = 0;
     double Execution_Time[iter];
     double Execution_Temp;
     double Execution_Sum;
@@ -140,10 +141,14 @@ int main(int argc, char* argv[]) {
 
             // isnan(Execution_Time[i]);
             int shit = isnan(Execution_Time[i]);
-            if (shit != 0) {
+            if (shit == 0) {
                 printf("isnan value: %d\n", isnan(Execution_Time[i]));
                 Execution_Time[i] += Execution_Temp;
                 Execution_Sum += Execution_Time[i];
+            }else {
+                printf("Fail counter: %d\n", fail_count);
+                printf("isnan value: %d\n", isnan(Execution_Time[i]));
+                fail_count++;
             }
 
             printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
