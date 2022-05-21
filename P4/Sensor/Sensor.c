@@ -1,6 +1,7 @@
 #include <arpa/inet.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <math.h>
 #include <netinet/in.h>
 #include <pthread.h>
 #include <stdio.h>
@@ -16,7 +17,6 @@
 #include <sys/wait.h>
 #include <time.h>
 #include <unistd.h>
-#include <math.h>
 
 #include "Headers/SocketFunctions.h"
 #include "Headers/shm_write_read.h"
@@ -69,6 +69,7 @@ int main(int argc, char* argv[]) {
     /* Execution time variables */
     int iter = 1000;
     double Execution_Time[iter];
+    double Execution_Temp;
     double Execution_Sum;
     double Execution_Average;
     clock_t Clock_Start;
@@ -134,10 +135,14 @@ int main(int argc, char* argv[]) {
                 transmitWiFi(&sock, (char*)buffer);
             }
             Clock_End = clock();
-            Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
+            // Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
+            Execution_Temp += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
 
-            if (Execution_Time[i] != isnan(Execution_Time[i])) {
+            // isnan(Execution_Time[i]);
+            int shit = isnan(Execution_Time[i]);
+            if (shit != 0) {
                 printf("isnan value: %d\n", isnan(Execution_Time[i]));
+                Execution_Time[i] += Execution_Temp;
                 Execution_Sum += Execution_Time[i];
             }
 
