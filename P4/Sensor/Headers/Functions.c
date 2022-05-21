@@ -7,7 +7,7 @@ void Argument_Setup(int argc, char* argv[]) {
     int axis_change = 0;
     char firstCharacter;
 
-    char* argument = malloc(10);
+    char* argument;
     argument = argv[1];
 
     char* test = "cancer";
