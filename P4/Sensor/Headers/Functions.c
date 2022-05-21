@@ -6,19 +6,21 @@ void help() {
 void Argument_Setup(int argc, char* argv[]) {
     int axis_change = 0;
     char firstCharacter;
-    char argument;
-    strcpy(argument, argv[1]);
+    
+    char* argument = malloc(100);
+    argument = argv[1];
 
-    char test = "i";
-    // test = {'o','\0'};
+    int test1 = scanf("i", argument);
 
-    printf("\n\n First Argument is: %d \n\n", argument);
+
+    printf("\n\n First Argument is: %d \n\n", test1);
 
     printf("\n\nInside Argument Function \n\n");
+    /*
     if (argument == test) {
         printf("\nInside If statement\n\n");
         help();
-    }
+    }*/
 
     // NÅR DU FATTER AT MÅLE PÅ CHARS, KAN DU "INDKOMMENTERE" LOOPET NEDENFOR
     // HUSK AT RETTE TIL... DEN MÅLER PÅ STRINGS FRA C++
