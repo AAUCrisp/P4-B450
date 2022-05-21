@@ -27,25 +27,25 @@
 // const char* SEM_WRITE_FNAME = "../";
 
 void shm_write(const char* message, const int SIZE, const char* name) {
-    printf("Do I reach here 1");
+    printf("Do I reach here 1\n");
     /* Semaphore variables */
     // sem_unlink(SEM_READ_FNAME);
     // sem_unlink(SEM_WRITE_FNAME);
 
     //sem_t* SEM_WRITE = sem_open(SEM_WRITE_FNAME, O_CREAT, 0660, 0);
-    printf("WHY NO WORK? 1");
+    printf("WHY NO WORK? 1\n");
     /*if (SEM_WRITE == SEM_FAILED) {
         perror("shm_write = sem_open/SEM_WRITE");
         exit(EXIT_FAILURE);
     }*/
-    printf("Do I reach here 2");
+    printf("Do I reach here 2\n");
     //sem_t* SEM_READ = sem_open(SEM_READ_FNAME, O_CREAT, 0660, 0);
-    printf("WHY NO WORK? 2");
+    printf("WHY NO WORK? 2\n");
     /*if (SEM_READ == SEM_FAILED) {
         perror("shm_write = sem_open/SEM_READ");
         exit(EXIT_FAILURE);
     }*/
-    printf("Do I reach here 3");
+    printf("Do I reach here 3\n");
 
     /* shared memory file descriptor */
     int shm_fd;
@@ -59,23 +59,23 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     /* configure the size of the shared memory object */
     ftruncate(shm_fd, SIZE);
 
-    printf("Do I reach here 4");
+    printf("Do I reach here 4\n");
     // sem_wait(SEM_WRITE);
-    printf("Do I reach here 5");
+    printf("Do I reach here 5\n");
 
     /* memory map the shared memory object */
     ptr = mmap(NULL, SIZE, PROT_WRITE, MAP_SHARED, shm_fd, 0);
-    printf("Do I reach here 6");
+    printf("Do I reach here 6\n");
     /* write to the shared memory object */
     sprintf(ptr, "%s", message);
     printf("Wrote from shm_write: %s\n", (char*)ptr);
 
     // sem_post(SEM_READ);
-    printf("Do I reach here 7");
+    printf("Do I reach here 7\n");
     // sem_close(SEM_READ);
-    printf("Do I reach here 8");
+    printf("Do I reach here 8\n");
     // sem_close(SEM_WRITE);
-    printf("Do I reach here 9");
+    printf("Do I reach here 9\n");
 
     // printf("This is ptr: %p\n", ptr);
     // printf("This is ptr char*: %s\n", (char*)ptr);

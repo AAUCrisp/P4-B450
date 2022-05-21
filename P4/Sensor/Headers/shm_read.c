@@ -27,23 +27,23 @@
 // const char* SEM_WRITE_FNAME;
 
 void* shm_read(const int SIZE, const char* name) {
-    printf("Do I reach here 1");
+    printf("Do I reach here 1\n");
     /* Semaphore variables */
     //sem_t* SEM_WRITE = sem_open(SEM_WRITE_FNAME, 1);
-    printf("WHY NO WORK? 1");
+    printf("WHY NO WORK? 1\n");
     /*if (SEM_WRITE == SEM_FAILED) {
         perror("shm_read = sem_open/SEM_WRITE");
         exit(EXIT_FAILURE);
     }*/
-    printf("Do I reach here 2");
+    printf("Do I reach here 2\n");
 
     //sem_t* SEM_READ = sem_open(SEM_READ_FNAME, 1);
-    printf("WHY NO WORK? 2");
+    printf("WHY NO WORK? 2\n");
     /*if (SEM_READ == SEM_FAILED) {
         perror("shm_read = sem_open/SEM_READ");
         exit(EXIT_FAILURE);
     }*/
-    printf("Do I reach here 3");
+    printf("Do I reach here 3\n");
 
     /* shared memory file descriptor */
     int shm_fd;
@@ -52,22 +52,22 @@ void* shm_read(const int SIZE, const char* name) {
     void* ptr;
 
     //sem_wait(SEM_READ);
-    printf("Do I reach here 4");
+    printf("Do I reach here 4\n");
     /* open the shared memory object */
     shm_fd = shm_open(name, O_RDONLY, 0666);
     // printf("This is shm_fd with shm_open: %d\n", shm_fd);
-    printf("Do I reach here 5");
+    printf("Do I reach here 5\n");
 
     /* memory map the shared memory object */
     ptr = mmap(NULL, SIZE, PROT_READ, MAP_SHARED, shm_fd, 0);
     printf("Read from shm_read: %s\n", (char*)ptr);
 
     //sem_post(SEM_WRITE);
-    printf("Do I reach here 6");
+    printf("Do I reach here 6\n");
     //sem_close(SEM_READ);
-    printf("Do I reach here 7");
+    printf("Do I reach here 7\n");
     //sem_close(SEM_WRITE);
-    printf("Do I reach here 8");
+    printf("Do I reach here 8\n");
 
     // printf("This is ptr memory map: %p\n", ptr);
 
