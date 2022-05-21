@@ -88,6 +88,8 @@ int main(int argc, char* argv[]) {
     double Execution_Temp;
     double Execution_Sum;
     double Execution_Average;
+    clock_t Time_Started;
+    clock_t Time_Ended;
     clock_t Clock_Start;
     clock_t Clock_End;
 
