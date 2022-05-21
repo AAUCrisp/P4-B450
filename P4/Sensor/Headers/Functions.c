@@ -6,7 +6,7 @@ void help() {
 void Argument_Setup(int argc, char* argv[]) {
     int axis_change = 0;
     char firstCharacter;
-    
+
     char* argument = malloc(10);
     argument = argv[1];
 
@@ -15,13 +15,11 @@ void Argument_Setup(int argc, char* argv[]) {
     printf("argv[0]: %s\n", argv[0]);
     printf("argv[1]: %s\n", argv[1]);
     printf("argument: %s\n", argument);
-    if (argument == test)
-    {
+    if (strcmp(argument, test) == 0) {
         printf("Actually reached inside if statement");
     }
-    
 
-    //int test1 = scanf("%10i", *argument);
+    // int test1 = scanf("%10i", *argument);
 
     printf("\n\nInside Argument Function \n\n");
     /*
@@ -38,7 +36,7 @@ void Argument_Setup(int argc, char* argv[]) {
         string current = argv[i];
         firstCharacter = current.at(0);
         // cout << "First Character in Argument is: " << firstCharacter << endl;
-        
+
         if(firstCharacter == '-') {
             // Signal Monitoring Process Argument
             if((string) argv[i] == "-m" || (string) argv[i] == "-monitor" || (string) argv[i] == "-monitoring") {
@@ -57,10 +55,10 @@ void Argument_Setup(int argc, char* argv[]) {
                     cout << "===== Hex Chars Disabled =====" << endl;
 
                 }
-                
+
                 }
 
-            
+
             // Force Both Technologies Argument
             if((string) argv[i] == "-b" || (string) argv[i] == "-both") {
                 if ( (string) argv[i+1] == "no" || (string) argv[i+1] == "0" || (string) argv[i+1] == "false") {
@@ -73,12 +71,11 @@ void Argument_Setup(int argc, char* argv[]) {
                     force_both = 1;
                     // force_both = 1;
                 }
-                else { cout << "===== Invalid argument for \"Forced Both Technologies\"===== " << endl; 
+                else { cout << "===== Invalid argument for \"Forced Both Technologies\"===== " << endl;
                 }
             }
         }
-        
+
     }
     */
 }
-
