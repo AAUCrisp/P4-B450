@@ -1,6 +1,7 @@
 #include <arpa/inet.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <math.h>
 #include <netinet/in.h>
 #include <pthread.h>
 #include <semaphore.h>
@@ -9,6 +10,7 @@
 #include <string.h>
 #include <sys/ipc.h>  //IPC thing
 #include <sys/mman.h>
+#include <sys/sem.h>
 #include <sys/shm.h>  //SHM thing
 #include <sys/socket.h>
 #include <sys/stat.h>
@@ -20,9 +22,11 @@
 
 #include "shm_write_read.h"
 
+#define IPC_RESULT_ERROR (-1)
+
 void* shm_read(const int SIZE, const char* name) {
     /* Semaphore variables */
-    sem_t *SEM_WRITE = sem_open(SEM_WRITE_FNAME, 0);
+    sem_t* SEM_WRITE = sem_open(SEM_WRITE_FNAME, 0);
     if (SEM_WRITE == SEM_FAILED) {
         perror("sem_open/SEM_WRITE");
         exit(EXIT_FAILURE);
@@ -50,11 +54,6 @@ void* shm_read(const int SIZE, const char* name) {
     sem_post(SEM_WRITE);
     sem_close(SEM_READ);
     sem_close(SEM_WRITE);
-
-
-
-
-
 
     // printf("Read from shm_read: %s\n", (char*)ptr);
 

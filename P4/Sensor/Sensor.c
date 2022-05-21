@@ -9,6 +9,7 @@
 #include <string.h>
 #include <sys/ipc.h>  //IPC thing
 #include <sys/mman.h>
+#include <sys/sem.h>
 #include <sys/shm.h>  //SHM thing
 #include <sys/socket.h>
 #include <sys/stat.h>
@@ -30,32 +31,30 @@ int main(int argc, char* argv[]) {
 
     printf("\n==================\nSensor Program Started\n==================\n\n");
 
-    //if (argc <= 1) {}
+    // if (argc <= 1) {}
 
-    
-        if (argc > 1) {  // If the program is run with arguments
-            printf("\nArgument(s) accepted.\n");
+    if (argc > 1) {  // If the program is run with arguments
+        printf("\nArgument(s) accepted.\n");
 
-            Argument_Setup(argc, argv);
+        Argument_Setup(argc, argv);
 
-            // int aug1 = atoi(argv[1]);
-            // int aug2 = atoi(argv[2]);
+        // int aug1 = atoi(argv[1]);
+        // int aug2 = atoi(argv[2]);
 
-            // printf("\nBefore Monitor Argument\n");
-            // if (aug1 == 0) {  // For disabling GSV Update
-            //     printf("\n=====  Monitoring Disabled =====\n");
-            //     monitor = 0;
-            // }
+        // printf("\nBefore Monitor Argument\n");
+        // if (aug1 == 0) {  // For disabling GSV Update
+        //     printf("\n=====  Monitoring Disabled =====\n");
+        //     monitor = 0;
+        // }
 
-            // printf("\nBefore Both Argument\n");
-            // if (aug2 == 1) {  // For enabling using both LTE and WiFi.
-            //     printf("\n=====  Forced Both LTE & WiFi =====\n");
-            //     both_tech = 1;
-            // }
-        } else {
-            printf("\nNo arguments inserted, running staticly.\n");
-        }
-        
+        // printf("\nBefore Both Argument\n");
+        // if (aug2 == 1) {  // For enabling using both LTE and WiFi.
+        //     printf("\n=====  Forced Both LTE & WiFi =====\n");
+        //     both_tech = 1;
+        // }
+    } else {
+        printf("\nNo arguments inserted, running staticly.\n");
+    }
 
     /* Initialize PORT & INTERFACE*/
     uint PORT_LTE_TRANSMITTER = 9000;

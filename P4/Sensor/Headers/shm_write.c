@@ -1,6 +1,7 @@
 #include <arpa/inet.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <math.h>
 #include <netinet/in.h>
 #include <pthread.h>
 #include <semaphore.h>
@@ -9,6 +10,7 @@
 #include <string.h>
 #include <sys/ipc.h>  //IPC thing
 #include <sys/mman.h>
+#include <sys/sem.h>
 #include <sys/shm.h>  //SHM thing
 #include <sys/socket.h>
 #include <sys/stat.h>
@@ -19,6 +21,8 @@
 #include <unistd.h>
 
 #include "shm_write_read.h"
+
+#define IPC_RESULT_ERROR (-1)
 
 void shm_write(const char* message, const int SIZE, const char* name) {
     /* Semaphore variables */
