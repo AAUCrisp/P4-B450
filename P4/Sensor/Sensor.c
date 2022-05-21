@@ -184,7 +184,7 @@ int main(int argc, char* argv[]) {
                 // printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
             }
 
-            // printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
+            printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
             // printf("Execution_Sum = %f\n", Execution_Sum);
 
             // sleep(3);
