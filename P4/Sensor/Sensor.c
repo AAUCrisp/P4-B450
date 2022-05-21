@@ -68,9 +68,9 @@ int main(int argc, char* argv[]) {
     /* Execution time variables */
     int iter = 1000;
     //struct timespec start, end;
-    long double Execution_Time[iter];
-    long double Execution_Sum;
-    long double Execution_Average;
+    double Execution_Time[iter];
+    double Execution_Sum;
+    double Execution_Average;
     clock_t Clock_Start;
     clock_t Clock_End;
 
