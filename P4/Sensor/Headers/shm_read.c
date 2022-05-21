@@ -56,7 +56,7 @@ void* shm_read(const int SIZE, const char* name) {
     }
     printf("Do I reach here 4\n");
     /* open the shared memory object */
-    shm_fd = shm_open(name, O_RDONLY, 0600);
+    shm_fd = shm_open(name, O_RDONLY, 0644);
     if (shm_fd == -1) {
         perror("shm_open failed");
         fprintf(stderr, "errno shm_open failed: %s\n", strerror(errno));
