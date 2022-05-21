@@ -66,7 +66,7 @@ int main(int argc, char* argv[]) {
     char* curr_time;
 
     /* Execution time variables */
-    int iter = 10000;
+    int iter = 10;
     long double Execution_Time[iter];
     long double Execution_Sum;
     long double Execution_Average;
@@ -140,6 +140,7 @@ int main(int argc, char* argv[]) {
             printf("Execution_Sum = %Lf\n", Execution_Sum);
             // printf("Execution time: %f ms \n", Execution_Time);
             // sleep(3);
+            sleep(1);
         }
         Execution_Average = Execution_Sum / iter;
         printf("Execution average: %Lf\n", Execution_Average);
