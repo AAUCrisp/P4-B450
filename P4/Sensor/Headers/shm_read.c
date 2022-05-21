@@ -59,7 +59,7 @@ void* shm_read(const int SIZE, const char* name) {
     shm_fd = shm_open(name, O_RDONLY, 0666);
     if (shm_fd == -1) {
         perror("shm_open failed");
-        fprintf(stderr, "shm_open failed %s\n", strerror(errno));
+        fprintf(stderr, "errno shm_open failed %s\n", strerror(errno));
     }
     if (shm_fd == 1023) {
                 printf("Success on overwrite!");
