@@ -156,7 +156,8 @@ int main(int argc, char* argv[]) {
                 fail_count++;
                 printf("Fail counter: %d\n", fail_count);
                 printf("isnan value: %d\n", isnan(Execution_Time[i]));
-                sleep(50);
+                printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
+                sleep(10);
             }
 
             printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
