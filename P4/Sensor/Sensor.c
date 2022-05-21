@@ -178,6 +178,7 @@ int main(int argc, char* argv[]) {
         }
         Time_Ended = clock();
         int Total_Time_Elapsed = (int)(Time_Ended - Time_Started);
+        printf("Total_Time_Elapsed: %d\n", Total_Time_Elapsed);
 
         int seconds = (int)(Total_Time_Elapsed / 1000) % 60;
         int minutes = (int)((Total_Time_Elapsed / (1000 * 60)) % 60);
