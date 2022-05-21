@@ -23,8 +23,8 @@
 #include "shm_write_read.h"
 
 /* Semaphore Names */
-//const char* SEM_READ_FNAME;
-//const char* SEM_WRITE_FNAME;
+// const char* SEM_READ_FNAME;
+// const char* SEM_WRITE_FNAME;
 
 void* shm_read(const int SIZE, const char* name) {
     /* Semaphore variables */
@@ -54,11 +54,10 @@ void* shm_read(const int SIZE, const char* name) {
     /* memory map the shared memory object */
     ptr = mmap(NULL, SIZE, PROT_READ, MAP_SHARED, shm_fd, 0);
     printf("Read from shm_read: %s\n", (char*)ptr);
-    
+
     sem_post(SEM_WRITE);
     sem_close(SEM_READ);
     sem_close(SEM_WRITE);
-
 
     // printf("This is ptr memory map: %p\n", ptr);
 

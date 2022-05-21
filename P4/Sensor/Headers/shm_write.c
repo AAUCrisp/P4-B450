@@ -23,13 +23,13 @@
 #include "shm_write_read.h"
 
 /* Semaphore Names */
-//const char* SEM_READ_FNAME = "../";
-//const char* SEM_WRITE_FNAME = "../";
+// const char* SEM_READ_FNAME = "../";
+// const char* SEM_WRITE_FNAME = "../";
 
 void shm_write(const char* message, const int SIZE, const char* name) {
     /* Semaphore variables */
-    //sem_unlink(SEM_READ_FNAME);
-    //sem_unlink(SEM_WRITE_FNAME);
+    // sem_unlink(SEM_READ_FNAME);
+    // sem_unlink(SEM_WRITE_FNAME);
 
     sem_t* SEM_WRITE = sem_open(SEM_WRITE_FNAME, O_CREAT, 0660, 0);
     if (SEM_WRITE == SEM_FAILED) {
@@ -64,11 +64,10 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     /* write to the shared memory object */
     sprintf(ptr, "%s", message);
     printf("Wrote from shm_write: %s\n", (char*)ptr);
-    
+
     sem_post(SEM_READ);
     sem_close(SEM_READ);
     sem_close(SEM_WRITE);
-
 
     // printf("This is ptr: %p\n", ptr);
     // printf("This is ptr char*: %s\n", (char*)ptr);

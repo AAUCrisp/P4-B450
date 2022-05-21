@@ -21,7 +21,7 @@
 
 #ifndef LIBRARIES
 #define LIBRARIES
-#include "Libraries.c"      // File with all our includes
+#include "Libraries.c"  // File with all our includes
 #endif
 #ifndef FUNCTIONS
 #define FUNCTIONS
@@ -85,6 +85,7 @@ int main(int argc, char* argv[]) {
     /* Execution time variables */
     int fail_count = 0;
     double Execution_Time[iter];
+    int shit = isnan(Execution_Time[i]);
     double Execution_Temp;
     double Execution_Sum;
     double Execution_Average;
@@ -128,7 +129,7 @@ int main(int argc, char* argv[]) {
         for (int i = 0; i < iter; i++) {
             // usleep(1000);
             msg = shm_read(32, GSV_KEY);
-            // GSV = atoi(msg);
+            GSV = atoi(msg);
             //  printf("\nSensor || GSV from shared memory: %s\n", msg);
 
             // printf("\nGSV converted: %d\n", GSV);
@@ -165,7 +166,7 @@ int main(int argc, char* argv[]) {
             fclose(file);*/
 
             // isnan(Execution_Time[i]);
-            int shit = isnan(Execution_Time[i]);
+            
             if (shit == 0) {
                 // printf("isnan value: %d\n", isnan(Execution_Time[i]));
                 Execution_Time[i] += Execution_Temp;
