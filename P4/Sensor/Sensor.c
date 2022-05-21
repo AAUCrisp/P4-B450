@@ -180,7 +180,7 @@ int main(int argc, char* argv[]) {
 
         Execution_Average = Execution_Sum / iter;
         printf("Execution average: %f ms\n", Execution_Average);
-        printf("Total_Time_Elapsed: %ld\n", (Time_Ended - Time_Started));
+        printf("Total_Time_Elapsed: %ld s\n", (Time_Ended - Time_Started)/1000);
         printf("Total failed counts: %d\n", fail_count);
 
         //}
