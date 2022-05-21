@@ -145,7 +145,7 @@ int main(int argc, char* argv[]) {
             }
             fprintf(file, "%f", Execution_Temp);
             fclose(file);
-            
+
             // isnan(Execution_Time[i]);
             int shit = isnan(Execution_Time[i]);
             if (shit == 0) {
@@ -156,7 +156,7 @@ int main(int argc, char* argv[]) {
                 fail_count++;
                 printf("Fail counter: %d\n", fail_count);
                 printf("isnan value: %d\n", isnan(Execution_Time[i]));
-                sleep(5);
+                sleep(50);
             }
 
             printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);

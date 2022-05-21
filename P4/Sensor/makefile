@@ -34,4 +34,5 @@ test: Libraries.c $(Dependencies)
 clean:
 	rm -f Sensor SensorMonitoring
 	rm *.o
+	rm *.txt
 	@echo "clean completed!"
