@@ -82,7 +82,8 @@ int main() {
             Clock_Start = clock();
             processData(COMMANDS);
             Clock_End = clock();
-            Execution_Time += Time_Difference;
+            Execution_Time += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
+            ;
             printf("Execution time: %f ms \n", Execution_Time);
 
             sleep(2);
