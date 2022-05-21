@@ -110,14 +110,14 @@ void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *
 
     /* Error checking */
     if (sock->sockLTE_RECEIVER == -1) {
-        perror("Failed to create Sensor LTE Socket");
+        perror("Sensor Connection || Failed to create LTE Socket");
         exit(0);
     }
     if (sock->sockWiFi_RECEIVER == -1) {
-        perror("Failed to create Sensor WiFi Socket");
+        perror("Sensor Connection || Failed to create WiFi Socket");
         exit(0);
     }
-    printf("Sensor Sockets sucessfully created\n");
+    printf("Sensor Connection || LTE & WiFi Receiving Sockets sucessfully created\n");
 
     /* Configure settings to communicate with remote UDP client for receiver */
     sock->ServerLTE_RECEIVER.sin_family = AF_INET;
@@ -134,14 +134,14 @@ void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *
 
     /* Error checking */
     if (bindLTE == -1) {
-        perror("Failed to bind Sensor LTE socket");
+        perror("Sensor Connection || Failed to bind LTE socket");
         exit(0);
     }
     if (bindWiFi == -1) {
-        perror("Failed to bind Sensor WiFi socket");
+        perror("Sensor Connection || Failed to bind WiFi socket");
         exit(0);
     }
-    printf("Bind was succesful!\n");
+    printf("Sensor Connection || LTE & WiFi Receiving Sockets sucessfully bound\n");
 }
 
 
@@ -150,14 +150,14 @@ void *receiveLTE(void *socket) {
     Sockets *sock = (Sockets *)socket;
     int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
     if(print_sen_in == 1) {
-        printf("\n\nSensor LTE || Receive Socket: %d\n", sock->sockLTE_RECEIVER);
+        printf("\n\nIncoming || LTE (Sensor) || Receive Socket: %d\n", sock->sockLTE_RECEIVER);
     }
     RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message_LTE, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, (unsigned int*)&LenLTE);
     Timestamp();
 
     if(print_sen_in == 1 || message_only == 1) {
-        printf("\nSensor LTE || Message is: %s\n", message_LTE);
-        printf("Sensor LTE || Message from LTE received at: %s\n\n", curr_time);
+        printf("\n\nIncoming || LTE (Sensor) || Message is: %s\n", message_LTE);
+        printf("Incoming || LTE (Sensor) || Message received at: %s\n\n", curr_time);
     }
     return message_LTE;
 }
@@ -170,14 +170,14 @@ void *receiveWiFi(void *socket) {
     int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
 
     if(print_sen_in == 1) {
-        printf("\n\nSensor WiFi || Receive Socket: %d\n", sock->sockWiFi_RECEIVER);
+        printf("\n\nIncoming || WiFi (Sensor) || Receive Socket: %d\n", sock->sockWiFi_RECEIVER);
     }
     RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message_WiFi, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, (unsigned int*)&LenWiFi);
     Timestamp();
 
     if(print_sen_in == 1 || message_only == 1) {
-        printf("\nSensor WiFi || Message is: %s\n", message_WiFi);
-        printf("Sensor WiFi || Message from WiFi received at: %s \n\n", curr_time);
+        printf("\n\nIncoming || WiFi (Sensor) || Message is: %s\n", message_WiFi);
+        printf("Incoming || WiFi (Sensor) || Message received at: %s \n\n", curr_time);
     }
 
     return message_WiFi;    
@@ -208,14 +208,14 @@ void Sockets_GSV(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, uint PO
 
     /* Error checking */
     if (sock->sockLTE_TRANSMITTER == -1) {
-        perror("GSV || Failed to create GSV LTE transmitter socket");
+        perror("GSV Connection || Failed to create GSV LTE transmitter socket");
         exit(0);
     }
     if (sock->sockWiFi_TRANSMITTER == -1) {
-        perror("GSV || Failed to create GSV WiFi transmitter socket");
+        perror("GSV Connection || Failed to create GSV WiFi transmitter socket");
         exit(0);
     }
-    printf("GSV || Sockets  sucessfully created\n");
+    printf("GSV Connection || LTE & WiFi Transmit Sockets sucessfully created\n");
 
     /* Configure settings to communicate with remote UDP client for receiver */
     sock->ClientLTE_TRANSMITTER.sin_family = AF_INET;
@@ -248,14 +248,14 @@ void Sockets_Actuator(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, ui
 
     /* Error checking */
     if (sock->act_LTE == -1) {
-        perror("Command || Failed to create LTE transmitter socket");
+        perror("Actuator Connection || Failed to create LTE transmitter socket");
         exit(0);
     }
     if (sock->act_WiFi == -1) {
-        perror("Command || Failed to create WiFi transmitter socket");
+        perror("Actuator Connection || Failed to create WiFi transmitter socket");
         exit(0);
     }
-    printf("Command || Actuator Sockets sucessfully created\n");
+    printf("Actuator Connection || LTE & WiFi Transmit Sockets sucessfully created\n");
 
     /* Configure settings to communicate with remote UDP client for receiver */
     sock->Client_act_LTE.sin_family = AF_INET;
@@ -275,13 +275,13 @@ void *transmit_GSV_LTE(void *socket) {
     const char *GSV_KEY = "GSV_KEY";
     GSV = shm_read(32, GSV_KEY);
     if(print_GSV == 1) {
-        printf("\n\nGSV LTE || Transmit Socket: %d\n", sock->sockLTE_TRANSMITTER);
+        printf("\n\nGSV || LTE || Transmit Socket: %d\n", sock->sockLTE_TRANSMITTER);
     }
     TX_LTE = sendto(sock->sockLTE_TRANSMITTER, GSV, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, LenLTE);
     if(print_GSV == 1) {
         // printf("LTE-Thread id = %ld\n", pthread_self());
-        printf("GSV LTE || Shared memory object LTE: %s\n", GSV);
-        printf("GSV LTE || Message from LTE transmitted at: %s\n\n", curr_time);
+        printf("GSV || LTE || Technology Variable is: %s\n", GSV);
+        printf("GSV || LTE || Message transmitted at: %s\n\n", curr_time);
     }
     pthread_exit(NULL);
 }
@@ -294,13 +294,13 @@ void *transmit_GSV_WiFi(void *socket) {
     const char *GSV_KEY = "GSV_KEY";
     GSV = shm_read(32, GSV_KEY);
     if(print_GSV == 1) {
-        printf("\n\nGSV WiFi || Transmit Socket: %d\n", sock->sockWiFi_TRANSMITTER);
+        printf("\n\nGSV || WiFi || Transmit Socket: %d\n", sock->sockWiFi_TRANSMITTER);
     }
     TX_WiFi = sendto(sock->sockWiFi_TRANSMITTER, GSV, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, LenWiFi);
     if(print_GSV == 1) {
         // printf("WiFi-Thread id = %ld\n", pthread_self());
-        printf("GSV WiFi || Shared memory object WiFi: %s\n", GSV);
-        printf("GSV WiFi || Message from WiFi transmitted at: %s\n\n", curr_time);
+        printf("GSV || WiFi || Technology Variable is: %s\n", GSV);
+        printf("GSV || WiFi || Message transmitted at: %s\n\n", curr_time);
     }
     pthread_exit(NULL);
 }
@@ -315,14 +315,14 @@ void* transmit_command_LTE(void *socket, char* message) {
     Sockets *sock = (Sockets *)socket;
     int LenLTE = sizeof(sock->Client_act_LTE);
     if(print_act_out == 1) {
-        printf("\n\nActuator LTE || Actuator Socket: %d\n", sock->act_LTE);
+        printf("\n\nSending || LTE (Actuator) || Actuator Socket: %d\n", sock->act_LTE);
     }
 
     TX_LTE = sendto(sock->act_LTE, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_LTE, LenLTE);
     if(print_act_out == 1 || message_only == 1) {
 
-        printf("Actuator LTE || Sending Command to Actuator: %s\n", message);
-        printf("Actuator LTE || Message transmitted at: %s\n\n", curr_time);
+        printf("Sending || LTE (Actuator) || Sending Command to Actuator: %s\n", message);
+        printf("Sending || LTE (Actuator) || Message transmitted at: %s\n\n", curr_time);
     }
     return 0;
 }
@@ -332,12 +332,12 @@ void* transmit_command_WiFi(void *socket, char* message) {
     Sockets *sock = (Sockets *)socket;
     int LenWiFi = sizeof(sock->Client_act_WiFi);
     if(print_act_out == 1) {
-        printf("\n\nActuator WiFi || Actuator Socket: %d\n", sock->act_WiFi);
+        printf("\n\nSending || WiFi (Actuator) || Actuator Socket: %d\n", sock->act_WiFi);
     }
     TX_WiFi = sendto(sock->act_WiFi, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_WiFi, LenWiFi);
     if(print_act_out == 1 || message_only == 1) {
-        printf("Actuator WiFi || Sending Command to Actuator: %s\n", message);
-        printf("Actuator WiFi || Message transmitted at: %s\n\n", curr_time);
+        printf("Sending || WiFi (Actuator) || Sending Command to Actuator: %s\n", message);
+        printf("Sending || WiFi (Actuator) || Message transmitted at: %s\n\n", curr_time);
     }
     return 0;
 }
@@ -347,9 +347,9 @@ void* transmit_command(void *socket, char* message) {
     Sockets *sock = (Sockets *)socket;
     if(print_act_out == 1) {
         cout << "======================\n==== SEND COMMAND ====\n======= entry ========\n" << endl;
-        cout << "Message passed to the general transmit commmand: \n" << message << endl;
-        printf("\n\nActuator WiFi || Sockets in Transmit Command: %d\n", sock->act_WiFi);
-        printf("\n\nActuator LTE || Sockets in Transmit Command: %d\n", sock->act_LTE);
+        printf("\n\nSending || WiFi (Actuator) || Sockets in Transmit Command: %d\n", sock->act_WiFi);
+        printf("\nSending || LTE (Actuator) || Sockets in Transmit Command: %d\n", sock->act_LTE);
+        cout << "\nSending || Mutual Transmit Function || Message passed to function: \n" << message << endl;
     }
     int LenWiFi = sizeof(sock->Client_act_WiFi);
     const char *GSV;
@@ -357,7 +357,7 @@ void* transmit_command(void *socket, char* message) {
     GSV = shm_read(32, GSV_KEY);
     int gsv = atoi(GSV);
     if(print_act_out == 1) {
-        cout << "Global Signal Variable is: " << GSV << endl;
+        cout << "Sending || Global Signal Variable is: " << GSV << endl;
     }
     if(force_both == 0) {
         gsv = 0;
@@ -365,13 +365,13 @@ void* transmit_command(void *socket, char* message) {
 
     if((gsv == 0) || (gsv == 1)) {
         if(print_act_out == 1) {
-            cout << "Sending command via WiFi" << endl;
+            cout << "Sending || Transfer command via WiFi" << endl;
         }
         transmit_command_WiFi(sock, message);
     }
     if((gsv == 0) || (gsv == 2)) {
         if(print_act_out == 1) {
-            cout << "Sending command via LTE" << endl;
+            cout << "Sending || Transfer command via LTE" << endl;
         }
         transmit_command_LTE(sock, message);
     }

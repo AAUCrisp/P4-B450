@@ -83,7 +83,6 @@ string* generate_grid(int x_axis, int y_axis, int hex = 1) {
     }
     printf("\rAll Rows Done.\n\n");
 
-
     return grid;
 }
 
