@@ -31,13 +31,13 @@ void shm_write(const char* message, const int SIZE, const char* name) {
 
     sem_t* SEM_WRITE = sem_open(SEM_WRITE_FNAME, IPC_CREAT, 0660, 0);
     if (SEM_WRITE == SEM_FAILED) {
-        perror("sem_open/SEM_WRITE");
+        perror("shm_write = sem_open/SEM_WRITE");
         exit(EXIT_FAILURE);
     }
 
     sem_t* SEM_READ = sem_open(SEM_READ_FNAME, IPC_CREAT, 0660, 0);
     if (SEM_READ == SEM_FAILED) {
-        perror("sem_open/SEM_READ");
+        perror("shm_write = sem_open/SEM_READ");
         exit(EXIT_FAILURE);
     }
 
