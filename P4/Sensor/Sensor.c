@@ -68,8 +68,8 @@ int main(int argc, char* argv[]) {
     /* Execution time variables */
     int iter = 10000;
     double Execution_Time[iter];
-    double Execution_Sum;
-    double Execution_Average;
+    long double Execution_Sum;
+    long double Execution_Average;
     // double Execution_Time = 0.0;
     clock_t Clock_Start;
     clock_t Clock_End;
@@ -110,7 +110,7 @@ int main(int argc, char* argv[]) {
             //msg = shm_read(32, GSV_KEY);
             //GSV = atoi(msg);
             //printf("\nSensor || GSV from shared memory: %s\n", msg);
-            
+
             // printf("\nGSV converted: %d\n", GSV);
             /*if (monitor == 1) {
             }*/
