@@ -134,7 +134,7 @@ int main(int argc, char* argv[]) {
             Clock_End = clock();
             Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
             ;
-            printf("Execution_Time[%d] = %f\n", i,);
+            printf("Execution_Time[%d]\n", i);
             Execution_Sum += Execution_Time[i];
             // printf("Execution time: %f ms \n", Execution_Time);
             // sleep(3);
