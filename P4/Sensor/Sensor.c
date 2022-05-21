@@ -69,7 +69,9 @@ int main(int argc, char* argv[]) {
     int iter = 1000;
     // struct timespec start, end;
     double Execution_Time[iter];
+    double Execution_Time2[iter];
     double Execution_Sum;
+    double Execution_Sum2;
     double Execution_Average;
     clock_t Clock_Start;
     clock_t Clock_End;
@@ -135,9 +137,15 @@ int main(int argc, char* argv[]) {
             }
             Clock_End = clock();
             Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
-            
-            if (Execution_Time[i] <= 0.000200 && Execution_Time[i] >= 0.000300){
+
+            /*if (Execution_Time[i] <= 0.000200 && Execution_Time[i] >= 0.000300){
                 Execution_Sum += Execution_Time[i];
+            }*/
+            if (i == 900) {
+
+                Execution_Sum += Execution_Time2[i];
+                printf("Execution_Time[%d]: %f\n", i, Execution_Time2[i]);
+                printf("Execution_Sum = %f\n", Execution_Sum2);
             }
 
             printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
