@@ -66,9 +66,9 @@ void* shm_read(const int SIZE, const char* name) {
 
     sem_post(&SEM_WRITE);
     printf("Do I reach here 6\n");
-    sem_close(&SEM_READ);
+    //sem_close(&SEM_READ);
     printf("Do I reach here 7\n");
-    sem_close(&SEM_WRITE);
+    //sem_close(&SEM_WRITE);
     printf("Do I reach here 8\n");
 
     // printf("This is ptr memory map: %p\n", ptr);
