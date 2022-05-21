@@ -181,13 +181,13 @@ int main(int argc, char* argv[]) {
 
         int h, m, s;
 
-        h = (Total_Time_Elapsed / 3600);
-        m = (Total_Time_Elapsed - (3600 * h)) / 60;
-        s = (Total_Time_Elapsed - (3600 * h) - (m * 60));
+        h = (Total_Time_Elapsed / 360000);
+        m = (Total_Time_Elapsed / 60000);
+        s = (Total_Time_Elapsed /1000);
 
         Execution_Average = Execution_Sum / iter;
         printf("Execution average: %f ms\n", Execution_Average);
-        printf("Execution time: %d:%d:%d\n", h, m, s);
+        printf("Total_Time_Elapsed: %d:%d:%d\n", h, m, s);
         printf("Total failed counts: %d\n", fail_count);
 
         //}
