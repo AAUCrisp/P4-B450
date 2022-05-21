@@ -87,7 +87,8 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     sprintf(ptr, "%s", message);
     printf("Wrote from shm_write: %s\n", (char*)ptr);
 
-    munmap(ptr, SIZE);
+    //munmap(ptr, SIZE);
+    close(shm_fd);
 
     if (sem_post(&SEM_READ)) {
         perror("SEM_WRITE sem_post failed");
