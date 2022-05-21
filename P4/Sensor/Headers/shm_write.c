@@ -32,18 +32,19 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     // sem_unlink(SEM_WRITE_FNAME);
 
     sem_t* SEM_WRITE = sem_open(SEM_WRITE_FNAME, O_CREAT, 0660, 0);
-    printf("shm_write SEM_WRITE: %s\n", (char*)SEM_WRITE);
+    printf("shm_write SEM_WRITE: %s\n", SEM_WRITE);
     if (SEM_WRITE == SEM_FAILED) {
         perror("shm_write = sem_open/SEM_WRITE");
         exit(EXIT_FAILURE);
     }
 
     sem_t* SEM_READ = sem_open(SEM_READ_FNAME, O_CREAT, 0660, 0);
-    printf("shm_write SEM_READ: %s\n", (char*)SEM_READ);
+    printf("shm_write SEM_READ: %s\n", SEM_READ);
     if (SEM_READ == SEM_FAILED) {
         perror("shm_write = sem_open/SEM_READ");
         exit(EXIT_FAILURE);
     }
+    printf("Do I reach here 1");
 
     /* shared memory file descriptor */
     int shm_fd;
@@ -54,11 +55,12 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     /* create the shared memory object */
     // shm_fd = shm_open(name, O_CREAT | O_RDWR, 0666); ORIGINAL
     shm_fd = shm_open(name, O_CREAT | O_RDWR, 0644);
-
     /* configure the size of the shared memory object */
     ftruncate(shm_fd, SIZE);
 
+    printf("Do I reach here 2");
     sem_wait(SEM_WRITE);
+    printf("Do I reach here 1");
 
     /* memory map the shared memory object */
     ptr = mmap(NULL, SIZE, PROT_WRITE, MAP_SHARED, shm_fd, 0);
