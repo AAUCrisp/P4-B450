@@ -1,33 +1,42 @@
-#include <arpa/inet.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <math.h>
-#include <netinet/in.h>
-#include <pthread.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/ipc.h>  //IPC thing
-#include <sys/mman.h>
-#include <sys/sem.h>
-#include <sys/shm.h>  //SHM thing
-#include <sys/socket.h>
-#include <sys/stat.h>
-#include <sys/time.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <time.h>
-#include <unistd.h>
+// #include <arpa/inet.h>
+// #include <errno.h>
+// #include <fcntl.h>
+// #include <math.h>
+// #include <netinet/in.h>
+// #include <pthread.h>
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <string.h>
+// #include <sys/ipc.h>  //IPC thing
+// #include <sys/mman.h>
+// #include <sys/sem.h>
+// #include <sys/shm.h>  //SHM thing
+// #include <sys/socket.h>
+// #include <sys/stat.h>
+// #include <sys/time.h>
+// #include <sys/types.h>
+// #include <sys/wait.h>
+// #include <time.h>
+// #include <unistd.h>
 
+#ifndef LIBRARIES
+#define LIBRARIES
+#include "Libraries.c"      // File with all our includes
+#endif
+#ifndef FUNCTIONS
+#define FUNCTIONS
 #include "Headers/Functions.c"
+#endif
+// #include "Headers/Functions.c"
 #include "Headers/SocketFunctions.h"
 #include "Headers/shm_write_read.h"
 
 #define BUFFER 64
 
 int main(int argc, char* argv[]) {
-    int both_tech = 0;
-    int monitor = 1;
+    // int both_tech = 0;
+    // int monitor = 1;
+    // int iter = 10000;
 
     printf("\n==================\nSensor Program Started\n==================\n\n");
 
@@ -74,7 +83,6 @@ int main(int argc, char* argv[]) {
     char* curr_time;
 
     /* Execution time variables */
-    int iter = 10000;
     int fail_count = 0;
     double Execution_Time[iter];
     double Execution_Temp;
