@@ -65,6 +65,7 @@ void* shm_read(const int SIZE, const char* name) {
         perror("mmap failed");
     }
     printf("Read from shm_read: %s\n", (char*)ptr);
+    munmap(ptr, SIZE);
 
     if (sem_post(&SEM_WRITE)) {
         perror("SEM_WRITE sem_post failed");
@@ -81,7 +82,8 @@ void* shm_read(const int SIZE, const char* name) {
     // printf("Read from shm_read.c: %s\n", (char*)ptr);
 
     /* remove the shared memory object */
-    // shm_unlink(name);
+    close(shm_fd);
+    shm_unlink(name);
 
     return ptr;
 }
