@@ -74,6 +74,9 @@ int main(int argc, char* argv[]) {
     clock_t Clock_Start;
     clock_t Clock_End;
 
+    time_t Time_Start;
+    time_t Time_Stop;
+
     /* Create sockets */
     Sockets sock;
     Sockets_Transmitter(&sock, IP_LTE, IP_WiFi, PORT_LTE_TRANSMITTER, PORT_WiFi_TRANSMITTER, LTE, WiFi);
@@ -114,7 +117,8 @@ int main(int argc, char* argv[]) {
             // printf("\nGSV converted: %d\n", GSV);
             /*if (monitor == 1) {
             }*/
-            Clock_Start = clock();
+            //Clock_Start = clock();
+            Time_Start = time(NULL);
             sprintf(buffer, "%d", generate(1, 25000000));
             // printf("\nSensor || After Random Int Generation\n");
             //usleep(2000);
@@ -132,9 +136,11 @@ int main(int argc, char* argv[]) {
             if (GSV == B || GSV == W) {
                 transmitWiFi(&sock, (char*)buffer);
             }
-            Clock_End = clock();
-            Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
+            //Clock_End = clock();
+            Time_Stop = time(NULL);
+            //Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
             ;
+            Execution_Time[i] += (Time_Stop - Time_Start);
             printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
             Execution_Sum += Execution_Time[i];
             printf("Execution_Sum = %Lf\n", Execution_Sum);
