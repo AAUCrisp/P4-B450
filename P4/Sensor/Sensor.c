@@ -141,7 +141,7 @@ int main(int argc, char* argv[]) {
             // sleep(3);
         }
         Execution_Average = Execution_Sum / iter;
-        printf("Execution average: %f\n", Execution_Average);
+        printf("Execution average: %Lf\n", Execution_Average);
         //}
     }
 }
