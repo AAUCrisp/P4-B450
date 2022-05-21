@@ -137,6 +137,7 @@ int main(int argc, char* argv[]) {
             Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
 
             if (Execution_Time[i] != isnan(Execution_Time[i])) {
+                printf("isnan value: %f\n", isnan(Execution_Time[i]));
                 Execution_Sum += Execution_Time[i];
             }
 
