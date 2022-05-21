@@ -23,8 +23,8 @@
 #include "shm_write_read.h"
 
 /* Semaphore Names */
-const char* SEM_READ_FNAME;
-const char* SEM_WRITE_FNAME;
+//const char* SEM_READ_FNAME;
+//const char* SEM_WRITE_FNAME;
 
 void* shm_read(const int SIZE, const char* name) {
     /* Semaphore variables */
