@@ -168,6 +168,6 @@ int main(int argc, char *argv[]) {
             counter++;
         }
 
-        sleep(3);
+        //sleep(3);
     }
 }
