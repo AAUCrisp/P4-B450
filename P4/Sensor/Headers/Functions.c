@@ -7,10 +7,10 @@ void Argument_Setup(int argc, char* argv[]) {
     int axis_change = 0;
     char firstCharacter;
     
-    char* argument = malloc(100);
+    char* argument = malloc(10);
     argument = argv[1];
 
-    int test1 = scanf("%10s", argument);
+    int test1 = scanf("%1s", argument);
 
 
     printf("\n\n First Argument is: %d \n\n", test1);
