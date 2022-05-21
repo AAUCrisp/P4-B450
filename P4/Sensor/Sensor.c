@@ -116,7 +116,7 @@ int main(int argc, char* argv[]) {
             Clock_Start = clock();
             sprintf(buffer, "%d", generate(1, 25000000));
             // printf("\nSensor || After Random Int Generation\n");
-            usleep(1000);
+            usleep(2000);
 
             /*if (both_tech == 1) {
                 printf("\nSensor || Troubleshooting for Both Technologies\n");
@@ -134,6 +134,7 @@ int main(int argc, char* argv[]) {
             Clock_End = clock();
             Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
             ;
+            printf("Execution_Time[%d] = %f\n", i,);
             Execution_Sum += Execution_Time[i];
             // printf("Execution time: %f ms \n", Execution_Time);
             // sleep(3);
