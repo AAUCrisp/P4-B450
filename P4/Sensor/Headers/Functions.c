@@ -6,15 +6,10 @@ void help() {
 void Argument_Setup(int argc, char* argv[]) {
     int axis_change = 0;
     char firstCharacter;
-
     char* argument;
     argument = argv[1];
 
     char* test = "cancer";
-
-    printf("argv[0]: %s\n", argv[0]);
-    printf("argv[1]: %s\n", argv[1]);
-    printf("argument: %s\n", argument);
     if (strcmp(argument, test) == 0) {
         printf("Actually reached inside if statement\n");
     }
