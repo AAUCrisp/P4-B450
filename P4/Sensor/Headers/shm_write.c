@@ -32,14 +32,14 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     // sem_unlink(SEM_WRITE_FNAME);
 
     sem_t* SEM_WRITE = sem_open(SEM_WRITE_FNAME, O_CREAT, 0660, 0);
-    printf("shm_write SEMWRITE: %s\n", (char*)SEM_WRITE);
+    printf("shm_write SEM_WRITE: %s\n", (char*)SEM_WRITE);
     if (SEM_WRITE == SEM_FAILED) {
         perror("shm_write = sem_open/SEM_WRITE");
         exit(EXIT_FAILURE);
     }
 
     sem_t* SEM_READ = sem_open(SEM_READ_FNAME, O_CREAT, 0660, 0);
-    printf("shm_write SEMWRITE: %s\n", (char*)SEM_WRITE);
+    printf("shm_write SEM_READ: %s\n", (char*)SEM_READ);
     if (SEM_READ == SEM_FAILED) {
         perror("shm_write = sem_open/SEM_READ");
         exit(EXIT_FAILURE);
