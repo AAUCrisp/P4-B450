@@ -117,7 +117,7 @@ int main(int argc, char* argv[]) {
         for (int i = 0; i < iter; i++) {
             // usleep(1000);
             msg = shm_read(32, GSV_KEY);
-            GSV = atoi(msg);
+            //GSV = atoi(msg);
             // printf("\nSensor || GSV from shared memory: %s\n", msg);
 
             // printf("\nGSV converted: %d\n", GSV);
