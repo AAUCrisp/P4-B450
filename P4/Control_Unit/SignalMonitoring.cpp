@@ -45,7 +45,35 @@ int lte_rsrp[buffer];
 int rsrp_sum;
 int rsrp_average;
 
-int main() {
+
+int main(int argc, char *argv[]) {
+    // string* grid;
+
+    // If Arguments is inserted
+    if(argc > 1) {      // If the program is run with arguments
+
+        for (int i = 1; i < argc; i++) {
+
+            // Force Both Technologies Argument
+            if((string) argv[i] == "-b" || (string) argv[i] == "-both") {
+                cout << "===== Forced Use of Both Technologies Enabled =====" << endl;
+                force_both = 1;
+            }
+
+            // Verbose Argument
+            if((string) argv[i] == "-v" || (string) argv[i] == "-verbose") {
+                cout << "===== Verbose Enabled =====" << endl;
+                message_only = 0;        // Print messages only
+                troubleshooting_print = 1;
+                print_GSV = 1;          // Print GSV related things
+            }
+        }
+    }
+    else {  // Running without arguments
+        cout << "============================\nControl Unit Process Started\n============================\n\n" << endl;
+        cout << "\nNo arguments inserted, running staticly." << endl;
+    }
+
     /* Initialize PORT & INTERFACE*/
     uint PORT_LTE_TRANSMITTER = 9002;
     uint PORT_WiFi_TRANSMITTER = 9003;

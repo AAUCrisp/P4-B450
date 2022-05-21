@@ -35,6 +35,7 @@ using namespace std;
     static int x_axis = 5000;       // Length of the x-axis of the grid
     static int y_axis = 5000;       // Length of the y-axis of the grid
     static int coordinates = x_axis*y_axis;     // Complete amount of coordinates
+    static string* grid;
     
     // Command Coversion
     static int use_hex = 1;     // Coordinates as Hex-Chars
