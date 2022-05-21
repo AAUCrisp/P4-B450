@@ -7,7 +7,7 @@ void Argument_Setup(int argc, char* argv[]) {
     int axis_change = 0;
     char firstCharacter;
     char argument;
-    argument = (char)argv[1];
+    argument = argv[1];
 
     char test = "i";
     // test = {'o','\0'};
