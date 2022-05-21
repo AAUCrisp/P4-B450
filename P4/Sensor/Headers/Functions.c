@@ -10,6 +10,9 @@ void Argument_Setup(int argc, char* argv[]) {
     char* argument = malloc(10);
     argument = argv[1];
 
+    printf("argv[0]: %s\n", argv[0]);
+    printf("argv[1]: %s\n", argv[1]);
+
     int test1 = scanf("%10i", *argument);
 
 
