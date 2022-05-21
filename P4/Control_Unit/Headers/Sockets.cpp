@@ -13,6 +13,7 @@
 #define SOCKETS_NET
 #include "Sockets.h"
 #endif
+#include <fstream>
 
 std::ofstream File;
 
@@ -352,7 +353,7 @@ void* transmit_command_WiFi(void *socket, char* message) {
     TX_WiFi = sendto(sock->act_WiFi, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_WiFi, LenWiFi);
     send_time = Timestamp();
     File.open("log.txt", std::ofstream::out | std::ofstream::app);
-    File << message << ";" << "LTE" << ";" << send_time << "\n \n";
+    File << message << ";" << "WiFi" << ";" << send_time << "\n \n";
     File.close();
     
     if(print_act_out == 1 || message_only == 1) {
