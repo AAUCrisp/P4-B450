@@ -60,7 +60,7 @@ void* shm_read(const int SIZE, const char* name) {
         perror("shm_open failed");
     }
     if (shm_fd == 1023) {
-        shm_fd = 0;
+        close(shm_fd);
         printf("Success on overwrite!");
     }
     // printf("This is shm_fd with shm_open: %d\n", shm_fd);
