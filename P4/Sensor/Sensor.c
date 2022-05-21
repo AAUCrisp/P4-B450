@@ -110,6 +110,7 @@ int main(int argc, char* argv[]) {
         }*/
     } else {
         // while (1) {
+        Time_Started = clock();
         for (int i = 0; i < iter; i++) {
             // usleep(1000);
             // msg = shm_read(32, GSV_KEY);
@@ -119,7 +120,7 @@ int main(int argc, char* argv[]) {
             // printf("\nGSV converted: %d\n", GSV);
             /*if (monitor == 1) {
             }*/
-            Time_Started = clock();
+            
             Clock_Start = clock();
             sprintf(buffer, "%d", generate(1, 25000000));
             // printf("\nSensor || After Random Int Generation\n");
