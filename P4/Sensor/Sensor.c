@@ -136,14 +136,14 @@ int main(int argc, char* argv[]) {
             Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
             Execution_Sum += Execution_Time[i];
 
-            printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
-            printf("Execution_Sum = %Lf\n", Execution_Sum);
+            printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
+            printf("Execution_Sum = %f\n", Execution_Sum);
 
             // sleep(3);
             usleep(10000);
         }
         Execution_Average = Execution_Sum / iter;
-        printf("Execution average: %Lf\n", Execution_Average);
+        printf("Execution average: %f\n", Execution_Average);
         //}
     }
 }
