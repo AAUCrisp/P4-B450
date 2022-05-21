@@ -56,6 +56,10 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     /* create the shared memory object */
     // shm_fd = shm_open(name, O_CREAT | O_RDWR, 0666); ORIGINAL
     shm_fd = shm_open(name, O_CREAT | O_RDWR, 0644);
+    if (shm_fd == -1) {
+        perror("shm_open failed");
+    }
+
     /* configure the size of the shared memory object */
     ftruncate(shm_fd, SIZE);
 
@@ -67,7 +71,6 @@ void shm_write(const char* message, const int SIZE, const char* name) {
 
     printf("SHM fd in WRITE: %d\n", shm_fd);
     printf("SHM name in WRITE: %s\n", (char*)name);
-
 
     /* memory map the shared memory object */
     ptr = mmap(NULL, SIZE, PROT_WRITE, MAP_SHARED, shm_fd, 0);
@@ -95,5 +98,5 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     // printf("This is shm_fd: %d\n", shm_fd);
     // printf("This is size of shared memory buffer: %d\n", SIZE);
     // printf("This is shared memory object name: %s\n", name);
-    //close(shm_fd);
+    // close(shm_fd);
 }

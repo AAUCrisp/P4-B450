@@ -56,6 +56,9 @@ void* shm_read(const int SIZE, const char* name) {
     printf("Do I reach here 4\n");
     /* open the shared memory object */
     shm_fd = shm_open(name, O_RDONLY, 0666);
+    if (shm_fd == -1) {
+        perror("shm_open failed");
+    }
     // printf("This is shm_fd with shm_open: %d\n", shm_fd);
     printf("Do I reach here 5\n");
 
@@ -68,7 +71,7 @@ void* shm_read(const int SIZE, const char* name) {
         perror("mmap failed");
     }
     printf("Read from shm_read: %s\n", (char*)ptr);
-    //munmap(ptr, SIZE);
+    // munmap(ptr, SIZE);
 
     if (sem_post(&SEM_WRITE)) {
         perror("SEM_WRITE sem_post failed");
@@ -85,8 +88,8 @@ void* shm_read(const int SIZE, const char* name) {
     // printf("Read from shm_read.c: %s\n", (char*)ptr);
 
     /* remove the shared memory object */
-    //shm_unlink(name);
-    //close(shm_fd);
+    // shm_unlink(name);
+    // close(shm_fd);
 
     return ptr;
 }
