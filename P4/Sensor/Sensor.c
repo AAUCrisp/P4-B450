@@ -102,6 +102,7 @@ int main(int argc, char* argv[]) {
     /* Shared memory object variables */
     const char* GSV_KEY = "GSV_KEY";
     const char* msg;
+    int SHM_BUFFER = 10000000;
 
     char buffer[BUFFER];
 
@@ -127,7 +128,7 @@ int main(int argc, char* argv[]) {
         Time_Started = clock();
         for (int i = 0; i < iter; i++) {
             // usleep(10000);
-            msg = shm_read(99999, GSV_KEY);
+            msg = shm_read(SHM_BUFFER, GSV_KEY);
             GSV = atoi(msg);
             // usleep(10000);
             //   printf("\nSensor || GSV from shared memory: %s\n", msg);
@@ -185,7 +186,7 @@ int main(int argc, char* argv[]) {
             }
 
             printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
-            // printf("Execution_Sum = %f\n", Execution_Sum);
+            printf("Execution_Sum = %f\n", Execution_Sum);
 
             // sleep(3);
             // usleep(10000);
