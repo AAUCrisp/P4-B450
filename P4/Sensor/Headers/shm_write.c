@@ -22,11 +22,9 @@
 
 #include "shm_write_read.h"
 
-#define IPC_RESULT_ERROR (-1)
-
 /* Semaphore Names */
-#define SEM_READ_FNAME "../SEM_READ"
-#define SEM_WRITE_FNAME "../SEM_WRITE"
+const char* SEM_READ_FNAME = "../";
+const char* SEM_WRITE_FNAME = "../";
 
 void shm_write(const char* message, const int SIZE, const char* name) {
     /* Semaphore variables */
