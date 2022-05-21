@@ -21,6 +21,7 @@ void WiFi_command(Sockets sock) {
         }
         sscanf((const char*)message, "%d %[^\n]", &data, msgDump);
         cout << "WiFi Command Function || Message Parsed from Sockets as INT is: " << data << endl;
+        cout << "msgDump in Command Function is: " << msgDump << endl;
         coordinate = convert_to_coordinate(data);
         cout << "WiFi Command Function || Coordinate for Actuator is: " << coordinate << "\n\n\n" << endl;
         strcpy(WiFimsg, coordinate.c_str());
