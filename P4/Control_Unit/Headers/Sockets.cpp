@@ -70,7 +70,7 @@ char *receive_WiFi;
 char curr_time[128];
 char msg_time[128];
 char send_tech[128];
-char send_time[128];
+char *send_time;
 int sensor_int;
 /* Misc */
 int bindLTE, bindWiFi;
@@ -163,9 +163,9 @@ void *receiveLTE(void *socket) {
         printf("\n\nIncoming || LTE (Sensor) || Message is: %s\n", message_LTE);
         printf("Incoming || LTE (Sensor) || Message received at: %s\n\n", curr_time);
     }
-    sscanf(message_LTE, "%d %[^\n]", sensor_int, msg_time);
+    sscanf(message_LTE, "%d %[^\n]", &sensor_int, msg_time);
     File.open("log.txt", std::ofstream::out | std::ofstream::app);
-    File << "\n\n" << sensor_int << ";" << msg_time << ";" << LTE << curr_time;
+    File << "\n\n" << sensor_int << ";" << msg_time << ";" << "LTE" << curr_time;
     File.close(); 
     return message_LTE;
 }
@@ -188,7 +188,7 @@ void *receiveWiFi(void *socket) {
         printf("Incoming || WiFi (Sensor) || Message received at: %s \n\n", curr_time);
     }
     File.open("log.txt", std::ofstream::out | std::ofstream::app);
-    File << "\n\n" << sensor_int << ";" << msg_time << ";" << WiFi << curr_time;
+    File << "\n\n" << sensor_int << ";" << msg_time << ";" << "WiFi" << curr_time;
     File.close();
     return message_WiFi;    
 }
