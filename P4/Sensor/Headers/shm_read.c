@@ -51,7 +51,7 @@ void* shm_read(const int SIZE, const char* name) {
     /* pointer to shared memory object */
     void* ptr;
 
-    sem_wait(SEM_READ);
+    //sem_wait(SEM_READ);
     printf("Do I reach here 4");
     /* open the shared memory object */
     shm_fd = shm_open(name, O_RDONLY, 0666);
@@ -62,11 +62,11 @@ void* shm_read(const int SIZE, const char* name) {
     ptr = mmap(NULL, SIZE, PROT_READ, MAP_SHARED, shm_fd, 0);
     printf("Read from shm_read: %s\n", (char*)ptr);
 
-    sem_post(SEM_WRITE);
+    //sem_post(SEM_WRITE);
     printf("Do I reach here 6");
-    sem_close(SEM_READ);
+    //sem_close(SEM_READ);
     printf("Do I reach here 7");
-    sem_close(SEM_WRITE);
+    //sem_close(SEM_WRITE);
     printf("Do I reach here 8");
 
     // printf("This is ptr memory map: %p\n", ptr);

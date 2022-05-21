@@ -29,8 +29,8 @@
 void shm_write(const char* message, const int SIZE, const char* name) {
     printf("Do I reach here 1");
     /* Semaphore variables */
-    //sem_unlink(SEM_READ_FNAME);
-    //sem_unlink(SEM_WRITE_FNAME);
+    // sem_unlink(SEM_READ_FNAME);
+    // sem_unlink(SEM_WRITE_FNAME);
 
     sem_t* SEM_WRITE = sem_open(SEM_WRITE_FNAME, O_CREAT, 0660, 0);
     printf("WHY NO WORK? 1");
@@ -60,7 +60,7 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     ftruncate(shm_fd, SIZE);
 
     printf("Do I reach here 4");
-    sem_wait(SEM_WRITE);
+    // sem_wait(SEM_WRITE);
     printf("Do I reach here 5");
 
     /* memory map the shared memory object */
@@ -70,11 +70,11 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     sprintf(ptr, "%s", message);
     printf("Wrote from shm_write: %s\n", (char*)ptr);
 
-    sem_post(SEM_READ);
+    // sem_post(SEM_READ);
     printf("Do I reach here 7");
-    sem_close(SEM_READ);
+    // sem_close(SEM_READ);
     printf("Do I reach here 8");
-    sem_close(SEM_WRITE);
+    // sem_close(SEM_WRITE);
     printf("Do I reach here 9");
 
     // printf("This is ptr: %p\n", ptr);
