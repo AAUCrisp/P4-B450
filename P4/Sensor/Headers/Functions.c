@@ -10,7 +10,7 @@ void Argument_Setup(int argc, char* argv[]) {
     char* argument = malloc(100);
     argument = argv[1];
 
-    int test1 = scanf("i", argument);
+    int test1 = scanf("%10s", argument);
 
 
     printf("\n\n First Argument is: %d \n\n", test1);
