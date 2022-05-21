@@ -60,14 +60,10 @@ void* shm_read(const int SIZE, const char* name) {
     printf("Do I reach here 5\n");
 
     /* memory map the shared memory object */
-    ptr = mmap(0, SIZE, PROT_READ, MAP_SHARED, shm_fd, 0);
-    if (ptr != MAP_FAILED) {
-
-    }
-    /*ptr = mmap(NULL, SIZE, PROT_READ, MAP_SHARED, shm_fd, 0);
+    ptr = mmap(NULL, SIZE, PROT_READ, MAP_SHARED, shm_fd, 0);
     if (ptr == MAP_FAILED) {
         perror("mmap failed");
-    }*/
+    }
     printf("Read from shm_read: %s\n", (char*)ptr);
     //munmap(ptr, SIZE);
 
