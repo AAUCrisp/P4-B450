@@ -28,7 +28,7 @@ using namespace std;
 #define VARIABLES
     // General Settings
     static int force_both = 0;      // Troubleshooting with both technologies
-    static int monitor = 0;         // Disable/Enable Start of Signal Monitoring
+    static int monitor = 1;         // Disable/Enable Start of Signal Monitoring
 
     // Grid Settings
     static int use_grid = 0;        // Usage of RAM Grid
@@ -47,13 +47,12 @@ using namespace std;
     static int print_act_out = 0;               // Print outgoing Actuator related things
     static int print_GSV = 0;                   // Print GSV related things
 
-
-    // -- DELETE THESE -- //
-
-    // static int troubleshooting_print = 0;
-    // static int print = 0;      // Enable/Disable prints for troubleshooting
-    // static int message_only = 1;   // Only print Selection
-    // static int force_both = 1;      // Forces it to use both LTE & WiFi
-
+    // Signal Monitoring Arguments
+    static int delay = 1;
+    static char* GSV_arg_used = NULL;
+    static char* GSV_arg_both = NULL;
+    static char* GSV_arg_print = NULL;
+    static char* GSV_sleep_arg = NULL;
+    static char* GSV_sleep_delay = NULL;
 
 #endif

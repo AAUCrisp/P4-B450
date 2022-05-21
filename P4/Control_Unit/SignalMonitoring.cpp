@@ -47,31 +47,46 @@ int rsrp_average;
 
 
 int main(int argc, char *argv[]) {
-    // string* grid;
 
     // If Arguments is inserted
     if(argc > 1) {      // If the program is run with arguments
+        int child = 0;
 
+        // If Child Process
+        if((string) argv[1] == "-a") {
+            child = 1;
+        }
+        else {
+            cout << "Sensor Monitoring Arguments Received" << endl;
+        }
         for (int i = 1; i < argc; i++) {
 
             // Force Both Technologies Argument
             if((string) argv[i] == "-b" || (string) argv[i] == "-both") {
-                cout << "===== Forced Use of Both Technologies Enabled =====" << endl;
+                if(child == 0) {
+                    cout << "===== Forced Use of Both Technologies Enabled =====" << endl;
+                }
                 force_both = 1;
             }
 
             // Verbose Argument
             if((string) argv[i] == "-v" || (string) argv[i] == "-verbose") {
-                cout << "===== Verbose Enabled =====" << endl;
+                if(child == 0) {
+                    cout << "===== Verbose Enabled =====" << endl;
+                }
                 message_only = 0;        // Print messages only
                 troubleshooting_print = 1;
                 print_GSV = 1;          // Print GSV related things
             }
+            
+            // Sleep Argument
+            if((string) argv[i] == "-s" || (string) argv[i] == "-sleep") {
+                delay = atoi(argv[i+1]);
+                if(child == 0) {
+                    cout << "===== Sleep Time Changed to " << delay << " seconds =====" << endl;
+                }
+            }
         }
-    }
-    else {  // Running without arguments
-        cout << "============================\nControl Unit Process Started\n============================\n\n" << endl;
-        cout << "\nNo arguments inserted, running staticly." << endl;
     }
 
     /* Initialize PORT & INTERFACE*/
@@ -168,6 +183,6 @@ int main(int argc, char *argv[]) {
             counter++;
         }
 
-        sleep(3);
+        sleep(delay);
     }
 }

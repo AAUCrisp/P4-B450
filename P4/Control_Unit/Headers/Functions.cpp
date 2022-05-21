@@ -113,6 +113,16 @@ void help() {
 
 
     cout << "  ----------------------------------------------------------" << endl;
+    cout << "  ----            Signal Monitor Sleep Time             ----" << endl;
+    cout << "  ----                                                  ----" << endl;
+    cout << "   Call Argument:" << endl;
+    cout << "      -s <int>"<< endl;
+    cout << "      -sleep <int>" << endl << endl;
+    cout << "   Accepted Arguments:" << endl;
+    cout << "      Any int               - Seconds of delay you want" << endl << endl << endl;
+
+
+    cout << "  ----------------------------------------------------------" << endl;
     cout << "  ----    Setting for Disabling Hex-Char Coordinates    ----" << endl;
     cout << "  ----                                                  ----" << endl;
     cout << "   Call Argument:" << endl;
@@ -169,38 +179,54 @@ void Argument_Setup(int argc, char* argv[]) {
 
             // Verbose Argument
             if((string) argv[i] == "-v" || (string) argv[i] == "-verbose") {
+                if(argc > i+1) {
+                    for (int j = i+1; j < argc; j++) {  // Check for sevaral Verbose arguments
+                        string current = argv[j];
+                        firstCharacter = current.at(0);
 
-                for (int j = i+1; j < argc; j++) {  // Check for sevaral Verbose arguments
-                    string current = argv[j];
-                    firstCharacter = current.at(0);
-
+                        if(firstCharacter == '-') {
+                            cout << "===== Verbose Enabled =====" << endl;
+                            message_only = 0;        // Print messages only
+                            troubleshooting_print = 1;
+                            print_sen_in = 1;       // Print incoming Sensor related things
+                            print_act_out = 1;      // Print outgoing Actuator related things
+                            print_GSV = 1;          // Print GSV related things
+                            GSV_arg_print = (char*) "-v";
+                            GSV_arg_used = (char*) "-a";
+                            break;
+                        }
+                        else if ( (string) argv[j] == "i" || (string) argv[j] == "in") {
+                            cout << "===== Verbose For Incoming Traffic Enabled =====" << endl;
+                            message_only = 0;        // Print messages only
+                            print_sen_in = 1;       // Print incoming Sensor related things
+                        }
+                        else if ( (string) argv[j] == "o" || (string) argv[j] == "out") {
+                            cout << "===== Verbose For Outgoing Traffic Enabled =====" << endl;
+                            message_only = 0;        // Print messages only
+                            print_act_out = 1;       // Print incoming Sensor related things
+                        }
+                        else if ( (string) argv[j] == "g" || (string) argv[j] == "gsv") {
+                            cout << "===== Verbose For GSV Enabled =====" << endl;
+                            message_only = 0;        // Print messages only
+                            print_GSV = 1;       // Print incoming Sensor related things
+                                // Signal Monitoring Arguments
+                            GSV_arg_print = (char*) "-v";
+                            GSV_arg_used = (char*) "-a";
+                        }
+                        else { 
+                            cout << "===== Invalid argument for \"Verbose\" =====" << endl; 
+                        }
+                    }
+                }
+                else {
                     cout << "===== Verbose Enabled =====" << endl;
-                    if(firstCharacter == '-') {
-                        message_only = 0;        // Print messages only
-                        troubleshooting_print = 1;
-                        print_sen_in = 1;       // Print incoming Sensor related things
-                        print_act_out = 1;      // Print outgoing Actuator related things
-                        print_GSV = 1;          // Print GSV related things
-                        break;
-                    }
-                    else if ( (string) argv[j] == "i" || (string) argv[j] == "in") {
-                        cout << "===== Verbose For Incoming Traffic Enabled =====" << endl;
-                        message_only = 0;        // Print messages only
-                        print_sen_in = 1;       // Print incoming Sensor related things
-                    }
-                    else if ( (string) argv[j] == "o" || (string) argv[j] == "out") {
-                        cout << "===== Verbose For Outgoing Traffic Enabled =====" << endl;
-                        message_only = 0;        // Print messages only
-                        print_act_out = 1;       // Print incoming Sensor related things
-                    }
-                    else if ( (string) argv[j] == "g" || (string) argv[j] == "gsv") {
-                        cout << "===== Verbose For GSV Enabled =====" << endl;
-                        message_only = 0;        // Print messages only
-                        print_GSV = 1;       // Print incoming Sensor related things
-                    }
-                    else { 
-                        cout << "===== Invalid argument for \"Verbose\" =====" << endl; 
-                    }
+                    message_only = 0;        // Print messages only
+                    troubleshooting_print = 1;
+                    print_sen_in = 1;       // Print incoming Sensor related things
+                    print_act_out = 1;      // Print outgoing Actuator related things
+                    print_GSV = 1;          // Print GSV related things
+                    GSV_arg_print = (char*) "-v";
+                    GSV_arg_used = (char*) "-a";
                 }
             }
 
@@ -214,6 +240,8 @@ void Argument_Setup(int argc, char* argv[]) {
             if((string) argv[i] == "-b" || (string) argv[i] == "-both") {
                 cout << "===== Forced Use of Both Technologies Enabled =====" << endl;
                 force_both = 1;
+                GSV_arg_both = (char*) "-b";
+                GSV_arg_used = (char*) "-a";
             }
 
             // X-Axis Range Argument
@@ -230,6 +258,20 @@ void Argument_Setup(int argc, char* argv[]) {
                 y_axis = atoi(argv[i+1]);
                 cout << "===== Y-axis range set to " << y_axis << " =====" << endl;
                 axis_change = 1;
+            }
+
+            // Signal Monitoring Sleep Delay
+            if((string) argv[i] == "-s" || (string) argv[i] == "-sleep") {
+                delay = atoi(argv[i+1]);
+                cout << "===== Signal Monitoring Sleep Time set to " << delay << " seconds =====" << endl;
+
+                char* temp_char = (char*) malloc(9);
+                string temp_str = (string) argv[i] + " " + argv[i+1];
+                strcpy(temp_char, temp_str.c_str());
+
+                GSV_arg_used = (char*) "-a";
+                GSV_sleep_arg = (char*) argv[i];
+                GSV_sleep_delay = (char*) argv[i+1];
             }
 
         }
