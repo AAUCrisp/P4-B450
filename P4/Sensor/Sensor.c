@@ -167,7 +167,7 @@ int main(int argc, char* argv[]) {
         Execution_Average = Execution_Sum / iter;
         printf("Execution average: %f ms\n", Execution_Average);
         printf("Total failed counts: %d\n", fail_count);
-        fclose(file) :
+        fclose(file);
         //}
         // Make a log file with execution time idiot
     }
