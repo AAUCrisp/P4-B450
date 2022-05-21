@@ -29,7 +29,7 @@
 void* shm_read(const int SIZE, const char* name) {
     printf("Do I reach here 1\n");
     /* Semaphore variables */
-    sem_t* SEM_WRITE = sem_init(&SEM_WRITE_FNAME, 1, 1);
+    sem_t SEM_WRITE = sem_init(&SEM_WRITE_FNAME, 1, 1);
     printf("WHY NO WORK? 1\n");
     if (SEM_WRITE == SEM_FAILED) {
         perror("shm_read = sem_open/SEM_WRITE");
@@ -37,7 +37,7 @@ void* shm_read(const int SIZE, const char* name) {
     }
     printf("Do I reach here 2\n");
 
-    sem_t* SEM_READ = sem_init(&SEM_READ_FNAME, 1, 1);
+    sem_t SEM_READ = sem_init(&SEM_READ_FNAME, 1, 1);
     printf("WHY NO WORK? 2\n");
     if (SEM_READ == SEM_FAILED) {
         perror("shm_read = sem_open/SEM_READ");
