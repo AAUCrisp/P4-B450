@@ -64,6 +64,7 @@ int main(int argc, char* argv[]) {
 
     /* Misc */
     pthread_t T1, T2;
+    FILE* file;
     char* curr_time;
 
     /* Execution time variables */
@@ -138,6 +139,11 @@ int main(int argc, char* argv[]) {
             Clock_End = clock();
             // Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
             Execution_Temp += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
+            file = fopen("Execution.txt", "a+");
+            if (file == NULL) {
+                perror("Failed to open Execution.txt");
+            }
+            fprintf(file,Execution_Temp);
 
             // isnan(Execution_Time[i]);
             int shit = isnan(Execution_Time[i]);
@@ -149,6 +155,7 @@ int main(int argc, char* argv[]) {
                 fail_count++;
                 printf("Fail counter: %d\n", fail_count);
                 printf("isnan value: %d\n", isnan(Execution_Time[i]));
+                sleep(5);
             }
 
             printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
@@ -161,5 +168,6 @@ int main(int argc, char* argv[]) {
         printf("Execution average: %f ms\n", Execution_Average);
         printf("Total failed counts: %d\n", fail_count);
         //}
+        // Make a log file with execution time idiot
     }
 }
