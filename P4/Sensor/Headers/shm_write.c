@@ -32,19 +32,21 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     // sem_unlink(SEM_READ_FNAME);
     // sem_unlink(SEM_WRITE_FNAME);
 
-    sem_t SEM_WRITE = sem_init(&SEM_WRITE_FNAME, 1, 1);
+    sem_init(&SEM_WRITE, 1, 1);
     printf("WHY NO WORK? 1\n");
+    /*
     if (SEM_WRITE == SEM_FAILED) {
         perror("shm_write = sem_open/SEM_WRITE");
         exit(EXIT_FAILURE);
-    }
+    }*/
     printf("Do I reach here 2\n");
-    sem_t SEM_READ = sem_init(&SEM_READ_FNAME, 1, 1);
+    sem_init(&SEM_READ, 1, 1);
     printf("WHY NO WORK? 2\n");
+    /*
     if (SEM_READ == SEM_FAILED) {
         perror("shm_write = sem_open/SEM_READ");
         exit(EXIT_FAILURE);
-    }
+    }*/
     printf("Do I reach here 3\n");
 
     /* shared memory file descriptor */
@@ -60,7 +62,7 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     ftruncate(shm_fd, SIZE);
 
     printf("Do I reach here 4\n");
-    sem_wait(SEM_WRITE);
+    sem_wait(&SEM_WRITE);
     printf("Do I reach here 5\n");
 
     /* memory map the shared memory object */
@@ -70,11 +72,11 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     sprintf(ptr, "%s", message);
     printf("Wrote from shm_write: %s\n", (char*)ptr);
 
-    sem_post(SEM_READ);
+    sem_post(&SEM_READ);
     printf("Do I reach here 7\n");
-    sem_close(SEM_READ);
+    sem_close(&SEM_READ);
     printf("Do I reach here 8\n");
-    sem_close(SEM_WRITE);
+    sem_close(&SEM_WRITE);
     printf("Do I reach here 9\n");
 
     // printf("This is ptr: %p\n", ptr);

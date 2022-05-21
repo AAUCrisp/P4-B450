@@ -4,8 +4,8 @@
 #include "../Libraries.c"
 
 /* Semaphore Names */
-sem_t SEM_READ_FNAME;
-sem_t SEM_WRITE_FNAME;
+sem_t SEM_READ;
+sem_t SEM_WRITE;
 
 void shm_write(const char* message, const int SIZE, const char* name);
 
