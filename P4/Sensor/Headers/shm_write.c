@@ -56,10 +56,10 @@ void shm_write(const char* message, const int SIZE, const char* name) {
 
     /* create the shared memory object */
     // shm_fd = shm_open(name, O_CREAT | O_RDWR, 0666); ORIGINAL
-    shm_fd = shm_open(name, O_CREAT | O_RDWR, 0644);
+    shm_fd = shm_open(name, O_CREAT | O_RDWR, 0600);
     if (shm_fd == -1) {
         perror("shm_open failed");
-        fprintf(stderr, "errno shm_open failed %s\n", strerror(errno));
+        fprintf(stderr, "errno shm_open failed: %s\n", strerror(errno));
     }
     if (shm_fd == 1023) {
         printf("Success on overwrite!");
