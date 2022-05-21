@@ -156,7 +156,7 @@ int main(int argc, char* argv[]) {
                 } else {
                     fail_count++;
                     printf("Fail counter: %d\n", fail_count);
-                    printf("Execution_Sum exceeded 10000000")
+                    printf("Execution_Sum exceeded 10000000");
                 }
             } else {
                 fail_count++;
