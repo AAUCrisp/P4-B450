@@ -65,6 +65,13 @@ int main(int argc, char* argv[]) {
     pthread_t T1, T2;
     char* curr_time;
 
+    struct timespec {
+        time_t tv_sec; // seconds
+        long tv_nsec; // nanoseconds
+    }
+
+    timespec start, end;
+
     /* Execution time variables */
     int iter = 1000;
     long double Execution_Time[iter];
@@ -113,7 +120,8 @@ int main(int argc, char* argv[]) {
             // printf("\nGSV converted: %d\n", GSV);
             /*if (monitor == 1) {
             }*/
-            Clock_Start = clock();
+            //Clock_Start = clock();
+            clock_gettime(CLOCK_REALTIME, &start);
             sprintf(buffer, "%d", generate(1, 25000000));
             // printf("\nSensor || After Random Int Generation\n");
             //usleep(2000);
@@ -131,15 +139,17 @@ int main(int argc, char* argv[]) {
             if (GSV == B || GSV == W) {
                 transmitWiFi(&sock, (char*)buffer);
             }
-            Clock_End = clock();
-            Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
-            ;
+            clock_gettime(CLOCK_REALTIME, &end);
+            //Clock_End = clock();
+            //Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
+            Execution_Time[i] += end.tv_nsec - start.tv_nsec;
+            
             printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
             Execution_Sum += Execution_Time[i];
             printf("Execution_Sum = %Lf\n", Execution_Sum);
             // printf("Execution time: %f ms \n", Execution_Time);
             // sleep(3);
-            usleep(100000);
+            usleep(10000);
         }
         Execution_Average = Execution_Sum / iter;
         printf("Execution average: %Lf\n", Execution_Average);
