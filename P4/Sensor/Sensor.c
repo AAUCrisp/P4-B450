@@ -136,7 +136,7 @@ int main(int argc, char* argv[]) {
             Clock_End = clock();
             Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
             
-            if (Execution_Time[i] != NULL) {
+            if (Execution_Time[i] != (double)NULL) {
                 Execution_Sum += Execution_Time[i];
             }
 
