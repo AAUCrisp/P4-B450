@@ -4,8 +4,9 @@ Group 450, Spring Semester 2022
 
 
 ## Control Unit:
-### Has many argument settings, give `-help` for full info
-
+### Has many argument settings
+Use `-help` for full info on arguments  
+  
 WiFi: 192.168.1.136  
 LTE: 10.20.0.16  
 Eth: 192.168.1.185  
