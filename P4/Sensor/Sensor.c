@@ -178,15 +178,16 @@ int main(int argc, char* argv[]) {
         }
         Time_Ended = clock();
         int Total_Time_Elapsed = (int)(Time_Ended - Time_Started);
-        printf("Total_Time_Elapsed: %d\n", Total_Time_Elapsed);
 
-        int seconds = (int)(Total_Time_Elapsed / 1000) % 60;
-        int minutes = (int)((Total_Time_Elapsed / (1000 * 60)) % 60);
-        int hours = (int)((Total_Time_Elapsed / (1000 * 60 * 60)) % 24);
+        int h, m, s;
+
+        h = (Total_Time_Elapsed / 3600);
+        m = (Total_Time_Elapsed - (3600 * h)) / 60;
+        s = (Total_Time_Elapsed - (3600 * h) - (m * 60));
 
         Execution_Average = Execution_Sum / iter;
         printf("Execution average: %f ms\n", Execution_Average);
-        printf("Execution time: %d:%d:%d\n", hours, minutes, seconds);
+        printf("Execution time: %d:%d:%d\n", h, m, s);
         printf("Total failed counts: %d\n", fail_count);
 
         //}
