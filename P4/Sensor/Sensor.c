@@ -143,7 +143,7 @@ int main(int argc, char* argv[]) {
             if (file == NULL) {
                 perror("Failed to open Execution.txt");
             }
-            fprintf(file, "[%d] %f\n",i, Execution_Temp);
+            fprintf(file, "[%d] %f\n", i, Execution_Temp);
             fclose(file);
 
             // isnan(Execution_Time[i]);
@@ -151,13 +151,18 @@ int main(int argc, char* argv[]) {
             if (shit == 0) {
                 printf("isnan value: %d\n", isnan(Execution_Time[i]));
                 Execution_Time[i] += Execution_Temp;
-                Execution_Sum += Execution_Time[i];
+                if (Execution_Time[i] >= 1000000) {
+                    Execution_Sum += Execution_Time[i];
+                } else {
+                    fail_count++;
+                    printf("Fail counter: %d\n", fail_count);
+                    printf("Execution_Sum exceeded 10000000")
+                }
             } else {
                 fail_count++;
                 printf("Fail counter: %d\n", fail_count);
                 printf("isnan value: %d\n", isnan(Execution_Time[i]));
                 printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
-                sleep(10);
             }
 
             printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
@@ -169,7 +174,7 @@ int main(int argc, char* argv[]) {
         Execution_Average = Execution_Sum / iter;
         printf("Execution average: %f ms\n", Execution_Average);
         printf("Total failed counts: %d\n", fail_count);
-        
+
         //}
         // Make a log file with execution time idiot
     }
