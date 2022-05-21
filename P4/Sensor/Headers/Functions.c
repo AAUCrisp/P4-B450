@@ -6,16 +6,16 @@ void help() {
 void Argument_Setup(int argc, char* argv[]) {
     int axis_change = 0;
     char firstCharacter;
-    const char* argument;
-    argument = (char*) argv[1];
+    char argument;
+    argument = (char)argv[1];
 
-    char* test = 'o\0';
+    char test = "i";
     // test = {'o','\0'};
 
     printf("\n\n First Argument is: %s \n\n", argument);
 
     printf("\n\nInside Argument Function \n\n");
-    if ( (char*)argument == test) {
+    if (argument == test) {
         printf("\nInside If statement\n\n");
         help();
     }
