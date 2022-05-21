@@ -64,7 +64,13 @@ int main(int argc, char* argv[]) {
     /* Misc */
     pthread_t T1, T2;
     char* curr_time;
-    double Execution_Time = 0.0;
+
+    /* Execution time variables */
+    int iter = 10000;
+    double Execution_Time[iter];
+    double Execution_Sum;
+    double Execution_Average;
+    // double Execution_Time = 0.0;
     clock_t Clock_Start;
     clock_t Clock_End;
 
@@ -89,7 +95,6 @@ int main(int argc, char* argv[]) {
     pid_t sensor_monitor;     // Prepare the process ID for monitoring
     sensor_monitor = fork();  // Starts new process
 
-
     if (sensor_monitor == 0) {
         printf("Parent process ID: %d \n", getppid());
         printf("Sensor monitoring process ID is: %d \n", getpid());
@@ -99,18 +104,18 @@ int main(int argc, char* argv[]) {
             execv(path, args);
         }*/
     } else {
-        
-        while (1) {
+        // while (1) {
+        for (int i = 0; i < iter; i++) {
             usleep(1000);
             msg = shm_read(32, GSV_KEY);
             GSV = atoi(msg);
             printf("\nSensor || GSV from shared memory: %s\n", msg);
-            //printf("\nGSV converted: %d\n", GSV);
+            // printf("\nGSV converted: %d\n", GSV);
             /*if (monitor == 1) {
             }*/
             Clock_Start = clock();
             sprintf(buffer, "%d", generate(1, 25000000));
-            //printf("\nSensor || After Random Int Generation\n");
+            // printf("\nSensor || After Random Int Generation\n");
             usleep(1000);
 
             /*if (both_tech == 1) {
@@ -118,7 +123,7 @@ int main(int argc, char* argv[]) {
                 GSV = 0;  // Troubleshooting for both
             }*/
 
-            //printf("Sensor || Before Transmitting\n");
+            // printf("Sensor || Before Transmitting\n");
             if (GSV == B || GSV == L) {
                 transmitLTE(&sock, (char*)buffer);
             }
@@ -127,10 +132,14 @@ int main(int argc, char* argv[]) {
                 transmitWiFi(&sock, (char*)buffer);
             }
             Clock_End = clock();
-            Execution_Time += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
+            Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
             ;
-            printf("Execution time: %f ms \n", Execution_Time);
-            sleep(3);
+            Execution_Sum += Execution_Time[i];
+            // printf("Execution time: %f ms \n", Execution_Time);
+            // sleep(3);
         }
+        Execution_Average = Execution_Sum / iter;
+        printf("Execution average: %f\n", Execution_Average);
+        //}
     }
 }
