@@ -142,12 +142,13 @@ int main(int argc, char* argv[]) {
             Clock_End = clock();
             // Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
             Execution_Temp += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
+            /*
             file = fopen("Execution.txt", "a+");
             if (file == NULL) {
                 perror("Failed to open Execution.txt");
             }
             fprintf(file, "[%d] %f\n", i, Execution_Temp);
-            fclose(file);
+            fclose(file);*/
 
             // isnan(Execution_Time[i]);
             int shit = isnan(Execution_Time[i]);
@@ -177,7 +178,7 @@ int main(int argc, char* argv[]) {
         Time_Ended = clock();
         Execution_Average = Execution_Sum / iter;
         printf("Execution average: %f ms\n", Execution_Average);
-        printf("Execution time: %s ms\n", (Time_Ended - Time_Started));
+        printf("Execution time: %ld ms\n", (Time_Ended - Time_Started));
         printf("Total failed counts: %d\n", fail_count);
 
         //}
