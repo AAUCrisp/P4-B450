@@ -50,6 +50,10 @@ int main() {
     pthread_t T1, T2;
     char* curr_time;
     int *Processed_Data;
+    double Execution_Time; = 0.0;
+    clock_t Clock_Start;
+    clock_t Clock_End;
+    double Time_Difference = (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
 
     /* Shared memory object variables */
     const char* COMMANDS_KEY = "COMMANDS_KEY";
@@ -75,9 +79,12 @@ int main() {
 
             snprintf(msg, sizeof(msg), "%s", COMMANDS);
 
+            Clock_Start = clock();
             processData(COMMANDS);
-            //printf("Processed_Data: %d\n%d", Processed_Data)
-            //logData(Processed_Data);
+            Clock_End = clock();
+            Execution_Time += Time_Difference;
+            printf("Execution time: %f ms \n", Execution_Time);
+            
             sleep(2);
         }
     }

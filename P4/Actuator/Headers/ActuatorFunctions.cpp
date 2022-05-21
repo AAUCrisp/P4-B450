@@ -75,21 +75,21 @@ void processData(char msg[buffer]) {
     int movement_x;
     int movement_y;
     bytes_read = sscanf(msg, "%[^:%s]:%s:", tempx, tempy);  // Parses the received char array, into two seperate char arrays
-    cout << "Temp X is: " << tempx << endl;                 // prints out the char arrays containing x and y coordinates.
-    cout << "Temp Y is: " << tempy << endl;
+    //cout << "Temp X is: " << tempx << endl;                 // prints out the char arrays containing x and y coordinates.
+    //cout << "Temp Y is: " << tempy << endl;
     int x = hex_to_int(tempx);  // Converts the hex-chars of the x coordinate to an int
     int y = hex_to_int(tempy);  // Converts the hex-chars of the x coordinate to an int
 
     if (last_x_coordinate == 0 && last_y_coordinate == 0) {
         movement_x = x;
         movement_y = y;
-        printf("movement_x = x: %d\n", movement_x);
-        printf("movement_y = y: %d\n", movement_y);
+        //printf("movement_x = x: %d\n", movement_x);
+        //printf("movement_y = y: %d\n", movement_y);
     } else {
         movement_x = x - last_x_coordinate;
         movement_y = y - last_y_coordinate;
-        printf("movement_x = x - last_x: %d\n", movement_x);
-        printf("movement_y = y - last_y: %d\n", movement_y);
+        //printf("movement_x = x - last_x: %d\n", movement_x);
+        //printf("movement_y = y - last_y: %d\n", movement_y);
     }
     printf("Movement_x: %d \nMovement_y: %d \n\n", movement_x, movement_y);
     if (movement_x == 0 && movement_y == 0){
