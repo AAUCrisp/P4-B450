@@ -12,7 +12,7 @@ void Argument_Setup(int argc, char* argv[]) {
     char test = "i";
     // test = {'o','\0'};
 
-    printf("\n\n First Argument is: %s \n\n", argument);
+    printf("\n\n First Argument is: %d \n\n", argument);
 
     printf("\n\nInside Argument Function \n\n");
     if (argument == test) {
