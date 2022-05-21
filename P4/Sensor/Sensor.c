@@ -149,7 +149,7 @@ int main(int argc, char* argv[]) {
             // isnan(Execution_Time[i]);
             int shit = isnan(Execution_Time[i]);
             if (shit == 0) {
-                printf("isnan value: %d\n", isnan(Execution_Time[i]));
+                //printf("isnan value: %d\n", isnan(Execution_Time[i]));
                 Execution_Time[i] += Execution_Temp;
                 if (Execution_Time[i] <= 1000000) {
                     Execution_Sum += Execution_Time[i];
