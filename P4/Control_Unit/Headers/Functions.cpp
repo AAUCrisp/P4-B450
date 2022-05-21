@@ -65,74 +65,74 @@ void* LTE_command(void* socket) {
 }
 
 void help() {
-    cout << " |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|" << endl;
-    cout << " |-|-|-|-|-|-  Main program for Control Unit  -|-|-|-|-|-|" << endl;
-    cout << " |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|" << endl;
-    cout << " |-|-|                                               |-|-|" << endl;
-    cout << " |-|-|  For 4th semester project of ComTek Group 450 |-|-|" << endl;
-    cout << " |-|-|             Spring Semester 2022              |-|-|" << endl;
-    cout << " |-|-|                                               |-|-|" << endl;
-    cout << " |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|" << endl << endl << endl;
-    cout << "Arguments Available for this program is:" << endl;
-    cout << "__________________________________________________________" << endl << endl;
+    cout << "  |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|" << endl;
+    cout << "  |-|-|-|-|-|-  Main program for Control Unit  -|-|-|-|-|-|" << endl;
+    cout << "  |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|" << endl;
+    cout << "  |-|-|                                               |-|-|" << endl;
+    cout << "  |-|-|  For 4th semester project of ComTek Group 450 |-|-|" << endl;
+    cout << "  |-|-|             Spring Semester 2022              |-|-|" << endl;
+    cout << "  |-|-|                                               |-|-|" << endl;
+    cout << "  |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|" << endl << endl << endl << endl << endl;
+    cout << "   Arguments Available for this program is:" << endl;
+    cout << "  __________________________________________________________" << endl << endl;
 
 
-    cout << "----------------------------------------------------------" << endl;
-    cout << "----      Start of the Signal Monitoring Process      ----" << endl;
-    cout << "----                                                  ----" << endl;
-    cout << "Call Arguments:" << endl;
-    cout << "   -m" << endl;
-    cout << "   -monitor" << endl;
-    cout << "   -monitoring" << endl << endl << endl;
+    cout << "  ----------------------------------------------------------" << endl;
+    cout << "  ----      Start of the Signal Monitoring Process      ----" << endl;
+    cout << "  ----                                                  ----" << endl;
+    cout << "   Call Arguments:" << endl;
+    cout << "      -m" << endl;
+    cout << "      -monitor" << endl;
+    cout << "      -monitoring" << endl << endl << endl;
 
 
-    cout << "----------------------------------------------------------" << endl;
-    cout << "----       Use RAM Grid for Command Conversion        ----" << endl;
-    cout << "----                                                  ----" << endl;
-    cout << "Call Argument:" << endl;
-    cout << "   -g" << endl;
-    cout << "   -grid" << endl;
+    cout << "  ----------------------------------------------------------" << endl;
+    cout << "  ----       Use RAM Grid for Command Conversion        ----" << endl;
+    cout << "  ----                                                  ----" << endl;
+    cout << "   Call Argument:" << endl;
+    cout << "      -g" << endl;
+    cout << "      -grid" << endl << endl << endl;
 
 
-    cout << "----------------------------------------------------------" << endl;
-    cout << "----      Force Communication on Both LTE & WiFi      ----" << endl;
-    cout << "----                                                  ----" << endl;
-    cout << "Call Argument:" << endl;
-    cout << "   -b" << endl;
-    cout << "   -both" << endl << endl << endl;
+    cout << "  ----------------------------------------------------------" << endl;
+    cout << "  ----      Force Communication on Both LTE & WiFi      ----" << endl;
+    cout << "  ----                                                  ----" << endl;
+    cout << "   Call Argument:" << endl;
+    cout << "      -b" << endl;
+    cout << "      -both" << endl << endl << endl;
 
 
-    cout << "----------------------------------------------------------" << endl;
-    cout << "----                Change Axis Sizes                 ----" << endl;
-    cout << "----                                                  ----" << endl;
-    cout << "Call Argument:" << endl;
-    cout << "   -x <int>              - For the X-axis" << endl;
-    cout << "   -y <int>              - For the Y-axis" << endl << endl;
-    cout << "Accepted Arguments:" << endl;
-    cout << "   Any int               - Int of the size you want" << endl << endl << endl;
+    cout << "  ----------------------------------------------------------" << endl;
+    cout << "  ----                Change Axis Sizes                 ----" << endl;
+    cout << "  ----                                                  ----" << endl;
+    cout << "   Call Argument:" << endl;
+    cout << "      -x <int>              - For the X-axis" << endl;
+    cout << "      -y <int>              - For the Y-axis" << endl << endl;
+    cout << "   Accepted Arguments:" << endl;
+    cout << "      Any int               - Int of the size you want" << endl << endl << endl;
 
 
-    cout << "----------------------------------------------------------" << endl;
-    cout << "----    Setting for Disabling Hex-Char Coordinates    ----" << endl;
-    cout << "----                                                  ----" << endl;
-    cout << "Call Argument:" << endl;
-    cout << "   -h" << endl;
-    cout << "   -hex" << endl << endl << endl;
+    cout << "  ----------------------------------------------------------" << endl;
+    cout << "  ----    Setting for Disabling Hex-Char Coordinates    ----" << endl;
+    cout << "  ----                                                  ----" << endl;
+    cout << "   Call Argument:" << endl;
+    cout << "      -h" << endl;
+    cout << "      -hex" << endl << endl << endl;
 
 
-    cout << "----------------------------------------------------------" << endl;
-    cout << "---- Verbose, to write out everthing that is going on ----" << endl;
-    cout << "----                                                  ----" << endl;
-    cout << "Arguments market with * can be written sequencially" << endl;
-    cout << "without needing to call -v / -verbose again" << endl << endl;
-    cout << "Call Argument:" << endl;
-    cout << "   -v <extra_1> <extra_2>" << endl;
-    cout << "   -verbose <extra_1> <extra_2>" << endl << endl;
-    cout << "Accepted Extra Arguments:" << endl;
-    cout << "   no extra              - Prints everything" << endl;
-    cout << "   i / in              * - Prints from incoming traffic" << endl;
-    cout << "   o / out             * - Prints from outgoing traffic" << endl;
-    cout << "   g / gsv             * - Prints from the GSV system" << endl << endl << endl;
+    cout << "  ----------------------------------------------------------" << endl;
+    cout << "  ---- Verbose, to write out everthing that is going on ----" << endl;
+    cout << "  ----                                                  ----" << endl;
+    cout << "   Arguments market with * can be written sequencially" << endl;
+    cout << "   without needing to call -v / -verbose again" << endl << endl;
+    cout << "   Call Argument:" << endl;
+    cout << "      -v <extra_1> <extra_2> <extra_3>" << endl;
+    cout << "      -verbose <extra_1> <extra_2> <extra_3>" << endl << endl;
+    cout << "   Accepted Extra Arguments:" << endl;
+    cout << "      no extra              - Prints everything" << endl;
+    cout << "      i / in              * - Prints from incoming traffic" << endl;
+    cout << "      o / out             * - Prints from outgoing traffic" << endl;
+    cout << "      g / gsv             * - Prints from the GSV system" << endl << endl << endl;
     
     exit(0);
 }
