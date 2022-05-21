@@ -1,16 +1,21 @@
 # P4-B450
-P4 Project
+P4 Project  
+Group 450, Spring Semester 2022  
 
 
 ## Control Unit:
+### Has many argument settings
+Use `-help` for full info on arguments  
+  
 WiFi: 192.168.1.136  
 LTE: 10.20.0.16  
 Eth: 192.168.1.185  
 
 ## Sensor: 
-Program Argument 1 is for Signal Monitor process            Insert 0 to disable 
-Program Argument 2 is for sending on both technologies      Insert 1 to disable 
-etc. `./Sensor 1 1`      This will ignore (enable) Signal Monitoring, and force to send on both technologies. 
+### Has argument settings 
+`-b` to force both LTE & WiFi  
+`-i <int>` to run a specific amount of times  
+`-m` to disable the Signal Monitor process  
 
 WiFi: 192.168.1.160  
 LTE: 10.20.0.10  
