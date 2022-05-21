@@ -143,7 +143,7 @@ int main(int argc, char* argv[]) {
             if (file == NULL) {
                 perror("Failed to open Execution.txt");
             }
-            fprintf(file, "%f", Execution_Temp);
+            fprintf(file, "%f\n", Execution_Temp);
             fclose(file);
 
             // isnan(Execution_Time[i]);
