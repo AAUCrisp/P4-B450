@@ -62,7 +62,7 @@ void* shm_read(const int SIZE, const char* name) {
         fprintf(stderr, "errno shm_open failed: %s\n", strerror(errno));
     }
     if (shm_fd == 1023) {
-                printf("Success on overwrite!");
+        printf("Success on overwrite!");
     }
     // printf("This is shm_fd with shm_open: %d\n", shm_fd);
     printf("Do I reach here 5\n");
@@ -76,6 +76,7 @@ void* shm_read(const int SIZE, const char* name) {
         perror("mmap failed");
         strerror(errno);
     }
+    
     printf("Read from shm_read: %s\n", (char*)ptr);
     // munmap(ptr, SIZE);
     close(shm_fd);
