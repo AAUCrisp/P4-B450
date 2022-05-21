@@ -50,7 +50,7 @@ int main() {
     pthread_t T1, T2;
     char* curr_time;
     int *Processed_Data;
-    double Execution_Time; = 0.0;
+    double Execution_Time = 0.0;
     clock_t Clock_Start;
     clock_t Clock_End;
     double Time_Difference = (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
@@ -84,7 +84,7 @@ int main() {
             Clock_End = clock();
             Execution_Time += Time_Difference;
             printf("Execution time: %f ms \n", Execution_Time);
-            
+
             sleep(2);
         }
     }
