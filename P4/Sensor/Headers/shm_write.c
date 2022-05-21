@@ -25,6 +25,7 @@
 /* Semaphore Names */
 // const char* SEM_READ_FNAME = "../";
 // const char* SEM_WRITE_FNAME = "../";
+extern int errno;
 
 void shm_write(const char* message, const int SIZE, const char* name) {
     printf("Do I reach here 1\n");
@@ -58,6 +59,7 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     shm_fd = shm_open(name, O_CREAT | O_RDWR, 0644);
     if (shm_fd == -1) {
         perror("shm_open failed");
+        fprintf(stderr, "shm_open failed %s\n", strerror(errno));
     }
     if (shm_fd == 1023) {
         printf("Success on overwrite!");
