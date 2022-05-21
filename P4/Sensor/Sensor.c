@@ -178,25 +178,16 @@ int main(int argc, char* argv[]) {
         }
         Time_Ended = clock();
 
-        long Elapsed_Time = (long)(Time_Ended - Time_Started);
+        double Elapsed_Time = (Time_Ended - Time_Started);
 
-        // Value chosen to be 1 hour, 1 minute, 1 second, and 1 millisecond
-        //Elapsed_Time = 9999999999999;
-
-        // 3600000 milliseconds in an hour
-        long hr = Elapsed_Time / 3600000;
-        Elapsed_Time = Elapsed_Time - 3600000 * hr;
-        // 60000 milliseconds in a minute
-        long min = Elapsed_Time / 60000;
-        Elapsed_Time = Elapsed_Time - 60000 * min;
-        // 1000 milliseconds in a second
-        long sec = Elapsed_Time / 1000;
-        Elapsed_Time = Elapsed_Time - 1000 * sec;
+        double sec = milliseconds / 1000.0;
+        double min = seconds / 60.0;
+        double hr = minutes / 60.0;
 
         Execution_Average = Execution_Sum / iter;
         printf("Execution average: %f ms\n", Execution_Average);
         printf("Total time: %ld\n", (Time_Ended - Time_Started));
-        printf("Total_Time_Elapsed: %ld:%ld:%ld\n",hr,min,sec);
+        printf("Total_Time_Elapsed: %lf:%lf:%lf\n",hr,min,sec);
         printf("Total failed counts: %d\n", fail_count);
 
         //}
