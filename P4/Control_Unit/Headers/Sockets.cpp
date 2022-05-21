@@ -332,7 +332,7 @@ void* transmit_command_LTE(void *socket, char* message) {
     send_time = Timestamp();
     
     File.open("log.txt", std::ofstream::out | std::ofstream::app);
-    File << "\n LTE: Transmitting Message " << message << "\n Time;" << "  ;  " << send_time << "\n \n";
+    File << ";  LTE  ;" << message << ";  Time" << "  ;  " << send_time << "\n \n";
     File.close();
 
     if(print_act_out == 1 || message_only == 1) {
@@ -353,7 +353,7 @@ void* transmit_command_WiFi(void *socket, char* message) {
     TX_WiFi = sendto(sock->act_WiFi, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_WiFi, LenWiFi);
     send_time = Timestamp();
     File.open("log.txt", std::ofstream::out | std::ofstream::app);
-    File << "WiFi: Transmitting Message; " << message << "\n Time;" << send_time << "\n";
+    File << "WiFi; " << message << "Time  ;  " << send_time;
     File.close();
     
     if(print_act_out == 1 || message_only == 1) {
