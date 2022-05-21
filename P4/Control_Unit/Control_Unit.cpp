@@ -5,6 +5,7 @@
 #ifndef SOCKETS_CONT
 #define SOCKETS_CONT
 #include "Headers/Sockets.h"
+// #include "Headers/Sockets.cpp"
 #endif
 #ifndef CONVERTER
 #define CONVERTER
@@ -24,8 +25,8 @@
 // #include<iostream>
 // using namespace std;
 /* -- Test Data Variable-- */
-int monitor = 0;        // Disable/Enable Start of Signal Monitoring
-int troubleshooting_print = 0;
+// int monitor = 0;        // Disable/Enable Start of Signal Monitoring
+// int troubleshooting_print = 0;
 
 // string* grid = new string[coordinates]; // Don't forget to delete [] a; when you're done!
 
@@ -40,8 +41,8 @@ int main(int argc, char *argv[]) {
     -------- Conversion Area --------
     ------------- start ----------- */
     
-    int hex = 1;
-    int use_grid = 0;
+    // int hex = 1;
+    // int use_grid = 0;
     string* grid;
 
     if(argc > 1) {      // If the program is run with arguments
@@ -49,61 +50,15 @@ int main(int argc, char *argv[]) {
 
         cout << "Number of arguments combinations: " << (argc - 1)/2 << endl;
 
-        for (int i = 1; i < argc; i++) {
-            // RAM Grid Argument
-            if((string) argv[i] == "-g" || (string) argv[i] == "-grid") {
-                if ( (string) argv[i+1] == "no" || (string) argv[i+1] == "0" || (string) argv[i+1] == "false") {
-                    cout << "=====  RAM Grid Disabled =====" << endl;
-                    use_grid = 0;
-                }
-                else if ( (string) argv[i+1] == "yes" || (string) argv[i+1] == "1" || (string) argv[i+1] == "true") {
-                    cout << "=====  RAM Grid Enabled =====" << endl;
-                    use_grid = 1;
-                }
-            }
-
-            // Signal Monitoring Process Argument
-            if((string) argv[i] == "-m" || (string) argv[i] == "-monitor" || (string) argv[i] == "-monitoring") {
-                if ( (string) argv[i+1] == "no" || (string) argv[i+1] == "0" || (string) argv[i+1] == "false") {
-                    cout << "=====  Signal Monitoring Process Creation Disabled =====" << endl;
-                    monitor = 0;
-                }
-                else if ( (string) argv[i+1] == "yes" || (string) argv[i+1] == "1" || (string) argv[i+1] == "true") {
-                    cout << "=====  Signal Monitoring Process Creation Enabled =====" << endl;
-                    monitor = 1;
-                }
-            }
-
-            // Verbose Argument
-            if((string) argv[i] == "-v" || (string) argv[i] == "-verbose") {
-                if ( (string) argv[i+1] == "no" || (string) argv[i+1] == "0" || (string) argv[i+1] == "false") {
-                    cout << "=====  Verbose Disabled =====" << endl;
-                    troubleshooting_print = 0;
-                }
-                else if ( (string) argv[i+1] == "yes" || (string) argv[i+1] == "1" || (string) argv[i+1] == "true") {
-                    cout << "=====  Verbose Enabled =====" << endl;
-                    troubleshooting_print = 1;
-                }
-            }
-
-        }
-        
-        if(argc == 3) {     // For enabling or disabling Hex-char output.
-            hex = atoi(argv[2]);
-            if(hex == 0){
-                cout << "Hex-char version disabled" << endl;
-            }
-            else{
-                cout << "Hex-char version enabled" << endl;
-            }
-        }
+        Argument_Setup(argc, argv);
     }
     else {
         cout << "\nNo arguments inserted, running staticly." << endl;
     }
     if(use_grid == 1) {
         cout << "Using RAM Grid!" << endl;
-        grid = generate_grid(x_axis, y_axis, hex);
+        cout << "X-axis size is: " << x_axis << "   & Y-axis size is: " << y_axis << endl;
+        grid = generate_grid(x_axis, y_axis, use_hex);
     }
 
     /* ----------- end --------------

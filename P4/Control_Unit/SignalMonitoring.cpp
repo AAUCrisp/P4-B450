@@ -11,14 +11,15 @@
 #ifndef SOCKETS_MON
 #define SOCKETS_MON
 #include "Headers/Sockets.h"
+// #include "Headers/Sockets.cpp"
+// #include "Headers/RSSI.cpp"
 #endif
-// #include "Headers/Sockets.h"
 
 #define buffer 32
 
-int print = 0;      // Enable/Disable prints for troubleshooting
-int only_message = 1;   // Only print Selection
-int both_tech = 1;      // Forces it to use both LTE & WiFi
+// int print = 0;      // Enable/Disable prints for troubleshooting
+// int only_message = 1;   // Only print Selection
+// int both_tech = 1;      // Forces it to use both LTE & WiFi
 
 pthread_t wifi, lte;
 

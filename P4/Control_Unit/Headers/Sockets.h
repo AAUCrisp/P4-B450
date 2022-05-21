@@ -2,7 +2,6 @@
 #define SOCKETS
 
 /* Function declarations here: */
-
 #ifndef SOCKET_STRUCT
 #define SOCKET_STRUCT
 
