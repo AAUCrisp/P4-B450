@@ -125,6 +125,7 @@ int main(int argc, char* argv[]) {
             }*/
 
             // printf("Sensor || Before Transmitting\n");
+            usleep(1000);
             if (GSV == B || GSV == L) {
                 transmitLTE(&sock, (char*)buffer);
             }
