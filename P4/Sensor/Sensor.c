@@ -158,7 +158,7 @@ int main(int argc, char* argv[]) {
             //usleep(10000);
         }
         Execution_Average = Execution_Sum / iter;
-        printf("Execution average: %f\n ms", Execution_Average);
+        printf("Execution average: %f ms\n", Execution_Average);
         printf("Total failed counts: %d\n", fail_count);
         //}
     }
