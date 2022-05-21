@@ -178,13 +178,13 @@ int main(int argc, char* argv[]) {
         }
         Time_Ended = clock();
 
-        double Elapsed_Time = (Time_Ended - Time_Started);
+        long timestamp = (long)(Time_Ended - Time_Started);
 
-        double sec = Elapsed_Time / 1000.0;
-        double min = sec / 60.0;
-        double hr = min / 60.0;
+        ong milliseconds = (long)(timestamp / 1000) % 1000;
+        long seconds = (((long)(timestamp / 1000) - milliseconds) / 1000) % 60;
+        long minutes = (((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) % 60 long hours = ((((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) - minutes) / 60
 
-        Execution_Average = Execution_Sum / iter;
+                                                                                                               Execution_Average = Execution_Sum / iter;
         printf("Execution average: %f ms\n", Execution_Average);
         printf("Total time: %ld\n", (Time_Ended - Time_Started));
         printf("Total_Time_Elapsed: %lf:%lf:%lf\n",hr,min,sec);
