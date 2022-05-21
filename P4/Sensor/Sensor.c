@@ -129,7 +129,7 @@ int main(int argc, char* argv[]) {
             Clock_End = clock();
             Execution_Time += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
             ;
-            printf("Execution time: %f ms \n\n", Execution_Time);
+            printf("Execution time: %f ms \n", Execution_Time);
             sleep(3);
         }
     }
