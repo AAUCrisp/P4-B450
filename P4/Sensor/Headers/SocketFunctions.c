@@ -166,7 +166,24 @@ void *receiveLTE(void *socket) {
             printf("GSV || LTE || Message: %s from Control Unit \n\n", message);
         }
         printf("Do I reach here 1");
+        printf("Do I reach here 1");
+        printf("Do I reach here 1");
+        printf("Do I reach here 1");
+        printf("Do I reach here 1");
+        printf("Do I reach here 1");
+        printf("Do I reach here 1");
+        printf("Do I reach here 1");
+        printf("Do I reach here 1");
+        printf("Do I reach here 1");
+        printf("Do I reach here 1");
+        printf("Do I reach here 1");
         shm_write(message, 32, GSV_KEY);
+        printf("Do I reach here 2");
+        printf("Do I reach here 2");
+        printf("Do I reach here 2");
+        printf("Do I reach here 2");
+        printf("Do I reach here 2");
+        printf("Do I reach here 2");
         printf("Do I reach here 2");
     }
 }
