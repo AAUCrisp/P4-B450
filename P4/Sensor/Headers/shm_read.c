@@ -82,8 +82,8 @@ void* shm_read(const int SIZE, const char* name) {
     // printf("Read from shm_read.c: %s\n", (char*)ptr);
 
     /* remove the shared memory object */
-    close(shm_fd);
     shm_unlink(name);
+    close(shm_fd);
 
     return ptr;
 }
