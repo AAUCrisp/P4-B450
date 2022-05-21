@@ -120,7 +120,7 @@ int main(int argc, char* argv[]) {
             // printf("\nGSV converted: %d\n", GSV);
             /*if (monitor == 1) {
             }*/
-            
+
             Clock_Start = clock();
             sprintf(buffer, "%d", generate(1, 25000000));
             // printf("\nSensor || After Random Int Generation\n");
@@ -154,32 +154,38 @@ int main(int argc, char* argv[]) {
             // isnan(Execution_Time[i]);
             int shit = isnan(Execution_Time[i]);
             if (shit == 0) {
-                //printf("isnan value: %d\n", isnan(Execution_Time[i]));
+                // printf("isnan value: %d\n", isnan(Execution_Time[i]));
                 Execution_Time[i] += Execution_Temp;
                 if (Execution_Time[i] <= 1000000) {
                     Execution_Sum += Execution_Time[i];
                 } else {
                     fail_count++;
-                    //printf("Fail counter: %d\n", fail_count);
-                    //printf("Execution_Sum exceeded 10000000\n");
+                    // printf("Fail counter: %d\n", fail_count);
+                    // printf("Execution_Sum exceeded 10000000\n");
                 }
             } else {
                 fail_count++;
-                //printf("Fail counter: %d\n", fail_count);
-                //printf("isnan value: %d\n", isnan(Execution_Time[i]));
-                //printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
+                // printf("Fail counter: %d\n", fail_count);
+                // printf("isnan value: %d\n", isnan(Execution_Time[i]));
+                // printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
             }
 
-            //printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
-            //printf("Execution_Sum = %f\n", Execution_Sum);
+            // printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
+            // printf("Execution_Sum = %f\n", Execution_Sum);
 
             // sleep(3);
             // usleep(10000);
         }
         Time_Ended = clock();
+        double Total_Time_Elapsed = (Time_Ended - Time_Started);
+
+        int seconds = (int)(Total_Time_Elapsed / 1000) % 60;
+        int minutes = (int)((Total_Time_Elapsed / (1000 * 60)) % 60);
+        int hours = (int)((Total_Time_Elapsed / (1000 * 60 * 60)) % 24);
+
         Execution_Average = Execution_Sum / iter;
         printf("Execution average: %f ms\n", Execution_Average);
-        printf("Execution time: %ld ms\n", (Time_Ended - Time_Started));
+        printf("Execution time: %d:%d:%d\n", hours, minutes, seconds);
         printf("Total failed counts: %d\n", fail_count);
 
         //}

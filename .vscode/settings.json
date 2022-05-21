@@ -18,7 +18,8 @@
     "sockets.h": "c",
     "iostream": "cpp",
     "iosfwd": "cpp",
-    "cmath": "c"
+    "cmath": "c",
+    "chrono": "c"
   },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "/usr/bin/g++",
