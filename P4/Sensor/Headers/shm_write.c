@@ -59,6 +59,10 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     if (shm_fd == -1) {
         perror("shm_open failed");
     }
+    if(shm_fd == 1023){
+        shm_fd = 0;
+        printf("Success on overwrite!");
+    }
 
     /* configure the size of the shared memory object */
     ftruncate(shm_fd, SIZE);
