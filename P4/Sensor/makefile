@@ -1,5 +1,5 @@
-all: Sensor SensorMonitoring
-# all: Git Sensor SensorMonitoring
+#all: Sensor SensorMonitoring
+all: Git Sensor SensorMonitoring
 
 Git:
 	git pull
