@@ -5,7 +5,8 @@ Group 450, Spring Semester 2022
 
 ## Control Unit:
 ### Has many argument settings
-Use `-help` for full info on arguments 
+Use `-help` for full info on arguments.  
+  
 If running Signal Monitoring on it's own it takes:  
 `-b` to force both LTE & WiFi  
 `-v`to print out shit... troubleshooting... get it?  
