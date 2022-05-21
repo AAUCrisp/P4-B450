@@ -85,7 +85,6 @@ int main(int argc, char* argv[]) {
     /* Execution time variables */
     int fail_count = 0;
     double Execution_Time[iter];
-    int shit = isnan(Execution_Time[i]);
     double Execution_Temp;
     double Execution_Sum;
     double Execution_Average;
@@ -166,7 +165,7 @@ int main(int argc, char* argv[]) {
             fclose(file);*/
 
             // isnan(Execution_Time[i]);
-            
+            int shit = isnan(Execution_Time[i]);
             if (shit == 0) {
                 // printf("isnan value: %d\n", isnan(Execution_Time[i]));
                 Execution_Time[i] += Execution_Temp;
