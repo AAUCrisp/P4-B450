@@ -14,9 +14,9 @@ using namespace std;
 #define CONVERT_VARIABLES
 /* -- Test Data Variable-- */
 // int data_int = 1500000;     // Static Test Variable
-int x_axis = 5000;      // Length of the x-axis of the grid
-int y_axis = 5000;      // Length of the y-axis of the grid
-int coordinates = x_axis*y_axis;
+// int x_axis = 5000;      // Length of the x-axis of the grid
+// int y_axis = 5000;      // Length of the y-axis of the grid
+// int coordinates = x_axis*y_axis;
 // string* grid = new string[coordinates]; // Don't forget to delete [] a; when you're done!
 #endif
 
@@ -43,7 +43,7 @@ string int_to_hex(int data, int back = 0) {
 
 
 /* --- Option to store the grid in memory and save processing power --- */
-string* generate_grid(int x_axis, int y_axis, int hex = 1) {
+string* generate_grid(int x_axis, int y_axis, int use_hex = 1) {
     // int coor = x_axis * y_axis;
     // string* grid = new string[coor]; // Don't forget to delete [] a; when you're done!
     string* grid = new string[coordinates]; // Don't forget to delete [] a; when you're done!
@@ -57,7 +57,7 @@ string* generate_grid(int x_axis, int y_axis, int hex = 1) {
     for (int i = 0; i < (x_axis * y_axis); i++) {
         string x;
         string y;
-        if(hex == 1) {
+        if(use_hex == 1) {
             x = int_to_hex(x_count);
             y = int_to_hex(y_count);
         }
@@ -98,7 +98,7 @@ void print_grid(string* grid, int coordinates) {
 
 /* Option for processing the coordinates instead of using memory */
 // string convert_to_coordinate(int number, int x_axis, int y_axis, int hex=1) {
-string convert_to_coordinate(int number, int hex=1) {
+string convert_to_coordinate(int number, int use_hex=1) {
     // int x = (number % (x_axis+1));
     // cout << "\n\nIS THIS HERE? \n\n" << endl;
     int x = ((number-1) % (x_axis))+1;
@@ -106,7 +106,7 @@ string convert_to_coordinate(int number, int hex=1) {
 
     string str_x;
     string str_y;
-    if(hex == 1) {
+    if(use_hex == 1) {
         str_x = int_to_hex(x);
         // cout << "Between HEX'es" << endl;
         str_y = int_to_hex(y);

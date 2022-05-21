@@ -8,7 +8,6 @@
 #include "shm_read.cpp"
 #endif
 
-// #endif
 #ifndef SOCKETS_NET
 #define SOCKETS_NET
 #include "Sockets.h"
@@ -17,18 +16,20 @@
 
 
 /* -- Trouble Shooting Setup -- */
-int message_only = 1;        // Print messages only
-int print_sen_in = 0;       // Print incoming Sensor related things
-int print_act_out = 0;      // Print outgoing Actuator related things
-int print_GSV = 0;          // Print GSV related things
-int force_both = 1;         // Troubleshooting with both technologies
 
 /* -------------------------
 -------- SETUP AREA --------
 ---------- start ---------*/
+// int message_only = 1;        // Print messages only
+// int print_sen_in = 0;       // Print incoming Sensor related things
+// int print_act_out = 0;      // Print outgoing Actuator related things
+// int print_GSV = 0;          // Print GSV related things
+// int force_both = 1;         // Troubleshooting with both technologies
+
 
 #ifndef SOCKET_STRUCT
 #define SOCKET_STRUCT
+
 
 typedef struct _sockets {
     /* Receiver sockets*/
