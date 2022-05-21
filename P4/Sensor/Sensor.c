@@ -119,9 +119,9 @@ int main(int argc, char* argv[]) {
         printf("Sensor monitoring process ID is: %d \n", getpid());
         char path[] = "./SensorMonitoring";
         char* args[] = {"./SensorMonitoring", NULL};
-        if (monitor == 1) {
+        /*if (monitor == 1) {
             execv(path, args);
-        }
+        }*/
     } else {
         // while (1) {
         Time_Started = clock();
