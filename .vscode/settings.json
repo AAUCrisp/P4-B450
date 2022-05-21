@@ -19,7 +19,8 @@
     "iostream": "cpp",
     "iosfwd": "cpp",
     "cmath": "c",
-    "chrono": "c"
+    "chrono": "c",
+    "ratio": "c"
   },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "/usr/bin/g++",
