@@ -67,7 +67,7 @@ int main(int argc, char* argv[]) {
 
     /* Execution time variables */
     int iter = 1000;
-    //struct timespec start, end;
+    // struct timespec start, end;
     double Execution_Time[iter];
     double Execution_Sum;
     double Execution_Average;
@@ -135,7 +135,9 @@ int main(int argc, char* argv[]) {
             }
             Clock_End = clock();
             Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
-            Execution_Sum += Execution_Time[i];
+            if (Execution_Time[i] != -nan || Execution_Time[i] != "-nan") {
+                Execution_Sum += Execution_Time[i];
+            }
 
             printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
             printf("Execution_Sum = %f\n", Execution_Sum);
