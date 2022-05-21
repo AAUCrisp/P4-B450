@@ -9,14 +9,13 @@ void Argument_Setup(int argc, char* argv[]) {
     const char* argument;
     argument = (char*) argv[1];
 
-    char* test;
-    test = "o\0";
+    char* test = 'o\0';
     // test = {'o','\0'};
 
     printf("\n\n First Argument is: %s \n\n", argument);
 
     printf("\n\nInside Argument Function \n\n");
-    if ( (char*)argument == "o") {
+    if ( (char*)argument == test) {
         printf("\nInside If statement\n\n");
         help();
     }

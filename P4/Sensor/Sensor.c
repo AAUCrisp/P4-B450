@@ -18,9 +18,9 @@
 #include <time.h>
 #include <unistd.h>
 
+#include "Headers/Functions.c"
 #include "Headers/SocketFunctions.h"
 #include "Headers/shm_write_read.h"
-#include "Headers/Functions.c"
 
 #define BUFFER 64
 
@@ -30,28 +30,32 @@ int main(int argc, char* argv[]) {
 
     printf("\n==================\nSensor Program Started\n==================\n\n");
 
-    if (argc > 1) {  // If the program is run with arguments
-        printf("\nArgument(s) accepted.\n");
+    //if (argc <= 1) {}
 
-        Argument_Setup(argc, argv);
+    
+        if (argc > 1) {  // If the program is run with arguments
+            printf("\nArgument(s) accepted.\n");
 
-        // int aug1 = atoi(argv[1]);
-        // int aug2 = atoi(argv[2]);
+            Argument_Setup(argc, argv);
 
-        // printf("\nBefore Monitor Argument\n");
-        // if (aug1 == 0) {  // For disabling GSV Update
-        //     printf("\n=====  Monitoring Disabled =====\n");
-        //     monitor = 0;
-        // }
+            // int aug1 = atoi(argv[1]);
+            // int aug2 = atoi(argv[2]);
 
-        // printf("\nBefore Both Argument\n");
-        // if (aug2 == 1) {  // For enabling using both LTE and WiFi.
-        //     printf("\n=====  Forced Both LTE & WiFi =====\n");
-        //     both_tech = 1;
-        // }
-    } else {
-        printf("\nNo arguments inserted, running staticly.\n");
-    }
+            // printf("\nBefore Monitor Argument\n");
+            // if (aug1 == 0) {  // For disabling GSV Update
+            //     printf("\n=====  Monitoring Disabled =====\n");
+            //     monitor = 0;
+            // }
+
+            // printf("\nBefore Both Argument\n");
+            // if (aug2 == 1) {  // For enabling using both LTE and WiFi.
+            //     printf("\n=====  Forced Both LTE & WiFi =====\n");
+            //     both_tech = 1;
+            // }
+        } else {
+            printf("\nNo arguments inserted, running staticly.\n");
+        }
+        
 
     /* Initialize PORT & INTERFACE*/
     uint PORT_LTE_TRANSMITTER = 9000;
@@ -117,8 +121,8 @@ int main(int argc, char* argv[]) {
         for (int i = 0; i < iter; i++) {
             // usleep(1000);
             msg = shm_read(32, GSV_KEY);
-            //GSV = atoi(msg);
-            // printf("\nSensor || GSV from shared memory: %s\n", msg);
+            // GSV = atoi(msg);
+            //  printf("\nSensor || GSV from shared memory: %s\n", msg);
 
             // printf("\nGSV converted: %d\n", GSV);
             /*if (monitor == 1) {
