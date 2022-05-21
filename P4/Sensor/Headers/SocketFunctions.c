@@ -165,7 +165,9 @@ void *receiveLTE(void *socket) {
             printf("GSV || LTE || Message from LTE received at: %s\n", curr_time);
             printf("GSV || LTE || Message: %s from Control Unit \n\n", message);
         }
+        printf("Do I reach here 1");
         shm_write(message, 32, GSV_KEY);
+        printf("Do I reach here 2");
     }
 }
 
