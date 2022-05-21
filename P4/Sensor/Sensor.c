@@ -74,6 +74,8 @@ int main(int argc, char* argv[]) {
     double Execution_Temp;
     double Execution_Sum;
     double Execution_Average;
+    clock_t Time_Started;
+    clock_t Time_Ended;
     clock_t Clock_Start;
     clock_t Clock_End;
 
@@ -117,6 +119,7 @@ int main(int argc, char* argv[]) {
             // printf("\nGSV converted: %d\n", GSV);
             /*if (monitor == 1) {
             }*/
+            Time_Started = clock();
             Clock_Start = clock();
             sprintf(buffer, "%d", generate(1, 25000000));
             // printf("\nSensor || After Random Int Generation\n");
@@ -171,8 +174,10 @@ int main(int argc, char* argv[]) {
             // sleep(3);
             // usleep(10000);
         }
+        Time_Ended = clock();
         Execution_Average = Execution_Sum / iter;
         printf("Execution average: %f ms\n", Execution_Average);
+        printf("Execution time: %s ms\n", (Time_Ended - Time_Started));
         printf("Total failed counts: %d\n", fail_count);
 
         //}
