@@ -65,6 +65,10 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     }
     printf("Do I reach here 5\n");
 
+    printf("SHM fd in WRITE: %d\n", shm_fd);
+    printf("SHM name in WRITE: %s\n", (char*)name);
+
+
     /* memory map the shared memory object */
     ptr = mmap(NULL, SIZE, PROT_WRITE, MAP_SHARED, shm_fd, 0);
     if (ptr == MAP_FAILED) {

@@ -126,10 +126,10 @@ int main(int argc, char* argv[]) {
         // while (1) {
         Time_Started = clock();
         for (int i = 0; i < iter; i++) {
-            usleep(10000);
+            //usleep(10000);
             msg = shm_read(99999, GSV_KEY);
             GSV = atoi(msg);
-            usleep(10000);
+            //usleep(10000);
             //  printf("\nSensor || GSV from shared memory: %s\n", msg);
 
             // printf("\nGSV converted: %d\n", GSV);

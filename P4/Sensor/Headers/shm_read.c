@@ -59,6 +59,9 @@ void* shm_read(const int SIZE, const char* name) {
     // printf("This is shm_fd with shm_open: %d\n", shm_fd);
     printf("Do I reach here 5\n");
 
+    printf("SHM fd in READ: %d\n", shm_fd);
+    printf("SHM name in READ: %s\n", (char*)name);
+
     /* memory map the shared memory object */
     ptr = mmap(NULL, SIZE, PROT_READ, MAP_SHARED, shm_fd, 0);
     if (ptr == MAP_FAILED) {
