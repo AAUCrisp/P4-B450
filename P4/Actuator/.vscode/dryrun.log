@@ -1,0 +1,10 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/ubeyd/P4-B450/P4/Actuator'
+g++ -pthread Actuator.cpp -o Actuator -lrt
+touch Actuator
+g++ -c Headers/SocketFunctions.c -lrt
+touch Headers/SocketFunctions.c
+g++ -pthread ActuatorMonitoring.c  SocketFunctions.o -o ActuatorMonitoring -lrt
+touch ActuatorMonitoring
+make: Leaving directory '/home/ubeyd/P4-B450/P4/Actuator'
+ 
