@@ -19,7 +19,12 @@ void WiFi_command(Sockets sock) {
         }
         sscanf((const char*)message, "%d %[^\n]", &data, msgDump);
         cout << "WiFi Command Function || Message Parsed from Sockets as INT is: " << data << endl;
-        coordinate = convert_to_coordinate(data, use_hex);
+        if(use_grid == 1) {
+            coordinate = grid[data];
+        }
+        else {
+            coordinate = convert_to_coordinate(data, use_hex);
+        }
         cout << "WiFi Command Function || Coordinate for Actuator is: " << coordinate << "\n\n\n" << endl;
         strcpy(WiFimsg, coordinate.c_str());
         transmit_command(&sock, WiFimsg);
@@ -47,7 +52,12 @@ void* LTE_command(void* socket) {
         }
         sscanf((const char*)message, "%d %[^\n]", &data, msgDump);
         cout << "LTE Command Function || Message Parsed from Sockets as INT is: " << data << endl;
-        coordinate = convert_to_coordinate(data, use_hex);
+        if(use_grid == 1) {
+            coordinate = grid[data];
+        }
+        else {
+            coordinate = convert_to_coordinate(data, use_hex);
+        }
         cout << "LTE Command Function || Coordinate for Actuator is: " << coordinate << "\n\n\n" << endl;
         strcpy(LTEmsg, coordinate.c_str());
         transmit_command(sock, LTEmsg);
@@ -74,9 +84,6 @@ void help() {
     cout << "   -m" << endl;
     cout << "   -monitor" << endl;
     cout << "   -monitoring" << endl << endl << endl;
-    cout << "Accepted Arguments:" << endl;
-    cout << "   true / yes / 1        - For enabling" << endl;
-    cout << "   false / no / 0        - For disabling" << endl << endl << endl;
 
 
     cout << "----------------------------------------------------------" << endl;
@@ -85,9 +92,6 @@ void help() {
     cout << "Call Argument:" << endl;
     cout << "   -g" << endl;
     cout << "   -grid" << endl;
-    cout << "Accepted Arguments:" << endl << endl;
-    cout << "   true / yes / 1        - For enabling" << endl;
-    cout << "   false / no / 0        - For disabling" << endl << endl << endl;
 
 
     cout << "----------------------------------------------------------" << endl;
@@ -95,31 +99,25 @@ void help() {
     cout << "----                                                  ----" << endl;
     cout << "Call Argument:" << endl;
     cout << "   -b" << endl;
-    cout << "   -both" << endl << endl;
-    cout << "Accepted Arguments:" << endl;
-    cout << "   true / yes / 1        - For enabling" << endl;
-    cout << "   false / no / 0        - For disabling" << endl << endl << endl;
+    cout << "   -both" << endl << endl << endl;
 
 
     cout << "----------------------------------------------------------" << endl;
     cout << "----                Change Axis Sizes                 ----" << endl;
     cout << "----                                                  ----" << endl;
     cout << "Call Argument:" << endl;
-    cout << "   -x               - For the X-axis" << endl;
-    cout << "   -y               - For the Y-axis" << endl << endl;
+    cout << "   -x <int>              - For the X-axis" << endl;
+    cout << "   -y <int>              - For the Y-axis" << endl << endl;
     cout << "Accepted Arguments:" << endl;
     cout << "   Any int               - Int of the size you want" << endl << endl << endl;
 
 
     cout << "----------------------------------------------------------" << endl;
-    cout << "----   Setting for Using Hex-Chars or normal numbers  ----" << endl;
+    cout << "----    Setting for Disabling Hex-Char Coordinates    ----" << endl;
     cout << "----                                                  ----" << endl;
     cout << "Call Argument:" << endl;
     cout << "   -h" << endl;
-    cout << "   -hex" << endl << endl;
-    cout << "Accepted Arguments:" << endl;
-    cout << "   true / yes / 1        - For enabling" << endl;
-    cout << "   false / no / 0        - For disabling" << endl << endl << endl;
+    cout << "   -hex" << endl << endl << endl;
 
 
     cout << "----------------------------------------------------------" << endl;
@@ -128,11 +126,10 @@ void help() {
     cout << "Arguments market with * can be written sequencially" << endl;
     cout << "without needing to call -v / -verbose again" << endl << endl;
     cout << "Call Argument:" << endl;
-    cout << "   -v" << endl;
-    cout << "   -verbose" << endl << endl;
-    cout << "Accepted Arguments:" << endl;
-    cout << "   true / yes / 1        - Enable all prints" << endl;
-    cout << "   false / no / 0        - Disabling nonimportant prints" << endl;
+    cout << "   -v <extra_1> <extra_2>" << endl;
+    cout << "   -verbose <extra_1> <extra_2>" << endl << endl;
+    cout << "Accepted Extra Arguments:" << endl;
+    cout << "   no extra              - Prints everything" << endl;
     cout << "   i / in              * - Prints from incoming traffic" << endl;
     cout << "   o / out             * - Prints from outgoing traffic" << endl;
     cout << "   g / gsv             * - Prints from the GSV system" << endl << endl << endl;
@@ -150,9 +147,7 @@ void Argument_Setup(int argc, char* argv[]) {
     }
     cout << "============================\nControl Unit Process Started\n============================\n\n" << endl;
 
-    cout << "\nArgument(s) accepted." << endl;
-
-    cout << "Number of arguments combinations: " << (argc - 1)/2 << endl;
+    cout << "\nArgument(s) accepted." << endl << endl;
 
     for (int i = 1; i < argc; i++) {
         string current = argv[i];
@@ -162,28 +157,14 @@ void Argument_Setup(int argc, char* argv[]) {
         if(firstCharacter == '-') {
             // RAM Grid Argument
             if((string) argv[i] == "-g" || (string) argv[i] == "-grid") {
-                if ( (string) argv[i+1] == "no" || (string) argv[i+1] == "0" || (string) argv[i+1] == "false") {
-                    cout << "===== RAM Grid Disabled =====" << endl;
-                    use_grid = 0;
-                }
-                else if ( (string) argv[i+1] == "yes" || (string) argv[i+1] == "1" || (string) argv[i+1] == "true") {
-                    cout << "===== RAM Grid Enabled =====" << endl;
-                    use_grid = 1;
-                }
-                else { cout << "===== Invalid argument for \"RAM Grid Usage\" =====" << endl; }
+                cout << "===== RAM Grid Enabled =====" << endl;
+                use_grid = 1;
             }
 
             // Signal Monitoring Process Argument
             if((string) argv[i] == "-m" || (string) argv[i] == "-monitor" || (string) argv[i] == "-monitoring") {
-                if ( (string) argv[i+1] == "no" || (string) argv[i+1] == "0" || (string) argv[i+1] == "false") {
-                    cout << "===== Signal Monitoring Process Creation Disabled =====" << endl;
-                    monitor = 0;
-                }
-                else if ( (string) argv[i+1] == "yes" || (string) argv[i+1] == "1" || (string) argv[i+1] == "true") {
-                    cout << "===== Signal Monitoring Process Creation Enabled =====" << endl;
-                    monitor = 1;
-                }
-                else { cout << "===== Invalid argument for \"Signal Monitoring Process Start\" =====" << endl; }
+                cout << "===== Signal Monitoring Process Creation Disabled =====" << endl;
+                monitor = 0;
             }
 
             // Verbose Argument
@@ -193,23 +174,9 @@ void Argument_Setup(int argc, char* argv[]) {
                     string current = argv[j];
                     firstCharacter = current.at(0);
 
+                    cout << "===== Verbose Enabled =====" << endl;
                     if(firstCharacter == '-') {
-                        break;
-                    }
-                    else if ( (string) argv[j] == "no" || (string) argv[j] == "0" || (string) argv[i+1] == "false") {
-                        cout << "===== Verbose Disabled =====" << endl;
-                        message_only = 1;        // Print messages only
-                        // troubleshooting_print = 0;
-                        troubleshooting_print = 0;
-                        print_sen_in = 0;       // Print incoming Sensor related things
-                        print_act_out = 0;      // Print outgoing Actuator related things
-                        print_GSV = 0;          // Print GSV related things
-                        break;
-                    }
-                    else if ( (string) argv[j] == "yes" || (string) argv[j] == "1" || (string) argv[i+1] == "true") {
-                        cout << "===== Verbose Enabled =====" << endl;
                         message_only = 0;        // Print messages only
-                        // troubleshooting_print = 1;
                         troubleshooting_print = 1;
                         print_sen_in = 1;       // Print incoming Sensor related things
                         print_act_out = 1;      // Print outgoing Actuator related things
@@ -239,30 +206,14 @@ void Argument_Setup(int argc, char* argv[]) {
 
             // Usage of Hex Char Argument
             if((string) argv[i] == "-h" || (string) argv[i] == "-hex") {
-                if ( (string) argv[i+1] == "no" || (string) argv[i+1] == "0" || (string) argv[i+1] == "false") {
-                    cout << "===== Hex Chars Disabled =====" << endl;
-                    use_hex = 0;
-                }
-                else if ( (string) argv[i+1] == "yes" || (string) argv[i+1] == "1" || (string) argv[i+1] == "true") {
-                    cout << "===== Hex Chars Enabled =====" << endl;
-                    use_hex = 1;
-                }
-                else { cout << "===== Invalid argument for \"Hex Conversion\" =====" << endl; }
+                cout << "===== Hex Chars Disabled =====" << endl;
+                use_hex = 0;
             }
 
             // Force Both Technologies Argument
             if((string) argv[i] == "-b" || (string) argv[i] == "-both") {
-                if ( (string) argv[i+1] == "no" || (string) argv[i+1] == "0" || (string) argv[i+1] == "false") {
-                    cout << "===== Forced Use of Both Technologies Disabled =====" << endl;
-                    force_both = 0;
-                    force_both = 0;
-                }
-                else if ( (string) argv[i+1] == "yes" || (string) argv[i+1] == "1" || (string) argv[i+1] == "true") {
-                    cout << "===== Forced Use of Both Technologies Enabled =====" << endl;
-                    force_both = 1;
-                    // force_both = 1;
-                }
-                else { cout << "===== Invalid argument for \"Forced Both Technologies\"===== " << endl; }
+                cout << "===== Forced Use of Both Technologies Enabled =====" << endl;
+                force_both = 1;
             }
 
             // X-Axis Range Argument
@@ -286,6 +237,11 @@ void Argument_Setup(int argc, char* argv[]) {
     if(axis_change >= 1) {
         coordinates = x_axis * y_axis;
     }
+    if(use_grid == 1) {
+        cout << "X-axis size is: " << x_axis << "   &   Y-axis size is: " << y_axis << endl;
+        grid = generate_grid(x_axis, y_axis, use_hex);
+    }
+    cout << "\n\n==== Argument Setup Done ====\n\n" << endl;
 
 }
 

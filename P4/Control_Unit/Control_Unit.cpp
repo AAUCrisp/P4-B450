@@ -35,7 +35,7 @@
 
 /* Main running code */
 int main(int argc, char *argv[]) {
-    string* grid;
+    // string* grid;
 
     // If Arguments is inserted
     if(argc > 1) {      // If the program is run with arguments
@@ -46,14 +46,6 @@ int main(int argc, char *argv[]) {
         cout << "\nNo arguments inserted, running staticly." << endl;
     }
 
-    if(use_grid == 1) {
-        cout << "X-axis size is: " << x_axis << "   & Y-axis size is: " << y_axis << endl;
-        grid = generate_grid(x_axis, y_axis, use_hex);
-    }
-
-    /* ----------- end --------------
-    -------- Conversion Area --------
-    ------------------------------ */
 
 
     /* -- Connection Setup -- */
