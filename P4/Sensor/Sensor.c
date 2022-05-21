@@ -113,8 +113,8 @@ int main(int argc, char* argv[]) {
         Time_Started = clock();
         for (int i = 0; i < iter; i++) {
             // usleep(1000);
-            // msg = shm_read(32, GSV_KEY);
-            // GSV = atoi(msg);
+            msg = shm_read(32, GSV_KEY);
+            GSV = atoi(msg);
             // printf("\nSensor || GSV from shared memory: %s\n", msg);
 
             // printf("\nGSV converted: %d\n", GSV);
@@ -132,7 +132,6 @@ int main(int argc, char* argv[]) {
             }*/
 
             // printf("Sensor || Before Transmitting\n");
-            usleep(1000);
             if (GSV == B || GSV == L) {
                 transmitLTE(&sock, (char*)buffer);
             }
@@ -179,7 +178,6 @@ int main(int argc, char* argv[]) {
         Time_Ended = clock();
 
         long timestamp = (long)(Time_Ended - Time_Started);
-
         long milliseconds = (long)(timestamp / 1000) % 1000;
         long seconds = (((long)(timestamp / 1000) - milliseconds) / 1000) % 60;
         long minutes = (((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) % 60;
@@ -188,7 +186,7 @@ int main(int argc, char* argv[]) {
         Execution_Average = Execution_Sum / iter;
         printf("Execution average: %f ms\n", Execution_Average);
         printf("Total time: %ld\n", (Time_Ended - Time_Started));
-        printf("Total_Time_Elapsed: %ld:%ld:%ld:%ld\n", hours, minutes, seconds, milliseconds);
+        printf("Total_Time_Elapsed [HH:MM:SS:MS]: %ld:%ld:%ld:%ld\n", hours, minutes, seconds, milliseconds);
         printf("Total failed counts: %d\n", fail_count);
 
         //}
