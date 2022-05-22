@@ -8,8 +8,8 @@ Group 450, Spring Semester 2022
 Use `-help` for full info on arguments.  
   
 ##### If running Signal Monitoring on it's own it takes:  
-`-t <arg>` to force both LTE & WiFi  `b / both` for both, `w / wifi` for WiFi & `l / lte` for LTE  
-`-v`to print out shit... troubleshooting... get it?  
+`-t <arg>` to force both LTE & WiFi  *no arguments* or `b / both` for both, `w / wifi` for WiFi & `l / lte` for LTE  
+`-v`to print out shit... *no arguments* for all, or `m` for important messages  
 `-s <int>` to set how often it monitors  
   
 WiFi: 192.168.1.136  

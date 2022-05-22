@@ -45,6 +45,7 @@ int rsrp_average;
 
 int main(int argc, char *argv[]) {
 
+
     // If Arguments is inserted
     if(argc > 1) {      // If the program is run with arguments
         int child = 0;
@@ -54,17 +55,19 @@ int main(int argc, char *argv[]) {
             child = 1;
         }
         else {
-            cout << "Sensor Monitoring Arguments Received" << endl;
+            cout << "  Sensor Monitoring Arguments Received" << endl;
         }
         for (int i = 1; i < argc; i++) {
 
             // Force Technologies Argument
             if((string) argv[i] == "-t" || (string) argv[i] == "-tech" || (string) argv[i] == "-technology") {
+                char firstCharacter;
 
                 if( argc > i+1) {
                     string current = argv[i+1];
-                    char firstCharacter = current.at(0);
-
+                    if(child == 0) {
+                        firstCharacter = current.at(0);
+                    }
                     if( (firstCharacter == '-') || (string) argv[i+1] == "b" ||  (string) argv[i+1] == "both") {
                         if(child == 0) {
                             cout << "  ===== Forced Use of Both Technologies Enabled =====" << endl;
@@ -94,19 +97,28 @@ int main(int argc, char *argv[]) {
 
             // Verbose Argument
             if((string) argv[i] == "-v" || (string) argv[i] == "-verbose") {
-                if(child == 0) {
-                    cout << "===== Verbose Enabled =====" << endl;
+
+                if(argv[i+1] == (string) "m") {
+                    if(child == 0) {
+                        cout << "  ===== Verbose For Messages Enabled =====" << endl;
+                    }
+                    message_only = 1;
                 }
-                message_only = 0;        // Print messages only
-                troubleshooting_print = 1;
-                print_GSV = 1;          // Print GSV related things
+                else {
+                    if(child == 0) {
+                        cout << "  ===== Verbose Enabled =====" << endl;
+                    }
+                    message_only = 1;
+                    troubleshooting_print = 1;
+                    print_GSV = 1;          // Print GSV related things
+                }
             }
             
             // Sleep Argument
             if((string) argv[i] == "-s" || (string) argv[i] == "-sleep") {
                 delay = atoi(argv[i+1]);
                 if(child == 0) {
-                    cout << "===== Sleep Time Changed to " << delay << " seconds =====" << endl;
+                    cout << "  ===== Sleep Time Changed to " << delay << " seconds =====" << endl;
                 }
             }
         }
@@ -127,22 +139,31 @@ int main(int argc, char *argv[]) {
 
     printf("\n\n  ============================\n   Monitoring Process Started\n  ============================\n\n");
     int counter = 0;
+    // int bad_signal = 0;
 
     while (1) {
         wifi_rssi[counter] = RSSI_VAL();
         lte_rsrp[counter] = RSRP_VAL();
 
-        if (gsv == "1" || gsv == "0") {  // If GSV is set to WiFi or both
-            if (wifi_rssi[counter] < rssi_bad) {
-                gsv =  (char*)"2";
-            }
-        }
+        // if (gsv == "1" || gsv == "0") {  // If GSV is set to WiFi or both
+        //     if (wifi_rssi[counter] < rssi_bad) {
+        //         gsv =  (char*)"2";
+        //         bad_signal = 1;
+        //         if(message_only == 1) {
+        //             cout << "GSV || Bad Signal || LTE Selected" << endl << endl;
+        //         }
+        //     }
+        // }
 
-        if (gsv == "2" || gsv == "0") {
-            if (lte_rsrp[counter] < rsrp_bad) {
-                gsv =  (char*)"1";
-            }
-        }
+        // if (gsv == "2" || gsv == "0") {
+        //     if (lte_rsrp[counter] < rsrp_bad) {
+        //         gsv =  (char*)"1";
+        //         bad_signal = 1;
+        //         if(message_only == 1) {
+        //             cout << "GSV || Bad Signal || WiFi Selected" << endl << endl;
+        //         }
+        //     }
+        // }
 
         rssi_sum = 0;
         rsrp_sum = 0;
@@ -158,18 +179,36 @@ int main(int argc, char *argv[]) {
         if(force_tech > 0){
             if(force_tech == 1){
                 gsv = (char*)"0";
-                cout << "GSV || Forced Use of Both" << endl << endl;
+                if(message_only == 1) {
+                    cout << "GSV || Forced Use of Both" << endl << endl;
+                }
             }
             else if(force_tech == 2){
                 gsv = (char*)"1";
-                cout << "GSV || Forced Use of WiFi" << endl << endl;
+                if(message_only == 1) {
+                    cout << "GSV || Forced Use of WiFi" << endl << endl;
+                }
             }
             else if(force_tech == 3){
                 gsv = (char*)"2";
-                cout << "GSV || Forced Use of LTE" << endl << endl;
+                if(message_only == 1) {
+                    cout << "GSV || Forced Use of LTE" << endl << endl;
+                }
             }
         }
         /* Compare signals and select a technology */
+        else if (lte_rsrp[counter] < rsrp_bad) {
+            gsv =  (char*)"1";
+            if(message_only == 1) {
+                cout << "GSV || Bad Signal || WiFi Selected" << endl << endl;
+            }
+        }
+        else if (wifi_rssi[counter] < rssi_bad) {
+            gsv =  (char*)"2";
+            if(message_only == 1) {
+                cout << "GSV || Bad Signal || LTE Selected" << endl << endl;
+            }
+        }
         else if ((rssi_average >= rssi_good && rsrp_average < rsrp_good) || (rssi_average >= rssi_mid && rsrp_average < rsrp_mid)) {
             gsv =  (char*)"1";  // If WiFi has stronger signal, set WiFi
             if(troubleshooting_print == 1 || message_only == 1) {

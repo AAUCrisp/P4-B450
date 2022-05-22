@@ -72,10 +72,10 @@ int main(int argc, char *argv[]) {
     pid_t signal_monitor;     // Prepare the process ID for monitoring
     signal_monitor = fork();  // Starts new process
     if (signal_monitor == 0) {
-        printf("  Parent Process ID: %d \n", getppid());
-        printf("  Monitoring Process ID is: %d \n", getpid());
-
-        cout << "  GSV Tech Argument is: " << GSV_tech << " with " << GSV_tech_arg << endl;
+        if(troubleshooting_print == 1) {
+            printf("  Parent Process ID: %d \n", getppid());
+            printf("  Monitoring Process ID is: %d \n", getpid());
+        }
 
         char* path = (char*) "./SignalMonitoring";                 // Path of the file for new process to run
         char* args[] = { (char*)"./SignalMonitoring&", GSV_arg_used, GSV_print, GSV_sleep, GSV_sleep_arg, GSV_tech, GSV_tech_arg, (char*) NULL};       // Command for the function to execute, always ended on NULL argument

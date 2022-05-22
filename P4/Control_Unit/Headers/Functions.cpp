@@ -8,24 +8,26 @@ void WiFi_command(Sockets sock) {
     printf("\n\n  =======================\n   WiFi Listener Started\n  =======================\n\n");
     
     if(troubleshooting_print == 1) {
-        cout << "WiFi Command Function || WiFi Sensor Socket: " <<sock.sockWiFi_RECEIVER << endl;
-        cout << "WiFi Command Function || WiFi Actuator Socket: " <<sock.act_WiFi << endl;
-        cout << "WiFi Command Function || LTE Actuator Socket: " <<sock.act_LTE << endl;
+        cout << "  WiFi Command Function || WiFi Sensor Socket: " <<sock.sockWiFi_RECEIVER << endl;
+        cout << "  WiFi Command Function || WiFi Actuator Socket: " <<sock.act_WiFi << endl;
+        cout << "  WiFi Command Function || LTE Actuator Socket: " <<sock.act_LTE << endl;
     }
     while(1) {
         message = (void*)receiveWiFi((void*)&sock);
         if(troubleshooting_print == 1) {
-            cout << "WiFi Command Function || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
+            cout << "  WiFi Command Function || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
         }
         sscanf((const char*)message, "%d %[^\n]", &data, msgDump);
-        cout << "WiFi Command Function || Message Parsed from Sockets as INT is: " << data << endl;
         if(use_grid == 1) {
             coordinate = grid[data];
         }
         else {
             coordinate = convert_to_coordinate(data, use_hex);
         }
-        cout << "WiFi Command Function || Coordinate for Actuator is: " << coordinate << "\n\n\n" << endl;
+        if(message_only == 1) {
+            cout << "  WiFi Command Function || Message Parsed from Sockets as INT is: " << data << endl;
+            cout << "  WiFi Command Function || Coordinate for Actuator is: " << coordinate << "\n\n\n" << endl;
+        }
         strcpy(WiFimsg, coordinate.c_str());
         transmit_command(&sock, WiFimsg);
     }    
@@ -41,24 +43,26 @@ void* LTE_command(void* socket) {
     printf("\n\n  ======================\n   LTE Listener Started\n  ======================\n\n");
     
     if(troubleshooting_print == 1) {
-        cout << "LTE Command Function || LTE Sensor Socket: " << sock->sockLTE_RECEIVER << endl;
-        cout << "LTE Command Function || WiFi Actuator Socket: " << sock->act_WiFi << endl;
-        cout << "LTE Command Function || LTE Actuator Socket: " << sock->act_LTE << endl; 
+        cout << "  LTE Command Function || LTE Sensor Socket: " << sock->sockLTE_RECEIVER << endl;
+        cout << "  LTE Command Function || WiFi Actuator Socket: " << sock->act_WiFi << endl;
+        cout << "  LTE Command Function || LTE Actuator Socket: " << sock->act_LTE << endl; 
     }
     while(1) {
         message = (void*)receiveLTE((void*)sock);
         if(troubleshooting_print == 1) {
-           cout << "LTE Command Function || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
+           cout << "  LTE Command Function || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
         }
         sscanf((const char*)message, "%d %[^\n]", &data, msgDump);
-        cout << "LTE Command Function || Message Parsed from Sockets as INT is: " << data << endl;
         if(use_grid == 1) {
             coordinate = grid[data];
         }
         else {
             coordinate = convert_to_coordinate(data, use_hex);
         }
-        cout << "LTE Command Function || Coordinate for Actuator is: " << coordinate << "\n\n\n" << endl;
+        if(message_only == 1) {
+            cout << "  LTE Command Function || Message Parsed from Sockets as INT is: " << data << endl;
+            cout << "  LTE Command Function || Coordinate for Actuator is: " << coordinate << "\n\n\n" << endl;
+        }
         strcpy(LTEmsg, coordinate.c_str());
         transmit_command(sock, LTEmsg);
     }
@@ -144,10 +148,11 @@ void help() {
     cout << "   Arguments market with * can be written sequencially" << endl;
     cout << "   without needing to call -v / -verbose again" << endl << endl;
     cout << "   Call Argument:" << endl;
-    cout << "      -v <extra_1> <extra_2> <extra_3>" << endl;
-    cout << "      -verbose <extra_1> <extra_2> <extra_3>" << endl << endl;
+    cout << "      -v <extra_1> <extra_2> <extra_3> <extra_4>" << endl;
+    cout << "      -verbose <extra_1> <extra_2> <extra_3> <extra_4>" << endl << endl;
     cout << "   Accepted Extra Arguments:" << endl;
     cout << "      no extra              - Prints everything" << endl;
+    cout << "      m / msg / message   * - Prints \"important\" messages" << endl;
     cout << "      i / in              * - Prints from incoming traffic" << endl;
     cout << "      o / out             * - Prints from outgoing traffic" << endl;
     cout << "      g / gsv             * - Prints from the GSV system" << endl << endl << endl;
@@ -196,7 +201,7 @@ void Argument_Setup(int argc, char* argv[]) {
                         string current = argv[j];
                         firstCharacter = current.at(0);
 
-                        if(firstCharacter == '-') {
+                        if(firstCharacter == '-' && j == i+1) {
                             cout << "  ===== Verbose Enabled =====" << endl;
                             message_only = 0;        // Print messages only
                             troubleshooting_print = 1;
@@ -225,14 +230,22 @@ void Argument_Setup(int argc, char* argv[]) {
                             GSV_print = (char*) "-v";
                             GSV_arg_used = (char*) "-a";
                         }
-                        else { 
-                            cout << "  ===== Invalid argument for \"Verbose\" =====" << endl; 
+                        else if ( (string) argv[j] == "m" || (string) argv[j] == "msg" || (string) argv[j] == "message") {
+                            cout << "  ===== Verbose For Messages Enabled =====" << endl;
+                            message_only = 1;        // Print messages only
+                                // Signal Monitoring Arguments
+                            GSV_print = (char*) "-v";
+                            GSV_print_arg = (char*) "m";
+                            GSV_arg_used = (char*) "-a";
+                        }
+                        if(firstCharacter == '-' && j != i+1) {
+                            break;
                         }
                     }
                 }
                 else {
                     cout << "  ===== Verbose Enabled =====" << endl;
-                    message_only = 0;        // Print messages only
+                    message_only = 1;        // Print messages only
                     troubleshooting_print = 1;
                     print_sen_in = 1;       // Print incoming Sensor related things
                     print_act_out = 1;      // Print outgoing Actuator related things
@@ -259,6 +272,7 @@ void Argument_Setup(int argc, char* argv[]) {
 
                     if( (firstCharacter == '-') || (string) argv[i+1] == "b" ||  (string) argv[i+1] == "both") {
                         cout << "  ===== Forced Use of Both Technologies Enabled =====" << endl;
+                        GSV_tech_arg = (char*) "b";
                         force_tech = 1;
                     }
                     else if((string) argv[i+1] == "w" || (string) argv[i+1] == "wifi") {
@@ -274,6 +288,7 @@ void Argument_Setup(int argc, char* argv[]) {
                 }
                 else {
                     cout << "  ===== Forced Use of Both Technologies Enabled =====" << endl;
+                    GSV_tech_arg = (char*) "b";
                     force_tech = 1;
                 }
             }
