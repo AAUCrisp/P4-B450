@@ -65,7 +65,7 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     ftruncate(shm_fd, SIZE);
 
     
-        if (sem_wait(&SEM_READ) == -1) {
+        if (sem_wait(&SEM_WRITE) == -1) {
             perror("SEM_READ sem_wait failed");
         }
     /* memory map the shared memory object */
