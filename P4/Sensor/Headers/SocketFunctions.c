@@ -23,11 +23,11 @@
 
 /* Troubleshooting Options */
 int print_GSV = 1;
-int print_out = 1;
+int print_out = 0;
 
 /* Define buffers & PORT number */
 #define BUFFER 1024
-#define SHM_BUFFER 1000000000
+#define SHM_BUFFER 10000
 char message[BUFFER];
 char curr_time[128];
 char *curr_timeLTE;
