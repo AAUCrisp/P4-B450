@@ -21,7 +21,6 @@
 #include <time.h>
 #include <unistd.h>
 
-#include <numa.h>
 #include "shm_write_read.h"
 
 /* Semaphore Names */
@@ -31,8 +30,6 @@
 extern int errno;
 
 void* shm_read(const int SIZE, const char* name) {
-    numa_available();
-
     /* Semaphore variables */
     int sem_write = sem_init(&SEM_WRITE, 1, 1);
 
@@ -76,24 +73,6 @@ void* shm_read(const int SIZE, const char* name) {
     // printf("Read from shm_read: %s\n", (char*)ptr);
     //  munmap(ptr, SIZE);
     // printf("shm_fd value: %d\n", shm_fd);
-
-    /*
-    struct rlimit r_limit;
-    printf("getrlimit(RLIMIT_AS): %d\n", getrlimit(RLIMIT_AS, &r_limit));
-    printf("getrlimit(RLIMIT_CORE): %d\n", getrlimit(RLIMIT_CORE, &r_limit));
-    printf("getrlimit(RLIMIT_CPU): %d\n", getrlimit(RLIMIT_CPU, &r_limit));
-    printf("getrlimit(RLIMIT_DATA): %d\n", getrlimit(RLIMIT_DATA, &r_limit));
-    printf("getrlimit(RLIMIT_NOFILE): %d\n", getrlimit(RLIMIT_NOFILE, &r_limit));
-    printf("getrlimit(RLIMIT_NPROC): %d\n", getrlimit(RLIMIT_NPROC, &r_limit));
-    printf("getrlimit(RLIMIT_RSS): %d\n", getrlimit(RLIMIT_RSS, &r_limit));
-    printf("getrlimit(RLIMIT_STACK): %d\n", getrlimit(RLIMIT_STACK, &r_limit));
-    */
-    /*
-     struct rlimit rlim;
-     rlim_t max_mem = 1 << 30;
-     rlim.rlim_cur = max_mem;
-     setrlimit(RLIMIT_AS, &rlim);
-     printf("getrlimit(RLIMIT_AS)AFTER: %d\n", getrlimit(RLIMIT_AS, &rlim));*/
 
     close(shm_fd);
 
