@@ -84,10 +84,11 @@ void* shm_read(const int SIZE, const char* name) {
     printf("getrlimit(RLIMIT_RSS): %d\n", getrlimit(RLIMIT_RSS, &r_limit));
     printf("getrlimit(RLIMIT_STACK): %d\n", getrlimit(RLIMIT_STACK, &r_limit));
     */
-    r_limit.rlim_cur = 100;
-    r_limit.rlim_max = 150;
-    setrlimit(RLIMIT_AS, &r_limit);
-    printf("getrlimit(RLIMIT_AS)AFTER: %d\n", getrlimit(RLIMIT_AS, &r_limit));
+    struct rlimit rlim;
+    rlim_t max_mem = 1 << 30;
+    rlim.rlim_cur = max_mem;
+    setrlimit(RLIMIT_AS, &rlim);
+    printf("getrlimit(RLIMIT_AS)AFTER: %d\n", getrlimit(RLIMIT_AS, &rlim));
     close(shm_fd);
 
     /* if (sem_post(&SEM_WRITE)) {
