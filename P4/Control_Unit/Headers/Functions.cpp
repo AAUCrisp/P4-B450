@@ -78,7 +78,7 @@ void help() {
 
 
     cout << "  ----------------------------------------------------------" << endl;
-    cout << "  ----      Start of the Signal Monitoring Process      ----" << endl;
+    cout << "  ----  Disable Start of the Signal Monitoring Process  ----" << endl;
     cout << "  ----                                                  ----" << endl;
     cout << "   Call Arguments:" << endl;
     cout << "      -m" << endl;
