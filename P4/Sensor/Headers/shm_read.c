@@ -76,6 +76,7 @@ void* shm_read(const int SIZE, const char* name) {
     //printf("Read from shm_read: %s\n", (char*)ptr);
     // munmap(ptr, SIZE);
     //printf("shm_fd value: %d\n", shm_fd);
+    munmap(ptr, SIZE);
     close(shm_fd);
 
     /* if (sem_post(&SEM_WRITE)) {
