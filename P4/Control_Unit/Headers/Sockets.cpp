@@ -283,6 +283,20 @@ void *transmit_GSV_LTE(void *socket) {
     if(print_GSV == 1) {
         printf("\n\nGSV || LTE || Transmit Socket: %d\n", sock->sockLTE_TRANSMITTER);
     }
+    if(force_tech > 0){
+        if(force_tech == 1){
+            GSV = (const char*)'0';
+        }
+        else if(force_tech == 2){
+            GSV = (const char*)'1';
+        }
+        else if(force_tech == 3){
+            GSV = (const char*)'2';
+        }
+    }
+    else {
+        GSV = shm_read(32, GSV_KEY);
+    }
     TX_LTE = sendto(sock->sockLTE_TRANSMITTER, GSV, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, LenLTE);
     if(print_GSV == 1) {
         // printf("LTE-Thread id = %ld\n", pthread_self());
@@ -298,9 +312,22 @@ void *transmit_GSV_WiFi(void *socket) {
     int LenWiFi = sizeof(sock->ClientWiFi_TRANSMITTER);
     const char *GSV;
     const char *GSV_KEY = "GSV_KEY";
-    GSV = shm_read(32, GSV_KEY);
     if(print_GSV == 1) {
         printf("\n\nGSV || WiFi || Transmit Socket: %d\n", sock->sockWiFi_TRANSMITTER);
+    }
+    if(force_tech > 0){
+        if(force_tech == 1){
+            GSV = (const char*)'0';
+        }
+        else if(force_tech == 2){
+            GSV = (const char*)'1';
+        }
+        else if(force_tech == 3){
+            GSV = (const char*)'2';
+        }
+    }
+    else {
+        GSV = shm_read(32, GSV_KEY);
     }
     TX_WiFi = sendto(sock->sockWiFi_TRANSMITTER, GSV, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, LenWiFi);
     if(print_GSV == 1) {
