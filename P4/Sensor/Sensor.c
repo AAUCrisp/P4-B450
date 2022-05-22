@@ -231,13 +231,13 @@ int main(int argc, char* argv[]) {
         long hours = ((((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) - minutes) / 60;
 
         Execution_Average = Execution_Sum / iter;
-        printf("\n\n===================================");
+        printf("\n\n===================================\n\n");
         printf("Execution_Sum: %Lf\n", Execution_Sum);
         printf("\n\nExecution average: %Lf ms\n", Execution_Average);
         printf("Total time: %ld\n", (Time_Ended - Time_Started));
         printf("Total_Time_Elapsed [HH:MM:SS:MS]: %ld:%ld:%ld:%ld\n", hours, minutes, seconds, milliseconds);
         printf("Total failed counts: %d\n", fail_count);
-        printf("===================================");
+        printf("\n\n===================================\n\n");
 
         //}
         // Make a log file with execution time idiot
