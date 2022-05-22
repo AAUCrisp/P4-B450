@@ -171,16 +171,16 @@ int main(int argc, char* argv[]) {
             if (shit == 0) {
                 // printf("isnan value: %d\n", isnan(Execution_Time[i]));
                 Execution_Time[i] += Execution_Temp;
-                if (Execution_Time[i] <= 1000000 || Execution_Time[i] >= -1000000) {
+                if (Execution_Time[i] >= -1000000000 || Execution_Time [i] <= 1000000000) {
                     Execution_Sum += Execution_Time[i];
                 } else {
                     fail_count++;
-                    // printf("Fail counter: %d\n", fail_count);
+                    printf("Fail counter: %d\n", fail_count);
                     // printf("Execution_Sum exceeded 10000000\n");
                 }
             } else {
                 fail_count++;
-                // printf("Fail counter: %d\n", fail_count);
+                printf("Fail counter: %d\n", fail_count);
                 // printf("isnan value: %d\n", isnan(Execution_Time[i]));
                 // printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
             }
