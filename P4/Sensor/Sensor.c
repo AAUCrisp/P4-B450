@@ -184,8 +184,9 @@ int main(int argc, char* argv[]) {
                 fail_count++;
                 printf("fail count: %d\n", fail_count);
                 printf("Failed Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
+                sleep(5);
                 Execution_Time[i] = 0;
-                printf("Failed Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
+                printf("Forced Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
                 sleep(5);
             } else {
                 printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
