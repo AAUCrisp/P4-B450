@@ -55,8 +55,7 @@ int main() {
     /* Execution time variables */
     int count = 0;
     int fail_count = 0;
-    int iter = 500000;
-    double Execution_Time[iter];
+    double Execution_Time[500000];
     double Execution_Temp = 0;
     double Execution_Sum = 0;
     double Execution_Average = 0;
@@ -106,7 +105,7 @@ int main() {
                 // printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
                 Execution_Sum += Execution_Time[count];
             }
-            if (count == iter) {
+            if (count == 500000) {
                 break;
             }
         }
