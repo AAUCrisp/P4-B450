@@ -92,7 +92,7 @@ int main(int argc, char *argv[]) {
         cout << "GSV Tech Argument is: " << GSV_arg_both << " with " << GSV_arg_both_arg << endl;
 
         char* path = (char*) "./SignalMonitoring";                 // Path of the file for new process to run
-        char* args[] = { (char*)"./SignalMonitoring&", GSV_arg_used, GSV_arg_both, GSV_arg_both_arg, GSV_arg_print, GSV_sleep_arg, GSV_sleep_delay, (char*) NULL};       // Command for the function to execute, always ended on NULL argument
+        char* args[] = { (char*)"./SignalMonitoring&", GSV_arg_used, GSV_arg_print, GSV_sleep_arg, GSV_sleep_delay, GSV_arg_both, GSV_arg_both_arg, (char*) NULL};       // Command for the function to execute, always ended on NULL argument
         if(monitor == 1) {
             execv(path, args);                                  // Tells the new process to "reset" and run a different code instead
             printf("ERROR: DIDN'T START THE MONITORING PROCESS!!\n");  // Should never get this far!

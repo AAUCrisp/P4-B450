@@ -49,11 +49,11 @@ using namespace std;
 
     // Signal Monitoring Arguments
     static int delay = 1;
-    static char* GSV_arg_used = NULL;
-    static char* GSV_arg_both = NULL;
-    static char* GSV_arg_both_arg = NULL;
-    static char* GSV_arg_print = NULL;
-    static char* GSV_sleep_arg = NULL;
-    static char* GSV_sleep_delay = NULL;
+    static char* GSV_arg_used = (char*) "";
+    static char* GSV_arg_both = (char*) "";
+    static char* GSV_arg_both_arg = (char*) "";
+    static char* GSV_arg_print = (char*) "";
+    static char* GSV_sleep_arg = (char*) "";
+    static char* GSV_sleep_delay = (char*) "";
 
 #endif
