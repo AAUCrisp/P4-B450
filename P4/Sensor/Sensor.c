@@ -173,7 +173,7 @@ int main(int argc, char* argv[]) {
             if (shit == 0) {
                 // printf("isnan value: %d\n", isnan(Execution_Time[i]));
                 Execution_Time[i] += Execution_Temp;
-                if (Execution_Time[i] >= -1000000 || Execution_Time[i] <= 1000000) {
+                if (Execution_Time[i] >= -1000000.0 || Execution_Time[i] <= 1000000.0) {
                     Execution_Sum += Execution_Time[i];
                 } else {
                     fail_count++;
