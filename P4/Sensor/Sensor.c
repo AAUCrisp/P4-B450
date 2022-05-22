@@ -131,16 +131,12 @@ int main(int argc, char* argv[]) {
             execv(path, args);
         }
     } else {
-
-        
         // while (1) {
         Time_Started = clock();
         for (int i = 0; i < iter; i++) {
-            // usleep(10000);
             msg = shm_read(SHM_BUFFER, GSV_KEY);
             GSV = atoi(msg);
-            
-            // usleep(10000);
+
             //   printf("\nSensor || GSV from shared memory: %s\n", msg);
 
             // printf("\nGSV converted: %d\n", GSV);
@@ -151,7 +147,6 @@ int main(int argc, char* argv[]) {
             // WORKS clock_gettime(CLOCK_REALTIME, &begin);
             sprintf(buffer, "%d", generate(1, 25000000));
             // printf("\nSensor || After Random Int Generation\n");
-            // usleep(2000);
 
             /*if (both_tech == 1) {
                 printf("\nSensor || Troubleshooting for Both Technologies\n");
@@ -168,28 +163,16 @@ int main(int argc, char* argv[]) {
             }
             Clock_End = clock();
 
-
-            if (Execution_Temp > 10000) {
-                fail_count++;
-            } 
             Execution_Time[i] = (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
+
             if (Execution_Time[i] > 10000) {
-                // printf("Failed Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
-                // sleep(1);
+                fail_count++;
+                printf("Execution_Time[%d]: %Lf\n", i, (double)Execution_Time[i]);
                 Execution_Time[i] = 0;
-                // printf("Forced Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
-                sleep(1);
             } else {
                 printf("Execution_Time[%d]\n", i);
                 // printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
-            }
-            // sleep(5);
-            Execution_Sum += Execution_Time[i];
-            if (Execution_Sum > 10000) {
-                fail_count++;
-                // printf("fail count: %d\n", fail_count);
-                // printf("Failed Execution_Sum: %Lf\n", Execution_Sum);
-                // sleep(5);
+                Execution_Sum += Execution_Time[i];
             }
 
             /* Works */
