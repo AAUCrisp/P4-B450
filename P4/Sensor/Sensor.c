@@ -169,7 +169,7 @@ int main(int argc, char* argv[]) {
                 printf("Execution_Temp was: %Lf\n", Execution_Temp);
                 sleep(10);
             } else {
-                Execution_Time[i] += EXecution_Temp;
+                Execution_Time[i] += Execution_Temp;
                 printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
                 printf("Execution_Sum = %Lf\n", Execution_Sum);
             }
