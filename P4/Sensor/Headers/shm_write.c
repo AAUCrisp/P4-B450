@@ -30,8 +30,8 @@ extern int errno;
 void shm_write(const char* message, const int SIZE, const char* name) {
 
     /* Semaphore variables */
-    // sem_unlink(SEM_READ_FNAME);
-    // sem_unlink(SEM_WRITE_FNAME);
+    sem_unlink(SEM_READ_FNAME);
+    sem_unlink(SEM_WRITE_FNAME);
 
     int sem_write = sem_init(&SEM_WRITE, 1, 1);
     if (sem_write == -1) {
