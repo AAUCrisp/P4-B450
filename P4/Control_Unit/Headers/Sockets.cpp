@@ -12,8 +12,9 @@
 #define SOCKETS_NET
 #include "Sockets.h"
 #endif
+#include <fstream>
 
-
+std::ofstream File;
 
 /* -- Trouble Shooting Setup -- */
 
@@ -68,7 +69,10 @@ char message_WiFi[BUFFER];
 char *receive_LTE;
 char *receive_WiFi;
 char curr_time[128];
-
+char msg_time[128];
+char send_tech[128];
+char *send_time;
+int sensor_int;
 /* Misc */
 int bindLTE, bindWiFi;
 int RX_LTE, RX_WiFi;
@@ -160,6 +164,10 @@ void *receiveLTE(void *socket) {
         printf("\n\nIncoming || LTE (Sensor) || Message is: %s\n", message_LTE);
         printf("Incoming || LTE (Sensor) || Message received at: %s\n\n", curr_time);
     }
+    sscanf(message_LTE, "%d %[^\n]", &sensor_int, msg_time);
+    File.open("log.txt", std::ofstream::out | std::ofstream::app);
+    File << "\n\n" << sensor_int << ";" << msg_time << ";" << "LTE Sensor: Received at time: " << curr_time << "\n";
+    File.close(); 
     return message_LTE;
 }
 
@@ -180,7 +188,9 @@ void *receiveWiFi(void *socket) {
         printf("\n\nIncoming || WiFi (Sensor) || Message is: %s\n", message_WiFi);
         printf("Incoming || WiFi (Sensor) || Message received at: %s \n\n", curr_time);
     }
-
+    File.open("log.txt", std::ofstream::out | std::ofstream::app);
+    File << "\n\n" << sensor_int << ";" << msg_time << ";" << "WiFi Sensor: Received at Time" << curr_time << "\n";
+    File.close();
     return message_WiFi;    
 }
 
@@ -320,6 +330,12 @@ void* transmit_command_LTE(void *socket, char* message) {
     }
 
     TX_LTE = sendto(sock->act_LTE, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_LTE, LenLTE);
+    send_time = Timestamp();
+    
+    File.open("log.txt", std::ofstream::out | std::ofstream::app);
+    File << "\nLTE Transmitting;" << message << "    Time;" << send_time << "\n \n";
+    File.close();
+
     if(print_act_out == 1 || message_only == 1) {
 
         printf("Sending || LTE (Actuator) || Sending Command to Actuator: %s\n", message);
@@ -336,6 +352,11 @@ void* transmit_command_WiFi(void *socket, char* message) {
         printf("\n\nSending || WiFi (Actuator) || Actuator Socket: %d\n", sock->act_WiFi);
     }
     TX_WiFi = sendto(sock->act_WiFi, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_WiFi, LenWiFi);
+    send_time = Timestamp();
+    File.open("log.txt", std::ofstream::out | std::ofstream::app);
+    File << "WiFi Transmitting;" << message << "    Time;" << send_time;
+    File.close();
+    
     if(print_act_out == 1 || message_only == 1) {
         printf("Sending || WiFi (Actuator) || Sending Command to Actuator: %s\n", message);
         printf("Sending || WiFi (Actuator) || Message transmitted at: %s\n\n", curr_time);
