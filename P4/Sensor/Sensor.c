@@ -170,15 +170,14 @@ int main(int argc, char* argv[]) {
             nanoseconds = end.tv_nsec - begin.tv_nsec;
            
             elapsed = seconds + nanoseconds * 1e-9;
-            printf("Execution_Sum before: %Lf\n", Execution_Sum);
             printf("\n\nelapsed time: %f\n", elapsed);
-            sleep(5);
+            //sleep(5);
             Execution_Time[i] = elapsed;
             printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
-            sleep(5);
+            //sleep(5);
             Execution_Sum += elapsed;
             printf("Execution_Sum: %Lf\n", Execution_Sum);
-            sleep(5);
+            //sleep(5);
 
 
             // Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
