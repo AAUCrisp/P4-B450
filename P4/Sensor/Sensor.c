@@ -181,8 +181,6 @@ int main(int argc, char* argv[]) {
             // sleep(5);
             Execution_Time[i] = elapsed;
             if (Execution_Time[i] > 10000) {
-                fail_count++;
-                printf("fail count: %d\n", fail_count);
                 printf("Failed Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
                 sleep(5);
                 Execution_Time[i] = 0;
@@ -231,7 +229,7 @@ int main(int argc, char* argv[]) {
         long hours = ((((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) - minutes) / 60;
 
         Execution_Average = Execution_Sum / iter;
-        printf("\n\n===================================\n");
+        printf("\n\n===================================\n\n");
         printf("Execution_Sum: %Lf\n", Execution_Sum);
         printf("Execution average: %Lf ms\n", Execution_Average);
         printf("Total time: %ld\n", (Time_Ended - Time_Started));
