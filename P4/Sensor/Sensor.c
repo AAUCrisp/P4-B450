@@ -177,6 +177,7 @@ int main(int argc, char* argv[]) {
                     printf("Execution_Temp: %Lf\n", Execution_Temp);
                     printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
                     sleep(10);
+                    exit(0);
                 }
 
                 if (Execution_Time[i] >= -1000000.0 || Execution_Time[i] <= 1000000.0) {
