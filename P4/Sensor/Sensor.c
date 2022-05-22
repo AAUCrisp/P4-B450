@@ -136,7 +136,7 @@ int main(int argc, char* argv[]) {
         for (int i = 0; i < iter; i++) {
             msg = shm_read(SHM_BUFFER, GSV_KEY);
             GSV = atoi(msg);
-            unlink(GSV_KEY);
+            shm_unlink(GSV_KEY);
 
             //   printf("\nSensor || GSV from shared memory: %s\n", msg);
 
