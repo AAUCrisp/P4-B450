@@ -173,9 +173,11 @@ int main(int argc, char* argv[]) {
             if (shit == 0) {
                 // printf("isnan value: %d\n", isnan(Execution_Time[i]));
                 Execution_Time[i] += Execution_Temp;
-                printf("Execution_Temp: %Lf\n", Execution_Temp);
-                printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
-                sleep(1);
+                if (Execution_Temp >= 10000000 || Execution_Temp <= -10000000) {
+                    printf("Execution_Temp: %Lf\n", Execution_Temp);
+                    printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
+                    sleep(10);
+                }
 
                 if (Execution_Time[i] >= -1000000.0 || Execution_Time[i] <= 1000000.0) {
                     Execution_Sum += Execution_Time[i];
