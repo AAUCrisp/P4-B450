@@ -63,7 +63,7 @@ void* shm_read(const int SIZE, const char* name) {
     }
 
     /* memory map the shared memory object */
-    ptr = mmap(NULL, SIZE, PROT_READ, MAP_SHARED, shm_fd, 0);
+    ptr = mmap(NULL, SIZE, PROT_READ, MAP_SHARED, shm_fd, SIZE);
     if (ptr == MAP_FAILED) {
         printf("Something went wrong: %d\n", errno);
         perror("mmap failed");
@@ -74,9 +74,10 @@ void* shm_read(const int SIZE, const char* name) {
     //  munmap(ptr, SIZE);
     // printf("shm_fd value: %d\n", shm_fd);
 
+    /*
     struct rlimit r_limit;
     printf("getrlimit(RLIMIT_AS): %d\n", getrlimit(RLIMIT_AS, &r_limit));
-    /*printf("getrlimit(RLIMIT_CORE): %d\n", getrlimit(RLIMIT_CORE, &r_limit));
+    printf("getrlimit(RLIMIT_CORE): %d\n", getrlimit(RLIMIT_CORE, &r_limit));
     printf("getrlimit(RLIMIT_CPU): %d\n", getrlimit(RLIMIT_CPU, &r_limit));
     printf("getrlimit(RLIMIT_DATA): %d\n", getrlimit(RLIMIT_DATA, &r_limit));
     printf("getrlimit(RLIMIT_NOFILE): %d\n", getrlimit(RLIMIT_NOFILE, &r_limit));
@@ -84,11 +85,13 @@ void* shm_read(const int SIZE, const char* name) {
     printf("getrlimit(RLIMIT_RSS): %d\n", getrlimit(RLIMIT_RSS, &r_limit));
     printf("getrlimit(RLIMIT_STACK): %d\n", getrlimit(RLIMIT_STACK, &r_limit));
     */
+   /*
     struct rlimit rlim;
     rlim_t max_mem = 1 << 30;
     rlim.rlim_cur = max_mem;
     setrlimit(RLIMIT_AS, &rlim);
-    printf("getrlimit(RLIMIT_AS)AFTER: %d\n", getrlimit(RLIMIT_AS, &rlim));
+    printf("getrlimit(RLIMIT_AS)AFTER: %d\n", getrlimit(RLIMIT_AS, &rlim));*/
+
     close(shm_fd);
 
     /* if (sem_post(&SEM_WRITE)) {
