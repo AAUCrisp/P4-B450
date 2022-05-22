@@ -147,7 +147,7 @@ int main(int argc, char* argv[]) {
             /*if (monitor == 1) {
             }*/
 
-            /Clock_Start = clock();
+            Clock_Start = clock();
             // WORKS clock_gettime(CLOCK_REALTIME, &begin);
             sprintf(buffer, "%d", generate(1, 25000000));
             // printf("\nSensor || After Random Int Generation\n");
