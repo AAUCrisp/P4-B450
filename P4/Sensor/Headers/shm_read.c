@@ -62,8 +62,9 @@ void* shm_read(const int SIZE, const char* name) {
         fprintf(stderr, "errno shm_open failed: %s\n", strerror(errno));
     }
 
+    off_t test = 99999999;
     /* memory map the shared memory object */
-    ptr = mmap(NULL, SIZE, PROT_READ, MAP_SHARED, shm_fd, off_t 9999999999);
+    ptr = mmap(NULL, SIZE, PROT_READ, MAP_SHARED, shm_fd, test);
     if (ptr == MAP_FAILED) {
         printf("Something went wrong: %d\n", errno);
         perror("mmap failed");
@@ -85,12 +86,12 @@ void* shm_read(const int SIZE, const char* name) {
     printf("getrlimit(RLIMIT_RSS): %d\n", getrlimit(RLIMIT_RSS, &r_limit));
     printf("getrlimit(RLIMIT_STACK): %d\n", getrlimit(RLIMIT_STACK, &r_limit));
     */
-   /*
-    struct rlimit rlim;
-    rlim_t max_mem = 1 << 30;
-    rlim.rlim_cur = max_mem;
-    setrlimit(RLIMIT_AS, &rlim);
-    printf("getrlimit(RLIMIT_AS)AFTER: %d\n", getrlimit(RLIMIT_AS, &rlim));*/
+    /*
+     struct rlimit rlim;
+     rlim_t max_mem = 1 << 30;
+     rlim.rlim_cur = max_mem;
+     setrlimit(RLIMIT_AS, &rlim);
+     printf("getrlimit(RLIMIT_AS)AFTER: %d\n", getrlimit(RLIMIT_AS, &rlim));*/
 
     close(shm_fd);
 
