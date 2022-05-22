@@ -182,10 +182,10 @@ int main(int argc, char* argv[]) {
             Execution_Time[i] = elapsed;
             if (Execution_Time[i] > 10000) {
                 printf("Failed Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
-                sleep(5);
+                sleep(2);
                 Execution_Time[i] = 0;
                 printf("Forced Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
-                sleep(5);
+                sleep(2);
             } else {
                 printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
             }
