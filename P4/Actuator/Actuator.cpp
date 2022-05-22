@@ -56,10 +56,10 @@ int main() {
     int count = 0;
     int fail_count = 0;
     int iter = 500000;
-    long double Execution_Time[iter];
-    long double Execution_Temp = 0;
-    long double Execution_Sum = 0;
-    long double Execution_Average = 0;
+    double Execution_Time[iter];
+    double Execution_Temp = 0;
+    double Execution_Sum = 0;
+    double Execution_Average = 0;
     clock_t Time_Started;
     clock_t Time_Ended;
     clock_t Clock_Start;
