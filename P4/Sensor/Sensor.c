@@ -168,7 +168,7 @@ int main(int argc, char* argv[]) {
 
             seconds = end.tv_sec - begin.tv_sec;
             nanoseconds = end.tv_nsec - begin.tv_nsec;
-            sleep(5);
+           
             elapsed = seconds + nanoseconds * 1e-9;
             printf("elapsed time: %f\n", elapsed);
             sleep(5);
