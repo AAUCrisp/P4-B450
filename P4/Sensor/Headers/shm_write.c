@@ -69,6 +69,9 @@ void shm_write(const char* message, const int SIZE, const char* name) {
         perror("SEM_WRITE sem_wait failed");
     }
 
+    if (sem_wait(&SEM_WRITE) == -1) {
+        perror("SEM_READ sem_wait failed");
+    }
     /* memory map the shared memory object */
     ptr = mmap(NULL, SIZE, PROT_WRITE, MAP_SHARED, shm_fd, 0);
     if (ptr == MAP_FAILED) {
