@@ -175,7 +175,11 @@ int main(int argc, char* argv[]) {
                 Execution_Time[i] += Execution_Temp;
                 if (Execution_Time[i] >= -1000000.0 || Execution_Time[i] <= 1000000.0) {
                     Execution_Sum += Execution_Time[i];
-                } else {
+                } else if (Execution_Time[i] >= 10000000000.0000) {
+                    sleep(10);
+                    sleep(10);
+                    sleep(10);
+                    sleep(10);
                     fail_count++;
                     printf("Fail counter: %d\n", fail_count);
                     printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
