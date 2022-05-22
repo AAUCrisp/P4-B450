@@ -29,7 +29,7 @@ using namespace std;
     // General Settings
     static int force_both = 0;      // Troubleshooting with both technologies
     static int monitor = 1;         // Disable/Enable Start of Signal Monitoring
-    static int iter = 0;
+    
     // Grid Settings
     static int use_grid = 0;        // Usage of RAM Grid
     static int x_axis = 5000;       // Length of the x-axis of the grid
@@ -54,5 +54,7 @@ using namespace std;
     static char* GSV_arg_print = NULL;
     static char* GSV_sleep_arg = NULL;
     static char* GSV_sleep_delay = NULL;
+
+
 
 #endif

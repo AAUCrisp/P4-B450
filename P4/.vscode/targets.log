@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun May 22 13:03:50 2022
+# Make data base, printed on Sun May 22 18:54:53 2022
 
 # Variables
 
@@ -51,7 +51,7 @@ VTE_VERSION = 6003
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
 # environment
-JOURNAL_STREAM = 8:42908
+JOURNAL_STREAM = 8:48421
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # environment
@@ -73,7 +73,7 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-MANAGERPID = 1359
+MANAGERPID = 1343
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
 # environment
@@ -87,7 +87,7 @@ PATH = /home/ubeyd/miniforge3/bin:/home/ubeyd/.cargo/bin:/home/ubeyd/.local/bin:
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-SESSION_MANAGER = local/ubeyd-IdeaPad-L340-15IRH-Gaming:@/tmp/.ICE-unix/1579,unix/ubeyd-IdeaPad-L340-15IRH-Gaming:/tmp/.ICE-unix/1579
+SESSION_MANAGER = local/ubeyd-IdeaPad-L340-15IRH-Gaming:@/tmp/.ICE-unix/1612,unix/ubeyd-IdeaPad-L340-15IRH-Gaming:/tmp/.ICE-unix/1612
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -105,7 +105,7 @@ DISABLE_WAYLAND = 1
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = ee0bf71087424843b44d5a1b4d5c99b2
+INVOCATION_ID = 926da34306414b7b95ebb34d72ae18fb
 # environment
 GDK_PIXBUF_MODULEDIR = /snap/code/97/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
 # default
@@ -129,7 +129,7 @@ PWD = /home/ubeyd/P4-B450/P4
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 1540
+SSH_AGENT_PID = 1574
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -181,7 +181,7 @@ SHLVL = 1
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-71f48d47-da64-4f8a-abbd-1bb8e8f3629e.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-1e3c24f8-1b8e-4248-8b6d-acfa040b249e.sock
 # default
 MAKE_VERSION := 4.2.1
 # environment
@@ -233,7 +233,7 @@ LC_ALL = C
 # environment
 GJS_DEBUG_TOPICS = JS ERROR;JS LOG
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/5e27e1f1_0aba_4108_877e_f0d3f439595a
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/0c29c27a_2bf8_4d28_961f_50685ecb8be7
 # automatic
 ^F = $(notdir $^)
 # environment
@@ -257,7 +257,7 @@ LANG = C
 # environment
 TERM = xterm-256color
 # environment
-VSCODE_PID = 3552
+VSCODE_PID = 3514
 # variable set hash-table stats:
 # Load=123/1024=12%, Rehash=0, Collisions=15/145=10%
 
@@ -294,6 +294,7 @@ Makefile:
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
+ 
 #  File does not exist.
 #  File has been updated.
 #  Failed to be updated.
@@ -302,7 +303,6 @@ makefile:
 .DEFAULT:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
- 
 #  File has not been updated.
 
 # Not a target:
@@ -326,6 +326,6 @@ GNUmakefile:
 # strcache performance: lookups = 20 / hit rate = 15%
 # hash-table stats:
 # Load=17/8192=0%, Rehash=0, Collisions=1/20=5%
-# Finished Make data base on Sun May 22 13:03:50 2022
+# Finished Make data base on Sun May 22 18:54:53 2022
 
  

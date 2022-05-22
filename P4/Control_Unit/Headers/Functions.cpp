@@ -1,3 +1,16 @@
+    // Variables for time execution in functions.ccp
+    int iter = 20;
+    int fail_count = 0;
+    double Execution_Time[iter];
+    double Execution_Temp;
+    double Execution_Sum;
+    double Execution_Average;
+    clock_t Time_Started;
+    clock_t Time_Ended;
+    clock_t Clock_Start;
+    clock_t Clock_End;
+    int i, j;
+
 void WiFi_command(Sockets sock) {
     void* message;
     char msgDump[32];
@@ -15,7 +28,7 @@ void WiFi_command(Sockets sock) {
 
 
     Time_Started = clock();
-    while( int i < iter) {
+    while( i < iter) {
         Clock_Start = clock(); // added function
         message = (void*)receiveWiFi((void*)&sock);
         if(troubleshooting_print == 1) {
@@ -37,36 +50,31 @@ void WiFi_command(Sockets sock) {
 
         // time executions code under
         Execution_Temp = (Clock_End - Clock_Start) / CLOCKS_PER_SEC;
-        int shit = isnan(Execution_Time[i]); 
-        if (shit == 0) {
-            Execution_Time[i] += Execution_Temp;
-            if (Execution_Time[i] >= -1000000000 || Execution_Time [i] <= 1000000000) {
-                    Execution_Sum += Execution_Time[i];
-            } else {
-                    fail_count++;
-                    printf("WiFi: Fail counter: %d\n", fail_count);
-                    // printf("Execution_Sum exceeded 10000000\n");
-                }
-        } else {
+        if (Execution_Time[i] > 10000) {
             fail_count++;
-            printf("WiFi: Fail counter: %d\n", fail_count);
+            printf("Execution_time[%d]: %f\n", i, (double)Execution_Time[i]);
+            Execution_Time[i] = 0;
+        } else {
+            printf("Execution_time[%d]: %f\n", i);
+            Execution_Sum += Execution_Time[i];
         }  
-
-        printf("WiFi: Execution_Time[%d]: %f\n", i, Execution_Time[i]);
-        printf("WiFi: Execution_Sum = %f\n", Execution_Sum);
+        i++;
     }    
     Time_Ended = clock();
-    long timestamp = (long)(Time_Ended - Time_Started);
-    long milliseconds = (long)(timestamp / 1000) % 1000;
-    long seconds = (((long)(timestamp / 1000) - milliseconds) / 1000) % 60;
-    long minutes = (((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) % 60;
-    long hours = ((((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) - minutes) / 60;
+        long timestamp = (long)(Time_Ended - Time_Started);
+        long milliseconds = (long)(timestamp / 1000) % 1000;
+        long seconds = (((long)(timestamp / 1000) - milliseconds) / 1000) % 60;
+        long minutes = (((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) % 60;
+        long hours = ((((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) - minutes) / 60;
 
-    Execution_Average = Execution_Sum / iter;
-    printf("WiFi: Execution average: %f ms\n", Execution_Average);
-    printf("WiFi: Total time: %ld\n", (Time_Ended - Time_Started));
-    printf("WiFi: Total_Time_Elapsed [HH:MM:SS:MS]: %ld:%ld:%ld:%ld\n", hours, minutes, seconds, milliseconds);
-    printf("WiFi: Total failed counts: %d\n", fail_count);
+        Execution_Average = Execution_Sum / iter;
+        printf("\n\n===================================\n\n");
+        printf("Execution_Sum: %Lf\n", Execution_Sum);
+        printf("Execution average: %Lf ms\n", Execution_Average);
+        printf("Total time: %ld\n", (Time_Ended - Time_Started));
+        printf("Total_Time_Elapsed [HH:MM:SS:MS]: %ld:%ld:%ld:%ld\n", hours, minutes, seconds, milliseconds);
+        printf("Total failed counts: %d\n", fail_count);
+        printf("\n===================================\n\n");
 }
 
 void* LTE_command(void* socket) {
@@ -84,7 +92,7 @@ void* LTE_command(void* socket) {
         cout << "LTE Command Function || LTE Actuator Socket: " << sock->act_LTE << endl; 
     }
     Time_Started = clock();
-    while(int j < iter) {
+    while(j < iter) {
         Clock_Start = clock();
 
         message = (void*)receiveLTE((void*)sock);
@@ -106,23 +114,15 @@ void* LTE_command(void* socket) {
 
         // time executions code under
         Execution_Temp = (Clock_End - Clock_Start) / CLOCKS_PER_SEC;
-        int shit = isnan(Execution_Time[i]); 
-        if (shit == 0) {
-            Execution_Time[i] += Execution_Temp;
-            if (Execution_Time[i] >= -1000000000 || Execution_Time [i] <= 1000000000) {
-                    Execution_Sum += Execution_Time[i];
-            } else {
-                    fail_count++;
-                    printf("WiFi: Fail counter: %d\n", fail_count);
-                    // printf("Execution_Sum exceeded 10000000\n");
-                }
-        } else {
-            fail_count++;
-            printf("WiFi: Fail counter: %d\n", fail_count);
-        }  
 
-        printf("WiFi: Execution_Time[%d]: %f\n", i, Execution_Time[i]);
-        printf("WiFi: Execution_Sum = %f\n", Execution_Sum);
+        if(Execution_Time[j] > 10000) {
+            fail_count++;
+            printf("Execution_Time[%d]: %f\n", i, (double)Execution_Time[j]);
+            Execution[j] = 0;
+        } else {
+            printf("Execution_Time[%d]\n", i);
+            Execution_sum += Execution_Time[j];
+        }
     }
     Time_Ended = clock();
     long timestamp = (long)(Time_Ended - Time_Started);
@@ -132,10 +132,10 @@ void* LTE_command(void* socket) {
     long hours = ((((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) - minutes) / 60;
 
     Execution_Average = Execution_Sum / iter;
-    printf("WiFi: Execution average: %f ms\n", Execution_Average);
-    printf("WiFi: Total time: %ld\n", (Time_Ended - Time_Started));
-    printf("WiFi: Total_Time_Elapsed [HH:MM:SS:MS]: %ld:%ld:%ld:%ld\n", hours, minutes, seconds, milliseconds);
-    printf("WiFi: Total failed counts: %d\n", fail_count);
+    printf("LTE: Execution average: %f ms\n", Execution_Average);
+    printf("LTE: Total time: %ld\n", (Time_Ended - Time_Started));
+    printf("LTE: Total_Time_Elapsed [HH:MM:SS:MS]: %ld:%ld:%ld:%ld\n", hours, minutes, seconds, milliseconds);
+    printf("LTE: Total failed counts: %d\n", fail_count);
 
 }
 
@@ -172,7 +172,7 @@ void help() {
     cout << "  ----------------------------------------------------------" << endl;
     cout << "  ----      Force Communication on Both LTE & WiFi      ----" << endl;
     cout << "  ----                                                  ----" << endl;
-    cout << "   Call Argument:" << endl;
+    cout << "     Call Argument:" << endl;
     cout << "      -b" << endl;
     cout << "      -both" << endl << endl << endl;
 
