@@ -131,6 +131,8 @@ int main(int argc, char* argv[]) {
             execv(path, args);
         }
     } else {
+
+        
         // while (1) {
         Time_Started = clock();
         for (int i = 0; i < iter; i++) {
@@ -145,8 +147,8 @@ int main(int argc, char* argv[]) {
             /*if (monitor == 1) {
             }*/
 
-            // Clock_Start = clock();
-            clock_gettime(CLOCK_REALTIME, &begin);
+            /Clock_Start = clock();
+            // WORKS clock_gettime(CLOCK_REALTIME, &begin);
             sprintf(buffer, "%d", generate(1, 25000000));
             // printf("\nSensor || After Random Int Generation\n");
             // usleep(2000);
@@ -164,9 +166,35 @@ int main(int argc, char* argv[]) {
             if (GSV == B || GSV == W) {
                 transmitWiFi(&sock, (char*)buffer);
             }
-            // Clock_End = clock();
-            
-            clock_gettime(CLOCK_REALTIME, &end);
+            Clock_End = clock();
+
+
+            if (Execution_Temp > 10000) {
+                fail_count++;
+            } 
+            Execution_Time[i] = (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
+            if (Execution_Time[i] > 10000) {
+                // printf("Failed Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
+                // sleep(1);
+                Execution_Time[i] = 0;
+                // printf("Forced Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
+                sleep(1);
+            } else {
+                printf("Execution_Time[%d]\n", i);
+                // printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
+            }
+            // sleep(5);
+            Execution_Sum += Execution_Time[i];
+            if (Execution_Sum > 10000) {
+                fail_count++;
+                // printf("fail count: %d\n", fail_count);
+                // printf("Failed Execution_Sum: %Lf\n", Execution_Sum);
+                // sleep(5);
+            }
+
+            /* Works */
+            /*
+            //clock_gettime(CLOCK_REALTIME, &end);
 
             seconds = end.tv_sec - begin.tv_sec;
             nanoseconds = end.tv_nsec - begin.tv_nsec;
@@ -200,27 +228,8 @@ int main(int argc, char* argv[]) {
                 //sleep(5);
             } else {
                 //printf("Execution_Sum: %Lf\n", Execution_Sum);
-            }
-
-            // sleep(5);
-
-            // Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
-            // Execution_Temp += (long double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
-
-            // printf("Execution_Temp: %Lf\n", Execution_Temp);
-            /*
-            if (Execution_Temp > 1000000.000 || Execution_Temp < -1000000.000) {
-                fail_count++;
-                printf("fail_count: %d\n", fail_count);
-                printf("Execution_Temp was: %Lf\n", Execution_Temp);
-                sleep(10);
-            } else {
-                Execution_Time[i] += Execution_Temp;
-                printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
-                printf("Execution_Sum = %Lf\n", Execution_Sum);
             }*/
 
-            // sleep(3);
             // usleep(10000);
         }
         Time_Ended = clock();
