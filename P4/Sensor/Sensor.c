@@ -84,12 +84,12 @@ int main(int argc, char* argv[]) {
 
     /* Execution time variables */
     int fail_count = 0;
-    double Execution_Time[iter];
-    double Real_Execution_Time[iter];
-    double Execution_Temp;
-    double Execution_Sum;
-    double Real_Execution_Sum;
-    double Execution_Average;
+    long double Execution_Time[iter];
+    long double Real_Execution_Time[iter];
+    long double Execution_Temp;
+    long double Execution_Sum;
+    long double Real_Execution_Sum;
+    long double Execution_Average;
     clock_t Time_Started;
     clock_t Time_Ended;
     clock_t Clock_Start;
@@ -159,7 +159,7 @@ int main(int argc, char* argv[]) {
             }
             Clock_End = clock();
             // Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
-            Execution_Temp += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
+            Execution_Temp += (long double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
             /*
             file = fopen("Execution.txt", "a+");
             if (file == NULL) {
@@ -174,13 +174,17 @@ int main(int argc, char* argv[]) {
                 // printf("isnan value: %d\n", isnan(Execution_Time[i]));
                 Execution_Time[i] += Execution_Temp;
                 if (Execution_Time[i] >= -1000000 || Execution_Time[i] <= 1000000) {
-                    if ((Execution_Sum += Execution_Time[i]) >= 1000000) {
+                    Execution_Sum += Execution_Time[i]
+                    /*if ((Execution_Sum += Execution_Time[i]) >= 1000000) {
                         fail_count++;
                         sleep(5);
-                    }
+                    }*/
                 } else {
                     fail_count++;
-                    // printf("Fail counter: %d\n", fail_count);
+                    printf("Fail counter: %d\n", fail_count);
+                    printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
+                    printf("Execution_Sum: %Lf\n", i, Execution_Time[i]);
+                    sleep(5);
                     //  printf("Execution_Sum exceeded 10000000\n");
                 }
             } else {
@@ -190,8 +194,8 @@ int main(int argc, char* argv[]) {
                 //  printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
             }
 
-            printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
-            printf("Execution_Sum = %f\n", Execution_Sum);
+            printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
+            printf("Execution_Sum = %Lf\n", Execution_Sum);
 
             // sleep(3);
             // usleep(10000);
@@ -205,7 +209,7 @@ int main(int argc, char* argv[]) {
         long hours = ((((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) - minutes) / 60;
 
         Execution_Average = Execution_Sum / iter;
-        printf("Execution average: %f ms\n", Execution_Average);
+        printf("Execution average: %Lf ms\n", Execution_Average);
         printf("Total time: %ld\n", (Time_Ended - Time_Started));
         printf("Total_Time_Elapsed [HH:MM:SS:MS]: %ld:%ld:%ld:%ld\n", hours, minutes, seconds, milliseconds);
         printf("Total failed counts: %d\n", fail_count);
