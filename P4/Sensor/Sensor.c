@@ -131,19 +131,7 @@ int main(int argc, char* argv[]) {
             execv(path, args);
         }
     } else {
-        FILE *fp = open("/dev/shm/GSV_KEY", "r");
-        int number;
-        FILE* in_file = fopen("name_of_file", "r");  // read only
-        if (!in_file)  // equivalent to saying if ( in_file == NULL )
-        {
-            printf("oops, file can't be read\n");
-            exit(-1);
-        }
-        // attempt to read the next line and store
-        // the value in the "number" variable
-        while (fscanf(file, "%d", &number) == 1) {
-            printf("We just read %d\n", number);
-        }
+        
         // while (1) {
         Time_Started = clock();
         for (int i = 0; i < iter; i++) {
