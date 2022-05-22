@@ -196,7 +196,7 @@ int main(int argc, char* argv[]) {
             if (Execution_Sum > 10000) {
                 fail_count++;
                 printf("fail count: %d\n", fail_count);
-                printf("Execution_Sum: %Lf\n", Execution_Sum);
+                printf("Failed Execution_Sum: %Lf\n", Execution_Sum);
                 //sleep(5);
             } else {
                 printf("Execution_Sum: %Lf\n", Execution_Sum);
