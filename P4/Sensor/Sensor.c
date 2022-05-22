@@ -183,8 +183,7 @@ int main(int argc, char* argv[]) {
             if (Execution_Time[i] > 10000) {
                 fail_count++;
                 printf("fail count: %d\n", fail_count);
-                printf
-                    printf("Failed Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
+                printf("Failed Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
                 sleep(5);
             } else {
                 printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
