@@ -54,7 +54,7 @@ int main() {
     /* Execution time variables */
     int count = 0;
     int fail_count = 0;
-    int iter = 500000;
+    int iter = 100000;
     long double Execution_Time[iter];
     long double Execution_Temp = 0;
     long double Execution_Sum = 0;
