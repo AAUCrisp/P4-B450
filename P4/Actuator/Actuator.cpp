@@ -94,16 +94,16 @@ int main() {
             Clock_Start = clock();
             processData(COMMANDS);
             Clock_End = clock();
-            Execution_Time[i] = (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
+            Execution_Time[count] = (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
 
-            if (Execution_Time[i] > 10000) {
+            if (Execution_Time[count] > 10000) {
                 fail_count++;
-                printf("Execution_Time[%d]: %f\n", i, (double)Execution_Time[i]);
-                Execution_Time[i] = 0;
+                printf("Execution_Time[%d]: %f\n", count, (double)Execution_Time[i]);
+                Execution_Time[count] = 0;
             } else {
-                printf("Execution_Time[%d]\n", i);
+                printf("Execution_Time[%d]\n", count);
                 // printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
-                Execution_Sum += Execution_Time[i];
+                Execution_Sum += Execution_Time[count];
             }
             if (count == iter) {
                 break;
