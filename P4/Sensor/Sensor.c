@@ -95,6 +95,11 @@ int main(int argc, char* argv[]) {
     clock_t Clock_Start;
     clock_t Clock_End;
 
+    struct timespec begin, end;
+    unsigned long seconds = 0;
+    unsigned long nanoseconds = 0;
+    double elapsed = 0;
+
     /* Create sockets */
     Sockets sock;
     Sockets_Transmitter(&sock, IP_LTE, IP_WiFi, PORT_LTE_TRANSMITTER, PORT_WiFi_TRANSMITTER, LTE, WiFi);
@@ -139,7 +144,8 @@ int main(int argc, char* argv[]) {
             /*if (monitor == 1) {
             }*/
 
-            Clock_Start = clock();
+            // Clock_Start = clock();
+            clock_gettime(CLOCK_REALTIME, &begin);
             sprintf(buffer, "%d", generate(1, 25000000));
             // printf("\nSensor || After Random Int Generation\n");
             // usleep(2000);
@@ -157,11 +163,19 @@ int main(int argc, char* argv[]) {
             if (GSV == B || GSV == W) {
                 transmitWiFi(&sock, (char*)buffer);
             }
-            Clock_End = clock();
-            // Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
-            Execution_Temp += (long double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
+            // Clock_End = clock();
+            clock_gettime(CLOCK_REALTIME, &end);
 
-            printf("Execution_Temp: %Lf\n", Execution_Temp);
+            seconds = end.tv_sec - begin.tv_sec;
+            nanoseconds = end.tv_nsec - begin.tv_nsec;
+            elapsed = seconds + nanoseconds * 1e-9;
+
+            printf("elapsed time: %f\n", elapsed);
+
+            // Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
+            //Execution_Temp += (long double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
+
+            //printf("Execution_Temp: %Lf\n", Execution_Temp);
 
             if (Execution_Temp > 1000000.000 || Execution_Temp < -1000000.000) {
                 fail_count++;
