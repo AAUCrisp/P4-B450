@@ -131,6 +131,10 @@ int main(int argc, char* argv[]) {
             execv(path, args);
         }
     } else {
+
+        struct stat statbuf;
+        int fp = open("/dev/shm/GSV_KEY", "r");
+        fstat(fp, &statbuf);
         // while (1) {
         Time_Started = clock();
         for (int i = 0; i < iter; i++) {
