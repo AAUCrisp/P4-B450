@@ -98,14 +98,14 @@ int main() {
 
             if (Execution_Time[count] > 10000) {
                 fail_count++;
-                printf("Execution_Time[%d]: %f\n", count, (double)Execution_Time[count]);
+                //printf("Execution_Time[%d]: %f\n", count, (double)Execution_Time[count]);
                 Execution_Time[count] = 0;
             } else {
-                printf("Execution_Time[%d]\n", count);
+                //printf("Execution_Time[%d]\n", count);
                 // printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
                 Execution_Sum += Execution_Time[count];
             }
-            printf("count: %d\n", count);
+            //printf("count: %d\n", count);
             if (count == iter) {
                 break;
             }
