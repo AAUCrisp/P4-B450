@@ -50,15 +50,15 @@ int main() {
     pthread_t T1, T2;
     char* curr_time;
     int* Processed_Data;
-    double Execution_Time = 0.0;
 
     /* Execution time variables */
     int count = 0;
     int fail_count = 0;
-    double Execution_Time[500000];
-    double Execution_Temp = 0;
-    double Execution_Sum = 0;
-    double Execution_Average = 0;
+    int iter = 500000;
+    long double Execution_Time[iter];
+    long double Execution_Temp = 0;
+    long double Execution_Sum = 0;
+    long double Execution_Average = 0;
     clock_t Time_Started;
     clock_t Time_Ended;
     clock_t Clock_Start;
@@ -105,7 +105,7 @@ int main() {
                 // printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
                 Execution_Sum += Execution_Time[count];
             }
-            if (count == 500000) {
+            if (count == iter) {
                 break;
             }
         }
