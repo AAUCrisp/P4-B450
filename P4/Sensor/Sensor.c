@@ -172,18 +172,18 @@ int main(int argc, char* argv[]) {
             elapsed = seconds + nanoseconds * 1e-9;
             if (elapsed > 10000) {
                 fail_count++;
-                printf("fail count: %d\n", fail_count);
-                printf("Failed elapsed time: %f\n", elapsed);
+               // printf("fail count: %d\n", fail_count);
+               // printf("Failed elapsed time: %f\n", elapsed);
             } else {
-                printf("\nelapsed time: %f\n", elapsed);
+               // printf("\nelapsed time: %f\n", elapsed);
             }
             // sleep(5);
             Execution_Time[i] = elapsed;
             if (Execution_Time[i] > 10000) {
-                printf("Failed Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
+               // printf("Failed Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
                 sleep(1);
                 Execution_Time[i] = 0;
-                printf("Forced Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
+               // printf("Forced Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
                 sleep(1);
             } else {
                 printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
@@ -192,12 +192,13 @@ int main(int argc, char* argv[]) {
             Execution_Sum += Execution_Time[i];
             if (Execution_Sum > 10000) {
                 fail_count++;
-                printf("fail count: %d\n", fail_count);
-                printf("Failed Execution_Sum: %Lf\n", Execution_Sum);
+               // printf("fail count: %d\n", fail_count);
+               // printf("Failed Execution_Sum: %Lf\n", Execution_Sum);
                 //sleep(5);
             } else {
-                printf("Execution_Sum: %Lf\n", Execution_Sum);
+                //printf("Execution_Sum: %Lf\n", Execution_Sum);
             }
+            
             // sleep(5);
 
             // Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
