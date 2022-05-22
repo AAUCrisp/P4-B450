@@ -50,10 +50,10 @@ void* shm_read(const int SIZE, const char* name) {
 
     /* pointer to shared memory object */
     void* ptr;
-    /*
+    
         if (sem_wait(&SEM_READ) == -1) {
             perror("SEM_READ sem_wait failed");
-        }*/
+        }
 
     /* open the shared memory object */
     shm_fd = shm_open(name, O_RDONLY, 0644);
@@ -75,10 +75,10 @@ void* shm_read(const int SIZE, const char* name) {
 
     close(shm_fd);
 
-    /*if (sem_post(&SEM_WRITE)) {
+    if (sem_post(&SEM_WRITE)) {
         perror("SEM_WRITE sem_post failed");
     }
-*/
+
     // sem_close(&SEM_READ);
 
     // sem_close(&SEM_WRITE);
