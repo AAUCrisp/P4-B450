@@ -79,9 +79,9 @@ void* shm_read(const int SIZE, const char* name) {
         perror("SEM_WRITE sem_post failed");
     }
 
-    //sem_close(&SEM_READ);
+    sem_close(&SEM_READ);
 
-    // sem_close(&SEM_WRITE);
+    sem_close(&SEM_WRITE);
 
     // printf("This is ptr memory map: %p\n", ptr);
 

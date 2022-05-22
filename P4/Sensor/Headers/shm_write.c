@@ -28,20 +28,23 @@
 extern int errno;
 
 void shm_write(const char* message, const int SIZE, const char* name) {
+
+    /* Semaphore variables */
+    //sem_unlink(SEM_READ);
+    //sem_unlink(SEM_WRITE);
+
     int sem_write = sem_init(&SEM_WRITE, 1, 1);
     if (sem_write == -1) {
         perror("shm_write = sem_open/SEM_WRITE");
         exit(EXIT_FAILURE);
     }
-
+   
     int sem_read = sem_init(&SEM_READ, 1, 1);
     if (sem_read == -1) {
         perror("shm_write = sem_open/SEM_READ");
         exit(EXIT_FAILURE);
     }
-    /* Semaphore variables */
-    sem_unlink(&sem_write);
-    sem_unlink(&sem_read);
+
 
     /* shared memory file descriptor */
     int shm_fd;
@@ -79,7 +82,7 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     sprintf(ptr, "%s", message);
     printf("Wrote from shm_write: %s\n", (char*)ptr);
 
-    // munmap(ptr, SIZE);
+    //munmap(ptr, SIZE);
     printf("shm_fd value: %d\n", shm_fd);
     close(shm_fd);
 
@@ -87,9 +90,10 @@ void shm_write(const char* message, const int SIZE, const char* name) {
         perror("SEM_WRITE sem_post failed");
     }
 
-    // sem_close(&SEM_READ);
+    sem_close(&SEM_READ);
 
-    // sem_close(&SEM_WRITE);
+    sem_close(&SEM_WRITE);
+
 
     // printf("This is ptr: %p\n", ptr);
     // printf("This is ptr char*: %s\n", (char*)ptr);
