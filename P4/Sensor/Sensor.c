@@ -131,7 +131,6 @@ int main(int argc, char* argv[]) {
             execv(path, args);
         }
     } else {
-        
         // while (1) {
         Time_Started = clock();
         for (int i = 0; i < iter; i++) {
