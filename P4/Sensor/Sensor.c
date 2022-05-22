@@ -168,13 +168,17 @@ int main(int argc, char* argv[]) {
 
             seconds = end.tv_sec - begin.tv_sec;
             nanoseconds = end.tv_nsec - begin.tv_nsec;
+            sleep(5);
             elapsed = seconds + nanoseconds * 1e-9;
-            Execution_Time[i] = elapsed;
-            Execution_Sum += elapsed;
-
             printf("elapsed time: %f\n", elapsed);
+            sleep(5);
+            Execution_Time[i] = elapsed;
             printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
+            sleep(5);
+            Execution_Sum += elapsed;
             printf("Execution_Sum: %Lf\n", Execution_Sum);
+            sleep(5);
+
 
             // Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
             //Execution_Temp += (long double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
