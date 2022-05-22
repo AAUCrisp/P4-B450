@@ -25,6 +25,11 @@
 /* Semaphore Names */
 // const char* SEM_READ_FNAME;
 // const char* SEM_WRITE_FNAME;
+
+#ifndef MAP_HUGETLB
+#define MAP_HUGETLB 0x40000
+#endif
+
 extern int errno;
 
 void* shm_read(const int SIZE, const char* name) {
