@@ -10,6 +10,7 @@
 #include <string.h>
 #include <sys/ipc.h>  //IPC thing
 #include <sys/mman.h>
+#include <sys/resource.h>
 #include <sys/sem.h>
 #include <sys/shm.h>  //SHM thing
 #include <sys/socket.h>
@@ -29,42 +30,38 @@
 extern int errno;
 
 void* shm_read(const int SIZE, const char* name) {
-  
     /* Semaphore variables */
     int sem_write = sem_init(&SEM_WRITE, 1, 1);
-   
+
     if (sem_write == -1) {
         perror("shm_read = sem_open/SEM_WRITE");
         exit(EXIT_FAILURE);
     }
-   
+
     int sem_read = sem_init(&SEM_READ, 1, 1);
-   
+
     if (sem_read == -1) {
         perror("shm_read = sem_open/SEM_READ");
         exit(EXIT_FAILURE);
     }
-   
 
     /* shared memory file descriptor */
     int shm_fd;
 
     /* pointer to shared memory object */
     void* ptr;
-/*
-    if (sem_wait(&SEM_READ) == -1) {
-        perror("SEM_READ sem_wait failed");
-    }*/
-    
-    
+    /*
+        if (sem_wait(&SEM_READ) == -1) {
+            perror("SEM_READ sem_wait failed");
+        }*/
+
     /* open the shared memory object */
     shm_fd = shm_open(name, O_RDONLY, 0644);
     if (shm_fd == -1) {
         perror("shm_open failed");
         fprintf(stderr, "errno shm_open failed: %s\n", strerror(errno));
     }
-   
-  
+
     /* memory map the shared memory object */
     ptr = mmap(NULL, SIZE, PROT_READ, MAP_SHARED, shm_fd, 0);
     if (ptr == MAP_FAILED) {
@@ -73,20 +70,30 @@ void* shm_read(const int SIZE, const char* name) {
         strerror(errno);
     }
 
-    //printf("Read from shm_read: %s\n", (char*)ptr);
-    // munmap(ptr, SIZE);
-    //printf("shm_fd value: %d\n", shm_fd);
+    // printf("Read from shm_read: %s\n", (char*)ptr);
+    //  munmap(ptr, SIZE);
+    // printf("shm_fd value: %d\n", shm_fd);
+
+    struct rlimit r_limit;
+    printf("getrlimit(RLIMIT_AS): %d\n", getrlimit(RLIMIT_AS, &r_limit));
+    printf("getrlimit(RLIMIT_CORE): %d\n", getrlimit(RLIMIT_CORE, &r_limit));
+    printf("getrlimit(RLIMIT_CPU): %d\n", getrlimit(RLIMIT_CPU, &r_limit));
+    printf("getrlimit(RLIMIT_DATA): %d\n", getrlimit(RLIMIT_DATA, &r_limit));
+    printf("getrlimit(RLIMIT_NOFILE): %d\n", getrlimit(RLIMIT_NOFILE, &r_limit));
+    printf("getrlimit(RLIMIT_NPROC): %d\n", getrlimit(RLIMIT_NPROC, &r_limit));
+    printf("getrlimit(RLIMIT_RSS): %d\n", getrlimit(RLIMIT_RSS, &r_limit));
+    printf("getrlimit(RLIMIT_STACK): %d\n", getrlimit(RLIMIT_STACK, &r_limit));
+    
+
     close(shm_fd);
-    munmap(ptr, SIZE);
 
     /* if (sem_post(&SEM_WRITE)) {
          perror("SEM_WRITE sem_post failed");
      } */
- 
+
     // sem_close(&SEM_READ);
-   
+
     // sem_close(&SEM_WRITE);
- 
 
     // printf("This is ptr memory map: %p\n", ptr);
 
