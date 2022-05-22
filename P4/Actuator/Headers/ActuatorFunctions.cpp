@@ -91,7 +91,7 @@ void processData(char msg[buffer]) {
         //printf("movement_x = x - last_x: %d\n", movement_x);
         //printf("movement_y = y - last_y: %d\n", movement_y);
     }
-    printf("Movement_x: %d \nMovement_y: %d \n\n", movement_x, movement_y);
+    // remove this comment printf("Movement_x: %d \nMovement_y: %d \n\n", movement_x, movement_y);
     if (movement_x == 0 && movement_y == 0){
 
     }else{

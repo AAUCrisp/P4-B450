@@ -86,8 +86,9 @@ int main() {
         while (1) {
             count++;
             pthread_create(&T1, NULL, DoSomething, NULL);
+
             COMMANDS = (char*)shm_read(32, COMMANDS_KEY);
-            printf("COMMANDS from shared memory: %s\n", COMMANDS);
+            //printf("COMMANDS from shared memory: %s\n", COMMANDS);
 
             snprintf(msg, sizeof(msg), "%s", COMMANDS);
 
@@ -98,7 +99,7 @@ int main() {
 
             if (Execution_Time[count] > 10000) {
                 fail_count++;
-                printf("Execution_Time[%d]: %f\n", count, (double)Execution_Time[i]);
+                printf("Execution_Time[%d]: %f\n", count, (double)Execution_Time[count]);
                 Execution_Time[count] = 0;
             } else {
                 printf("Execution_Time[%d]\n", count);
