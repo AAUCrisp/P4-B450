@@ -228,7 +228,7 @@ int main(int argc, char* argv[]) {
         long hours = ((((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) - minutes) / 60;
 
         Execution_Average = Execution_Sum / iter;
-        printf("Execution average: %Lf ms\n", Execution_Average);
+        printf("\n\nExecution average: %Lf ms\n", Execution_Average);
         printf("Total time: %ld\n", (Time_Ended - Time_Started));
         printf("Total_Time_Elapsed [HH:MM:SS:MS]: %ld:%ld:%ld:%ld\n", hours, minutes, seconds, milliseconds);
         printf("Total failed counts: %d\n", fail_count);
