@@ -163,7 +163,7 @@ int main(int argc, char* argv[]) {
 
             printf("Execution_Temp: %Lf\n", Execution_Temp);
 
-            if (Execution_Temp > 1000000 || Execution_Temp < -1000000) {
+            if (Execution_Temp > 1000000.000 || Execution_Temp < -1000000.000) {
                 fail_count++;
                 printf("fail_count: %d\n", fail_count);
                 printf("Execution_Temp was: %Lf\n", Execution_Temp);
