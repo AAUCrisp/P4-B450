@@ -76,15 +76,16 @@ void* shm_read(const int SIZE, const char* name) {
 
     struct rlimit r_limit;
     printf("getrlimit(RLIMIT_AS): %d\n", getrlimit(RLIMIT_AS, &r_limit));
-    printf("getrlimit(RLIMIT_CORE): %d\n", getrlimit(RLIMIT_CORE, &r_limit));
+    /*printf("getrlimit(RLIMIT_CORE): %d\n", getrlimit(RLIMIT_CORE, &r_limit));
     printf("getrlimit(RLIMIT_CPU): %d\n", getrlimit(RLIMIT_CPU, &r_limit));
     printf("getrlimit(RLIMIT_DATA): %d\n", getrlimit(RLIMIT_DATA, &r_limit));
     printf("getrlimit(RLIMIT_NOFILE): %d\n", getrlimit(RLIMIT_NOFILE, &r_limit));
     printf("getrlimit(RLIMIT_NPROC): %d\n", getrlimit(RLIMIT_NPROC, &r_limit));
     printf("getrlimit(RLIMIT_RSS): %d\n", getrlimit(RLIMIT_RSS, &r_limit));
     printf("getrlimit(RLIMIT_STACK): %d\n", getrlimit(RLIMIT_STACK, &r_limit));
-    
-
+    */
+    setrlimit(RLIMIT_AS, &r_limit);
+    printf("getrlimit(RLIMIT_AS)AFTER: %d\n", getrlimit(RLIMIT_AS, &r_limit));
     close(shm_fd);
 
     /* if (sem_post(&SEM_WRITE)) {
