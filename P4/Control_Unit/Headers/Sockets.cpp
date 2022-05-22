@@ -21,11 +21,6 @@ std::ofstream File;
 /* -------------------------
 -------- SETUP AREA --------
 ---------- start ---------*/
-// int message_only = 1;        // Print messages only
-// int print_sen_in = 0;       // Print incoming Sensor related things
-// int print_act_out = 0;      // Print outgoing Actuator related things
-// int print_GSV = 0;          // Print GSV related things
-// int force_both = 1;         // Troubleshooting with both technologies
 
 
 #ifndef SOCKET_STRUCT
@@ -381,8 +376,16 @@ void* transmit_command(void *socket, char* message) {
     if(print_act_out == 1) {
         cout << "Sending || Global Signal Variable is: " << GSV << endl;
     }
-    if(force_both == 0) {
-        gsv = 0;
+    if(force_tech > 0) {
+        if(force_tech == 1) {
+            gsv = 0;
+        }
+        if(force_tech == 2) {
+            gsv = 1;
+        }
+        if(force_tech == 3) {
+            gsv = 2;
+        }
     }
 
     if((gsv == 0) || (gsv == 1)) {

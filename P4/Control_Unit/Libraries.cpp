@@ -27,7 +27,7 @@ using namespace std;
 #ifndef VARIABLES
 #define VARIABLES
     // General Settings
-    static int force_both = 0;      // Troubleshooting with both technologies
+    static int force_tech = 0;      // Troubleshooting with both technologies
     static int monitor = 1;         // Disable/Enable Start of Signal Monitoring
 
     // Grid Settings
@@ -51,6 +51,7 @@ using namespace std;
     static int delay = 1;
     static char* GSV_arg_used = NULL;
     static char* GSV_arg_both = NULL;
+    static char* GSV_arg_both_arg = NULL;
     static char* GSV_arg_print = NULL;
     static char* GSV_sleep_arg = NULL;
     static char* GSV_sleep_delay = NULL;

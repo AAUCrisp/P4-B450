@@ -89,9 +89,7 @@ int main(int argc, char *argv[]) {
         printf("Parent Process ID: %d \n", getppid());
         printf("Monitoring Process ID is: %d \n", getpid());
         char* path = (char*) "./SignalMonitoring";                 // Path of the file for new process to run
-        // char path[] = "./SignalMonitoring";                 // Path of the file for new process to run
-        // char* args[] = { (char*)"./SignalMonitoring&", (char*) NULL};       // Command for the function to execute, always ended on NULL argument
-        char* args[] = { (char*)"./SignalMonitoring&", GSV_arg_used, GSV_sleep_arg, GSV_sleep_delay, GSV_arg_both, GSV_arg_print, (char*) NULL};       // Command for the function to execute, always ended on NULL argument
+        char* args[] = { (char*)"./SignalMonitoring&", GSV_arg_used, GSV_sleep_arg, GSV_sleep_delay, GSV_arg_both, GSV_arg_both_arg, GSV_arg_print, (char*) NULL};       // Command for the function to execute, always ended on NULL argument
         if(monitor == 1) {
             execv(path, args);                                  // Tells the new process to "reset" and run a different code instead
             printf("ERROR: DIDN'T START THE MONITORING PROCESS!!\n");  // Should never get this far!

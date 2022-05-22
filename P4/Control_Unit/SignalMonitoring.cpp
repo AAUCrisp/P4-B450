@@ -17,9 +17,6 @@
 
 #define buffer 32
 
-// int print = 0;      // Enable/Disable prints for troubleshooting
-// int message_only = 1;   // Only print Selection
-// int force_both = 1;      // Forces it to use both LTE & WiFi
 
 pthread_t wifi, lte;
 
@@ -62,11 +59,30 @@ int main(int argc, char *argv[]) {
         for (int i = 1; i < argc; i++) {
 
             // Force Both Technologies Argument
-            if((string) argv[i] == "-b" || (string) argv[i] == "-both") {
-                if(child == 0) {
-                    cout << "===== Forced Use of Both Technologies Enabled =====" << endl;
+            if((string) argv[i] == "-t" || (string) argv[i] == "-tech" || (string) argv[i] == "-technology") {
+                char firstCharacter;
+                string current = argv[i+1];
+                firstCharacter = current.at(0);
+                if( (argc > i+1 && firstCharacter != '-') || firstCharacter == '-' || ( argc > i+1 && ( (string) argv[i+1] == "b" ||  (string) argv[i+1] == "b") ) ) {
+                    if((string) argv[i+1] == "w" || (string) argv[i+1] == "wifi") {
+                        if(child == 0) {
+                            cout << "===== Forced Use of WiFi =====" << endl;
+                        }
+                        force_tech = 2;
+                    }
+                    else if ((string) argv[i+1] == "l" || (string) argv[i+1] == "lte") {
+                        if(child == 0) {
+                            cout << "===== Forced Use of WiFi =====" << endl;
+                        }
+                        force_tech = 3;
+                    } 
                 }
-                force_both = 1;
+                else {
+                    if(child == 0) {
+                        cout << "===== Forced Use of Both Technologies Enabled =====" << endl;
+                    }
+                    force_tech = 1;
+                }
             }
 
             // Verbose Argument
@@ -102,7 +118,7 @@ int main(int argc, char *argv[]) {
     Sockets sock;
     Sockets_GSV(&sock, IP_LTE, IP_WiFi, PORT_LTE_TRANSMITTER, PORT_WiFi_TRANSMITTER, LTE, WiFi);
 
-    printf("\n\n==========================\nMonitoring Process Started\n==========================\n\n");
+    printf("\n\n  ============================\n   Monitoring Process Started\n  ============================\n\n");
     int counter = 0;
 
     while (1) {
@@ -152,7 +168,7 @@ int main(int argc, char *argv[]) {
             }
         }
 
-        if(force_both == 1) {
+        if(force_tech == 1) {
             gsv = (char*)"0";   // Force both technologies if enabled
         }
         shm_write(gsv, buffer, GSV_KEY);  // Write selected technology to shared memory

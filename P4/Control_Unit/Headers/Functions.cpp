@@ -5,7 +5,7 @@ void WiFi_command(Sockets sock) {
     string coordinate;
     char* WiFimsg = (char*) malloc(9);
 
-    printf("\n\n=====================\nWiFi Listener Started\n=====================\n\n");
+    printf("\n\n  =======================\n   WiFi Listener Started\n  =======================\n\n");
     
     if(troubleshooting_print == 1) {
         cout << "WiFi Command Function || WiFi Sensor Socket: " <<sock.sockWiFi_RECEIVER << endl;
@@ -38,7 +38,7 @@ void* LTE_command(void* socket) {
     int data;
     string coordinate;
     char* LTEmsg = (char*) malloc(9);
-    printf("\n\n====================\nLTE Listener Started\n====================\n\n");
+    printf("\n\n  ======================\n   LTE Listener Started\n  ======================\n\n");
     
     if(troubleshooting_print == 1) {
         cout << "LTE Command Function || LTE Sensor Socket: " << sock->sockLTE_RECEIVER << endl;
@@ -152,12 +152,16 @@ void Argument_Setup(int argc, char* argv[]) {
     int axis_change = 0;
     char firstCharacter;
 
-    if ((string) argv[1] == "-help") {
+    if ((string) argv[1] == "-help" || (string) argv[1] == "-h") {
         help();
     }
-    cout << "============================\nControl Unit Process Started\n============================\n\n" << endl;
+    cout << "  ===================================" << endl;
+    cout << "     Control Unit Process Started" << endl;
+    cout << "  ===================================" << endl << endl << endl << endl;
 
-    cout << "\nArgument(s) accepted." << endl << endl;
+    cout << "  ===================================" << endl;
+    cout << "   ====  Argument(s) accepted  ====" << endl;
+    cout << "    === Argument Setup Started ==="<< endl << endl << endl;
 
     for (int i = 1; i < argc; i++) {
         string current = argv[i];
@@ -173,7 +177,7 @@ void Argument_Setup(int argc, char* argv[]) {
 
             // Signal Monitoring Process Argument
             if((string) argv[i] == "-m" || (string) argv[i] == "-monitor" || (string) argv[i] == "-monitoring") {
-                cout << "===== Signal Monitoring Process Creation Disabled =====" << endl;
+                cout << "  ===== Signal Monitoring Process Creation Disabled =====" << endl;
                 monitor = 0;
             }
 
@@ -185,7 +189,7 @@ void Argument_Setup(int argc, char* argv[]) {
                         firstCharacter = current.at(0);
 
                         if(firstCharacter == '-') {
-                            cout << "===== Verbose Enabled =====" << endl;
+                            cout << "  ===== Verbose Enabled =====" << endl;
                             message_only = 0;        // Print messages only
                             troubleshooting_print = 1;
                             print_sen_in = 1;       // Print incoming Sensor related things
@@ -196,17 +200,17 @@ void Argument_Setup(int argc, char* argv[]) {
                             break;
                         }
                         else if ( (string) argv[j] == "i" || (string) argv[j] == "in") {
-                            cout << "===== Verbose For Incoming Traffic Enabled =====" << endl;
+                            cout << "  ===== Verbose For Incoming Traffic Enabled =====" << endl;
                             message_only = 0;        // Print messages only
                             print_sen_in = 1;       // Print incoming Sensor related things
                         }
                         else if ( (string) argv[j] == "o" || (string) argv[j] == "out") {
-                            cout << "===== Verbose For Outgoing Traffic Enabled =====" << endl;
+                            cout << "  ===== Verbose For Outgoing Traffic Enabled =====" << endl;
                             message_only = 0;        // Print messages only
                             print_act_out = 1;       // Print incoming Sensor related things
                         }
                         else if ( (string) argv[j] == "g" || (string) argv[j] == "gsv") {
-                            cout << "===== Verbose For GSV Enabled =====" << endl;
+                            cout << "  ===== Verbose For GSV Enabled =====" << endl;
                             message_only = 0;        // Print messages only
                             print_GSV = 1;       // Print incoming Sensor related things
                                 // Signal Monitoring Arguments
@@ -214,12 +218,12 @@ void Argument_Setup(int argc, char* argv[]) {
                             GSV_arg_used = (char*) "-a";
                         }
                         else { 
-                            cout << "===== Invalid argument for \"Verbose\" =====" << endl; 
+                            cout << "  ===== Invalid argument for \"Verbose\" =====" << endl; 
                         }
                     }
                 }
                 else {
-                    cout << "===== Verbose Enabled =====" << endl;
+                    cout << "  ===== Verbose Enabled =====" << endl;
                     message_only = 0;        // Print messages only
                     troubleshooting_print = 1;
                     print_sen_in = 1;       // Print incoming Sensor related things
@@ -232,23 +236,45 @@ void Argument_Setup(int argc, char* argv[]) {
 
             // Usage of Hex Char Argument
             if((string) argv[i] == "-h" || (string) argv[i] == "-hex") {
-                cout << "===== Hex Chars Disabled =====" << endl;
+                cout << "  ===== Hex Chars Disabled =====" << endl;
                 use_hex = 0;
             }
 
-            // Force Both Technologies Argument
-            if((string) argv[i] == "-b" || (string) argv[i] == "-both") {
-                cout << "===== Forced Use of Both Technologies Enabled =====" << endl;
-                force_both = 1;
-                GSV_arg_both = (char*) "-b";
+            // Force Technologies Argument
+            if((string) argv[i] == "-t" || (string) argv[i] == "-tech" || (string) argv[i] == "-technology") {
+                GSV_arg_both = (char*) "-t";
                 GSV_arg_used = (char*) "-a";
+
+                if( argc > i+1) {
+                    string current = argv[i+1];
+                    firstCharacter = current.at(0);
+
+                    if( (firstCharacter == '-') || (string) argv[i+1] == "b" ||  (string) argv[i+1] == "both") {
+                        cout << "  ===== Forced Use of Both Technologies Enabled =====" << endl;
+                        force_tech = 1;
+                    }
+                    else if((string) argv[i+1] == "w" || (string) argv[i+1] == "wifi") {
+                        cout << "  ===== Forced Use of WiFi =====" << endl;
+                        GSV_arg_both_arg = (char*) "w";
+                        force_tech = 2;
+                    }
+                    else if ((string) argv[i+1] == "l" || (string) argv[i+1] == "lte") {
+                        cout << "  ===== Forced Use of LTE =====" << endl;
+                        GSV_arg_both_arg = (char*) "l";
+                        force_tech = 3;
+                    } 
+                }
+                else {
+                    cout << "  ===== Forced Use of Both Technologies Enabled =====" << endl;
+                    force_tech = 1;
+                }
             }
 
             // X-Axis Range Argument
             if((string) argv[i] == "-x") {
                 
                 x_axis = atoi(argv[i+1]);
-                cout << "===== X-axis range set to " << x_axis << " =====" << endl;
+                cout << "  ===== X-axis range set to " << x_axis << " =====" << endl;
                 axis_change = 1;
             }
 
@@ -256,14 +282,14 @@ void Argument_Setup(int argc, char* argv[]) {
             if((string) argv[i] == "-y") {
                 
                 y_axis = atoi(argv[i+1]);
-                cout << "===== Y-axis range set to " << y_axis << " =====" << endl;
+                cout << "  ===== Y-axis range set to " << y_axis << " =====" << endl;
                 axis_change = 1;
             }
 
             // Signal Monitoring Sleep Delay
             if((string) argv[i] == "-s" || (string) argv[i] == "-sleep") {
                 delay = atoi(argv[i+1]);
-                cout << "===== Signal Monitoring Sleep Time set to " << delay << " seconds =====" << endl;
+                cout << "  ===== Signal Monitoring Sleep Time set to " << delay << " seconds =====" << endl;
 
                 char* temp_char = (char*) malloc(9);
                 string temp_str = (string) argv[i] + " " + argv[i+1];
@@ -273,17 +299,17 @@ void Argument_Setup(int argc, char* argv[]) {
                 GSV_sleep_arg = (char*) argv[i];
                 GSV_sleep_delay = (char*) argv[i+1];
             }
-
         }
     }
     if(axis_change >= 1) {
         coordinates = x_axis * y_axis;
     }
     if(use_grid == 1) {
-        cout << "X-axis size is: " << x_axis << "   &   Y-axis size is: " << y_axis << endl;
+        cout << "  X-axis size is: " << x_axis << "   &   Y-axis size is: " << y_axis << endl;
         grid = generate_grid(x_axis, y_axis, use_hex);
     }
-    cout << "\n\n==== Argument Setup Done ====\n\n" << endl;
+    cout << "\n\n     ==== Argument Setup Done ====" << endl;
+    cout << "  ===================================" << endl << endl << endl;
 
 }
 
