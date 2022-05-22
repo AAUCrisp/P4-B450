@@ -135,7 +135,7 @@ int main(int argc, char* argv[]) {
             msg = shm_read(SHM_BUFFER, GSV_KEY);
             GSV = atoi(msg);
 
-            //   printf("\nSensor || GSV from shared memory: %s\n", msg);
+            printf("\nSensor || GSV from shared memory: %s\n", msg);
 
             // printf("\nGSV converted: %d\n", GSV);
             /*if (monitor == 1) {
@@ -165,10 +165,10 @@ int main(int argc, char* argv[]) {
 
             if (Execution_Time[i] > 10000) {
                 fail_count++;
-                //printf("Execution_Time[%d]: %f\n", i, (double)Execution_Time[i]);
+                // printf("Execution_Time[%d]: %f\n", i, (double)Execution_Time[i]);
                 Execution_Time[i] = 0;
             } else {
-               // printf("Execution_Time[%d]\n", i);
+                // printf("Execution_Time[%d]\n", i);
                 // printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
                 Execution_Sum += Execution_Time[i];
             }
