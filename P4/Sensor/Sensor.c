@@ -174,7 +174,6 @@ int main(int argc, char* argv[]) {
                 fail_count++;
                 printf("fail count: %d\n", fail_count);
                 printf("Failed elapsed time: %f\n", elapsed);
-                sleep(5);
             } else {
                 printf("\nelapsed time: %f\n", elapsed);
             }
@@ -182,10 +181,10 @@ int main(int argc, char* argv[]) {
             Execution_Time[i] = elapsed;
             if (Execution_Time[i] > 10000) {
                 printf("Failed Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
-                sleep(2);
+                sleep(1);
                 Execution_Time[i] = 0;
                 printf("Forced Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
-                sleep(2);
+                sleep(1);
             } else {
                 printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
             }
