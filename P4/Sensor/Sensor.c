@@ -169,14 +169,16 @@ int main(int argc, char* argv[]) {
             seconds = end.tv_sec - begin.tv_sec;
             nanoseconds = end.tv_nsec - begin.tv_nsec;
             elapsed = seconds + nanoseconds * 1e-9;
+            Execution_Time[i] += elapsed;
 
             printf("elapsed time: %f\n", elapsed);
+            printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
 
             // Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
             //Execution_Temp += (long double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
 
             //printf("Execution_Temp: %Lf\n", Execution_Temp);
-
+            /*
             if (Execution_Temp > 1000000.000 || Execution_Temp < -1000000.000) {
                 fail_count++;
                 printf("fail_count: %d\n", fail_count);
@@ -186,7 +188,7 @@ int main(int argc, char* argv[]) {
                 Execution_Time[i] += Execution_Temp;
                 printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
                 printf("Execution_Sum = %Lf\n", Execution_Sum);
-            }
+            }*/
 
             // sleep(3);
             // usleep(10000);
