@@ -165,7 +165,7 @@ int main(int argc, char* argv[]) {
                 transmitWiFi(&sock, (char*)buffer);
             }
             // Clock_End = clock();
-            shm_unlink(GSV_KEY);
+            
             clock_gettime(CLOCK_REALTIME, &end);
 
             seconds = end.tv_sec - begin.tv_sec;
