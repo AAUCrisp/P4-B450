@@ -173,28 +173,31 @@ int main(int argc, char* argv[]) {
             if (elapsed > 10000) {
                 fail_count++;
                 printf("fail count: %d\n", fail_count);
+                printf("Failed elapsed time: %f\n", elapsed);
                 sleep(5);
             } else {
-                printf("\n\nelapsed time: %f\n", elapsed);
+                printf("elapsed time: %f\n", elapsed);
             }
             // sleep(5);
             Execution_Time[i] = elapsed;
             if (Execution_Time[i] > 10000) {
                 fail_count++;
                 printf("fail count: %d\n", fail_count);
+                printf
+                    printf("Failed Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
                 sleep(5);
             } else {
                 printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
             }
             // sleep(5);
             Execution_Sum += elapsed;
-            if (Execution_Sum > 10000){
+            if (Execution_Sum > 10000) {
                 fail_count++;
                 printf("fail count: %d\n", fail_count);
+                printf("Execution_Sum: %Lf\n", Execution_Sum);
                 sleep(5);
             } else {
-            printf("Execution_Sum: %Lf\n", Execution_Sum);
-
+                printf("Execution_Sum: %Lf\n", Execution_Sum);
             }
             // sleep(5);
 
