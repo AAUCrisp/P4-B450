@@ -85,8 +85,10 @@ int main(int argc, char* argv[]) {
     /* Execution time variables */
     int fail_count = 0;
     double Execution_Time[iter];
+    double Real_Execution_Time[iter];
     double Execution_Temp;
     double Execution_Sum;
+    double Real_Execution_Sum;
     double Execution_Average;
     clock_t Time_Started;
     clock_t Time_Ended;
@@ -171,18 +173,20 @@ int main(int argc, char* argv[]) {
             if (shit == 0) {
                 // printf("isnan value: %d\n", isnan(Execution_Time[i]));
                 Execution_Time[i] += Execution_Temp;
-                if (Execution_Time[i] >= -1000000000 || Execution_Time [i] <= 1000000000) {
-                    Execution_Sum += Execution_Time[i];
+                if (Execution_Time[i] >= -1000000 || Execution_Time[i] <= 1000000) {
+                    if ((Execution_Sum += Execution_Time[i]) >= 1000000) {
+                        fail_count++;
+                    }
                 } else {
                     fail_count++;
-                    printf("Fail counter: %d\n", fail_count);
-                    // printf("Execution_Sum exceeded 10000000\n");
+                    // printf("Fail counter: %d\n", fail_count);
+                    //  printf("Execution_Sum exceeded 10000000\n");
                 }
             } else {
                 fail_count++;
-                printf("Fail counter: %d\n", fail_count);
-                // printf("isnan value: %d\n", isnan(Execution_Time[i]));
-                // printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
+                // printf("Fail counter: %d\n", fail_count);
+                //  printf("isnan value: %d\n", isnan(Execution_Time[i]));
+                //  printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
             }
 
             printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
