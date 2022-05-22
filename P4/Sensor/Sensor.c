@@ -174,7 +174,7 @@ int main(int argc, char* argv[]) {
                 fail_count++;
                 printf("fail count: %d\n", fail_count);
                 printf("Failed elapsed time: %f\n", elapsed);
-                sleep(5);
+                //sleep(5);
             } else {
                 printf("elapsed time: %f\n", elapsed);
             }
@@ -184,7 +184,7 @@ int main(int argc, char* argv[]) {
                 fail_count++;
                 printf("fail count: %d\n", fail_count);
                 printf("Failed Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
-                sleep(5);
+                //sleep(5);
             } else {
                 printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
             }
@@ -194,7 +194,7 @@ int main(int argc, char* argv[]) {
                 fail_count++;
                 printf("fail count: %d\n", fail_count);
                 printf("Execution_Sum: %Lf\n", Execution_Sum);
-                sleep(5);
+                //sleep(5);
             } else {
                 printf("Execution_Sum: %Lf\n", Execution_Sum);
             }
