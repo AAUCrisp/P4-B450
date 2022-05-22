@@ -157,13 +157,16 @@ int main(int argc, char *argv[]) {
 
         if(force_tech > 0){
             if(force_tech == 1){
-                gsv = (char*)'0';
+                gsv = (char*)"0";
+                cout << "GSV || Forced Use of Both" << endl << endl;
             }
             else if(force_tech == 2){
-                gsv = (char*)'1';
+                gsv = (char*)"1";
+                cout << "GSV || Forced Use of WiFi" << endl << endl;
             }
             else if(force_tech == 3){
-                gsv = (char*)'2';
+                gsv = (char*)"2";
+                cout << "GSV || Forced Use of LTE" << endl << endl;
             }
         }
         /* Compare signals and select a technology */
