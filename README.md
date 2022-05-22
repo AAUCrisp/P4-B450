@@ -7,8 +7,8 @@ Group 450, Spring Semester 2022
 ### Has many argument settings
 Use `-help` for full info on arguments.  
   
-If running Signal Monitoring on it's own it takes:  
-`-b` to force both LTE & WiFi  
+##### If running Signal Monitoring on it's own it takes:  
+`-t <arg>` to force both LTE & WiFi  `b / both` for both, `w / wifi` for WiFi & `l / lte` for LTE  
 `-v`to print out shit... troubleshooting... get it?  
 `-s <int>` to set how often it monitors  
   

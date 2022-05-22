@@ -58,28 +58,35 @@ int main(int argc, char *argv[]) {
         }
         for (int i = 1; i < argc; i++) {
 
-            // Force Both Technologies Argument
+            // Force Technologies Argument
             if((string) argv[i] == "-t" || (string) argv[i] == "-tech" || (string) argv[i] == "-technology") {
-                char firstCharacter;
-                string current = argv[i+1];
-                firstCharacter = current.at(0);
-                if( (argc > i+1 && firstCharacter != '-') || firstCharacter == '-' || ( argc > i+1 && ( (string) argv[i+1] == "b" ||  (string) argv[i+1] == "b") ) ) {
-                    if((string) argv[i+1] == "w" || (string) argv[i+1] == "wifi") {
+
+                if( argc > i+1) {
+                    string current = argv[i+1];
+                    char firstCharacter = current.at(0);
+
+                    if( (firstCharacter == '-') || (string) argv[i+1] == "b" ||  (string) argv[i+1] == "both") {
                         if(child == 0) {
-                            cout << "===== Forced Use of WiFi =====" << endl;
+                            cout << "  ===== Forced Use of Both Technologies Enabled =====" << endl;
+                        }
+                        force_tech = 1;
+                    }
+                    else if((string) argv[i+1] == "w" || (string) argv[i+1] == "wifi") {
+                        if(child == 0) {
+                            cout << "  ===== Forced Use of WiFi =====" << endl;
                         }
                         force_tech = 2;
                     }
                     else if ((string) argv[i+1] == "l" || (string) argv[i+1] == "lte") {
                         if(child == 0) {
-                            cout << "===== Forced Use of WiFi =====" << endl;
+                            cout << "  ===== Forced Use of LTE =====" << endl;
                         }
                         force_tech = 3;
                     } 
                 }
                 else {
                     if(child == 0) {
-                        cout << "===== Forced Use of Both Technologies Enabled =====" << endl;
+                        cout << "  ===== Forced Use of Both Technologies Enabled =====" << endl;
                     }
                     force_tech = 1;
                 }

@@ -95,11 +95,19 @@ void help() {
 
 
     cout << "  ----------------------------------------------------------" << endl;
-    cout << "  ----      Force Communication on Both LTE & WiFi      ----" << endl;
+    cout << "  ----          Force Communication Technology          ----" << endl;
     cout << "  ----                                                  ----" << endl;
+    cout << "   Arguments market with * can be written sequencially" << endl;
+    cout << "   without needing to call -v / -verbose again" << endl << endl;
     cout << "   Call Argument:" << endl;
-    cout << "      -b" << endl;
-    cout << "      -both" << endl << endl << endl;
+    cout << "      -t <extra_1>" << endl;
+    cout << "      -tech <extra_1>" << endl;
+    cout << "      -technology <extra_1>" << endl << endl;
+    cout << "   Accepted Extra Arguments:" << endl;
+    cout << "      no extra              - Force use of both (incl. GSV)" << endl;
+    cout << "      b / both            * - Force use of both (incl. GSV)" << endl;
+    cout << "      w / wifi            * - Force use of WiFi (incl. GSV)" << endl;
+    cout << "      l / lte             * - Force use of LTE (incl. GSV)" << endl << endl << endl;
 
 
     cout << "  ----------------------------------------------------------" << endl;
