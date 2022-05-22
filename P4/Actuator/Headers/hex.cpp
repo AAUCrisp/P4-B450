@@ -26,7 +26,7 @@ int hex_to_int(string data) {
     int result;      // Create a variable for the converted integer
     stream << hex << data;    // Take the received hex-chars and covert to an integer
     stream >> result;        // Write the coverted integer to the integer variable
-    cout << "Converted back is: " << result << endl;
+    //cout << "Converted back is: " << result << endl;
 
     return result;
 }
