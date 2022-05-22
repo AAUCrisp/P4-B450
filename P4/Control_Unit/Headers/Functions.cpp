@@ -1,7 +1,7 @@
     // Variables for time execution in functions.ccp
     int iter = 20;
     int fail_count = 0;
-    double Execution_Time[iter];
+    double Execution_Time[20];
     double Execution_Temp;
     double Execution_Sum;
     double Execution_Average;
@@ -55,7 +55,7 @@ void WiFi_command(Sockets sock) {
             printf("Execution_time[%d]: %f\n", i, (double)Execution_Time[i]);
             Execution_Time[i] = 0;
         } else {
-            printf("Execution_time[%d]: %f\n", i);
+            printf("Execution_time[%d]:\n", i);
             Execution_Sum += Execution_Time[i];
         }  
         i++;
@@ -69,8 +69,8 @@ void WiFi_command(Sockets sock) {
 
         Execution_Average = Execution_Sum / iter;
         printf("\n\n===================================\n\n");
-        printf("Execution_Sum: %Lf\n", Execution_Sum);
-        printf("Execution average: %Lf ms\n", Execution_Average);
+        printf("Execution_Sum: %f\n", Execution_Sum);
+        printf("Execution average: %f ms\n", Execution_Average);
         printf("Total time: %ld\n", (Time_Ended - Time_Started));
         printf("Total_Time_Elapsed [HH:MM:SS:MS]: %ld:%ld:%ld:%ld\n", hours, minutes, seconds, milliseconds);
         printf("Total failed counts: %d\n", fail_count);
@@ -118,10 +118,10 @@ void* LTE_command(void* socket) {
         if(Execution_Time[j] > 10000) {
             fail_count++;
             printf("Execution_Time[%d]: %f\n", i, (double)Execution_Time[j]);
-            Execution[j] = 0;
+            Execution_Time[j] = 0;
         } else {
             printf("Execution_Time[%d]\n", i);
-            Execution_sum += Execution_Time[j];
+            Execution_Sum += Execution_Time[j];
         }
     }
     Time_Ended = clock();
@@ -136,7 +136,6 @@ void* LTE_command(void* socket) {
     printf("LTE: Total time: %ld\n", (Time_Ended - Time_Started));
     printf("LTE: Total_Time_Elapsed [HH:MM:SS:MS]: %ld:%ld:%ld:%ld\n", hours, minutes, seconds, milliseconds);
     printf("LTE: Total failed counts: %d\n", fail_count);
-
 }
 
 void help() {
