@@ -86,7 +86,7 @@ void* shm_read(const int SIZE, const char* name) {
     */
     r_limit.rlim_cur = 1000000;
     r_limit.rlim_max = 1000000;
-    setrlimit(RLIMIT_AS, &r_limit);
+    //setrlimit(RLIMIT_AS, &r_limit);
     printf("getrlimit(RLIMIT_AS)AFTER: %d\n", getrlimit(RLIMIT_AS, &r_limit));
     close(shm_fd);
 
