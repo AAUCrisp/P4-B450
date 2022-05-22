@@ -181,12 +181,13 @@ int main(int argc, char* argv[]) {
             Execution_Time[i] = elapsed;
             if (Execution_Time[i] > 10000) {
                // printf("Failed Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
-                sleep(1);
+                //sleep(1);
                 Execution_Time[i] = 0;
                // printf("Forced Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
                 sleep(1);
             } else {
-                printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
+                printf("Execution_Time[%d]", i);
+                //printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
             }
             // sleep(5);
             Execution_Sum += Execution_Time[i];
@@ -198,7 +199,7 @@ int main(int argc, char* argv[]) {
             } else {
                 //printf("Execution_Sum: %Lf\n", Execution_Sum);
             }
-            
+
             // sleep(5);
 
             // Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
