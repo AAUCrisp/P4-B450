@@ -180,7 +180,7 @@ int main(int argc, char* argv[]) {
                     printf("Fail counter: %d\n", fail_count);
                     printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
                     printf("Execution_Sum: %Lf\n", Execution_Time[i]);
-                    sleep(5);
+                    sleep(10);
                     //  printf("Execution_Sum exceeded 10000000\n");
                 }
             } else {
