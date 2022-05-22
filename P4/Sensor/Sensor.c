@@ -86,10 +86,10 @@ int main(int argc, char* argv[]) {
     int fail_count = 0;
     long double Execution_Time[iter];
     long double Real_Execution_Time[iter];
-    long double Execution_Temp;
-    long double Execution_Sum;
-    long double Real_Execution_Sum;
-    long double Execution_Average;
+    long double Execution_Temp = 0;
+    long double Execution_Sum = 0;
+    long double Real_Execution_Sum = 0;
+    long double Execution_Average = 0;
     clock_t Time_Started;
     clock_t Time_Ended;
     clock_t Clock_Start;
