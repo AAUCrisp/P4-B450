@@ -82,9 +82,9 @@ void shm_write(const char* message, const int SIZE, const char* name) {
     printf("shm_fd value: %d\n", shm_fd);
     close(shm_fd);
 
-    /*if (sem_post(&SEM_READ)) {
+    if (sem_post(&SEM_READ)) {
         perror("SEM_WRITE sem_post failed");
-    }*/
+    }
 
     // sem_close(&SEM_READ);
 
