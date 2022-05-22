@@ -15,6 +15,11 @@
 #define FUNCTIONS
 #include "Headers/Functions.cpp"
 #endif
+
+/* Execution time variables */
+
+
+
 // #ifndef SHM_READ
 // #define SHM_READ
 // #include "Headers/shm_read.cpp"

@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri May 20 08:54:48 2022
+# Make data base, printed on Sun May 22 13:03:50 2022
 
 # Variables
 
@@ -51,7 +51,7 @@ VTE_VERSION = 6003
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
 # environment
-JOURNAL_STREAM = 8:46896
+JOURNAL_STREAM = 8:42908
 # environment
 XDG_CONFIG_DIRS = /etc/xdg/xdg-ubuntu:/etc/xdg
 # environment
@@ -73,11 +73,11 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-MANAGERPID = 1348
+MANAGERPID = 1359
 # environment
 LESSOPEN = | /usr/bin/lesspipe %s
 # environment
-VSCODE_CWD = /home/ubeyd
+VSCODE_CWD = /home/ubeyd/P4-B450/P4
 # environment
 GSETTINGS_SCHEMA_DIR = /snap/code/97/usr/share/glib-2.0/schemas
 # default
@@ -87,7 +87,7 @@ PATH = /home/ubeyd/miniforge3/bin:/home/ubeyd/.cargo/bin:/home/ubeyd/.local/bin:
 # environment
 GPG_AGENT_INFO = /run/user/1000/gnupg/S.gpg-agent:0:1
 # environment
-SESSION_MANAGER = local/ubeyd-IdeaPad-L340-15IRH-Gaming:@/tmp/.ICE-unix/1565,unix/ubeyd-IdeaPad-L340-15IRH-Gaming:/tmp/.ICE-unix/1565
+SESSION_MANAGER = local/ubeyd-IdeaPad-L340-15IRH-Gaming:@/tmp/.ICE-unix/1579,unix/ubeyd-IdeaPad-L340-15IRH-Gaming:/tmp/.ICE-unix/1579
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -105,7 +105,7 @@ DISABLE_WAYLAND = 1
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-INVOCATION_ID = 2678374e89724e1e89b3091fd0a68ae6
+INVOCATION_ID = ee0bf71087424843b44d5a1b4d5c99b2
 # environment
 GDK_PIXBUF_MODULEDIR = /snap/code/97/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
 # default
@@ -129,7 +129,7 @@ PWD = /home/ubeyd/P4-B450/P4
 # default
 .LOADED := 
 # environment
-SSH_AGENT_PID = 1526
+SSH_AGENT_PID = 1540
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = ubuntu:GNOME
 # environment
@@ -181,7 +181,7 @@ SHLVL = 1
 # environment
 GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-a6d78ea1-1566-40ae-a37f-91c40861b280.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-71f48d47-da64-4f8a-abbd-1bb8e8f3629e.sock
 # default
 MAKE_VERSION := 4.2.1
 # environment
@@ -197,7 +197,7 @@ XDG_CURRENT_DESKTOP = Unity
 # default
 MAKE_COMMAND := make
 # environment
-OLDPWD = /home/ubeyd/P4-B450/P4/Actuator
+OLDPWD = /home/ubeyd/P4-B450
 # default
 .VARIABLES := 
 # automatic
@@ -233,11 +233,11 @@ LC_ALL = C
 # environment
 GJS_DEBUG_TOPICS = JS ERROR;JS LOG
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/989456db_cf7a_4cad_aa02_6f933601fea6
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/5e27e1f1_0aba_4108_877e_f0d3f439595a
 # automatic
 ^F = $(notdir $^)
 # environment
-GNOME_TERMINAL_SERVICE = :1.107
+GNOME_TERMINAL_SERVICE = :1.110
 # default
 SUFFIXES := 
 # environment
@@ -257,7 +257,7 @@ LANG = C
 # environment
 TERM = xterm-256color
 # environment
-VSCODE_PID = 4359
+VSCODE_PID = 3552
 # variable set hash-table stats:
 # Load=123/1024=12%, Rehash=0, Collisions=15/145=10%
 
@@ -285,7 +285,6 @@ all:
 #  File has not been updated.
 
 # Not a target:
- 
 Makefile:
 #  Implicit rule search has been done.
 #  File does not exist.
@@ -303,6 +302,7 @@ makefile:
 .DEFAULT:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
+ 
 #  File has not been updated.
 
 # Not a target:
@@ -326,6 +326,6 @@ GNUmakefile:
 # strcache performance: lookups = 20 / hit rate = 15%
 # hash-table stats:
 # Load=17/8192=0%, Rehash=0, Collisions=1/20=5%
-# Finished Make data base on Fri May 20 08:54:48 2022
+# Finished Make data base on Sun May 22 13:03:50 2022
 
  

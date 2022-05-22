@@ -12,7 +12,11 @@ void WiFi_command(Sockets sock) {
         cout << "WiFi Command Function || WiFi Actuator Socket: " <<sock.act_WiFi << endl;
         cout << "WiFi Command Function || LTE Actuator Socket: " <<sock.act_LTE << endl;
     }
-    while(1) {
+
+
+    Time_Started = clock();
+    while( int i < iter) {
+        Clock_Start = clock(); // added function
         message = (void*)receiveWiFi((void*)&sock);
         if(troubleshooting_print == 1) {
             cout << "WiFi Command Function || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
@@ -28,7 +32,41 @@ void WiFi_command(Sockets sock) {
         cout << "WiFi Command Function || Coordinate for Actuator is: " << coordinate << "\n\n\n" << endl;
         strcpy(WiFimsg, coordinate.c_str());
         transmit_command(&sock, WiFimsg);
+        
+        Clock_End = clock(); // added function to time 
+
+        // time executions code under
+        Execution_Temp = (Clock_End - Clock_Start) / CLOCKS_PER_SEC;
+        int shit = isnan(Execution_Time[i]); 
+        if (shit == 0) {
+            Execution_Time[i] += Execution_Temp;
+            if (Execution_Time[i] >= -1000000000 || Execution_Time [i] <= 1000000000) {
+                    Execution_Sum += Execution_Time[i];
+            } else {
+                    fail_count++;
+                    printf("WiFi: Fail counter: %d\n", fail_count);
+                    // printf("Execution_Sum exceeded 10000000\n");
+                }
+        } else {
+            fail_count++;
+            printf("WiFi: Fail counter: %d\n", fail_count);
+        }  
+
+        printf("WiFi: Execution_Time[%d]: %f\n", i, Execution_Time[i]);
+        printf("WiFi: Execution_Sum = %f\n", Execution_Sum);
     }    
+    Time_Ended = clock();
+    long timestamp = (long)(Time_Ended - Time_Started);
+    long milliseconds = (long)(timestamp / 1000) % 1000;
+    long seconds = (((long)(timestamp / 1000) - milliseconds) / 1000) % 60;
+    long minutes = (((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) % 60;
+    long hours = ((((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) - minutes) / 60;
+
+    Execution_Average = Execution_Sum / iter;
+    printf("WiFi: Execution average: %f ms\n", Execution_Average);
+    printf("WiFi: Total time: %ld\n", (Time_Ended - Time_Started));
+    printf("WiFi: Total_Time_Elapsed [HH:MM:SS:MS]: %ld:%ld:%ld:%ld\n", hours, minutes, seconds, milliseconds);
+    printf("WiFi: Total failed counts: %d\n", fail_count);
 }
 
 void* LTE_command(void* socket) {
@@ -45,7 +83,10 @@ void* LTE_command(void* socket) {
         cout << "LTE Command Function || WiFi Actuator Socket: " << sock->act_WiFi << endl;
         cout << "LTE Command Function || LTE Actuator Socket: " << sock->act_LTE << endl; 
     }
-    while(1) {
+    Time_Started = clock();
+    while(int j < iter) {
+        Clock_Start = clock();
+
         message = (void*)receiveLTE((void*)sock);
         if(troubleshooting_print == 1) {
            cout << "LTE Command Function || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
@@ -61,7 +102,41 @@ void* LTE_command(void* socket) {
         cout << "LTE Command Function || Coordinate for Actuator is: " << coordinate << "\n\n\n" << endl;
         strcpy(LTEmsg, coordinate.c_str());
         transmit_command(sock, LTEmsg);
+        Clock_End = clock();
+
+        // time executions code under
+        Execution_Temp = (Clock_End - Clock_Start) / CLOCKS_PER_SEC;
+        int shit = isnan(Execution_Time[i]); 
+        if (shit == 0) {
+            Execution_Time[i] += Execution_Temp;
+            if (Execution_Time[i] >= -1000000000 || Execution_Time [i] <= 1000000000) {
+                    Execution_Sum += Execution_Time[i];
+            } else {
+                    fail_count++;
+                    printf("WiFi: Fail counter: %d\n", fail_count);
+                    // printf("Execution_Sum exceeded 10000000\n");
+                }
+        } else {
+            fail_count++;
+            printf("WiFi: Fail counter: %d\n", fail_count);
+        }  
+
+        printf("WiFi: Execution_Time[%d]: %f\n", i, Execution_Time[i]);
+        printf("WiFi: Execution_Sum = %f\n", Execution_Sum);
     }
+    Time_Ended = clock();
+    long timestamp = (long)(Time_Ended - Time_Started);
+    long milliseconds = (long)(timestamp / 1000) % 1000;
+    long seconds = (((long)(timestamp / 1000) - milliseconds) / 1000) % 60;
+    long minutes = (((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) % 60;
+    long hours = ((((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) - minutes) / 60;
+
+    Execution_Average = Execution_Sum / iter;
+    printf("WiFi: Execution average: %f ms\n", Execution_Average);
+    printf("WiFi: Total time: %ld\n", (Time_Ended - Time_Started));
+    printf("WiFi: Total_Time_Elapsed [HH:MM:SS:MS]: %ld:%ld:%ld:%ld\n", hours, minutes, seconds, milliseconds);
+    printf("WiFi: Total failed counts: %d\n", fail_count);
+
 }
 
 void help() {
