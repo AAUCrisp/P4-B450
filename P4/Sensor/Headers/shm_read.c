@@ -63,7 +63,7 @@ void* shm_read(const int SIZE, const char* name) {
     }
 
     /* memory map the shared memory object */
-    ptr = mmap(NULL, ALIGN_ON_PAGE_SIZE(SIZE), PROT_READ, MAP_SHARED, shm_fd,(off_t)ALIGN_ON_PAGE_SIZE(SIZE));
+    ptr = mmap(NULL, SIZE, PROT_READ, MAP_SHARED, shm_fd, SIZE);
     if (ptr == MAP_FAILED) {
         printf("Something went wrong: %d\n", errno);
         perror("mmap failed");
