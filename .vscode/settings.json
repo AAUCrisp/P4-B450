@@ -24,7 +24,8 @@
     "types.h": "c",
     "socket": "c",
     "fstream": "c",
-    "cstdlib": "c"
+    "cstdlib": "c",
+    "algorithm": "cpp"
   },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "/usr/bin/g++",
