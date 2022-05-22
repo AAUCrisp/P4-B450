@@ -164,40 +164,15 @@ int main(int argc, char* argv[]) {
             printf("Execution_Temp: %Lf\n", Execution_Temp);
 
             if (Execution_Temp > 1000000 || Execution_Temp < -1000000) {
-                sleep(10);
-            }
-            /*
-            file = fopen("Execution.txt", "a+");
-            if (file == NULL) {
-                perror("Failed to open Execution.txt");
-            }
-            fprintf(file, "[%d] %f\n", i, Execution_Temp);
-            fclose(file);*/
-
-            // isnan(Execution_Time[i]);
-            int shit = isnan(Execution_Time[i]);
-            if (shit == 0) {
-                // printf("isnan value: %d\n", isnan(Execution_Time[i]));
-                Execution_Time[i] += Execution_Temp;
-
-                if (Execution_Time[i] >= -1000000.0 || Execution_Time[i] <= 1000000.0) {
-                    Execution_Sum += Execution_Time[i];
-                } else if (Execution_Time[i] >= 10000000000.0000) {
-                    fail_count++;
-                    printf("Fail counter: %d\n", fail_count);
-                    printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
-                    printf("Execution_Sum: %Lf\n", Execution_Time[i]);
-                    //  printf("Execution_Sum exceeded 10000000\n");
-                }
-            } else {
                 fail_count++;
-                // printf("Fail counter: %d\n", fail_count);
-                //  printf("isnan value: %d\n", isnan(Execution_Time[i]));
-                //  printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
+                printf("fail_count: %d\n", fail_count);
+                printf("Execution_Temp was: %Lf\n", Execution_Temp);
+                sleep(10);
+            } else {
+                Execution_Time[i] += EXecution_Temp;
+                printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
+                printf("Execution_Sum = %Lf\n", Execution_Sum);
             }
-
-            printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
-            printf("Execution_Sum = %Lf\n", Execution_Sum);
 
             // sleep(3);
             // usleep(10000);
@@ -220,3 +195,25 @@ int main(int argc, char* argv[]) {
         // Make a log file with execution time idiot
     }
 }
+
+/*
+            int shit = isnan(Execution_Time[i]);
+            if (shit == 0) {
+                // printf("isnan value: %d\n", isnan(Execution_Time[i]));
+                Execution_Time[i] += Execution_Temp;
+
+                if (Execution_Time[i] >= -1000000.0 || Execution_Time[i] <= 1000000.0) {
+                    Execution_Sum += Execution_Time[i];
+                } else if (Execution_Time[i] >= 10000000000.0000) {
+                    fail_count++;
+                    printf("Fail counter: %d\n", fail_count);
+                    printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
+                    printf("Execution_Sum: %Lf\n", Execution_Time[i]);
+                    //  printf("Execution_Sum exceeded 10000000\n");
+                }
+            } else {
+                fail_count++;
+                // printf("Fail counter: %d\n", fail_count);
+                //  printf("isnan value: %d\n", isnan(Execution_Time[i]));
+                //  printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
+            }*/
