@@ -133,7 +133,7 @@ int main(int argc, char* argv[]) {
     } else {
         int fp = open("/dev/shm/GSV_KEY", "r");
         size_t pagesize = getpagesize();
-        int read = fread(fp, 1, pagesize, stdout);
+        int read = fread(&fp, 1, pagesize, stdout);
         printf("Read %d pages", read);
         // while (1) {
         Time_Started = clock();
