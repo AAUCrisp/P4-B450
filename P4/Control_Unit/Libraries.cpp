@@ -49,11 +49,11 @@ using namespace std;
 
     // Signal Monitoring Arguments
     static int delay = 1;
-    static char* GSV_arg_used = (char*) "";
-    static char* GSV_arg_both = (char*) "";
-    static char* GSV_arg_both_arg = (char*) "";
-    static char* GSV_arg_print = (char*) "";
-    static char* GSV_sleep_arg = (char*) "";
-    static char* GSV_sleep_delay = (char*) "";
+    static char* GSV_arg_used = (char*) "";     // Tells the process it's a child, and shouldn't print "startup" statements
+    static char* GSV_tech = (char*) "";         // Forced Technology enable
+    static char* GSV_tech_arg = (char*) "";     // Extra arguement if needed
+    static char* GSV_print = (char*) "";        // Enable GSV Verbose
+    static char* GSV_sleep = (char*) "";        // Change sleep delay
+    static char* GSV_sleep_arg = (char*) "";    // The amount of seconds it sleeps
 
 #endif

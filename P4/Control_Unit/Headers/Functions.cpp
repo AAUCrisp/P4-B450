@@ -203,7 +203,7 @@ void Argument_Setup(int argc, char* argv[]) {
                             print_sen_in = 1;       // Print incoming Sensor related things
                             print_act_out = 1;      // Print outgoing Actuator related things
                             print_GSV = 1;          // Print GSV related things
-                            GSV_arg_print = (char*) "-v";
+                            GSV_print = (char*) "-v";
                             GSV_arg_used = (char*) "-a";
                             break;
                         }
@@ -222,7 +222,7 @@ void Argument_Setup(int argc, char* argv[]) {
                             message_only = 0;        // Print messages only
                             print_GSV = 1;       // Print incoming Sensor related things
                                 // Signal Monitoring Arguments
-                            GSV_arg_print = (char*) "-v";
+                            GSV_print = (char*) "-v";
                             GSV_arg_used = (char*) "-a";
                         }
                         else { 
@@ -237,7 +237,7 @@ void Argument_Setup(int argc, char* argv[]) {
                     print_sen_in = 1;       // Print incoming Sensor related things
                     print_act_out = 1;      // Print outgoing Actuator related things
                     print_GSV = 1;          // Print GSV related things
-                    GSV_arg_print = (char*) "-v";
+                    GSV_print = (char*) "-v";
                     GSV_arg_used = (char*) "-a";
                 }
             }
@@ -250,7 +250,7 @@ void Argument_Setup(int argc, char* argv[]) {
 
             // Force Technologies Argument
             if((string) argv[i] == "-t" || (string) argv[i] == "-tech" || (string) argv[i] == "-technology") {
-                GSV_arg_both = (char*) "-t";
+                GSV_tech = (char*) "-t";
                 GSV_arg_used = (char*) "-a";
 
                 if( argc > i+1) {
@@ -263,12 +263,12 @@ void Argument_Setup(int argc, char* argv[]) {
                     }
                     else if((string) argv[i+1] == "w" || (string) argv[i+1] == "wifi") {
                         cout << "  ===== Forced Use of WiFi =====" << endl;
-                        GSV_arg_both_arg = (char*) "w";
+                        GSV_tech_arg = (char*) "w";
                         force_tech = 2;
                     }
                     else if ((string) argv[i+1] == "l" || (string) argv[i+1] == "lte") {
                         cout << "  ===== Forced Use of LTE =====" << endl;
-                        GSV_arg_both_arg = (char*) "l";
+                        GSV_tech_arg = (char*) "l";
                         force_tech = 3;
                     } 
                 }
@@ -304,8 +304,8 @@ void Argument_Setup(int argc, char* argv[]) {
                 strcpy(temp_char, temp_str.c_str());
 
                 GSV_arg_used = (char*) "-a";
-                GSV_sleep_arg = (char*) argv[i];
-                GSV_sleep_delay = (char*) argv[i+1];
+                GSV_sleep = (char*) argv[i];
+                GSV_sleep_arg = (char*) argv[i+1];
             }
         }
     }
