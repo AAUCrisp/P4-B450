@@ -21,6 +21,7 @@
 #include <time.h>
 #include <unistd.h>
 
+#include <numa.h>
 #include "shm_write_read.h"
 
 /* Semaphore Names */
@@ -30,6 +31,8 @@
 extern int errno;
 
 void* shm_read(const int SIZE, const char* name) {
+    numa_available();
+
     /* Semaphore variables */
     int sem_write = sem_init(&SEM_WRITE, 1, 1);
 
