@@ -40,8 +40,8 @@ void shm_write(const char* message, const int SIZE, const char* name) {
         exit(EXIT_FAILURE);
     }
     /* Semaphore variables */
-    sem_unlink(sem_write);
-    sem_unlink(sem_read);
+    sem_unlink(&sem_write);
+    sem_unlink(&sem_read);
 
     /* shared memory file descriptor */
     int shm_fd;
