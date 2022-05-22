@@ -137,7 +137,7 @@ int main(int argc, char* argv[]) {
             // usleep(10000);
             msg = shm_read(SHM_BUFFER, GSV_KEY);
             GSV = atoi(msg);
-            shm_unlink(GSV_KEY);
+            
             // usleep(10000);
             //   printf("\nSensor || GSV from shared memory: %s\n", msg);
 
@@ -165,6 +165,7 @@ int main(int argc, char* argv[]) {
                 transmitWiFi(&sock, (char*)buffer);
             }
             // Clock_End = clock();
+            shm_unlink(GSV_KEY);
             clock_gettime(CLOCK_REALTIME, &end);
 
             seconds = end.tv_sec - begin.tv_sec;
