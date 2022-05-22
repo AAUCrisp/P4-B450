@@ -186,7 +186,7 @@ int main(int argc, char* argv[]) {
                // printf("Forced Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
                 sleep(1);
             } else {
-                printf("Execution_Time[%d]", i);
+                printf("Execution_Time[%d]\n", i);
                 //printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
             }
             // sleep(5);
