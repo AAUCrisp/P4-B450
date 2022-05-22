@@ -111,7 +111,7 @@ int main(int argc, char* argv[]) {
 
     char buffer[BUFFER];
 
-    int GSV = 0;
+    int GSV;
     int B = 0;
     int W = 1;
     int L = 2;
