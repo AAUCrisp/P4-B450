@@ -1,5 +1,5 @@
     // Variables for time execution in functions.ccp
-    int iter = 20;
+    int iter = 200000;
     int fail_count = 0;
     double Execution_Time[20];
     double Execution_Temp;
@@ -123,6 +123,7 @@ void* LTE_command(void* socket) {
             printf("Execution_Time[%d]\n", i);
             Execution_Sum += Execution_Time[j];
         }
+        j++;
     }
     Time_Ended = clock();
     long timestamp = (long)(Time_Ended - Time_Started);
