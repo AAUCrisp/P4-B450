@@ -181,10 +181,16 @@ int main(int argc, char* argv[]) {
                     printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
                     printf("Execution_Sum: %Lf\n", Execution_Time[i]);
                     sleep(10);
+                    sleep(10);
+                    sleep(10);
+                    sleep(10);
                     //  printf("Execution_Sum exceeded 10000000\n");
                 }
             } else {
                 fail_count++;
+                sleep(10);
+                sleep(10);
+                sleep(10);
                 // printf("Fail counter: %d\n", fail_count);
                 //  printf("isnan value: %d\n", isnan(Execution_Time[i]));
                 //  printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
