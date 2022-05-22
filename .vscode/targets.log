@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat May 21 18:58:12 2022
+# Make data base, printed on Sun May 22 19:21:12 2022
 
 # Variables
 
@@ -19,7 +19,7 @@ LC_ALL = C
 # environment
 NO_AT_BRIDGE = 1
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-ccf8853e-42af-4d9b-9338-1d06c03659d7.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-79d826f9-fde2-47ae-9c41-129223023381.sock
 # environment
 LC_NAME = en_DK.UTF-8
 # environment
@@ -79,7 +79,7 @@ APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_AUTH_SOCK = /tmp/ssh-XXXXXXSg2ImO/agent.1363
+SSH_AUTH_SOCK = /tmp/ssh-XXXXXXfFbZvV/agent.1337
 # default
 .SHELLFLAGS := -c
 # environment
@@ -95,13 +95,13 @@ MAKEFILE_LIST :=
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 1660
+VSCODE_PID = 1713
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/BamseLinux:@/tmp/.ICE-unix/1312,unix/BamseLinux:/tmp/.ICE-unix/1312
+SESSION_MANAGER = local/BamseLinux:@/tmp/.ICE-unix/1286,unix/BamseLinux:/tmp/.ICE-unix/1286
 # automatic
 *F = $(notdir $*)
 # environment
@@ -177,7 +177,7 @@ MAKE_VERSION := 4.3
 # environment
 LC_MEASUREMENT = en_DK.UTF-8
 # environment
-SSH_AGENT_PID = 1364
+SSH_AGENT_PID = 1338
 # environment
 _ = /usr/bin/make
 # environment
@@ -223,7 +223,6 @@ GDMSESSION = xfce
 # environment
 LC_IDENTIFICATION = en_DK.UTF-8
 # variable set hash-table stats:
- 
 # Load=105/1024=10%, Rehash=0, Collisions=6/132=5%
 
 # Pattern-specific Variable Values
@@ -285,11 +284,12 @@ GNUmakefile:
 # No general ('VPATH' variable) search path.
 
 # strcache buffers: 1 (0) / strings = 24 / storage = 301 B / avg = 12 B
+ 
 # current buf: size = 8162 B / used = 301 B / count = 24 / avg = 12 B
 
 # strcache performance: lookups = 27 / hit rate = 11%
 # hash-table stats:
 # Load=24/8192=0%, Rehash=0, Collisions=0/27=0%
-# Finished Make data base on Sat May 21 18:58:12 2022
+# Finished Make data base on Sun May 22 19:21:12 2022
 
  
