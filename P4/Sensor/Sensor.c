@@ -176,7 +176,7 @@ int main(int argc, char* argv[]) {
                 printf("Failed elapsed time: %f\n", elapsed);
                 //sleep(5);
             } else {
-                printf("elapsed time: %f\n", elapsed);
+                printf("\nelapsed time: %f\n", elapsed);
             }
             // sleep(5);
             Execution_Time[i] = elapsed;
