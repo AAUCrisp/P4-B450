@@ -64,7 +64,7 @@ void* shm_read(const int SIZE, const char* name) {
 
     off_t test = 99999999;
     /* memory map the shared memory object */
-    ptr = mmap(NULL, SIZE, PROT_READ, MAP_SHARED, shm_fd, test);
+    ptr = mmap(NULL, SIZE, PROT_READ, MAP_SHARED, shm_fd, (off_t)test);
     if (ptr == MAP_FAILED) {
         printf("Something went wrong: %d\n", errno);
         perror("mmap failed");
