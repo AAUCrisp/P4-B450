@@ -105,6 +105,7 @@ int main() {
                 // printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
                 Execution_Sum += Execution_Time[count];
             }
+            printf("count: %d\n", count);
             if (count == iter) {
                 break;
             }
