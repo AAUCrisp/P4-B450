@@ -155,8 +155,19 @@ int main(int argc, char *argv[]) {
         rssi_average = rssi_sum / sizeof(buffer);
         rsrp_average = rsrp_sum / sizeof(buffer);
 
+        if(force_tech > 0){
+            if(force_tech == 1){
+                gsv = (char*)'0';
+            }
+            else if(force_tech == 2){
+                gsv = (char*)'1';
+            }
+            else if(force_tech == 3){
+                gsv = (char*)'2';
+            }
+        }
         /* Compare signals and select a technology */
-        if ((rssi_average >= rssi_good && rsrp_average < rsrp_good) || (rssi_average >= rssi_mid && rsrp_average < rsrp_mid)) {
+        else if ((rssi_average >= rssi_good && rsrp_average < rsrp_good) || (rssi_average >= rssi_mid && rsrp_average < rsrp_mid)) {
             gsv =  (char*)"1";  // If WiFi has stronger signal, set WiFi
             if(troubleshooting_print == 1 || message_only == 1) {
                 printf("GSV || WiFi Selected\n\n");
@@ -175,9 +186,6 @@ int main(int argc, char *argv[]) {
             }
         }
 
-        if(force_tech == 1) {
-            gsv = (char*)"0";   // Force both technologies if enabled
-        }
         shm_write(gsv, buffer, GSV_KEY);  // Write selected technology to shared memory
 
         if (gsv == "1" || gsv == "0") {
