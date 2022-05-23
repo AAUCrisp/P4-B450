@@ -1,14 +1,24 @@
     // Variables for time execution in functions.ccp
-    int iter = 200000;
+    int iter = 100000;
     int fail_count = 0;
-    double Execution_Time[20];
+    double Execution_Time[100000];
+    double Execution_Time_LTE[100000];
     double Execution_Temp;
+    double Execution_Temp_LTE;
     double Execution_Sum;
+    double Execution_Sum_LTE;
     double Execution_Average;
+    double Execution_Average_LTE;
     clock_t Time_Started;
     clock_t Time_Ended;
     clock_t Clock_Start;
     clock_t Clock_End;
+
+    clock_t Time_Started_LTE;
+    clock_t Time_Ended_LTE;
+    clock_t Clock_Start_LTE;
+    clock_t Clock_End_LTE;
+
     int i, j;
 
 void WiFi_command(Sockets sock) {
@@ -28,8 +38,9 @@ void WiFi_command(Sockets sock) {
 
 
     Time_Started = clock();
-    while( i < iter) {
+    while(1) {
         Clock_Start = clock(); // added function
+        
         message = (void*)receiveWiFi((void*)&sock);
         if(troubleshooting_print == 1) {
             cout << "WiFi Command Function || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
@@ -59,22 +70,25 @@ void WiFi_command(Sockets sock) {
             Execution_Sum += Execution_Time[i];
         }  
         i++;
+        if (i == iter){
+            break;
+        }
     }    
     Time_Ended = clock();
-        long timestamp = (long)(Time_Ended - Time_Started);
-        long milliseconds = (long)(timestamp / 1000) % 1000;
-        long seconds = (((long)(timestamp / 1000) - milliseconds) / 1000) % 60;
-        long minutes = (((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) % 60;
-        long hours = ((((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) - minutes) / 60;
+    long timestamp = (long)(Time_Ended - Time_Started);
+    long milliseconds = (long)(timestamp / 1000) % 1000;
+    long seconds = (((long)(timestamp / 1000) - milliseconds) / 1000) % 60;
+    long minutes = (((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) % 60;
+    long hours = ((((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) - minutes) / 60;
 
-        Execution_Average = Execution_Sum / iter;
-        printf("\n\n===================================\n\n");
-        printf("Execution_Sum: %f\n", Execution_Sum);
-        printf("Execution average: %f ms\n", Execution_Average);
-        printf("Total time: %ld\n", (Time_Ended - Time_Started));
-        printf("Total_Time_Elapsed [HH:MM:SS:MS]: %ld:%ld:%ld:%ld\n", hours, minutes, seconds, milliseconds);
-        printf("Total failed counts: %d\n", fail_count);
-        printf("\n===================================\n\n");
+    Execution_Average = Execution_Sum / iter;
+    printf("\n\n===================================\n\n");
+    printf("Execution_Sum: %f\n", Execution_Sum);
+    printf("Execution average: %f ms\n", Execution_Average);
+    printf("Total time: %ld\n", (Time_Ended - Time_Started));
+    printf("Total_Time_Elapsed [HH:MM:SS:MS]: %ld:%ld:%ld:%ld\n", hours, minutes, seconds, milliseconds);
+    printf("Total failed counts: %d\n", fail_count);
+    printf("\n===================================\n\n");
 }
 
 void* LTE_command(void* socket) {
@@ -91,9 +105,9 @@ void* LTE_command(void* socket) {
         cout << "LTE Command Function || WiFi Actuator Socket: " << sock->act_WiFi << endl;
         cout << "LTE Command Function || LTE Actuator Socket: " << sock->act_LTE << endl; 
     }
-    Time_Started = clock();
-    while(j < iter) {
-        Clock_Start = clock();
+    Time_Started_LTE = clock();
+    while(1) {
+        Clock_Start_LTE = clock();
 
         message = (void*)receiveLTE((void*)sock);
         if(troubleshooting_print == 1) {
@@ -110,33 +124,37 @@ void* LTE_command(void* socket) {
         cout << "LTE Command Function || Coordinate for Actuator is: " << coordinate << "\n\n\n" << endl;
         strcpy(LTEmsg, coordinate.c_str());
         transmit_command(sock, LTEmsg);
-        Clock_End = clock();
+        Clock_End_LTE = clock();
 
         // time executions code under
-        Execution_Temp = (Clock_End - Clock_Start) / CLOCKS_PER_SEC;
+        Execution_Temp_LTE = (Clock_End_LTE - Clock_Start_LTE) / CLOCKS_PER_SEC;
 
-        if(Execution_Time[j] > 10000) {
+        if(Execution_Time_LTE[j] > 10000) {
             fail_count++;
-            printf("Execution_Time[%d]: %f\n", i, (double)Execution_Time[j]);
-            Execution_Time[j] = 0;
+            printf("Execution_Time[%d]: %f\n", j, (double)Execution_Time_LTE[j]);
+            Execution_Time_LTE[j] = 0;
         } else {
-            printf("Execution_Time[%d]\n", i);
-            Execution_Sum += Execution_Time[j];
+            printf("Execution_Time[%d]\n", j);
+            Execution_Sum_LTE += Execution_Time_LTE[j];
         }
         j++;
+        if (j == iter) {
+            break;
+        }
     }
-    Time_Ended = clock();
-    long timestamp = (long)(Time_Ended - Time_Started);
+    Time_Ended_LTE = clock();
+    long timestamp = (long)(Time_Ended_LTE - Time_Started_LTE);
     long milliseconds = (long)(timestamp / 1000) % 1000;
     long seconds = (((long)(timestamp / 1000) - milliseconds) / 1000) % 60;
     long minutes = (((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) % 60;
     long hours = ((((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) - minutes) / 60;
 
-    Execution_Average = Execution_Sum / iter;
-    printf("LTE: Execution average: %f ms\n", Execution_Average);
-    printf("LTE: Total time: %ld\n", (Time_Ended - Time_Started));
+    Execution_Average_LTE = Execution_Sum_LTE / iter;
+    printf("LTE: Execution average: %f ms\n", Execution_Average_LTE);
+    printf("LTE: Total time: %ld\n", (Time_Ended_LTE - Time_Started_LTE));
     printf("LTE: Total_Time_Elapsed [HH:MM:SS:MS]: %ld:%ld:%ld:%ld\n", hours, minutes, seconds, milliseconds);
     printf("LTE: Total failed counts: %d\n", fail_count);
+    
 }
 
 void help() {
