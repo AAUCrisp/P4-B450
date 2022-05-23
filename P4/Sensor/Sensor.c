@@ -135,7 +135,7 @@ int main(int argc, char* argv[]) {
             msg = shm_read(SHM_BUFFER, GSV_KEY);
             GSV = atoi(msg);
 
-            printf("\nSensor || GSV from shared memory: %s\n", msg);
+            //printf("\nSensor || GSV from shared memory: %s\n", msg);
 
             // printf("\nGSV converted: %d\n", GSV);
             /*if (monitor == 1) {
