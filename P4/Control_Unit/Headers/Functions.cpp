@@ -66,7 +66,8 @@ void WiFi_command(Sockets sock) {
             printf("Execution_time[%d]: %f\n", i, (double)Execution_Time[i]);
             Execution_Time[i] = 0;
         } else {
-            printf("Execution_time[%d]:\n", i);
+            //printf("Execution_time_WiFi[%d]:\n", i);
+            printf("Execution_Time_WiFi[%d]: %f\n", i, (double)Execution_Time[i]);
             Execution_Sum += Execution_Time[i];
         }  
         i++;
@@ -134,7 +135,8 @@ void* LTE_command(void* socket) {
             printf("Execution_Time[%d]: %f\n", j, (double)Execution_Time_LTE[j]);
             Execution_Time_LTE[j] = 0;
         } else {
-            printf("Execution_Time[%d]\n", j);
+            //printf("Execution_Time[%d]\n", j);
+            printf("Execution_Time[%d]: %f\n", j, Execution_Time[j]);
             Execution_Sum_LTE += Execution_Time_LTE[j];
         }
         j++;
