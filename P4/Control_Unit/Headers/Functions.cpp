@@ -64,28 +64,30 @@ void WiFi_command(Sockets sock) {
         Clock_End = clock(); // added function to time 
 
         // time executions code under
-        Execution_Time[i] = (double) (Clock_End - Clock_Start) / CLOCKS_PER_SEC;
-        if (Execution_Time[i] > 10000) {
-            printf("Failed execution time Execution_time[%d]: %Lf\n", i, Execution_Time[i]);
-            fail_count++;
-            Execution_Time[i] = 0;
-        } else {
-            //printf("Execution_time_WiFi[%d]:\n", i);
-            printf("Execution_Time_WiFi[%d]: %Lf\n", i, Execution_Time[i]);
-            Execution_Sum += Execution_Time[i];
-            i++;
-        }  
+        //Execution_Time[i] = (double) (Clock_End - Clock_Start) / CLOCKS_PER_SEC;
+        //if (Execution_Time[i] > 10000) {
+        //    printf("Failed execution time Execution_time[%d]: %Lf\n", i, Execution_Time[i]);
+        //    fail_count++;
+        //    Execution_Time[i] = 0;
+        //} else {
+        //    //printf("Execution_time_WiFi[%d]:\n", i);
+        //    printf("Execution_Time_WiFi[%d]: %Lf\n", i, Execution_Time[i]);
+        //    Execution_Sum += Execution_Time[i];
+        //    
+        //}
+        i++;  
         if (i == iter){
             break;
         }
-    }    
+    }  
+     
     Time_Ended = clock();
     long timestamp = (long)(Time_Ended - Time_Started);
     long milliseconds = (long)(timestamp / 1000) % 1000;
     long seconds = (((long)(timestamp / 1000) - milliseconds) / 1000) % 60;
     long minutes = (((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) % 60;
     long hours = ((((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) - minutes) / 60;
-
+    
     Execution_Average = Execution_Sum / iter;
     printf("\n\n===================================\n\n");
     printf("WiFi: Execution_Sum: %Lf\n", Execution_Sum);
@@ -94,6 +96,7 @@ void WiFi_command(Sockets sock) {
     printf("WiFi: Total_Time_Elapsed [HH:MM:SS.MS]: %ld:%ld:%ld.%ld\n", hours, minutes, seconds, milliseconds);
     printf("WiFi: Total failed counts: %d\n", fail_count);
     printf("\n===================================\n\n");
+    
 }
 
 void* LTE_command(void* socket) {
@@ -134,6 +137,7 @@ void* LTE_command(void* socket) {
         Clock_End_LTE = clock();
 
         // time executions code under
+        /*
         Execution_Time_LTE[j] = (double)(Clock_End_LTE - Clock_Start_LTE) / CLOCKS_PER_SEC;
 
         if(Execution_Time_LTE[j] > 10000) {
@@ -144,8 +148,10 @@ void* LTE_command(void* socket) {
             //printf("Execution_Time[%d]\n", j);
             printf("Execution_Time_LTE[%d]: %Lf\n", j, Execution_Time_LTE[j]);
             Execution_Sum_LTE += Execution_Time_LTE[j];
-            j++;
+            
         }
+        */
+        j++;
         if (j == iter) {
             break;
         }
