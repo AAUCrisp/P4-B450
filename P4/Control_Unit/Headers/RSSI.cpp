@@ -19,12 +19,10 @@ int RSSI_VAL() {
                 sscanf(BufferWiFi, "%s %s %s %6c %d", BufferWiFi, BufferWiFi, BufferWiFi, BufferWiFi, &signalWiFi);
             }
         }
-
         pclose(pipe_WiFi);
         if(message_only == 1) {
-            printf("GSV || WiFi Strength: %d \n", signalWiFi);
+            printf("  GSV || WiFi Strength: %d \n", signalWiFi);
         }
-
         return signalWiFi;
     }
     return -300;
@@ -43,9 +41,8 @@ int RSRP_VAL() {
         }
         pclose(pipe_LTE);
         if(message_only == 1) {
-            printf("GSV || LTE Strength: %d \n", signalLTE);
+            printf("  GSV || LTE Strength: %d \n", signalLTE);
         }
-
         return signalLTE;
     }
     return -300;

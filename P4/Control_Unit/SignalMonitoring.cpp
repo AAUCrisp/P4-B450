@@ -148,31 +148,10 @@ int main(int argc, char *argv[]) {
 
     printf("\n\n  ============================\n   Monitoring Process Started\n  ============================\n\n");
     int counter = 0;
-    // int bad_signal = 0;
 
     while (1) {
         wifi_rssi[counter] = RSSI_VAL();
         lte_rsrp[counter] = RSRP_VAL();
-
-        // if (gsv == "1" || gsv == "0") {  // If GSV is set to WiFi or both
-        //     if (wifi_rssi[counter] < rssi_bad) {
-        //         gsv =  (char*)"2";
-        //         bad_signal = 1;
-        //         if(message_only == 1) {
-        //             cout << "GSV || Bad Signal || LTE Selected" << endl << endl;
-        //         }
-        //     }
-        // }
-
-        // if (gsv == "2" || gsv == "0") {
-        //     if (lte_rsrp[counter] < rsrp_bad) {
-        //         gsv =  (char*)"1";
-        //         bad_signal = 1;
-        //         if(message_only == 1) {
-        //             cout << "GSV || Bad Signal || WiFi Selected" << endl << endl;
-        //         }
-        //     }
-        // }
 
         rssi_sum = 0;
         rsrp_sum = 0;
@@ -246,7 +225,7 @@ int main(int argc, char *argv[]) {
                 perror("GSV || WiFi thread was not created");
             } 
             if(troubleshooting_print == 1) {
-                printf("GSV || Sent via WiFi\n");
+                printf("  GSV || Sent via WiFi\n");
             }
         }
         if (gsv == "2" || gsv == "0") {
