@@ -66,13 +66,13 @@ void WiFi_command(Sockets sock) {
 
         // time executions code under
         Execution_Time[i] = (Clock_End - Clock_Start) / CLOCKS_PER_SEC;
+        printf("Failed execution time Execution_time[%d]: %Lf\n", i, Execution_Time[i]);
         if (Execution_Time[i] > 10000) {
             fail_count++;
-            printf("Execution_time[%d]: %f\n", i, (double)Execution_Time[i]);
-            Execution_Time[i] = 0;
+            //Execution_Time[i] = 0;
         } else {
             //printf("Execution_time_WiFi[%d]:\n", i);
-            printf("Execution_Time_WiFi[%d]: %f\n", i, (double)Execution_Time[i]);
+            printf("Execution_Time_WiFi[%d]: %Lf\n", i, Execution_Time[i]);
             Execution_Sum += Execution_Time[i];
         }  
         i++;
@@ -150,6 +150,7 @@ void* LTE_command(void* socket) {
         if (j == iter) {
             break;
         }
+        
     }
     Time_Ended_LTE = clock();
     long timestamp = (long)(Time_Ended_LTE - Time_Started_LTE);
@@ -163,7 +164,7 @@ void* LTE_command(void* socket) {
     printf("LTE: Total time: %ld\n", (Time_Ended_LTE - Time_Started_LTE));
     printf("LTE: Total_Time_Elapsed [HH:MM:SS:MS]: %ld:%ld:%ld:%ld\n", hours, minutes, seconds, milliseconds);
     printf("LTE: Total failed counts: %d\n", fail_count);
-    
+    return 0;
 }
 
 void help() {
