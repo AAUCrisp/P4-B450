@@ -27,7 +27,7 @@ using namespace std;
 #ifndef VARIABLES
 #define VARIABLES
     // General Settings
-    static int force_both = 0;      // Troubleshooting with both technologies
+    static int force_tech = 0;      // Troubleshooting with both technologies
     static int monitor = 1;         // Disable/Enable Start of Signal Monitoring
 
     // Grid Settings
@@ -41,7 +41,7 @@ using namespace std;
     static int use_hex = 1;     // Coordinates as Hex-Chars
 
     // Prints
-    static int message_only = 1;                // Print messages only
+    static int message_only = 0;                // Print messages only
     static int troubleshooting_print = 0;       // Print everything for troubleshooting
     static int print_sen_in = 0;                // Print incoming Sensor related things
     static int print_act_out = 0;               // Print outgoing Actuator related things
@@ -49,10 +49,12 @@ using namespace std;
 
     // Signal Monitoring Arguments
     static int delay = 1;
-    static char* GSV_arg_used = NULL;
-    static char* GSV_arg_both = NULL;
-    static char* GSV_arg_print = NULL;
-    static char* GSV_sleep_arg = NULL;
-    static char* GSV_sleep_delay = NULL;
+    static char* GSV_arg_used = (char*) "";     // Tells the process it's a child, and shouldn't print "startup" statements
+    static char* GSV_tech = (char*) "";         // Forced Technology enable
+    static char* GSV_tech_arg = (char*) "";     // Extra arguement if needed
+    static char* GSV_print = (char*) "";        // Enable GSV Verbose
+    static char* GSV_print_arg = (char*) "";    // Extra arguement if needed
+    static char* GSV_sleep = (char*) "";        // Change sleep delay
+    static char* GSV_sleep_arg = (char*) "";    // The amount of seconds it sleeps
 
 #endif
