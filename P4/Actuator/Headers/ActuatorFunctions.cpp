@@ -97,7 +97,7 @@ void processData(char msg[buffer]) {
     }else{
         Timestamp();
         File.open("log.txt", std::ofstream::out | std::ofstream::app);
-        File << "\n\n" << curr_time << "\nMovement on the x-axis:" << movement_x << "\nMovement on the y-axis:" << movement_y;
+        File << "\n\n" << curr_time << "\nMovement on the x-axis:" << movement_x << " mm \nMovement on the y-axis:" << movement_y << " mm";
         File.close();
     }
 
