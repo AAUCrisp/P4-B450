@@ -64,7 +64,7 @@ void WiFi_command(Sockets sock) {
         Clock_End = clock(); // added function to time 
 
         // time executions code under
-        Execution_Time[i] = (Clock_End - Clock_Start) / CLOCKS_PER_SEC;
+        Execution_Time[i] = (double) (Clock_End - Clock_Start) / CLOCKS_PER_SEC;
         if (Execution_Time[i] > 10000) {
             printf("Failed execution time Execution_time[%d]: %Lf\n", i, Execution_Time[i]);
             fail_count++;
@@ -134,7 +134,7 @@ void* LTE_command(void* socket) {
         Clock_End_LTE = clock();
 
         // time executions code under
-        Execution_Time_LTE[j] = (Clock_End_LTE - Clock_Start_LTE) / CLOCKS_PER_SEC;
+        Execution_Time_LTE[j] = (double)(Clock_End_LTE - Clock_Start_LTE) / CLOCKS_PER_SEC;
 
         if(Execution_Time_LTE[j] > 10000) {
             fail_count++;
