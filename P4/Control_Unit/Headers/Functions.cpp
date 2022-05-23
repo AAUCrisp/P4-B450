@@ -128,7 +128,7 @@ void* LTE_command(void* socket) {
         Clock_End_LTE = clock();
 
         // time executions code under
-        Execution_Temp_LTE = (Clock_End_LTE - Clock_Start_LTE) / CLOCKS_PER_SEC;
+        Execution_Timp_LTE = (Clock_End_LTE - Clock_Start_LTE) / CLOCKS_PER_SEC;
 
         if(Execution_Time_LTE[j] > 10000) {
             fail_count++;
