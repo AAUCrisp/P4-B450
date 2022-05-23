@@ -122,9 +122,9 @@ int main() {
         Execution_Average = Execution_Sum / iter;
         printf("\n\n===================================\n\n");
         printf("Execution_Sum: %Lf\n", Execution_Sum);
-        printf("Execution average: %Lf ms\n", Execution_Average);
+        printf("Execution average: %Lf s\n", Execution_Average);
         printf("Total time: %ld\n", (Time_Ended - Time_Started));
-        printf("Total_Time_Elapsed [HH:MM:SS:MS]: %ld:%ld:%ld:%ld\n", hours, minutes, seconds, milliseconds);
+        printf("Total_Time_Elapsed [HH:MM:SS.MS]: %ld:%ld:%ld.%ld\n", hours, minutes, seconds, milliseconds);
         printf("Total failed counts: %d\n", fail_count);
         printf("\n===================================\n\n");
     }
