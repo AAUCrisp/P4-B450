@@ -22,12 +22,12 @@
 #include "shm_write_read.h"
 
 /* Troubleshooting Options */
-int print_GSV = 1;
+int print_GSV = 0;
 int print_out = 0;
 
 /* Define buffers & PORT number */
 #define BUFFER 1024
-#define SHM_BUFFER 10000
+#define SHM_BUFFER 100000
 char message[BUFFER];
 char curr_time[128];
 char *curr_timeLTE;
