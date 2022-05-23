@@ -1,3 +1,4 @@
+
 #include <arpa/inet.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -20,6 +21,9 @@
 #include "SocketFunctions.h"
 #include "shm_write.c"
 
+/* Troubleshooting Options */
+int print_COMMANDS = 0;
+
 /* Define buffers & PORT number */
 #define BUFFER 1024
 char message[BUFFER];
@@ -36,14 +40,13 @@ int TX_LTE, TX_WiFi;
 /* Define threads */
 pthread_t T1, T2;
 
-
 /* Function to create receiver sockets */
 void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
     /* Time struct for socket timeout */
     struct timeval tv2;
     tv2.tv_sec = 0;
     tv2.tv_usec = 500000;
-    
+
     /* Create socket receiver */
     sock->sockLTE_RECEIVER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sock->sockWiFi_RECEIVER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -53,8 +56,8 @@ void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *
     /* Setting up socket options & specifying interface for receiver */
     setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
     setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
-    //setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
-    //setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
+    // setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
+    // setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
 
     /* Error checking */
     if (sock->sockLTE_RECEIVER == -1) {
@@ -154,9 +157,12 @@ void *receiveLTE(void *socket) {
         RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
         Timestamp();
 
-        // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
-        printf("LTE || Message from LTE received at: %s\n", curr_time);
-        printf("LTE || Message: %s from Control Unit \n\n", message);
+        if (print_COMMANDS == 1) {
+            // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
+            printf("LTE || Message from LTE received at: %s\n", curr_time);
+            printf("LTE || Message: %s from Control Unit \n\n", message);
+        }
+
         shm_write(message, 32, COMMANDS_KEY);
     }
 }
@@ -167,14 +173,16 @@ void *receiveWiFi(void *socket) {
         Sockets *sock = (Sockets *)socket;
         const char *COMMANDS_KEY = "COMMANDS_KEY";
         unsigned int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
-        
+
         printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
         Timestamp();
 
-        // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
-        printf("WiFi || Message from WiFi received at: %s \n", curr_time);
-        printf("WiFi || Message: %s from Control Unit \n\n", message);
+        if (print_COMMANDS == 1) {
+            // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
+            printf("WiFi || Message from WiFi received at: %s \n", curr_time);
+            printf("WiFi || Message: %s from Control Unit \n\n", message);
+        }
         shm_write(message, 32, COMMANDS_KEY);
     }
 }

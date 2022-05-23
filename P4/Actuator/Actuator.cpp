@@ -83,7 +83,7 @@ int main() {
     } else {
         Time_Started = clock();
         while (1) {
-            count++;
+            
             pthread_create(&T1, NULL, DoSomething, NULL);
 
             COMMANDS = (char*)shm_read(32, COMMANDS_KEY);
@@ -104,6 +104,7 @@ int main() {
                 //printf("Execution_Time[%d]\n", count);
                 // printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
                 Execution_Sum += Execution_Time[count];
+                count++;
             }
             //printf("count: %d\n", count);
             if (count == iter) {
