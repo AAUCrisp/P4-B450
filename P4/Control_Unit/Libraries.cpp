@@ -41,7 +41,7 @@ using namespace std;
     static int use_hex = 1;     // Coordinates as Hex-Chars
 
     // Prints
-    static int message_only = 1;                // Print messages only
+    static int message_only = 0;                // Print messages only
     static int troubleshooting_print = 0;       // Print everything for troubleshooting
     static int print_sen_in = 0;                // Print incoming Sensor related things
     static int print_act_out = 0;               // Print outgoing Actuator related things
