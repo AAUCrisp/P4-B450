@@ -1,14 +1,16 @@
     // Variables for time execution in functions.ccp
     int iter = 100000;
     int fail_count = 0;
-    double Execution_Time[100000];
-    double Execution_Time_LTE[100000];
-    double Execution_Temp;
-    double Execution_Temp_LTE;
-    double Execution_Sum;
-    double Execution_Sum_LTE;
-    double Execution_Average;
-    double Execution_Average_LTE;
+    long double Execution_Time[100000];
+
+    long double Execution_Time_LTE [100000];
+    long double Execution_Temp;
+    long double Execution_Temp_LTE;
+    long double Execution_Sum;
+    long double Execution_Sum_LTE;
+    long double Execution_Average;
+    long double Execution_Average_LTE;
+    
     clock_t Time_Started;
     clock_t Time_Ended;
     clock_t Clock_Start;
@@ -60,7 +62,7 @@ void WiFi_command(Sockets sock) {
         Clock_End = clock(); // added function to time 
 
         // time executions code under
-        Execution_Temp = (Clock_End - Clock_Start) / CLOCKS_PER_SEC;
+        Execution_Time[i] = (Clock_End - Clock_Start) / CLOCKS_PER_SEC;
         if (Execution_Time[i] > 10000) {
             fail_count++;
             printf("Execution_time[%d]: %f\n", i, (double)Execution_Time[i]);
@@ -84,11 +86,11 @@ void WiFi_command(Sockets sock) {
 
     Execution_Average = Execution_Sum / iter;
     printf("\n\n===================================\n\n");
-    printf("Execution_Sum: %f\n", Execution_Sum);
-    printf("Execution average: %f ms\n", Execution_Average);
-    printf("Total time: %ld\n", (Time_Ended - Time_Started));
-    printf("Total_Time_Elapsed [HH:MM:SS:MS]: %ld:%ld:%ld:%ld\n", hours, minutes, seconds, milliseconds);
-    printf("Total failed counts: %d\n", fail_count);
+    printf("WiFi: Execution_Sum: %Lf\n", Execution_Sum);
+    printf("WiFi: Execution average: %Lf ms\n", Execution_Average);
+    printf("WiFi: Total time: %ld\n", (Time_Ended - Time_Started));
+    printf("WiFi: Total_Time_Elapsed [HH:MM:SS:MS]: %ld:%ld:%ld:%ld\n", hours, minutes, seconds, milliseconds);
+    printf("WiFi: Total failed counts: %d\n", fail_count);
     printf("\n===================================\n\n");
 }
 
@@ -128,7 +130,7 @@ void* LTE_command(void* socket) {
         Clock_End_LTE = clock();
 
         // time executions code under
-        Execution_Timp_LTE = (Clock_End_LTE - Clock_Start_LTE) / CLOCKS_PER_SEC;
+        Execution_Time_LTE[j] = (Clock_End_LTE - Clock_Start_LTE) / CLOCKS_PER_SEC;
 
         if(Execution_Time_LTE[j] > 10000) {
             fail_count++;
@@ -136,7 +138,7 @@ void* LTE_command(void* socket) {
             Execution_Time_LTE[j] = 0;
         } else {
             //printf("Execution_Time[%d]\n", j);
-            printf("Execution_Time[%d]: %f\n", j, Execution_Time[j]);
+            printf("Execution_Time[%d]: %Lf\n", j, Execution_Time[j]);
             Execution_Sum_LTE += Execution_Time_LTE[j];
         }
         j++;
@@ -152,7 +154,7 @@ void* LTE_command(void* socket) {
     long hours = ((((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) - minutes) / 60;
 
     Execution_Average_LTE = Execution_Sum_LTE / iter;
-    printf("LTE: Execution average: %f ms\n", Execution_Average_LTE);
+    printf("LTE: Execution average: %Lf ms\n", Execution_Average_LTE);
     printf("LTE: Total time: %ld\n", (Time_Ended_LTE - Time_Started_LTE));
     printf("LTE: Total_Time_Elapsed [HH:MM:SS:MS]: %ld:%ld:%ld:%ld\n", hours, minutes, seconds, milliseconds);
     printf("LTE: Total failed counts: %d\n", fail_count);
