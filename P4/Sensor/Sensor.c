@@ -133,7 +133,6 @@ int main(int argc, char* argv[]) {
         Time_Started = clock();
         for (int i = 0; i < iter; i++) {
             // Clock_Start = clock();
-            clock_gettime(CLOCK_REALTIME, &begin);
             msg = shm_read(SHM_BUFFER, GSV_KEY);
             GSV = atoi(msg);
 
@@ -143,6 +142,7 @@ int main(int argc, char* argv[]) {
             /*if (monitor == 1) {
             }*/
 
+            clock_gettime(CLOCK_REALTIME, &begin);
             sprintf(buffer, "%d", generate(1, 25000000));
             // printf("\nSensor || After Random Int Generation\n");
 
