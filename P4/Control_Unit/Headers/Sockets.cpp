@@ -20,11 +20,11 @@
 /* -------------------------
 -------- SETUP AREA --------
 ---------- start ---------*/
-// int message_only = 1;        // Print messages only
-// int print_sen_in = 0;       // Print incoming Sensor related things
-// int print_act_out = 0;      // Print outgoing Actuator related things
-// int print_GSV = 0;          // Print GSV related things
-// int force_both = 1;         // Troubleshooting with both technologies
+int message_only = 0;        // Print messages only
+int print_sen_in = 0;       // Print incoming Sensor related things
+int print_act_out = 0;      // Print outgoing Actuator related things
+int print_GSV = 0;          // Print GSV related things
+int force_both = 0;         // Troubleshooting with both technologies
 
 
 #ifndef SOCKET_STRUCT
