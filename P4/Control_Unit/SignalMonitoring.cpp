@@ -97,12 +97,21 @@ int main(int argc, char *argv[]) {
 
             // Verbose Argument
             if((string) argv[i] == "-v" || (string) argv[i] == "-verbose") {
-
-                if(argv[i+1] == (string) "m") {
-                    if(child == 0) {
-                        cout << "  ===== Verbose For Messages Enabled =====" << endl;
+                if ( argc > i+1) {
+                    if( argv[i+1] == (string) "m" ) {
+                        if(child == 0) {
+                            cout << "  ===== Verbose For Messages Enabled =====" << endl;
+                        }
+                        message_only = 1;
                     }
-                    message_only = 1;
+                    else {
+                        if(child == 0) {
+                            cout << "  ===== Verbose Enabled =====" << endl;
+                        }
+                        message_only = 1;
+                        troubleshooting_print = 1;
+                        print_GSV = 1;          // Print GSV related things
+                    }
                 }
                 else {
                     if(child == 0) {
@@ -180,19 +189,19 @@ int main(int argc, char *argv[]) {
             if(force_tech == 1){
                 gsv = (char*)"0";
                 if(message_only == 1) {
-                    cout << "GSV || Forced Use of Both" << endl << endl;
+                    cout << "  GSV || Forced Use of Both" << endl << endl;
                 }
             }
             else if(force_tech == 2){
                 gsv = (char*)"1";
                 if(message_only == 1) {
-                    cout << "GSV || Forced Use of WiFi" << endl << endl;
+                    cout << "  GSV || Forced Use of WiFi" << endl << endl;
                 }
             }
             else if(force_tech == 3){
                 gsv = (char*)"2";
                 if(message_only == 1) {
-                    cout << "GSV || Forced Use of LTE" << endl << endl;
+                    cout << "  GSV || Forced Use of LTE" << endl << endl;
                 }
             }
         }
@@ -200,31 +209,31 @@ int main(int argc, char *argv[]) {
         else if (lte_rsrp[counter] < rsrp_bad) {
             gsv =  (char*)"1";
             if(message_only == 1) {
-                cout << "GSV || Bad Signal || WiFi Selected" << endl << endl;
+                cout << "  GSV || Bad Signal || WiFi Selected" << endl << endl;
             }
         }
         else if (wifi_rssi[counter] < rssi_bad) {
             gsv =  (char*)"2";
             if(message_only == 1) {
-                cout << "GSV || Bad Signal || LTE Selected" << endl << endl;
+                cout << "  GSV || Bad Signal || LTE Selected" << endl << endl;
             }
         }
         else if ((rssi_average >= rssi_good && rsrp_average < rsrp_good) || (rssi_average >= rssi_mid && rsrp_average < rsrp_mid)) {
             gsv =  (char*)"1";  // If WiFi has stronger signal, set WiFi
             if(troubleshooting_print == 1 || message_only == 1) {
-                printf("GSV || WiFi Selected\n\n");
+                printf("  GSV || WiFi Selected\n\n");
             }
         } 
         else if ((rssi_average < rssi_good && rsrp_average >= rsrp_good) || (rssi_average < rssi_mid && rsrp_average >= rsrp_mid)) {
             gsv =  (char*)"2";  // If LTE has stronger signal, set LTE
             if(troubleshooting_print == 1 || message_only == 1) {
-                printf("GSV || LTE Selected\n\n");
+                printf("  GSV || LTE Selected\n\n");
             }
         }
         else {
             gsv =  (char*)"0";  // If no clear winner, set to send on both
             if(troubleshooting_print == 1 || message_only == 1) {
-                printf("GSV || Both Selected\n\n");
+                printf("  GSV || Both Selected\n\n");
             }
         }
 
@@ -246,7 +255,7 @@ int main(int argc, char *argv[]) {
                 perror("GSV || LTE thread was not created");
             }
             if(troubleshooting_print == 1) {
-                printf("GSV || Sent via LTE\n");
+                printf("  GSV || Sent via LTE\n");
             }
         }
 
