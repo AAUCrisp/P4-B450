@@ -148,7 +148,6 @@ int main(int argc, char *argv[]) {
 
     printf("\n\n  ============================\n   Monitoring Process Started\n  ============================\n\n");
     int counter = 0;
-    // int bad_signal = 0;
 
     while (1) {
         wifi_rssi[counter] = RSSI_VAL();
