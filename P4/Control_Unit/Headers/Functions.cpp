@@ -66,11 +66,11 @@ void WiFi_command(Sockets sock) {
         Execution_Time[i] = (Clock_End - Clock_Start) / CLOCKS_PER_SEC;
         if (Execution_Time[i] > 10000) {
             fail_count++;
-            printf("Execution_time[%d]: %f\n", i, (double)Execution_Time[i]);
-            Execution_Time[i] = 0;
+            printf("Failed execution time Execution_time[%d]: %Lf\n", i, Execution_Time[i]);
+            //Execution_Time[i] = 0;
         } else {
             //printf("Execution_time_WiFi[%d]:\n", i);
-            printf("Execution_Time_WiFi[%d]: %f\n", i, (double)Execution_Time[i]);
+            printf("Execution_Time_WiFi[%d]: %Lf\n", i, Execution_Time[i]);
             Execution_Sum += Execution_Time[i];
         }  
         i++;
