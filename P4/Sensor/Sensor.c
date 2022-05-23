@@ -132,7 +132,8 @@ int main(int argc, char* argv[]) {
         // while (1) {
         Time_Started = clock();
         for (int i = 0; i < iter; i++) {
-            Clock_Start = clock();
+            // Clock_Start = clock();
+            clock_gettime(CLOCK_REALTIME, &begin);
             msg = shm_read(SHM_BUFFER, GSV_KEY);
             GSV = atoi(msg);
 
@@ -142,7 +143,6 @@ int main(int argc, char* argv[]) {
             /*if (monitor == 1) {
             }*/
 
-            // WORKS clock_gettime(CLOCK_REALTIME, &begin);
             sprintf(buffer, "%d", generate(1, 25000000));
             // printf("\nSensor || After Random Int Generation\n");
 
@@ -160,9 +160,26 @@ int main(int argc, char* argv[]) {
             if (GSV == B || GSV == W) {
                 transmitWiFi(&sock, (char*)buffer);
             }
-            Clock_End = clock();
 
-            Execution_Time[i] = (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
+            clock_gettime(CLOCK_REALTIME, &end);
+            // Clock_End = clock();
+
+            seconds = end.tv_sec - begin.tv_sec;
+            nanoseconds = end.tv_nsec - begin.tv_nsec;
+
+            elapsed = seconds + nanoseconds * 1e-9;
+            if (elapsed > 10000) {
+                fail_count++;
+            }
+            Execution_Time[i] = elapsed;
+            if (Execution_Time[i] > 10000) {
+                Execution_Time[i] = 0;
+            } else {
+                Execution_Sum += Execution_Time[i];
+            }
+
+            /* NEW WORKS
+                Execution_Time[i] = (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
 
             if (Execution_Time[i] > 10000) {
                 fail_count++;
@@ -172,7 +189,7 @@ int main(int argc, char* argv[]) {
                 // printf("Execution_Time[%d]\n", i);
                 // printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
                 Execution_Sum += Execution_Time[i];
-            }
+            } */
 
             /* Works */
             /*
@@ -211,8 +228,6 @@ int main(int argc, char* argv[]) {
             } else {
                 //printf("Execution_Sum: %Lf\n", Execution_Sum);
             }*/
-
-            // usleep(10000);
         }
         Time_Ended = clock();
 
