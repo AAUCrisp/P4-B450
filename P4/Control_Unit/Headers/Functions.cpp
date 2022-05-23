@@ -28,7 +28,7 @@ void WiFi_command(Sockets sock) {
     char msgDump[32];
     int data;
     string coordinate;
-    char* WiFimsg = (char*) malloc(10);
+    char* WiFimsg = (char*) malloc(9);
 
     printf("\n\n  =======================\n   WiFi Listener Started\n  =======================\n\n");
     
@@ -105,7 +105,7 @@ void* LTE_command(void* socket) {
     char msgDump[32];
     int data;
     string coordinate;
-    char* LTEmsg = (char*) malloc(10);
+    char* LTEmsg = (char*) malloc(9);
     printf("\n\n  ======================\n   LTE Listener Started\n  ======================\n\n");
     
     if(troubleshooting_print == 1) {
