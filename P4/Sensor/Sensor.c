@@ -98,7 +98,7 @@ int main(int argc, char* argv[]) {
     unsigned long nanoseconds = 0;
     double elapsed = 0;
 
-    /* Create sockets */ 
+    /* Create sockets */
     Sockets sock;
     Sockets_Transmitter(&sock, IP_LTE, IP_WiFi, PORT_LTE_TRANSMITTER, PORT_WiFi_TRANSMITTER, LTE, WiFi);
     printf("sockLTE_TRANSMITTER (OUTSIDE): %d\n", sock.sockLTE_TRANSMITTER);
@@ -135,7 +135,7 @@ int main(int argc, char* argv[]) {
             msg = shm_read(SHM_BUFFER, GSV_KEY);
             GSV = atoi(msg);
 
-            //printf("\nSensor || GSV from shared memory: %s\n", msg);
+            // printf("\nSensor || GSV from shared memory: %s\n", msg);
 
             // printf("\nGSV converted: %d\n", GSV);
             /*if (monitor == 1) {
@@ -152,13 +152,12 @@ int main(int argc, char* argv[]) {
             }*/
 
             // printf("Sensor || Before Transmitting\n");
+            usleep(1000);
             if (GSV == B || GSV == L) {
-                usleep(1000);
                 transmitLTE(&sock, (char*)buffer);
             }
 
             if (GSV == B || GSV == W) {
-                usleep(1000);
                 transmitWiFi(&sock, (char*)buffer);
             }
             Clock_End = clock();
