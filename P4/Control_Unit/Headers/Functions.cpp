@@ -2,7 +2,6 @@
     int iter = 100000;
     int fail_count = 0;
     long double Execution_Time[100000];
-
     long double Execution_Time_LTE [100000];
     long double Execution_Temp;
     long double Execution_Temp_LTE;
@@ -64,16 +63,16 @@ void WiFi_command(Sockets sock) {
 
         // time executions code under
         Execution_Time[i] = (Clock_End - Clock_Start) / CLOCKS_PER_SEC;
-        printf("Failed execution time Execution_time[%d]: %Lf\n", i, Execution_Time[i]);
         if (Execution_Time[i] > 10000) {
+            printf("Failed execution time Execution_time[%d]: %Lf\n", i, Execution_Time[i]);
             fail_count++;
-            //Execution_Time[i] = 0;
+            Execution_Time[i] = 0;
         } else {
             //printf("Execution_time_WiFi[%d]:\n", i);
             printf("Execution_Time_WiFi[%d]: %Lf\n", i, Execution_Time[i]);
             Execution_Sum += Execution_Time[i];
+            i++;
         }  
-        i++;
         if (i == iter){
             break;
         }
@@ -90,7 +89,7 @@ void WiFi_command(Sockets sock) {
     printf("WiFi: Execution_Sum: %Lf\n", Execution_Sum);
     printf("WiFi: Execution average: %Lf ms\n", Execution_Average);
     printf("WiFi: Total time: %ld\n", (Time_Ended - Time_Started));
-    printf("WiFi: Total_Time_Elapsed [HH:MM:SS:MS]: %ld:%ld:%ld:%ld\n", hours, minutes, seconds, milliseconds);
+    printf("WiFi: Total_Time_Elapsed [HH:MM:SS.MS]: %ld:%ld:%ld.%ld\n", hours, minutes, seconds, milliseconds);
     printf("WiFi: Total failed counts: %d\n", fail_count);
     printf("\n===================================\n\n");
 }
@@ -139,10 +138,10 @@ void* LTE_command(void* socket) {
             Execution_Time_LTE[j] = 0;
         } else {
             //printf("Execution_Time[%d]\n", j);
-            printf("Execution_Time_LTE[%d]: %Lf\n", j, Execution_Time[j]);
+            printf("Execution_Time_LTE[%d]: %Lf\n", j, Execution_Time_LTE[j]);
             Execution_Sum_LTE += Execution_Time_LTE[j];
+            j++;
         }
-        j++;
         if (j == iter) {
             break;
         }
@@ -160,7 +159,8 @@ void* LTE_command(void* socket) {
     printf("LTE: Total time: %ld\n", (Time_Ended_LTE - Time_Started_LTE));
     printf("LTE: Total_Time_Elapsed [HH:MM:SS:MS]: %ld:%ld:%ld:%ld\n", hours, minutes, seconds, milliseconds);
     printf("LTE: Total failed counts: %d\n", fail_count);
-    return 0;
+    //return 0;
+    pthread_exit(NULL);
 }
 
 void help() {
