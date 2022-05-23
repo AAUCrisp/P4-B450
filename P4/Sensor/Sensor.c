@@ -84,16 +84,21 @@ int main(int argc, char* argv[]) {
 
     /* Execution time variables */
     int fail_count = 0;
-    double Execution_Time[iter];
-    double Execution_Temp;
-    double Execution_Sum;
-    double Execution_Average;
+    long double Execution_Time[iter];
+    long double Execution_Temp = 0;
+    long double Execution_Sum = 0;
+    long double Execution_Average = 0;
     clock_t Time_Started;
     clock_t Time_Ended;
     clock_t Clock_Start;
     clock_t Clock_End;
 
-    /* Create sockets */
+    struct timespec begin, end;
+    unsigned long seconds = 0;
+    unsigned long nanoseconds = 0;
+    double elapsed = 0;
+
+    /* Create sockets */ 
     Sockets sock;
     Sockets_Transmitter(&sock, IP_LTE, IP_WiFi, PORT_LTE_TRANSMITTER, PORT_WiFi_TRANSMITTER, LTE, WiFi);
     printf("sockLTE_TRANSMITTER (OUTSIDE): %d\n", sock.sockLTE_TRANSMITTER);
@@ -102,11 +107,11 @@ int main(int argc, char* argv[]) {
     /* Shared memory object variables */
     const char* GSV_KEY = "GSV_KEY";
     const char* msg;
-    int SHM_BUFFER = 10000;
+    int SHM_BUFFER = 100000;
 
     char buffer[BUFFER];
 
-    int GSV = 0;
+    int GSV;
     int B = 0;
     int W = 1;
     int L = 2;
@@ -127,20 +132,19 @@ int main(int argc, char* argv[]) {
         // while (1) {
         Time_Started = clock();
         for (int i = 0; i < iter; i++) {
-            // usleep(10000);
             msg = shm_read(SHM_BUFFER, GSV_KEY);
             GSV = atoi(msg);
-            // usleep(10000);
-            //   printf("\nSensor || GSV from shared memory: %s\n", msg);
+
+            //printf("\nSensor || GSV from shared memory: %s\n", msg);
 
             // printf("\nGSV converted: %d\n", GSV);
             /*if (monitor == 1) {
             }*/
 
             Clock_Start = clock();
+            // WORKS clock_gettime(CLOCK_REALTIME, &begin);
             sprintf(buffer, "%d", generate(1, 25000000));
             // printf("\nSensor || After Random Int Generation\n");
-            // usleep(2000);
 
             /*if (both_tech == 1) {
                 printf("\nSensor || Troubleshooting for Both Technologies\n");
@@ -156,39 +160,57 @@ int main(int argc, char* argv[]) {
                 transmitWiFi(&sock, (char*)buffer);
             }
             Clock_End = clock();
-            // Execution_Time[i] += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
-            Execution_Temp += (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
-            /*
-            file = fopen("Execution.txt", "a+");
-            if (file == NULL) {
-                perror("Failed to open Execution.txt");
-            }
-            fprintf(file, "[%d] %f\n", i, Execution_Temp);
-            fclose(file);*/
 
-            // isnan(Execution_Time[i]);
-            int shit = isnan(Execution_Time[i]);
-            if (shit == 0) {
-                // printf("isnan value: %d\n", isnan(Execution_Time[i]));
-                Execution_Time[i] += Execution_Temp;
-                if (Execution_Time[i] >= -1000000000 || Execution_Time [i] <= 1000000000) {
-                    Execution_Sum += Execution_Time[i];
-                } else {
-                    fail_count++;
-                    printf("Fail counter: %d\n", fail_count);
-                    // printf("Execution_Sum exceeded 10000000\n");
-                }
-            } else {
+            Execution_Time[i] = (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
+
+            if (Execution_Time[i] > 10000) {
                 fail_count++;
-                printf("Fail counter: %d\n", fail_count);
-                // printf("isnan value: %d\n", isnan(Execution_Time[i]));
-                // printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
+                // printf("Execution_Time[%d]: %f\n", i, (double)Execution_Time[i]);
+                Execution_Time[i] = 0;
+            } else {
+                // printf("Execution_Time[%d]\n", i);
+                // printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
+                Execution_Sum += Execution_Time[i];
             }
 
-            printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
-            printf("Execution_Sum = %f\n", Execution_Sum);
+            /* Works */
+            /*
+            //clock_gettime(CLOCK_REALTIME, &end);
 
-            // sleep(3);
+            seconds = end.tv_sec - begin.tv_sec;
+            nanoseconds = end.tv_nsec - begin.tv_nsec;
+
+            elapsed = seconds + nanoseconds * 1e-9;
+            if (elapsed > 10000) {
+                fail_count++;
+               // printf("fail count: %d\n", fail_count);
+               // printf("Failed elapsed time: %f\n", elapsed);
+            } else {
+               // printf("\nelapsed time: %f\n", elapsed);
+            }
+            // sleep(5);
+            Execution_Time[i] = elapsed;
+            if (Execution_Time[i] > 10000) {
+               // printf("Failed Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
+                //sleep(1);
+                Execution_Time[i] = 0;
+               // printf("Forced Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
+                sleep(1);
+            } else {
+                printf("Execution_Time[%d]\n", i);
+                //printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
+            }
+            // sleep(5);
+            Execution_Sum += Execution_Time[i];
+            if (Execution_Sum > 10000) {
+                fail_count++;
+               // printf("fail count: %d\n", fail_count);
+               // printf("Failed Execution_Sum: %Lf\n", Execution_Sum);
+                //sleep(5);
+            } else {
+                //printf("Execution_Sum: %Lf\n", Execution_Sum);
+            }*/
+
             // usleep(10000);
         }
         Time_Ended = clock();
@@ -200,12 +222,37 @@ int main(int argc, char* argv[]) {
         long hours = ((((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) - minutes) / 60;
 
         Execution_Average = Execution_Sum / iter;
-        printf("Execution average: %f ms\n", Execution_Average);
+        printf("\n\n===================================\n\n");
+        printf("Execution_Sum: %Lf\n", Execution_Sum);
+        printf("Execution average: %Lf s\n", Execution_Average);
         printf("Total time: %ld\n", (Time_Ended - Time_Started));
         printf("Total_Time_Elapsed [HH:MM:SS:MS]: %ld:%ld:%ld:%ld\n", hours, minutes, seconds, milliseconds);
         printf("Total failed counts: %d\n", fail_count);
+        printf("\n===================================\n\n");
 
         //}
         // Make a log file with execution time idiot
     }
 }
+
+/*
+            int shit = isnan(Execution_Time[i]);
+            if (shit == 0) {
+                // printf("isnan value: %d\n", isnan(Execution_Time[i]));
+                Execution_Time[i] += Execution_Temp;
+
+                if (Execution_Time[i] >= -1000000.0 || Execution_Time[i] <= 1000000.0) {
+                    Execution_Sum += Execution_Time[i];
+                } else if (Execution_Time[i] >= 10000000000.0000) {
+                    fail_count++;
+                    printf("Fail counter: %d\n", fail_count);
+                    printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
+                    printf("Execution_Sum: %Lf\n", Execution_Time[i]);
+                    //  printf("Execution_Sum exceeded 10000000\n");
+                }
+            } else {
+                fail_count++;
+                // printf("Fail counter: %d\n", fail_count);
+                //  printf("isnan value: %d\n", isnan(Execution_Time[i]));
+                //  printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
+            }*/

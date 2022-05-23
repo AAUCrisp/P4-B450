@@ -1,19 +1,12 @@
-#include <arpa/inet.h>
-#include <netinet/in.h>
-#include <pthread.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/socket.h>
-#include <time.h>
-#include <unistd.h>
+#ifndef LIBRARIES
+#define LIBRARIES
+#include "../Libraries.cpp"      // File with all our includes
+#endif
 
 #ifndef SOCKETS_RSSI
 #define SOCKETS_RSSI
 #include "Sockets.h"
 #endif
-
-int print_signal = 1;
 
 int RSSI_VAL() {
     // Get RSSI value from WiFi
@@ -28,7 +21,7 @@ int RSSI_VAL() {
         }
 
         pclose(pipe_WiFi);
-        if(print_signal == 1) {
+        if(message_only == 1) {
             printf("GSV || WiFi Strength: %d \n", signalWiFi);
         }
 
@@ -49,7 +42,7 @@ int RSRP_VAL() {
             }
         }
         pclose(pipe_LTE);
-        if(print_signal == 1) {
+        if(message_only == 1) {
             printf("GSV || LTE Strength: %d \n", signalLTE);
         }
 
