@@ -28,7 +28,7 @@ void WiFi_command(Sockets sock) {
     char msgDump[32];
     int data;
     string coordinate;
-    char* WiFimsg = (char*) malloc(100000);
+    char* WiFimsg = (char*) malloc(1000000);
 
     printf("\n\n  =======================\n   WiFi Listener Started\n  =======================\n\n");
     
@@ -74,7 +74,6 @@ void WiFi_command(Sockets sock) {
             printf("Execution_Time_WiFi[%d]: %Lf\n", i, Execution_Time[i]);
             Execution_Sum += Execution_Time[i];
             i++;
-            free(WiFimsg);
         }  
         if (i == iter){
             break;
@@ -103,7 +102,7 @@ void* LTE_command(void* socket) {
     char msgDump[32];
     int data;
     string coordinate;
-    char* LTEmsg = (char*) malloc(100000);
+    char* LTEmsg = (char*) malloc(1000000);
     printf("\n\n  ======================\n   LTE Listener Started\n  ======================\n\n");
     
     if(troubleshooting_print == 1) {
@@ -146,7 +145,6 @@ void* LTE_command(void* socket) {
             printf("Execution_Time_LTE[%d]: %Lf\n", j, Execution_Time_LTE[j]);
             Execution_Sum_LTE += Execution_Time_LTE[j];
             j++;
-            free(LTEmsg);
         }
         if (j == iter) {
             break;
