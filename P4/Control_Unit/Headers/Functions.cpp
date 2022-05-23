@@ -28,7 +28,7 @@ void WiFi_command(Sockets sock) {
     char msgDump[32];
     int data;
     string coordinate;
-    char* WiFimsg = (char*) malloc(9);
+    char* WiFimsg = (char*) malloc(10000);
 
     printf("\n\n  =======================\n   WiFi Listener Started\n  =======================\n\n");
     
