@@ -102,7 +102,7 @@ void* LTE_command(void* socket) {
     char msgDump[32];
     int data;
     string coordinate;
-    char* LTEmsg = (char*) malloc(9);
+    char* LTEmsg = (char*) malloc(10000);
     printf("\n\n  ======================\n   LTE Listener Started\n  ======================\n\n");
     
     if(troubleshooting_print == 1) {
