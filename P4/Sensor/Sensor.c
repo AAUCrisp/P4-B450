@@ -153,10 +153,12 @@ int main(int argc, char* argv[]) {
 
             // printf("Sensor || Before Transmitting\n");
             if (GSV == B || GSV == L) {
+                usleep(1000);
                 transmitLTE(&sock, (char*)buffer);
             }
 
             if (GSV == B || GSV == W) {
+                usleep(1000);
                 transmitWiFi(&sock, (char*)buffer);
             }
             Clock_End = clock();
