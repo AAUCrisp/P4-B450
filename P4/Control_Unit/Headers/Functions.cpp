@@ -21,7 +21,8 @@
     clock_t Clock_Start_LTE;
     clock_t Clock_End_LTE;
 
-    int i, j;
+    int i = 0;
+    int j = 0;
 
 void WiFi_command(Sockets sock) {
     void* message;
@@ -138,7 +139,7 @@ void* LTE_command(void* socket) {
             Execution_Time_LTE[j] = 0;
         } else {
             //printf("Execution_Time[%d]\n", j);
-            printf("Execution_Time[%d]: %Lf\n", j, Execution_Time[j]);
+            printf("Execution_Time_LTE[%d]: %Lf\n", j, Execution_Time[j]);
             Execution_Sum_LTE += Execution_Time_LTE[j];
         }
         j++;
