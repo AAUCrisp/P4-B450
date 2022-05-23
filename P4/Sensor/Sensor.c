@@ -98,7 +98,7 @@ int main(int argc, char* argv[]) {
     unsigned long nanoseconds = 0;
     double elapsed = 0;
 
-    /* Create sockets */
+    /* Create sockets */ 
     Sockets sock;
     Sockets_Transmitter(&sock, IP_LTE, IP_WiFi, PORT_LTE_TRANSMITTER, PORT_WiFi_TRANSMITTER, LTE, WiFi);
     printf("sockLTE_TRANSMITTER (OUTSIDE): %d\n", sock.sockLTE_TRANSMITTER);
