@@ -3,6 +3,8 @@ from PIL import Image
 import matplotlib.pyplot as plt
 import numpy as np
 from numba import njit
+from time import perf_counter
+
 
 def close_figure(event):
     """
@@ -151,7 +153,11 @@ def printBlock(block, blocksize):
 
 if __name__ == '__main__':
 
+    tempStart = perf_counter()
     f = np.asarray(Image.open("test.png").convert('L'), dtype='int16')        # Opens the image as an array with separate pixels, only with the lumen value, typecasted to int for processing
+    tempStop = perf_counter()
+    timeGreyscale = tempStop - tempStart
+    print(f'\n\n\nGreyscale conversion took time: {timeGreyscale} seconds')
     """
     pos = 0  # Starting position of conversion
     size = 256 # How many pixels (from start) to include
@@ -168,6 +174,7 @@ if __name__ == '__main__':
     #print(imageDimensions)
     
     
+    tempStart = perf_counter()
     # Turn image array into blockPartion
     blockPartition = np.zeros((int(imageDimensions[0]/blocksize), int(imageDimensions[1]/blocksize), blocksize, blocksize))
     blockPartitioning(f, blockPartition, blocksize)
@@ -175,7 +182,12 @@ if __name__ == '__main__':
     #Print first block of the block matrix
     print("\nUntouched:")
     printBlock(blockPartition[0][0], blocksize)
+    tempStop = perf_counter()
+    timePartitioning = tempStop - tempStart
+    print(f'\nBlock partitioning took time: {timePartitioning} seconds')
 
+
+    tempStart = perf_counter()
     # Use Discrete Cosine Transform on blockPartion
     blockPartitionDCT = np.zeros((int(imageDimensions[0]/blocksize), int(imageDimensions[1]/blocksize), blocksize, blocksize))
     blockPartitioningDCT(blockPartitionDCT, blockPartition, blocksize)
@@ -187,10 +199,14 @@ if __name__ == '__main__':
     #Print first block of the DCT block matrix
     print("\nDCT Version:")
     printBlock(blockPartitionDCT[0][0], blocksize)
-    
+    tempStop = perf_counter()
+    timeDCT = tempStop - tempStart
+    print(f'\nDiscrete cosine transform took time: {timeDCT} seconds')
     # Show DCT coefficiense version of image
     show(fDCT, "DCT", 1)
 
+
+    tempStart = perf_counter()
     # Create quantization_matrix 
     temp_quantization_matrix = [[16, 11, 10, 16, 24, 40, 51, 61], [12, 12, 14, 19, 26, 58, 60, 55], [14, 13, 16, 24, 40, 57, 69, 56], [14, 17, 22, 29, 51, 87, 80, 62], [18, 22, 37, 56, 68, 109, 103, 77],[24, 35, 55, 64, 81, 104, 113, 92], [49, 64, 78, 87, 103, 121, 120, 101], [79, 92, 95, 98, 112, 100, 103, 99]]
     quantization_matrix = np.zeros((blocksize, blocksize))
@@ -209,18 +225,28 @@ if __name__ == '__main__':
     # Print first block of quantazised DCT block matrix
     print("\nQuant:")
     printBlock(blockPartitionQuant[0][0], blocksize)
-
+    tempStop = perf_counter()
+    timeQuant = tempStop - tempStart
+    print(f'\nQuantization took time: {timeQuant} seconds')
 
     # Show the quantizised version
     show(fQuant, "Quantization", 1)
 
+
+
+    tempStart = perf_counter()
     # Make DCT3 Coefficiense block matrix
     blockPartitionDCT3 = np.zeros((int(imageDimensions[0]/blocksize), int(imageDimensions[1]/blocksize), blocksize, blocksize))
     DCT3_Coef(blockPartitionQuant, blockPartitionDCT3, blocksize, quantization_matrix)
 
     print("\nDeQuantizised Version:")
     printBlock(blockPartitionDCT3[0][0], blocksize)
+    tempStop = perf_counter()
+    timeDeQuant = tempStop - tempStart
+    print(f'\nDequantization took time: {timeDeQuant} seconds')
 
+
+    tempStart = perf_counter()
     # Restore image
     blockPartitionRestored = np.zeros((int(imageDimensions[0]/blocksize), int(imageDimensions[1]/blocksize), blocksize, blocksize))
     restoreImage(blockPartitionDCT3, blockPartitionRestored, blocksize)
@@ -233,6 +259,12 @@ if __name__ == '__main__':
     #Print first block of the block matrix
     print("\nRestored:")
     printBlock(blockPartitionRestored[0][0], blocksize)
+    tempStop = perf_counter()
+    timeRestore = tempStop - tempStart
+    print(f'\nRestoration took time: {timeRestore} seconds')
+    
+    print(f'\n\nOverall took time: {timeGreyscale + timePartitioning + timeDCT + timeQuant + timeDeQuant + timeRestore} seconds')
+
     # Show restores image?
     show(fRestored, "Restored?")
 
