@@ -84,7 +84,7 @@ int main() {
         Time_Started = clock();
         while (1) {
             
-            pthread_create(&T1, NULL, DoSomething, NULL);
+            pthread_create(&T1, NULL, DoSomething, NULL);       // Start a Thread that closes a Thread... and just that...
 
             COMMANDS = (char*)shm_read(32, COMMANDS_KEY);
             //printf("COMMANDS from shared memory: %s\n", COMMANDS);
