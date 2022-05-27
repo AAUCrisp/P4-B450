@@ -161,10 +161,10 @@ def printBlock(block, blocksize):
 
 
 if __name__ == '__main__':
-    num_threads = input(f'Enter max number of threads to use: ')
+    #num_threads = input(f'Enter max number of threads to use: ')
     blocksize = int(input(f'Enter blocksize: '))
 
-    set_num_threads(int(num_threads))
+    #set_num_threads(int(num_threads))
 
     tempStart = perf_counter()
     f = np.asarray(Image.open("test.png").convert('L'), dtype='int16')        # Opens the image as an array with separate pixels, only with the lumen value, typecasted to int for processing
