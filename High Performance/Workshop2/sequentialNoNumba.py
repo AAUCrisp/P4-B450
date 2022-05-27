@@ -2,8 +2,8 @@
 from PIL import Image
 import matplotlib.pyplot as plt
 import numpy as np
-from numba import njit
 from time import perf_counter
+
 
 
 def close_figure(event):
@@ -42,10 +42,13 @@ def show(im, text, imgtype=0):
     plt.show()      # Show the GUI
 
 
+def quantizise_matrixGen(blocksize, quantiziseMatrix):
+    for i in range(blocksize):
+        for ii in range(blocksize):
+            quantiziseMatrix[i][ii] = 3 + (2*i) + (2*ii)
 
 
 #Turn image into block partitions
-@njit
 def blockPartitioning(f, blockPartition, blocksize):
     for i in range(len(blockPartition)):
         for ii in range(len(blockPartition[0])):
@@ -53,7 +56,6 @@ def blockPartitioning(f, blockPartition, blocksize):
                 for iiii in range(blocksize):
                     blockPartition[i][ii][iii][iiii] = f[iii + (blocksize*i)][iiii + (blocksize*ii)]
 
-@njit
 def blockPartitioningDCT(blockPartitionDCT, blockPartition, blocksize):
     for i in range(len(blockPartitionDCT)):
         for ii in range(len(blockPartitionDCT[0])):
@@ -77,8 +79,6 @@ def blockPartitioningDCT(blockPartitionDCT, blockPartition, blocksize):
 
 
 
-
-@njit
 def quantizise(blockPartitionQuant, blockPartitionDCT, blocksize, quantization_matrix):
     for i in range(len(blockPartitionQuant)):
         for ii in range(len(blockPartitionQuant[0])):
@@ -86,7 +86,7 @@ def quantizise(blockPartitionQuant, blockPartitionDCT, blocksize, quantization_m
                 for iiii in range(blocksize):
                     blockPartitionQuant[i][ii][iii][iiii] = np.rint(blockPartitionDCT[i][ii][iii][iiii] / quantization_matrix[iii][iiii])
 
-@njit 
+
 def DCT3_Coef(blockPartitionQuant, blockPartitionDCT3, blocksize, quantization_matrix):
     for i in range(len(blockPartitionDCT3)):
         for ii in range(len(blockPartitionDCT3[0])):
@@ -95,7 +95,7 @@ def DCT3_Coef(blockPartitionQuant, blockPartitionDCT3, blocksize, quantization_m
                     blockPartitionDCT3[i][ii][iii][iiii] = blockPartitionQuant[i][ii][iii][iiii] * quantization_matrix[iii][iiii]
 
 
-@njit
+
 def restoreImage(blockPartitionDCT3, blockPartitionRestored, blocksize):
     for i in range(len(blockPartitionRestored)):
         for ii in range(len(blockPartitionRestored[0])):
@@ -118,7 +118,6 @@ def restoreImage(blockPartitionDCT3, blockPartitionRestored, blocksize):
                         blockPartitionRestored[i][ii][iii][iiii] += tempInner
 
 # Turn partition into image array
-@njit
 def partitionToImageArray(partition, retImage, blocksize):
     for i in range(len(partition)):
         for ii in range(len(partition[0])):
@@ -179,9 +178,10 @@ if __name__ == '__main__':
     blockPartition = np.zeros((int(imageDimensions[0]/blocksize), int(imageDimensions[1]/blocksize), blocksize, blocksize))
     blockPartitioning(f, blockPartition, blocksize)
     
+
     #Print first block of the block matrix
     print("\nUntouched:")
-    printBlock(blockPartition[0][0], blocksize)
+    #printBlock(blockPartition[0][0], blocksize)
     tempStop = perf_counter()
     timePartitioning = tempStop - tempStart
     print(f'\nBlock partitioning took time: {timePartitioning} seconds')
@@ -192,10 +192,13 @@ if __name__ == '__main__':
     blockPartitionDCT = np.zeros((int(imageDimensions[0]/blocksize), int(imageDimensions[1]/blocksize), blocksize, blocksize))
     blockPartitioningDCT(blockPartitionDCT, blockPartition, blocksize)
     
+
+
     # Create image array for DCT version
     fDCT = np.zeros((imageDimensions[0], imageDimensions[1]))
     partitionToImageArray(blockPartitionDCT, fDCT, blocksize)
     
+
     #Print first block of the DCT block matrix
     print("\nDCT Version:")
     printBlock(blockPartitionDCT[0][0], blocksize)
@@ -207,16 +210,22 @@ if __name__ == '__main__':
 
 
     tempStart = perf_counter()
-    # Create quantization_matrix 
-    temp_quantization_matrix = [[16, 11, 10, 16, 24, 40, 51, 61], [12, 12, 14, 19, 26, 58, 60, 55], [14, 13, 16, 24, 40, 57, 69, 56], [14, 17, 22, 29, 51, 87, 80, 62], [18, 22, 37, 56, 68, 109, 103, 77],[24, 35, 55, 64, 81, 104, 113, 92], [49, 64, 78, 87, 103, 121, 120, 101], [79, 92, 95, 98, 112, 100, 103, 99]]
+    # Create quantization_matrix
+
     quantization_matrix = np.zeros((blocksize, blocksize))
-    for i in range(blocksize):
-        for ii in range(blocksize):
-            quantization_matrix[i][ii] = temp_quantization_matrix[i][ii]
+    quantizise_matrixGen(blocksize, quantization_matrix)
+
+
+    #temp_quantization_matrix = [[16, 11, 10, 16, 24, 40, 51, 61], [12, 12, 14, 19, 26, 58, 60, 55], [14, 13, 16, 24, 40, 57, 69, 56], [14, 17, 22, 29, 51, 87, 80, 62], [18, 22, 37, 56, 68, 109, 103, 77],[24, 35, 55, 64, 81, 104, 113, 92], [49, 64, 78, 87, 103, 121, 120, 101], [79, 92, 95, 98, 112, 100, 103, 99]]
+    #quantization_matrix = np.zeros((blocksize, blocksize))
+    #for i in range(blocksize):
+        #for ii in range(blocksize):
+            #quantization_matrix[i][ii] = temp_quantization_matrix[i][ii]
     
     # Use quantazise on the DCT block matrix
     blockPartitionQuant = np.zeros((int(imageDimensions[0]/blocksize), int(imageDimensions[1]/blocksize), blocksize, blocksize))
     quantizise(blockPartitionQuant, blockPartitionDCT, blocksize, quantization_matrix)
+    
    
     # Make printable version of the quantizised version
     fQuant = np.zeros((imageDimensions[0], imageDimensions[1]))
@@ -238,6 +247,7 @@ if __name__ == '__main__':
     # Make DCT3 Coefficiense block matrix
     blockPartitionDCT3 = np.zeros((int(imageDimensions[0]/blocksize), int(imageDimensions[1]/blocksize), blocksize, blocksize))
     DCT3_Coef(blockPartitionQuant, blockPartitionDCT3, blocksize, quantization_matrix)
+    
 
     print("\nDeQuantizised Version:")
     printBlock(blockPartitionDCT3[0][0], blocksize)
@@ -250,6 +260,7 @@ if __name__ == '__main__':
     # Restore image
     blockPartitionRestored = np.zeros((int(imageDimensions[0]/blocksize), int(imageDimensions[1]/blocksize), blocksize, blocksize))
     restoreImage(blockPartitionDCT3, blockPartitionRestored, blocksize)
+    
 
     # Make printable version of restored
     fRestored = np.zeros((imageDimensions[0], imageDimensions[1]))
