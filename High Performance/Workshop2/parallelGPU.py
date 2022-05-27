@@ -186,11 +186,11 @@ if __name__ == '__main__':
     print(f'\n\n\nGreyscale conversion took time: {timeGreyscale} seconds')
     
 
-    """
+    
     pos = 0  # Starting position of conversion
     size = 256 # How many pixels (from start) to include
     f = f[pos:pos+size,pos:pos+size]
-    """
+    
 
     
 
@@ -203,7 +203,7 @@ if __name__ == '__main__':
     width = int (len(f))
     height = int (len(f[0]))
     imageDimensions = [width, height]
-    #print(imageDimensions)
+    print(imageDimensions)
 
     
     

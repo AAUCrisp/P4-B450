@@ -161,10 +161,10 @@ def printBlock(block, blocksize):
 
 
 if __name__ == '__main__':
-    #num_threads = input(f'Enter max number of threads to use: ')
+    num_threads = input(f'Enter max number of threads to use: ')
     blocksize = int(input(f'Enter blocksize: '))
 
-    #set_num_threads(int(num_threads))
+    set_num_threads(int(num_threads))
 
     tempStart = perf_counter()
     f = np.asarray(Image.open("test.png").convert('L'), dtype='int16')        # Opens the image as an array with separate pixels, only with the lumen value, typecasted to int for processing
@@ -173,17 +173,12 @@ if __name__ == '__main__':
     print(f'\n\n\nGreyscale conversion took time: {timeGreyscale} seconds')
     
     
-    """
+    
     pos = 0  # Starting position of conversion
-    if(int(len(f) > int(len(f[0])))):
-        size = int(len(f[0])/blocksize)*blocksize
-        print(size)
-    else:
-        size = int(len(f)/blocksize)*blocksize
-        print(size)
-    #size = 256 # How many pixels (from start) to include
+    
+    size = 256 # How many pixels (from start) to include
     f = f[pos:pos+size,pos:pos+size]
-    """
+    
     
 
     f-=128 # Substranct 128 from all the values, to make them center around 0
