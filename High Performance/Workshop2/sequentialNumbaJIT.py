@@ -162,7 +162,7 @@ if __name__ == '__main__':
     blocksize = int(input(f'Enter blocksize: '))
 
     tempStart = perf_counter()
-    f = np.asarray(Image.open("test.png").convert('L'), dtype='int16')        # Opens the image as an array with separate pixels, only with the lumen value, typecasted to int for processing
+    f = np.asarray(Image.open("big.png").convert('L'), dtype='int16')        # Opens the image as an array with separate pixels, only with the lumen value, typecasted to int for processing
     tempStop = perf_counter()
     timeGreyscale = tempStop - tempStart
     print(f'\n\n\nGreyscale conversion took time: {timeGreyscale} seconds')
