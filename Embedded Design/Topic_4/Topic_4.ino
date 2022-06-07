@@ -12,7 +12,7 @@ void t1(void *parameter) {
     long start = 0;
     long stop = 0;
     long sum = 0;
-    
+
     while (1) {
         // Tasks are delayed 50 ms each, or 100 ms in total,
         // in order for it to blink 10 times a second.

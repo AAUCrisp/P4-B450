@@ -31,9 +31,9 @@ void t2(void *parameter) {
 void setup() {
     Serial.begin(115200);
 
-    xTaskCreate(t1, "t1", 10000, (void *)&a, 2, NULL);
+    xTaskCreate(t1, "t1", 10000, (void *)&a, 1, NULL);
     // xTaskCreate(t1, "t1", 10000, (void *) &Str,  2, NULL);
-    xTaskCreate(t2, "t2", 10000, NULL, 1, NULL);
+    xTaskCreate(t2, "t2", 10000, NULL, 2, NULL);
     delay(3000);
 }
 

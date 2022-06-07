@@ -42,9 +42,9 @@ ISR(INT0_vect) {
 
 /*
    volatile char xx = 0;
- 
+
  ISR for pin D2 which corresponds to INT0_vect in the vector table.
-ISR(INT0_vect)  
+ISR(INT0_vect)
 {
  174:	1f 92       	push	r1
  176:	0f 92       	push	r0
@@ -63,9 +63,5 @@ ISR(INT0_vect)
  190:	0f 90       	pop	r0
  192:	1f 90       	pop	r1
  194:	18 95       	reti
- 
-  }*/
- 
- 
- 
 
+  }*/
