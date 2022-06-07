@@ -6,7 +6,7 @@ int revolutions = 0;        // Revolutions since last reset (each second)
 double total_distance = 0;
 
 
-float read_rotation() {
+void read_rotation() {
     // Reading random things... 
     // Return Random number, with a RPM count.
     
@@ -20,7 +20,6 @@ float read_rotation() {
         vTaskDelay(delay);
         revolutions++;
     }
-    return;
 }
 
 double distance_traveled(float rpm) {
