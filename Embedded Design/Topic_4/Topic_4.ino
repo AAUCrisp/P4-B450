@@ -2,7 +2,7 @@
 Topic 4
 Objective:
 1. Design a program that blinks 10 times a second.
-2. Write a function that prints counts ever 400 ms.
+2. Write a function that prints counts every 400 ms.
 
 */
 #define CONFIG_FREERTOS_HZ 1000

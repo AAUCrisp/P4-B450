@@ -198,7 +198,7 @@ void init_da()
 }
 
 void setup(){
-    Serial.begin(9600);
+    Serial.begin(115200);
     Serial.println("Setup");
 }
 
@@ -208,7 +208,7 @@ void loop(){
     init_da();
 
     function1();
-    //function2();
+    //function2();      // For execution time taking... and... other stuff?
 
 
     Serial.println("");

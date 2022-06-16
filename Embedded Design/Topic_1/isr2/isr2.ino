@@ -34,8 +34,8 @@ void setup() {
 
 void loop() {
     digitalWrite(ledPin, ledON);
-    Serial.print("Count: ");
+    Serial.print("1st ISR Count: ");
     Serial.print(cnt0);
-    Serial.print("; Count: ");
+    Serial.print("; 2nd ISR Count: ");
     Serial.println(cnt1);
 }

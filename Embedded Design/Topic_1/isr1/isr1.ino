@@ -6,7 +6,7 @@ volatile unsigned int cnt = 0;  // Use of volatiles
 
 // Interrupt Service Routine (ISR)
 void blink() {
-    cnt++;  // interrupt is dsiabled when running this code
+    cnt++;  // interrupt is disabled when running this code
     digitalWrite(ledPin, HIGH);
 }
 void setup() {

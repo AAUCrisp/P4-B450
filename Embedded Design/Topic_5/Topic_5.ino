@@ -12,16 +12,15 @@ Objective:
 char Str[] = "Hello world";
 int a = 1;
 
-void t1(void *parameter) {
+void print_task(void *parameter) {
     while (1) {
-        // Serial.println(*(char *)parameter);
         Serial.print("Count: ");
         Serial.println(*(int *)parameter);
         vTaskDelay(100 / portTICK_PERIOD_MS);
     }
 }
 
-void t2(void *parameter) {
+void increment_task(void *parameter) {
     while (1) {
         a++;
         vTaskDelay(2000 / portTICK_PERIOD_MS);
@@ -31,9 +30,8 @@ void t2(void *parameter) {
 void setup() {
     Serial.begin(115200);
 
-    xTaskCreate(t1, "t1", 10000, (void *)&a, 1, NULL);
-    // xTaskCreate(t1, "t1", 10000, (void *) &Str,  2, NULL);
-    xTaskCreate(t2, "t2", 10000, NULL, 2, NULL);
+    xTaskCreate(print_task, "Print", 10000, (void *)&a, 1, NULL);
+    xTaskCreate(increment_task, "Counter", 10000, NULL, 2, NULL);
     delay(3000);
 }
 

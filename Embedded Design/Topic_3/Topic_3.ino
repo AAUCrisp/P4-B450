@@ -1,9 +1,12 @@
 const char STARTBYTE = 0x2;
 const char STOPBYTE = 0x3;
 const char ESCAPE = 0x10;
+const char ESCAPE_SHIFT = 0x20;
+
 unsigned char Data[1024];
+
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   char arr[5] = {0x30,0x30,0x10,0x41,0x00};
 
   unsigned char *frame = CreateFrame(arr, strlen(arr));
@@ -24,11 +27,12 @@ unsigned char* CreateFrame(unsigned char* Frame, int len){
   int CRC = 0;
   Data[0] = STARTBYTE;
   Data[1] = len;
+
   while(*Frame != NULL) {
     if(*Frame == STARTBYTE || *Frame == STOPBYTE || *Frame == ESCAPE ){
       Data[index] = ESCAPE;
       index = index + 1; 
-      Data[index] = *Frame + ESCAPE;
+      Data[index] = *Frame + ESCAPE_SHIFT;
     }else {
       Data[index] = *Frame;
     }
@@ -36,11 +40,12 @@ unsigned char* CreateFrame(unsigned char* Frame, int len){
     CRC += *Frame; 
     Frame++; 
   }
+
   Data[index] = CRC;
   Data[index + 1] = CRC>>8; 
   Data[index + 2] = STOPBYTE;
-
   Data[index+3] = NULL;
+  
   return Data;  
 }
 
@@ -80,7 +85,7 @@ void DecodeFrame(unsigned char* Frame){
       case data:
            if (*Frame == ESCAPE){
             Frame++;
-            output[index] = *Frame - ESCAPE;
+            output[index] = *Frame - ESCAPE_SHIFT;
            } else {
             output[index] = *Frame;
            }
@@ -102,7 +107,7 @@ void DecodeFrame(unsigned char* Frame){
                 Serial.print(output[i], HEX); Serial.print(" ");
               }
           Serial.println();
-          CRC2 == Checksum ? Serial.print("CRC: OK"):Serial.print("CRC: Not OK");
+          CRC2 == Checksum ? Serial.print("CRC: OK") : Serial.print("CRC: Not OK");
           
           }
           state = done;
