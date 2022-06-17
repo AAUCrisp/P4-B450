@@ -63,12 +63,12 @@ int main() {
         //  printf("ptr: %s\n", (char*)ptr);
 
         /* write to the shared memory object */
-        sprintf(TESTX, "%s", KOMNU);
+        sprintf(TESTX, "%s", message);
         //printf("TESTX char: %s\n", (char*)TESTX);
         // close(shm_fd);
 
         // shm_unlink(shm_fd);
-        //printf("Count: %d\n", count++);
+        printf("Count: %d\n", count++);
         if (count == 5000000000000) {
             break;
         }
