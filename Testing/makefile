@@ -1,4 +1,8 @@
-all: Process Child
+all: Git Process Child
+
+
+Git:
+	git pull
 
 Process: Process.c shm_read.o
 	gcc -pthread Process.c shm_read.o -o Process -lrt
