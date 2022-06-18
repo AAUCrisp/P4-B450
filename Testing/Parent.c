@@ -21,14 +21,12 @@
 #include "Semaphore.h"
 #include "shm_read_write.h"
 
-
-
 int generate(int Min, int Max) {
     int number = (rand() % ((Max + 1) - Min)) + Min;
     return number;
 }
 
-int main() { 
+int main() {
     printf("PID of Parent: %d\n", getppid());
     sleep(1);
 
@@ -50,8 +48,7 @@ int main() {
         char* envVec[] = {NULL};
 
         execv(cmd, args);
-
-    } 
+    }
 
     /* Semaphore setup */
     sem_unlink(SemLockRead);
@@ -82,14 +79,11 @@ int main() {
         // usleep(10000);
 
         /* Write value to the shared memory object */
-        // printf("WRITER: Before sem_wait\n");
         sem_wait(SemWrite);
-        // printf("WRITER: Got the SemWrite?\n");
-        sprintf(write, "%s", message);
         printf("Parent gsv: %d\n", gsv);
+        // sprintf(write, "%s", message); // Placing char in shared memory
+        sprintf(write, "%d", gsv);  // Placing int in shared memory
         sem_post(SemRead);
-        // printf("WRITER: Gave the SemRead?\n");
-
 
         /* Breakout */
         count++;

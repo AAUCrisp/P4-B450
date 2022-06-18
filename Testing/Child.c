@@ -21,7 +21,7 @@
 #include "Semaphore.h"
 #include "shm_read_write.h"
 
-int main() { 
+int main() {
     printf("PID of Child: %d\n", getpid());
     sleep(1);
 
@@ -29,8 +29,8 @@ int main() {
     int count = 0;
     int counts = 100000;
     int gsv;
-    const char *key = "gsv_key";
-    char *message;
+    const char* key = "gsv_key";
+    char* message;
 
     char* B = "0";
     char* W = "1";
@@ -54,13 +54,18 @@ int main() {
 
     while (1) {
         /* Read the value in the shared memory object */
-        // printf("READER: Before sem_wait\n");
         sem_wait(SemRead);
-        // printf("READER: Got the SemWrite?\n");
-        printf("Child gsv: %s\n", (char *)message);
+        count++;
+        printf("Child gsv: %s\n", (char*)message);
+        printf("Child Count: %d\n", count);
         sem_post(SemWrite);
-        // printf("READER: Gave the SemRead?\n");
 
+        /* Breakout */
+        if (count == counts) {
+            break;
+        }
+
+        /* Dummy functions to simulate the transmission via WiFi or LTE */
         if (strcmp(message, B) == 0 || strcmp(message, W) == 0) {
             void dummyfunction();
             printf("\n========================================\n");
@@ -73,13 +78,6 @@ int main() {
             printf("\n========================================\n");
             printf("Inside second if statement\n");
             printf("========================================\n\n");
-        }
-
-        /* Breakout */
-        count++;
-        printf("Child Count: %d\n", count);
-        if (count == counts) {
-            break;
         }
     }
     exit(0);
