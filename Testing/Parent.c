@@ -28,7 +28,7 @@ int generate(int Min, int Max) {
     return number;
 }
 
-int main() {
+int main() { 
     printf("PID of Parent: %d\n", getppid());
     sleep(1);
 

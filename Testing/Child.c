@@ -21,7 +21,7 @@
 #include "Semaphore.h"
 #include "shm_read_write.h"
 
-int main() {
+int main() { 
     printf("PID of Child: %d\n", getpid());
     sleep(1);
 
