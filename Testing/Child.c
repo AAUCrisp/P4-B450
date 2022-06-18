@@ -27,7 +27,7 @@ int main() {
     int counts = 100000;
     const char* key = "gsv_key";
     char* gsv;
-    
+
     char* B = "0";
     char* W = "1";
     char* L = "2";
@@ -51,19 +51,11 @@ int main() {
     while (1) {
         /* Read the value in the shared memory object */
         sem_wait(SemRead);
-        count++;
         printf("Child gsv: %s\n", (char*)gsv);
         printf("Child Count: %d\n", count);
         sem_post(SemWrite);
 
-        /* Breakout */
-        if (count == counts) {
-            break;
-        }
-
-        /* Dummy functions to simulate the transmission via WiFi or LTE.
-           The following functions compares two strings
-        */
+        /* Dummy functions to simulate the transmission via WiFi or LTE */
         if (strcmp(gsv, B) == 0 || strcmp(gsv, W) == 0) {
             void dummyfunction();
             printf("\n========================================\n");
@@ -78,6 +70,11 @@ int main() {
             printf("========================================\n\n");
         }
 
+        /* Breakout */
+        count++;
+        if (count == counts) {
+            break;
+        }
     }
     exit(0);
 }

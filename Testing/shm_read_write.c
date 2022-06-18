@@ -35,7 +35,7 @@ void* shm_read(const int SIZE, const char* name) {
 
     /* memory map the shared memory object */
     ptr = mmap(0, SIZE, PROT_READ, MAP_SHARED, shm_fd, 0);
-    
+
     return ptr;
 }
 

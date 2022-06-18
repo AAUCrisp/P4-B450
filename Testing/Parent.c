@@ -70,20 +70,19 @@ int main() {
     while (1) {
         /* Generate random integer 0-2 */
         gsv = generate(0, 2);
-        sprintf(message, "%d", gsv);
 
         /* Used to test read/write and any synchronization problems */
         // usleep(10000);
 
         /* Write value to the shared memory object */
         sem_wait(SemWrite);
-        printf("Parent gsv: %s\n", message);
-        sprintf(write, "%s", message);
+        printf("Parent gsv: %d\n", gsv);
+        printf("Parent Count: %d\n", count);
+        sprintf(write, "%d", gsv);
         sem_post(SemRead);
 
         /* Breakout */
         count++;
-        printf("Parent Count: %d\n", count);
         if (count == counts) {
             break;
         }
