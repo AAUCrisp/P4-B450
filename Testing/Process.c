@@ -4,6 +4,7 @@
 #include <fcntl.h>
 #include <netinet/in.h>
 #include <pthread.h>
+#include <semaphore.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -17,15 +18,14 @@
 #include <time.h>
 #include <unistd.h>
 
+#include "Semaphore.h"
 #include "shm_read_write.h"
-
-#define buffer 1000
 
 int main() {
     pid_t child_pid;
     child_pid = fork();
 
-    if (child_pid == 0) {
+    /*if (child_pid == 0) {
         printf("PID of parent_pid: %d\n", getppid());
         printf("PID of child_pid: %d\n", getpid());
         printf("\n");
@@ -37,24 +37,46 @@ int main() {
         execv(cmd, args);
         printf("MULTIPROCESS FAIL! Didn't start the second process\n\n");
         exit(0);
-    }
+    }*/
 
     int count = 0;
     int gsv;
-    const char *gsv_key = "gsv_key";
+    const char *key = "gsv_key";
     char *message;
 
-    // shm_unlink(name);
+    sem_t *SemRead = sem_open(SemLockRead, 0);
+    if (SemRead == SEM_FAILED) {
+        perror("Parent: [sem_open] Failed");
+        exit(EXIT_FAILURE);
+    }
+
+    sem_t *SemWrite = sem_open(SemLockWrite, 0);
+    if (SemWrite == SEM_FAILED) {
+        perror("Child: [sem_open] Failed");
+        exit(EXIT_FAILURE);
+    }
+
+    message = shm_read(2, key);
 
     while (1) {
-        usleep(1);
-        count++;
-        message = shm_read(buffer, gsv_key);
-        printf("String message from child process: %s\n", (char *)message);
-        printf("Parent! %d\n", count);
+        //usleep(10000);
+        //printf("READER: Before sem_wait\n");
+        sem_wait(SemRead);
+        //printf("READER: Got the SemWrite?\n");
+        printf("gsv: %s\n", (char *)message);
+        sem_post(SemWrite);
+        //printf("READER: Gave the SemRead?\n");
+        //sem_close(SemRead);
+        //sem_close(SemWrite);
+        // sleep(100000);
+
+        printf("Count: %d\n", count);
         // printf("PID of parent_pid: %d\n", getppid());
         // printf("PID of child_pid: %d\n", getpid());
-        if (count == 10) {
+
+        count++;
+        usleep(1000);
+        if (count == 100000000) {
             break;
         }
     }

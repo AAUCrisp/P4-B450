@@ -1,6 +1,5 @@
 all: Git Process Child
 
-
 Git:
 	git pull
 
@@ -12,12 +11,11 @@ Child: Child.c shm_write.o
 	gcc -pthread Child.c shm_write.o -o Child -lrt
 	touch Child
 
-shm_write.o: shm_write.c shm_read_write.h Variables.h
+shm_write.o: shm_write.c shm_read_write.h 
 	gcc -c shm_write.c -lrt
 	touch shm_write.c 
 
-shm_read.o: shm_read.c shm_read_write.h Variables.h
-	gcc -c shm_read.c -lrt
+shm_read.o: shm_read.c shm_read_write.h 
 	touch shm_read.c 
 
 clean:

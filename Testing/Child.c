@@ -3,6 +3,7 @@
 #include <fcntl.h>
 #include <netinet/in.h>
 #include <pthread.h>
+#include <semaphore.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -17,7 +18,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "Variables.h"
+#include "Semaphore.h"
 #include "shm_read_write.h"
 
 #define buffer 1000
@@ -32,47 +33,60 @@ int main() {
     printf("PID of Child.c: %d\n", getpid());
     int count = 0;
     int gsv;
-    int shm_fd;
-    const char* name = "gsv_key";
+    int received;
+    int random;
+
+    const char* key = "gsv_key";
     char message[2];
     char* KOMNU;
+    char* TESTX;
 
-    void* TESTX;
+    /* Semaphore setup */
+    sem_unlink(SemLockRead);
+    sem_unlink(SemLockWrite);
 
-    TESTX = shm_create_writer(name);
+    sem_t* SemRead = sem_open(SemLockRead, O_CREAT, 0660, 0);
+    if (SemRead == SEM_FAILED) {
+        perror("Parent: [sem_open] Failed");
+        exit(EXIT_FAILURE);
+    }
+
+    sem_t* SemWrite = sem_open(SemLockWrite, O_CREAT, 0660, 1);
+    if (SemWrite == SEM_FAILED) {
+        perror("Child: [sem_open] Failed");
+        exit(EXIT_FAILURE);
+    }
+
+    TESTX = shm_create_writer(2, key);
     printf("TESTX: %p\n", TESTX);
 
     /* Simulate receiving GSV */
     while (1) {
-        // printf("Reaches here before gsv generated\n");
+        /* Generate random integer 0-2 */
         gsv = generate(0, 2);
         sprintf(message, "%d", gsv);
-        // printf("Reaches here after gsv generated\n");
-        //  message = converted;
-        /*printf("gsv: %d\n", gsv);
-        printf("char message: %s\n", message);
-        printf("shm_fd: %d\n", shm_fd);
-        */
-        // usleep(100);
-        //sleep(1);
 
-        // shm_write(message, buffer, gsv_key);
-        KOMNU = message;
-        //printf("KOMNU: %s\n", (char*)KOMNU);
-        // printf("append shit2\n");
-        //  printf("ptr: %s\n", (char*)ptr);
+        /* Used to test read/write and any synchronization problems */
+        //usleep(10000);
 
+       
         /* write to the shared memory object */
+        //printf("WRITER: Before sem_wait\n");
+        sem_wait(SemWrite);
+        //printf("WRITER: Got the SemWrite?\n");
         sprintf(TESTX, "%s", message);
-        //printf("TESTX char: %s\n", (char*)TESTX);
-        // close(shm_fd);
-
-        // shm_unlink(shm_fd);
+        printf("gsv: %d\n", gsv);
+        sem_post(SemRead);
+        //printf("WRITER: Gave the SemRead?\n");
+        //sem_close(SemWrite);
+        //sem_close(SemRead);
+       
         printf("Count: %d\n", count++);
-        if (count == 5000000000000) {
+
+        usleep(1000);
+        if (count == 100000000) {
             break;
         }
     }
-    while (1) {
-    }
+    exit(0);
 }

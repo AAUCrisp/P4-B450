@@ -3,6 +3,7 @@
 #include <fcntl.h>
 #include <netinet/in.h>
 #include <pthread.h>
+#include <semaphore.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -16,9 +17,25 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "Variables.h"
+#include "Semaphore.h"
 
-void* shm_create_writer(const char* name) {
+void* shm_create_writer(const int SIZE, const char* name) {
+    /* Semaphore setup */
+    /*sem_unlink(SemLockRead);
+    sem_unlink(SemLockWrite);
+
+    sem_t* SemRead = sem_open(SemLockRead, O_CREAT, 0660, 0);
+    if (SemRead == SEM_FAILED) {
+        perror("Parent: [sem_open] Failed");
+        exit(EXIT_FAILURE);
+    }
+
+    sem_t* SemWrite = sem_open(SemLockWrite, O_CREAT, 0660, 1);
+    if (SemWrite == SEM_FAILED) {
+        perror("Child: [sem_open] Failed");
+        exit(EXIT_FAILURE);
+    }*/
+
     /* shared memory file descriptor */
     int shm_fd;
 
@@ -30,28 +47,20 @@ void* shm_create_writer(const char* name) {
     if (shm_fd == -1) {
         perror("shm_open failed");
         fprintf(stderr, "errno shm_open failed: %s\n", strerror(errno));
-    } else {
-        printf("shm_fd create_writer: %d\n", shm_fd);
-    }
-    if (shm_fd == 65528) {
-        printf("shm_fd value was too big!");
     }
 
     /* configure the size of the shared memory object */
-    //printf("Reaches here ftruncate\n");
     ftruncate(shm_fd, SIZE);
 
     /* memory map the shared memory object */
-    /*printf("Reaches here ptr = mmap1\n");
-    printf("Reaches here ptr = mmap2\n");
-    */
+    //printf("WRITER: Before sem_wait\n");
+    //sem_wait(SemWrite);
+    //printf("WRITER: Got the SemWrite?\n");
     ptr = mmap(0, SIZE, PROT_WRITE, MAP_SHARED, shm_fd, 0);
-
-    /* write to the shared memory object */
-    // sprintf(ptr, "%s", message);
-    // close(shm_fd);
-
-    printf("ptr: %p\n", ptr);
+    //sem_post(SemRead);
+    //printf("WRITER: Gave the SemRead?\n");
+    //sem_close(SemWrite);
+    //sem_close(SemRead);
 
     return ptr;
 }
