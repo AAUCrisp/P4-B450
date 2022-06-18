@@ -30,11 +30,11 @@ int generate(int Min, int Max) {
 
 int main() {
     printf("PID of Parent: %d\n", getppid());
-    sleep(2);
+    sleep(1);
 
     /* Bunch of variables */
     int count = 0;
-    int counts = 250000;
+    int counts = 100000;
     int gsv;
     const char* key = "gsv_key";
     char message[2];

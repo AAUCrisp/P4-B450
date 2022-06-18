@@ -21,29 +21,31 @@
 #include "Semaphore.h"
 #include "shm_read_write.h"
 
-
-
 int main() {
     printf("PID of Child: %d\n", getpid());
-    sleep(2);
+    sleep(1);
 
     /* Bunch of variables */
     int count = 0;
-    int counts = 250000;
+    int counts = 100000;
     int gsv;
     const char *key = "gsv_key";
     char *message;
 
+    char* B = "0";
+    char* W = "1";
+    char* L = "2";
+
     /* Semaphore setup */
     SemRead = sem_open(SemLockRead, 0);
     if (SemRead == SEM_FAILED) {
-        perror("Parent: [sem_open] Failed");
+        perror("Parent: [sem_open] Failed\n");
         exit(EXIT_FAILURE);
     }
 
     SemWrite = sem_open(SemLockWrite, 0);
     if (SemWrite == SEM_FAILED) {
-        perror("Child: [sem_open] Failed");
+        perror("Child: [sem_open] Failed\n");
         exit(EXIT_FAILURE);
     }
 
@@ -58,6 +60,20 @@ int main() {
         printf("Child gsv: %s\n", (char *)message);
         sem_post(SemWrite);
         // printf("READER: Gave the SemRead?\n");
+
+        if (strcmp(message, B) == 0 || strcmp(message, W) == 0) {
+            void dummyfunction();
+            printf("\n========================================\n");
+            printf("Inside first if statement\n");
+            printf("========================================\n\n");
+        }
+
+        if (strcmp(message, B) == 0 || strcmp(message, L) == 0) {
+            void dummyfunction();
+            printf("\n========================================\n");
+            printf("Inside second if statement\n");
+            printf("========================================\n\n");
+        }
 
         /* Breakout */
         count++;
