@@ -1,5 +1,5 @@
-
 #include <arpa/inet.h>
+#include <assert.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <netinet/in.h>
@@ -22,16 +22,12 @@
 #include "shm_read_write.h"
 
 int main() {
-    printf("PID of Child: %d\n", getpid());
-    sleep(1);
-
     /* Bunch of variables */
     int count = 0;
     int counts = 100000;
-    int gsv;
     const char* key = "gsv_key";
-    char* message;
-
+    char* gsv;
+    
     char* B = "0";
     char* W = "1";
     char* L = "2";
@@ -50,13 +46,13 @@ int main() {
     }
 
     /* Initialize shm object */
-    message = shm_read(2, key);
+    gsv = shm_read(4, key);
 
     while (1) {
         /* Read the value in the shared memory object */
         sem_wait(SemRead);
         count++;
-        printf("Child gsv: %s\n", (char*)message);
+        printf("Child gsv: %s\n", (char*)gsv);
         printf("Child Count: %d\n", count);
         sem_post(SemWrite);
 
@@ -65,20 +61,23 @@ int main() {
             break;
         }
 
-        /* Dummy functions to simulate the transmission via WiFi or LTE */
-        if (strcmp(message, B) == 0 || strcmp(message, W) == 0) {
+        /* Dummy functions to simulate the transmission via WiFi or LTE.
+           The following functions compares two strings
+        */
+        if (strcmp(gsv, B) == 0 || strcmp(gsv, W) == 0) {
             void dummyfunction();
             printf("\n========================================\n");
             printf("Inside first if statement\n");
             printf("========================================\n\n");
         }
 
-        if (strcmp(message, B) == 0 || strcmp(message, L) == 0) {
+        if (strcmp(gsv, B) == 0 || strcmp(gsv, L) == 0) {
             void dummyfunction();
             printf("\n========================================\n");
             printf("Inside second if statement\n");
             printf("========================================\n\n");
         }
+
     }
     exit(0);
 }

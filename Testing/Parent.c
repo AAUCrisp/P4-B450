@@ -27,9 +27,6 @@ int generate(int Min, int Max) {
 }
 
 int main() {
-    printf("PID of Parent: %d\n", getppid());
-    sleep(1);
-
     /* Bunch of variables */
     int count = 0;
     int counts = 100000;
@@ -67,7 +64,7 @@ int main() {
     }
 
     /* Initialize shm object */
-    write = shm_write(2, key);
+    write = shm_write(40, key);
 
     /* Simulate receiving GSV */
     while (1) {
@@ -80,9 +77,8 @@ int main() {
 
         /* Write value to the shared memory object */
         sem_wait(SemWrite);
-        printf("Parent gsv: %d\n", gsv);
-        // sprintf(write, "%s", message); // Placing char in shared memory
-        sprintf(write, "%d", gsv);  // Placing int in shared memory
+        printf("Parent gsv: %s\n", message);
+        sprintf(write, "%s", message);
         sem_post(SemRead);
 
         /* Breakout */
