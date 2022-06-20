@@ -1,4 +1,6 @@
 
+#include "SocketFunctions.h"
+
 #include <arpa/inet.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -18,7 +20,6 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "SocketFunctions.h"
 #include "shm_write.c"
 
 /* Troubleshooting Options */
@@ -26,6 +27,7 @@ int print_COMMANDS = 0;
 
 /* Define buffers & PORT number */
 #define BUFFER 1024
+#define SHM_BUFFER 100
 char message[BUFFER];
 char curr_time[128];
 char *curr_timeLTE;
@@ -148,11 +150,12 @@ int generate(int Min, int Max) {
 
 /* Function to receive LTE packets */
 void *receiveLTE(void *socket) {
-    while (1) {
-        Sockets *sock = (Sockets *)socket;
-        const char *COMMANDS_KEY = "COMMANDS_KEY";
-        unsigned int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
+    Sockets *sock = (Sockets *)socket;
+    const char *COMMANDS_KEY = "COMMANDS_KEY";
+    char *writer = shm_write(SHM_BUFFER, COMMANDS_KEY);
+    unsigned int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
 
+    while (1) {
         printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
         RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
         Timestamp();
@@ -162,18 +165,18 @@ void *receiveLTE(void *socket) {
             printf("LTE || Message from LTE received at: %s\n", curr_time);
             printf("LTE || Message: %s from Control Unit \n\n", message);
         }
-
-        shm_write(message, 32, COMMANDS_KEY);
+        sprintf(writer, "%s", message);
     }
 }
 
 /* Function to receive WiFi packets */
 void *receiveWiFi(void *socket) {
+    Sockets *sock = (Sockets *)socket;
+    const char *COMMANDS_KEY = "COMMANDS_KEY";
+    char *writer = shm_write(SHM_BUFFER, COMMANDS_KEY);
+    unsigned int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
+    
     while (1) {
-        Sockets *sock = (Sockets *)socket;
-        const char *COMMANDS_KEY = "COMMANDS_KEY";
-        unsigned int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
-
         printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
         Timestamp();
@@ -183,6 +186,6 @@ void *receiveWiFi(void *socket) {
             printf("WiFi || Message from WiFi received at: %s \n", curr_time);
             printf("WiFi || Message: %s from Control Unit \n\n", message);
         }
-        shm_write(message, 32, COMMANDS_KEY);
+        sprintf(writer, "%s", message);
     }
 }

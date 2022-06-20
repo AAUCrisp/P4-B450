@@ -39,9 +39,11 @@ int execvp(const char* file, const char* const (&argv)[N]) {
     return execvp(file, const_cast<char* const*>(argv));
 }
 
-void* DoSomething(void* arg) {
+/*void* DoSomething(void* arg) {
     pthread_exit(NULL);
-}
+}*/
+
+#define SHM_BUFFER 100
 
 int main() {
     printf("==================\nActuator Process Started\n==================\n\n");
@@ -81,15 +83,15 @@ int main() {
         // execvp(path, args);
 
     } else {
+        COMMANDS = (char*)shm_read(32, COMMANDS_KEY);
         Time_Started = clock();
         while (1) {
-            
-            pthread_create(&T1, NULL, DoSomething, NULL);       // Start a Thread that closes a Thread... and just that...
+            usleep(1);
+            // pthread_create(&T1, NULL, DoSomething, NULL);       // Start a Thread that closes a Thread... and just that...
 
-            COMMANDS = (char*)shm_read(32, COMMANDS_KEY);
-            //printf("COMMANDS from shared memory: %s\n", COMMANDS);
+            printf("COMMANDS from shared memory: %s\n", COMMANDS);
 
-            snprintf(msg, sizeof(msg), "%s", COMMANDS);
+            snprintf(msg, sizeof(msg), "%s", COMMANDS); // Is "msg" even used for anything???
 
             Clock_Start = clock();
             processData(COMMANDS);
@@ -98,15 +100,15 @@ int main() {
 
             if (Execution_Time[count] > 10000) {
                 fail_count++;
-                //printf("Execution_Time[%d]: %f\n", count, (double)Execution_Time[count]);
+                // printf("Execution_Time[%d]: %f\n", count, (double)Execution_Time[count]);
                 Execution_Time[count] = 0;
             } else {
-                //printf("Execution_Time[%d]\n", count);
-                // printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
+                // printf("Execution_Time[%d]\n", count);
+                //  printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
                 Execution_Sum += Execution_Time[count];
                 count++;
             }
-            //printf("count: %d\n", count);
+            // printf("count: %d\n", count);
             if (count == iter) {
                 break;
             }

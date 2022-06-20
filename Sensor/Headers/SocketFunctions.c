@@ -1,4 +1,6 @@
 
+#include "SocketFunctions.h"
+
 #include <arpa/inet.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -18,8 +20,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "SocketFunctions.h"
-#include "shm_write_read.h"
+#include "shm_read_write.h"
 
 /* Troubleshooting Options */
 int print_GSV = 0;
@@ -27,7 +28,7 @@ int print_out = 1;
 
 /* Define buffers & PORT number */
 #define BUFFER 1024
-#define SHM_BUFFER 100000
+#define SHM_BUFFER 100
 char message[BUFFER];
 char curr_time[128];
 char *curr_timeLTE;
@@ -150,10 +151,12 @@ int generate(int Min, int Max) {
 
 /* Function to receive LTE packets */
 void *receiveLTE(void *socket) {
+    Sockets *sock = (Sockets *)socket;
+    const char *GSV_KEY = "GSV_KEY";
+    char *writer = shm_write(SHM_BUFFER, GSV_KEY);
+    int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
+
     while (1) {
-        Sockets *sock = (Sockets *)socket;
-        const char *GSV_KEY = "GSV_KEY";
-        int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
         if (print_GSV == 1) {
             printf("GSV || LTE socket: %d\n", sock->sockLTE_RECEIVER);
         }
@@ -165,20 +168,22 @@ void *receiveLTE(void *socket) {
             printf("GSV || LTE || Message from LTE received at: %s\n", curr_time);
             printf("GSV || LTE || Message: %s from Control Unit \n\n", message);
         }
-        shm_write(message, SHM_BUFFER, GSV_KEY);
+        sprintf(writer, "%s", message);
     }
 }
 
 /* Function to receive WiFi packets */
 void *receiveWiFi(void *socket) {
-    while (1) {
-        Sockets *sock = (Sockets *)socket;
-        const char *GSV_KEY = "GSV_KEY";
-        int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
+    Sockets *sock = (Sockets *)socket;
+    const char *GSV_KEY = "GSV_KEY";
+    char *writer = shm_write(SHM_BUFFER, GSV_KEY);
+    int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
 
+    while (1) {
         if (print_GSV == 1) {
             printf("GSV || WiFi socket: %d\n", sock->sockWiFi_RECEIVER);
         }
+
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
         Timestamp();
 
@@ -187,7 +192,7 @@ void *receiveWiFi(void *socket) {
             printf("GSV || WiFi || Message from WiFi received at: %s \n", curr_time);
             printf("GSV || WiFi || Message: %s from Control Unit \n\n", message);
         }
-        shm_write(message, SHM_BUFFER, GSV_KEY);
+        sprintf(write, "%s", message);
     }
 }
 

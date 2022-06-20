@@ -18,7 +18,7 @@
 #include <unistd.h>
 
 #include "Headers/SocketFunctions.h"
-#include "Headers/shm_write_read.h"
+#include "Headers/shm_read_write.h"
 
 int main() {
     printf("==================\nSensor Monitoring Process Started\n==================\n\n");
