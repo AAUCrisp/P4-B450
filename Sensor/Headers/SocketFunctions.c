@@ -1,28 +1,14 @@
-#include <arpa/inet.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <netinet/in.h>
-#include <pthread.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/ipc.h>  //IPC thing
-#include <sys/mman.h>
-#include <sys/shm.h>  //SHM thing
-#include <sys/socket.h>
-#include <sys/stat.h>
-#include <sys/time.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <time.h>
-#include <unistd.h>
+#ifndef LIBRARIES
+#define LIBRARIES
+#include "../Libraries.c"  // File with all our includes
+#endif
 
 #include "SocketFunctions.h"
 #include "shm_read_write.h"
 
 /* Troubleshooting Options */
 int print_GSV = 0;
-int print_out = 1;
+int print_out = 0;
 
 /* Define buffers & PORT number */
 #define BUFFER 1024
@@ -153,6 +139,7 @@ void *receiveLTE(void *socket) {
     const char *GSV_KEY = "GSV_KEY";
     char *writer = shm_write(SHM_BUFFER, GSV_KEY);
     int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
+    sprintf(writer, "%s", GSV_default);     // Default Value
 
     while (1) {
         if (print_GSV == 1) {
@@ -177,6 +164,7 @@ void *receiveWiFi(void *socket) {
     char *writer = shm_write(SHM_BUFFER, GSV_KEY);
     int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
 
+    sprintf(writer, "%s", GSV_default);     // Default Value
     while (1) {
         if (print_GSV == 1) {
             printf("GSV || WiFi socket: %d\n", sock->sockWiFi_RECEIVER);

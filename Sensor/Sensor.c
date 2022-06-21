@@ -1,24 +1,3 @@
-// #include <arpa/inet.h>
-// #include <errno.h>
-// #include <fcntl.h>
-// #include <math.h>
-// #include <netinet/in.h>
-// #include <pthread.h>
-// #include <stdio.h>
-// #include <stdlib.h>
-// #include <string.h>
-// #include <sys/ipc.h>  //IPC thing
-// #include <sys/mman.h>
-// #include <sys/sem.h>
-// #include <sys/shm.h>  //SHM thing
-// #include <sys/socket.h>
-// #include <sys/stat.h>
-// #include <sys/time.h>
-// #include <sys/types.h>
-// #include <sys/wait.h>
-// #include <time.h>
-// #include <unistd.h>
-
 #ifndef LIBRARIES
 #define LIBRARIES
 #include "Libraries.c"  // File with all our includes
@@ -32,6 +11,7 @@
 #include "Headers/shm_read_write.h"
 
 #define BUFFER 64
+#define BILLION  1000000000.0
 
 int main(int argc, char* argv[]) {
     // int both_tech = 0;
@@ -83,8 +63,9 @@ int main(int argc, char* argv[]) {
     char* curr_time;
 
     /* Execution time variables */
+    int count = 0;
     int fail_count = 0;
-    long double Execution_Time[iter];
+    long double Execution_Time = 0;
     long double Execution_Temp = 0;
     long double Execution_Sum = 0;
     long double Execution_Average = 0;
@@ -93,7 +74,7 @@ int main(int argc, char* argv[]) {
     clock_t Clock_Start;
     clock_t Clock_End;
 
-    struct timespec begin, end;
+    struct timespec begin, end, begin_program, end_program;
     unsigned long seconds = 0;
     unsigned long nanoseconds = 0;
     double elapsed = 0;
@@ -116,26 +97,29 @@ int main(int argc, char* argv[]) {
 
     /* Create child process */
     pid_t sensor_monitor;     // Prepare the process ID for monitoring
-    sensor_monitor = fork();  // Starts new process
+    if(monitor == 1) {
+        sensor_monitor = fork();  // Starts new process
+    }
 
     if (sensor_monitor == 0) {
         printf("Parent process ID: %d \n", getppid());
         printf("Sensor monitoring process ID is: %d \n", getpid());
         char path[] = "./SensorMonitoring";
         char* args[] = {"./SensorMonitoring", NULL};
-        if (monitor == 1) {
+        // if (monitor == 1) {
             execv(path, args);
             printf("  ERROR: DIDN'T START THE MONITORING PROCESS!!\n");  // Should never get this far!
-        }
+        // }
     } else {
         gsv = shm_read(BUFFER, GSV_KEY);
         // while (1) {
-        Time_Started = clock();
-        for (int i = 0; i < iter; i++) {
+        Time_Started = clock_gettime(CLOCK_REALTIME, &begin_program);
+        // for (int i = 0; i < iter; i++) {
+        while(1) {
             // Clock_Start = clock();
            
 
-            printf("\nSensor || GSV from shared memory: %s\n", (char*)gsv);
+            // printf("\nSensor || GSV from shared memory: %s\n", (char*)gsv);
 
             // printf("\nGSV converted: %d\n", GSV);
             /*if (monitor == 1) {
@@ -151,7 +135,6 @@ int main(int argc, char* argv[]) {
             }*/
 
             // printf("Sensor || Before Transmitting\n");
-            usleep(1000);
             if (strcmp(gsv, B) == 0 || strcmp(gsv, W) == 0) {
                 transmitLTE(&sock, (char*)buffer);
             }
@@ -169,28 +152,51 @@ int main(int argc, char* argv[]) {
             elapsed = seconds + nanoseconds * 1e-9;
             if (elapsed > 10000) {
                 fail_count++;
+                elapsed = 0;
             }
-            Execution_Time[i] = elapsed;
-            if (Execution_Time[i] > 10000) {
-                Execution_Time[i] = 0;
-            } else {
-                Execution_Sum += Execution_Time[i];
-            }
-        }
-        Time_Ended = clock();
+            Execution_Sum += elapsed;
+            count++;
 
-        long timestamp = (long)(Time_Ended - Time_Started);
-        long milliseconds = (long)(timestamp / 1000) % 1000;
-        long seconds = (((long)(timestamp / 1000) - milliseconds) / 1000) % 60;
-        long minutes = (((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) % 60;
-        long hours = ((((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) - minutes) / 60;
+            if (count == iter) {
+                break;
+            }
+            usleep(delay);
+
+        }
+
+        
+        Time_Ended = clock_gettime(CLOCK_REALTIME, &end_program);
+
+        // seconds = end_program.tv_sec - begin_program.tv_sec;
+        // nanoseconds = end_program.tv_nsec - begin_program.tv_nsec;
+
+        // double time_spent = seconds + (nanoseconds / 1000000000.0);
+
+        // clock_gettime(CLOCK_REALTIME, &end_program);
+    
+        // time_spent = end - start
+        double time_spent = (end_program.tv_sec - begin_program.tv_sec) +
+                        (end_program.tv_nsec - begin_program.tv_nsec) / BILLION;
+
+        long hours = (long) time_spent / 3600;
+        long minutes = ( (long)time_spent / 60) % 60;
+        long seconds = (long) time_spent % 60;
+        long milliseconds = (long) (time_spent * 1000) % 1000;
+
+        // long timestamp = (long)(Time_Ended - Time_Started);
+        // long milliseconds = (long)(timestamp / 1000) % 1000;
+        // long seconds = (((long)(timestamp / 1000) - milliseconds) / 1000) % 60;
+        // long minutes = (((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) % 60;
+        // long hours = ((((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) - minutes) / 60;
 
         Execution_Average = Execution_Sum / iter;
         printf("\n\n===================================\n\n");
-        printf("Execution_Sum: %Lf\n", Execution_Sum);
-        printf("Execution average: %Lf s\n", Execution_Average);
-        printf("Total time: %ld\n", (Time_Ended - Time_Started));
-        printf("Total_Time_Elapsed [HH:MM:SS.MS]: %ld:%ld:%ld.%ld\n", hours, minutes, seconds, milliseconds);
+        printf("Execution Sum:     %Lf sec\n", Execution_Sum);
+        printf("Execution average: %Lf sec\n\n", Execution_Average);
+        printf("Total time: %f sec\n", time_spent);
+        printf("________________________\n");
+        printf("Total Time:  \n            Hours: %ld  \n          Minutes: %ld  \n          Seconds: %ld \n     Milliseconds: %ld\n", hours, minutes, seconds, milliseconds);
+        printf("________________________\n\n");
         printf("Total failed counts: %d\n", fail_count);
         printf("\n===================================\n\n");
     }
