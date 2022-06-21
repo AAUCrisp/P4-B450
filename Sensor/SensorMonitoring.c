@@ -16,7 +16,7 @@ int main() {
     const char* WiFi = "wlan0";
 
     /* Misc */
-    pthread_t T1, T2;
+    pthread_t T1;
 
     /* Message char */
     char* msg[32];

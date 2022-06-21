@@ -6,12 +6,12 @@
 #define FUNCTIONS
 #include "Headers/Functions.c"
 #endif
-// #include "Headers/Functions.c"
+
 #include "Headers/SocketFunctions.h"
 #include "Headers/shm_read_write.h"
 
 #define BUFFER 64
-#define BILLION  1000000000.0
+#define BILLION 1000000000.0
 
 int main(int argc, char* argv[]) {
     // int both_tech = 0;
@@ -57,22 +57,11 @@ int main(int argc, char* argv[]) {
     // const char* IP_WiFi = "192.168.1.143";  // IP of Actuator
     // const char* IP_WiFi = "192.168.1.160";  // IP of Sensor
 
-    /* Misc */
-    pthread_t T1, T2;
-    FILE* file;
-    char* curr_time;
-
     /* Execution time variables */
     int count = 0;
     int fail_count = 0;
-    long double Execution_Time = 0;
-    long double Execution_Temp = 0;
     long double Execution_Sum = 0;
     long double Execution_Average = 0;
-    clock_t Time_Started;
-    clock_t Time_Ended;
-    clock_t Clock_Start;
-    clock_t Clock_End;
 
     struct timespec begin, end, begin_program, end_program;
     unsigned long seconds = 0;
@@ -96,37 +85,40 @@ int main(int argc, char* argv[]) {
     char* L = "2";
 
     /* Create child process */
-    pid_t sensor_monitor;     // Prepare the process ID for monitoring
-    if(monitor == 1) {
+    pid_t sensor_monitor;  // Prepare the process ID for monitoring
+    if (monitor == 1) {
         sensor_monitor = fork();  // Starts new process
     }
 
+    /* Checks if child process is running */
     if (sensor_monitor == 0) {
         printf("Parent process ID: %d \n", getppid());
         printf("Sensor monitoring process ID is: %d \n", getpid());
         char path[] = "./SensorMonitoring";
         char* args[] = {"./SensorMonitoring", NULL};
         // if (monitor == 1) {
-            execv(path, args);
-            printf("  ERROR: DIDN'T START THE MONITORING PROCESS!!\n");  // Should never get this far!
+        execv(path, args);
+        printf("  ERROR: DIDN'T START THE MONITORING PROCESS!!\n");  // Should never get this far!
         // }
     } else {
-        gsv = shm_read(BUFFER, GSV_KEY);
-        // while (1) {
-        Time_Started = clock_gettime(CLOCK_REALTIME, &begin_program);
-        // for (int i = 0; i < iter; i++) {
-        while(1) {
-            // Clock_Start = clock();
-           
 
+        /* Initialize SHM object reading */
+        gsv = shm_read(BUFFER, GSV_KEY);
+
+        /* Start timing all code */
+        clock_gettime(CLOCK_REALTIME, &begin_program);
+
+        while (1) {
             // printf("\nSensor || GSV from shared memory: %s\n", (char*)gsv);
 
             // printf("\nGSV converted: %d\n", GSV);
             /*if (monitor == 1) {
             }*/
 
+            /* Start timing code execution of code */
             clock_gettime(CLOCK_REALTIME, &begin);
             sprintf(buffer, "%d", generate(1, 25000000));
+
             // printf("\nSensor || After Random Int Generation\n");
 
             /*if (both_tech == 1) {
@@ -143,12 +135,13 @@ int main(int argc, char* argv[]) {
                 transmitWiFi(&sock, (char*)buffer);
             }
 
+            /* Stop timing code execution of code */
             clock_gettime(CLOCK_REALTIME, &end);
-            // Clock_End = clock();
 
             seconds = end.tv_sec - begin.tv_sec;
             nanoseconds = end.tv_nsec - begin.tv_nsec;
 
+            /* Calculation of elapsed time sum */
             elapsed = seconds + nanoseconds * 1e-9;
             if (elapsed > 10000) {
                 fail_count++;
@@ -161,35 +154,23 @@ int main(int argc, char* argv[]) {
                 break;
             }
             usleep(delay);
-
         }
+        /* Stop timing all code */
+        clock_gettime(CLOCK_REALTIME, &end_program);
 
-        
-        Time_Ended = clock_gettime(CLOCK_REALTIME, &end_program);
-
-        // seconds = end_program.tv_sec - begin_program.tv_sec;
-        // nanoseconds = end_program.tv_nsec - begin_program.tv_nsec;
-
-        // double time_spent = seconds + (nanoseconds / 1000000000.0);
-
-        // clock_gettime(CLOCK_REALTIME, &end_program);
-    
-        // time_spent = end - start
+        /* Calculation of total time execution */
         double time_spent = (end_program.tv_sec - begin_program.tv_sec) +
-                        (end_program.tv_nsec - begin_program.tv_nsec) / BILLION;
+                            (end_program.tv_nsec - begin_program.tv_nsec) / BILLION;
 
-        long hours = (long) time_spent / 3600;
-        long minutes = ( (long)time_spent / 60) % 60;
-        long seconds = (long) time_spent % 60;
-        long milliseconds = (long) (time_spent * 1000) % 1000;
+        /* Conversion of time spent to HH:MM:SS.MS */
+        long hours = (long)time_spent / 3600;
+        long minutes = ((long)time_spent / 60) % 60;
+        long seconds = (long)time_spent % 60;
+        long milliseconds = (long)(time_spent * 1000) % 1000;
 
-        // long timestamp = (long)(Time_Ended - Time_Started);
-        // long milliseconds = (long)(timestamp / 1000) % 1000;
-        // long seconds = (((long)(timestamp / 1000) - milliseconds) / 1000) % 60;
-        // long minutes = (((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) % 60;
-        // long hours = ((((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) - minutes) / 60;
-
+        /* Calculation of execution average */
         Execution_Average = Execution_Sum / iter;
+
         printf("\n\n===================================\n\n");
         printf("Execution Sum:     %Lf sec\n", Execution_Sum);
         printf("Execution average: %Lf sec\n\n", Execution_Average);

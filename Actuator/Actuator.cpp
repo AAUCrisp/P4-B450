@@ -52,15 +52,13 @@ int main() {
     /* Execution time variables */
     int count = 0;
     int fail_count = 0;
-    int iter = 100000;
-    long double Execution_Time[iter];
-    long double Execution_Temp = 0;
     long double Execution_Sum = 0;
     long double Execution_Average = 0;
-    clock_t Time_Started;
-    clock_t Time_Ended;
-    clock_t Clock_Start;
-    clock_t Clock_End;
+
+    struct timespec begin, end, begin_program, end_program;
+    unsigned long seconds = 0;
+    unsigned long nanoseconds = 0;
+    double elapsed = 0;
 
     /* Shared memory object variables */
     const char* COMMANDS_KEY = "COMMANDS_KEY";
@@ -68,61 +66,79 @@ int main() {
     char msg[1024];
 
     /* Create child process */
-    pid_t Actuator_monitor;     // Prepare the process ID for monitoring
-    Actuator_monitor = fork();  // Starts new process
+    pid_t Actuator_monitor;  // Prepare the process ID for monitoring
+    // Actuator_monitor = fork();  // Starts new process
 
+    /* Checks if child process is running */
     if (Actuator_monitor == 0) {
         printf("Parent process ID: %d \n", getppid());
         printf("Actuator monitoring process ID is: %d \n", getpid());
         char path[] = "./ActuatorMonitoring";
         const char* args[] = {"./ActuatorMonitoring", NULL};
-        // execvp(path, args);
+        execvp(path, args);
 
     } else {
+        /* Initialize SHM object reading */
         COMMANDS = (char*)shm_read(32, COMMANDS_KEY);
-        Time_Started = clock();
+
+        /* Start timing all code */
+        clock_gettime(CLOCK_REALTIME, &begin_program);
+
         while (1) {
             usleep(1);
 
             printf("COMMANDS from shared memory: %s\n", COMMANDS);
 
-            snprintf(msg, sizeof(msg), "%s", COMMANDS); // Is "msg" even used for anything???
+            snprintf(msg, sizeof(msg), "%s", COMMANDS);  // Is "msg" even used for anything???
 
-            Clock_Start = clock();
+            /* Start timing code execution of code */
+            clock_gettime(CLOCK_REALTIME, &begin);
+
             processData(COMMANDS);
-            Clock_End = clock();
-            Execution_Time[count] = (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
 
-            if (Execution_Time[count] > 10000) {
+            /* Stop timing code execution of code */
+            clock_gettime(CLOCK_REALTIME, &end);
+
+            seconds = end.tv_sec - begin.tv_sec;
+            nanoseconds = end.tv_nsec - begin.tv_nsec;
+
+            /* Calculation of elapsed time sum */
+            elapsed = seconds + nanoseconds * 1e-9;
+            if (elapsed > 10000) {
                 fail_count++;
-                // printf("Execution_Time[%d]: %f\n", count, (double)Execution_Time[count]);
-                Execution_Time[count] = 0;
-            } else {
-                // printf("Execution_Time[%d]\n", count);
-                //  printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
-                Execution_Sum += Execution_Time[count];
-                count++;
+                elapsed = 0;
             }
-            // printf("count: %d\n", count);
-            if (count == iter) {
-                break;
-            }
+            Execution_Sum += elapsed;
+            count++;
         }
-        Time_Ended = clock();
-
-        long timestamp = (long)(Time_Ended - Time_Started);
-        long milliseconds = (long)(timestamp / 1000) % 1000;
-        long seconds = (((long)(timestamp / 1000) - milliseconds) / 1000) % 60;
-        long minutes = (((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) % 60;
-        long hours = ((((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) - minutes) / 60;
-
-        Execution_Average = Execution_Sum / iter;
-        printf("\n\n===================================\n\n");
-        printf("Execution_Sum: %Lf\n", Execution_Sum);
-        printf("Execution average: %Lf s\n", Execution_Average);
-        printf("Total time: %ld\n", (Time_Ended - Time_Started));
-        printf("Total_Time_Elapsed [HH:MM:SS.MS]: %ld:%ld:%ld.%ld\n", hours, minutes, seconds, milliseconds);
-        printf("Total failed counts: %d\n", fail_count);
-        printf("\n===================================\n\n");
+        // printf("count: %d\n", count);
+        if (count == iter) {
+            break;
+        }
     }
+    /* Stop timing all code */
+    clock_gettime(CLOCK_REALTIME, &end_program);
+
+    /* Calculation of total time execution */
+    double time_spent = (end_program.tv_sec - begin_program.tv_sec) +
+                        (end_program.tv_nsec - begin_program.tv_nsec) / BILLION;
+
+    /* Conversion of time spent to HH:MM:SS.MS */
+    long hours = (long)time_spent / 3600;
+    long minutes = ((long)time_spent / 60) % 60;
+    long seconds = (long)time_spent % 60;
+    long milliseconds = (long)(time_spent * 1000) % 1000;
+
+    /* Calculation of execution average */
+    Execution_Average = Execution_Sum / iter;
+
+    printf("\n\n===================================\n\n");
+    printf("Execution Sum:     %Lf sec\n", Execution_Sum);
+    printf("Execution average: %Lf sec\n\n", Execution_Average);
+    printf("Total time: %f sec\n", time_spent);
+    printf("________________________\n");
+    printf("Total Time:  \n            Hours: %ld  \n          Minutes: %ld  \n          Seconds: %ld \n     Milliseconds: %ld\n", hours, minutes, seconds, milliseconds);
+    printf("________________________\n\n");
+    printf("Total failed counts: %d\n", fail_count);
+    printf("\n===================================\n\n");
 }

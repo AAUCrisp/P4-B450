@@ -48,3 +48,18 @@ if (Execution_Sum > 10000) {
 } else {
     //printf("Execution_Sum: %Lf\n", Execution_Sum);
 }*/
+
+/* Old execution time thing */
+// seconds = end_program.tv_sec - begin_program.tv_sec;
+// nanoseconds = end_program.tv_nsec - begin_program.tv_nsec;
+
+// double time_spent = seconds + (nanoseconds / 1000000000.0);
+
+// clock_gettime(CLOCK_REALTIME, &end_program);
+
+// time_spent = end - start
+// long timestamp = (long)(Time_Ended - Time_Started);
+// long milliseconds = (long)(timestamp / 1000) % 1000;
+// long seconds = (((long)(timestamp / 1000) - milliseconds) / 1000) % 60;
+// long minutes = (((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) % 60;
+// long hours = ((((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) - minutes) / 60;
