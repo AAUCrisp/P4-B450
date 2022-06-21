@@ -25,7 +25,7 @@
 #include <string>
 using namespace std;
 
-#include "hex.cpp"
+//#include "hex.h"
 
 /* Variables used to create and bind sockets, receive from sockets, and error handle on sockets */
 #define buffer 1024
@@ -44,6 +44,36 @@ char tempx[buffer];
 char tempy[buffer];
 char curr_time[128];
 std::ofstream File;
+
+/* --- Conversion from Integer to Hex-chars --- */
+/*
+string int_to_hex(int data, int back = 0) {
+    stringstream stream;    // Create hex-conversion object
+
+    stream << hex << data;    // Tell it to convert from int to hex-chars
+    string result( stream.str() );      // Do the conversion
+    cout << "Converted to Hex-chars is: " << result << endl;     // Print the result
+*/
+
+    /* -- Coversion back in same object, which already has the value -- */
+  /*  if(back == 1) {
+        int x;
+        stream >> x;        // Write the coverted integer to the integer variable
+        cout << "Converted back is: " << x << endl;
+    }
+    return result;
+}*/
+
+/* --- Conversion from Hex-chars to Integer --- */
+int hex_to_int(string data) {
+    stringstream stream;    // Create hex-conversion object
+    int result;      // Create a variable for the converted integer
+    stream << hex << data;    // Take the received hex-chars and covert to an integer
+    stream >> result;        // Write the coverted integer to the integer variable
+    //cout << "Converted back is: " << result << endl;
+
+    return result;
+}
 
 /*
 void logData(int *arr) {
@@ -75,29 +105,29 @@ void processData(char msg[buffer]) {
     int movement_x;
     int movement_y;
     bytes_read = sscanf(msg, "%[^:%s]:%s:", tempx, tempy);  // Parses the received char array, into two seperate char arrays
-    //cout << "Temp X is: " << tempx << endl;                 // prints out the char arrays containing x and y coordinates.
-    //cout << "Temp Y is: " << tempy << endl;
+    // cout << "Temp X is: " << tempx << endl;                 // prints out the char arrays containing x and y coordinates.
+    // cout << "Temp Y is: " << tempy << endl;
     int x = hex_to_int(tempx);  // Converts the hex-chars of the x coordinate to an int
     int y = hex_to_int(tempy);  // Converts the hex-chars of the x coordinate to an int
 
     if (last_x_coordinate == 0 && last_y_coordinate == 0) {
         movement_x = x;
         movement_y = y;
-        //printf("movement_x = x: %d\n", movement_x);
-        //printf("movement_y = y: %d\n", movement_y);
+        // printf("movement_x = x: %d\n", movement_x);
+        // printf("movement_y = y: %d\n", movement_y);
     } else {
         movement_x = x - last_x_coordinate;
         movement_y = y - last_y_coordinate;
-        //printf("movement_x = x - last_x: %d\n", movement_x);
-        //printf("movement_y = y - last_y: %d\n", movement_y);
+        // printf("movement_x = x - last_x: %d\n", movement_x);
+        // printf("movement_y = y - last_y: %d\n", movement_y);
     }
-    //printf("Movement_x: %d \nMovement_y: %d \n\n", movement_x, movement_y);
-    if (movement_x == 0 && movement_y == 0){
-
-    }else{
+    // printf("Movement_x: %d \nMovement_y: %d \n\n", movement_x, movement_y);
+    if (movement_x == 0 && movement_y == 0) {
+    } else {
         Timestamp();
         File.open("log.txt", std::ofstream::out | std::ofstream::app);
-        File << "\n\n" << curr_time << "\nMovement on the x-axis:" << movement_x << " mm \nMovement on the y-axis:" << movement_y << " mm";
+        File << "\n\n"
+             << curr_time << "\nMovement on the x-axis:" << movement_x << " mm \nMovement on the y-axis:" << movement_y << " mm";
         File.close();
     }
 

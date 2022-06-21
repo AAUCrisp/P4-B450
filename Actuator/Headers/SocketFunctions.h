@@ -13,9 +13,6 @@ typedef struct _sockets {
     int sockWiFi_TRANSMITTER;
     struct sockaddr_in ClientLTE_TRANSMITTER;
     struct sockaddr_in ClientWiFi_TRANSMITTER;
-
-    /* Mutex lock */
-    pthread_mutex_t mutex_lock;
 } Sockets;
 
 /* Function to create receiver socket */
@@ -34,7 +31,7 @@ void *receiveWiFi(void *socket);
 void *transmitLTE(void *socket);
 
 /* Function to transmit WiFi packets */
-//void *transmitWiFi(void *socket);
+// void *transmitWiFi(void *socket);
 void *transmitWiFi(void *socket);
 
 /* Function to generate timestamp */

@@ -21,25 +21,28 @@
 #include <cassert>
 #include <fstream>
 #include <iomanip>
-#include <iostream>
 #include <sstream>
 #include <string>
 
-#include "Headers/ActuatorFunctions.cpp"
-#include "Headers/SocketFunctions.h"
-#include "Headers/shm_read.c"
+//#include "Headers/ActuatorFunctions.cpp"
+//#include "Headers/SocketFunctions.h"
+#include <iostream>
+#include "Headers/shm_read_write.h"
+#include "Headers/ActuatorFunctions.h"
 
 using namespace std;
 
+#define SHM_BUFFER 100
+#define BILLION 1000000000.0
+
 // THIS FUNCTION OPENS CHILD PROGRAM!!!
+/*
 template <std::size_t N>
 int execvp(const char* file, const char* const (&argv)[N]) {
     assert((N > 0) && (argv[N - 1] == nullptr));
 
     return execvp(file, const_cast<char* const*>(argv));
-}
-
-#define SHM_BUFFER 100
+}*/
 
 int main() {
     printf("==================\nActuator Process Started\n==================\n\n");
@@ -48,6 +51,7 @@ int main() {
     pthread_t T1, T2;
     char* curr_time;
     int* Processed_Data;
+    int iter = 100000;
 
     /* Execution time variables */
     int count = 0;
@@ -66,8 +70,8 @@ int main() {
     char msg[1024];
 
     /* Create child process */
-    pid_t Actuator_monitor;  // Prepare the process ID for monitoring
-    // Actuator_monitor = fork();  // Starts new process
+    pid_t Actuator_monitor;     // Prepare the process ID for monitoring
+    //Actuator_monitor = fork();  // Starts new process
 
     /* Checks if child process is running */
     if (Actuator_monitor == 0) {
@@ -75,7 +79,7 @@ int main() {
         printf("Actuator monitoring process ID is: %d \n", getpid());
         char path[] = "./ActuatorMonitoring";
         const char* args[] = {"./ActuatorMonitoring", NULL};
-        execvp(path, args);
+        //execvp(path, (char* const*)args);
 
     } else {
         /* Initialize SHM object reading */
@@ -85,9 +89,8 @@ int main() {
         clock_gettime(CLOCK_REALTIME, &begin_program);
 
         while (1) {
-            usleep(1);
-
-            printf("COMMANDS from shared memory: %s\n", COMMANDS);
+            
+            //printf("COMMANDS from shared memory: %s\n", COMMANDS);
 
             snprintf(msg, sizeof(msg), "%s", COMMANDS);  // Is "msg" even used for anything???
 
@@ -110,10 +113,10 @@ int main() {
             }
             Execution_Sum += elapsed;
             count++;
-        }
-        // printf("count: %d\n", count);
-        if (count == iter) {
-            break;
+            // printf("count: %d\n", count);
+            if (count == iter) {
+                break;
+            }
         }
     }
     /* Stop timing all code */
@@ -126,7 +129,7 @@ int main() {
     /* Conversion of time spent to HH:MM:SS.MS */
     long hours = (long)time_spent / 3600;
     long minutes = ((long)time_spent / 60) % 60;
-    long seconds = (long)time_spent % 60;
+    long seconds2 = (long)time_spent % 60;
     long milliseconds = (long)(time_spent * 1000) % 1000;
 
     /* Calculation of execution average */
@@ -137,7 +140,7 @@ int main() {
     printf("Execution average: %Lf sec\n\n", Execution_Average);
     printf("Total time: %f sec\n", time_spent);
     printf("________________________\n");
-    printf("Total Time:  \n            Hours: %ld  \n          Minutes: %ld  \n          Seconds: %ld \n     Milliseconds: %ld\n", hours, minutes, seconds, milliseconds);
+    printf("Total Time:  \n            Hours: %ld  \n          Minutes: %ld  \n          Seconds: %ld \n     Milliseconds: %ld\n", hours, minutes, seconds2, milliseconds);
     printf("________________________\n\n");
     printf("Total failed counts: %d\n", fail_count);
     printf("\n===================================\n\n");

@@ -1,6 +1,3 @@
-
-#include "SocketFunctions.h"
-
 #include <arpa/inet.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -20,7 +17,28 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "shm_write.c"
+#include <cassert>
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <sstream>
+#include <string>
+
+#include "shm_read_write.h"
+
+typedef struct _sockets {
+    /* Receiver sockets*/
+    int sockLTE_RECEIVER;
+    int sockWiFi_RECEIVER;
+    struct sockaddr_in ServerLTE_RECEIVER;
+    struct sockaddr_in ServerWiFi_RECEIVER;
+
+    /* Transmitter sockets*/
+    int sockLTE_TRANSMITTER;
+    int sockWiFi_TRANSMITTER;
+    struct sockaddr_in ClientLTE_TRANSMITTER;
+    struct sockaddr_in ClientWiFi_TRANSMITTER;
+} Sockets;
 
 /* Troubleshooting Options */
 int print_COMMANDS = 0;
@@ -152,7 +170,7 @@ int generate(int Min, int Max) {
 void *receiveLTE(void *socket) {
     Sockets *sock = (Sockets *)socket;
     const char *COMMANDS_KEY = "COMMANDS_KEY";
-    char *writer = shm_write(SHM_BUFFER, COMMANDS_KEY);
+    char *writer = (char *)shm_write(SHM_BUFFER, COMMANDS_KEY);
     unsigned int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
 
     while (1) {
@@ -173,9 +191,9 @@ void *receiveLTE(void *socket) {
 void *receiveWiFi(void *socket) {
     Sockets *sock = (Sockets *)socket;
     const char *COMMANDS_KEY = "COMMANDS_KEY";
-    char *writer = shm_write(SHM_BUFFER, COMMANDS_KEY);
+    char *writer = (char *)shm_write(SHM_BUFFER, COMMANDS_KEY);
     unsigned int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
-    
+
     while (1) {
         printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);

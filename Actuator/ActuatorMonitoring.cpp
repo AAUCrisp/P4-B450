@@ -17,8 +17,9 @@
 #include <time.h>
 #include <unistd.h>
 
+#include <iostream>
+
 #include "Headers/SocketFunctions.h"
-#include "Headers/shm_write_read.h"
 
 int main() {
     printf("==================\nActuator Monitoring Process Started\n==================\n\n");
@@ -30,7 +31,7 @@ int main() {
     const char* WiFi = "wlan0";
 
     /* Misc */
-    pthread_t T1, T2;
+    pthread_t T1;
 
     /* Message char */
     char* msg[32];
