@@ -16,7 +16,7 @@ SocketFunctions.o: Headers/SocketFunctions.c Headers/SocketFunctions.h Headers/s
 	gcc -c Headers/SocketFunctions.c -lrt
 	touch Headers/SocketFunctions.c
 
-shm_read_write.o: Headers/shm_read_write.c Headers/shm_read_write.h 
+shm_read_write.o: shm_read_write.c shm_read_write.h 
 	gcc -c shm_read_write.c -lrt
 	touch shm_read_write.c
 
