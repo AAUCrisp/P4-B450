@@ -20,7 +20,6 @@ shm_read_write.o: Headers/shm_read_write.c Headers/shm_read_write.h
 	gcc -c shm_read_write.c -lrt
 	touch shm_read_write.c
 
-
 # Dependencies 
 Dependencies = $(wildcard */*.c)
 
