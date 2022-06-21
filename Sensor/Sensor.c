@@ -106,7 +106,7 @@ int main(int argc, char* argv[]) {
 
     /* Shared memory object variables */
     const char* GSV_KEY = "GSV_KEY";
-    int SHM_BUFFER[BUFFER];
+    int* SHM_BUFFER[BUFFER];
 
     char* gsv;
     char* B = "0";
