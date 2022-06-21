@@ -126,7 +126,7 @@ int main(int argc, char* argv[]) {
             execv(path, args);
         }
     } else {
-        gsv = shm_read(buffer, GSV_KEY);
+        gsv = shm_read(BUFFER, GSV_KEY);
         // while (1) {
         Time_Started = clock();
         for (int i = 0; i < iter; i++) {
