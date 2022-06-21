@@ -39,10 +39,6 @@ int execvp(const char* file, const char* const (&argv)[N]) {
     return execvp(file, const_cast<char* const*>(argv));
 }
 
-/*void* DoSomething(void* arg) {
-    pthread_exit(NULL);
-}*/
-
 #define SHM_BUFFER 100
 
 int main() {
@@ -87,7 +83,6 @@ int main() {
         Time_Started = clock();
         while (1) {
             usleep(1);
-            // pthread_create(&T1, NULL, DoSomething, NULL);       // Start a Thread that closes a Thread... and just that...
 
             printf("COMMANDS from shared memory: %s\n", COMMANDS);
 

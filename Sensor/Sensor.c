@@ -124,6 +124,7 @@ int main(int argc, char* argv[]) {
         char* args[] = {"./SensorMonitoring", NULL};
         if (monitor == 1) {
             execv(path, args);
+            printf("  ERROR: DIDN'T START THE MONITORING PROCESS!!\n");  // Should never get this far!
         }
     } else {
         gsv = shm_read(SHM_BUFFER, GSV_KEY);
