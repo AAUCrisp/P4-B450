@@ -1,6 +1,3 @@
-
-#include "SocketFunctions.h"
-
 #include <arpa/inet.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -20,6 +17,7 @@
 #include <time.h>
 #include <unistd.h>
 
+#include "SocketFunctions.h"
 #include "shm_read_write.h"
 
 /* Troubleshooting Options */
@@ -192,7 +190,7 @@ void *receiveWiFi(void *socket) {
             printf("GSV || WiFi || Message from WiFi received at: %s \n", curr_time);
             printf("GSV || WiFi || Message: %s from Control Unit \n\n", message);
         }
-        sprintf(write, "%s", message);
+        sprintf(writer, "%s", message);
     }
 }
 

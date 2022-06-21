@@ -106,7 +106,8 @@ int main(int argc, char* argv[]) {
 
     /* Shared memory object variables */
     const char* GSV_KEY = "GSV_KEY";
-    char SHM_BUFFER[BUFFER];
+    int* SHM_BUFFER[BUFFER];
+    char buffer[BUFFER];
 
     char* gsv;
     char* B = "0";
@@ -127,7 +128,7 @@ int main(int argc, char* argv[]) {
             printf("  ERROR: DIDN'T START THE MONITORING PROCESS!!\n");  // Should never get this far!
         }
     } else {
-        gsv = shm_read(SHM_BUFFER, GSV_KEY);
+        gsv = shm_read(BUFFER, GSV_KEY);
         // while (1) {
         Time_Started = clock();
         for (int i = 0; i < iter; i++) {

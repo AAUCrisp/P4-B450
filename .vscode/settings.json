@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "assert.h": "c",
-        "*.tcc": "c"
+        "*.tcc": "c",
+        "socketfunctions.h": "c"
     }
 }
