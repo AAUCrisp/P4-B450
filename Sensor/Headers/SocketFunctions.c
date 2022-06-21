@@ -190,7 +190,7 @@ void *receiveWiFi(void *socket) {
             printf("GSV || WiFi || Message from WiFi received at: %s \n", curr_time);
             printf("GSV || WiFi || Message: %s from Control Unit \n\n", message);
         }
-        sprintf(write, "%s", message);
+        sprintf(writer, "%s", message);
     }
 }
 
