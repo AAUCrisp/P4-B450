@@ -41,7 +41,7 @@ typedef struct _sockets {
 } Sockets;
 
 /* Troubleshooting Options */
-int print_COMMANDS = 0;
+int print_COMMANDS = 1;
 
 /* Define buffers & PORT number */
 #define BUFFER 1024
