@@ -100,8 +100,8 @@ int main(int argc, char* argv[]) {
     printf("GSV_default: %s", GSV_default);
     printf("\n==========================================\n");
 
-    /* Create child process *
-    printf("both_tech: %d\n", both_tech);
+    /* Create child process */
+    //printf("both_tech: %d\n", both_tech);
     pid_t sensor_monitor;  // Prepare the process ID for monitoring
     if (monitor == 1) {
         sensor_monitor = fork();  // Starts new process
