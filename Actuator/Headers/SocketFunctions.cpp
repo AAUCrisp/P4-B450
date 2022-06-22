@@ -60,6 +60,8 @@ int TX_LTE, TX_WiFi;
 /* Define threads */
 pthread_t T1, T2;
 
+std::ofstream File;
+
 /* Function to create receiver sockets */
 void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
     /* Time struct for socket timeout */
