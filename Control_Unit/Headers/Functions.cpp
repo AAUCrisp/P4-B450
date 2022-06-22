@@ -28,7 +28,7 @@ void WiFi_command(Sockets sock) {
             packet_ID = to_string(count);
             packet_ID.append(":");
             coordinate.append(packet_ID);
-            cout << "  Packet ID + Coordinate for Actuator is: " << coordinate << "\n\n\n"
+            cout << "  Packet ID + Coordinate for Actuator is: " << packet_ID << "\n\n\n"
                  << endl;
             count++;
         }
@@ -72,7 +72,7 @@ void* LTE_command(void* socket) {
             packet_ID = to_string(count);
             packet_ID.append(":");
             coordinate.append(packet_ID);
-            cout << "  Packet ID + Coordinate for Actuator is: " << coordinate << "\n\n\n"
+            cout << "  Packet ID + Coordinate for Actuator is: " << packet_ID << "\n\n\n"
                  << endl;
             count++;
         }
