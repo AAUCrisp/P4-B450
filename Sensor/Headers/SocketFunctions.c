@@ -7,8 +7,8 @@
 #include "shm_read_write.h"
 
 /* Troubleshooting Options */
-int print_GSV = 0;
-int print_out = 0;
+int print_GSV = 1;
+int print_out = 1;
 
 /* Define buffers & PORT number */
 #define BUFFER 1024
@@ -139,7 +139,7 @@ void *receiveLTE(void *socket) {
     const char *GSV_KEY = "GSV_KEY";
     char *writer = shm_write(SHM_BUFFER, GSV_KEY);
     int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
-    sprintf(writer, "%s", GSV_default);     // Default Value
+    sprintf(writer, "%s", GSV_default);  // Default Value
 
     while (1) {
         if (print_GSV == 1) {
@@ -164,7 +164,7 @@ void *receiveWiFi(void *socket) {
     char *writer = shm_write(SHM_BUFFER, GSV_KEY);
     int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
 
-    sprintf(writer, "%s", GSV_default);     // Default Value
+    sprintf(writer, "%s", GSV_default);  // Default Value
     while (1) {
         if (print_GSV == 1) {
             printf("GSV || WiFi socket: %d\n", sock->sockWiFi_RECEIVER);
