@@ -91,12 +91,22 @@ int main(int argc, char* argv[]) {
         pthread_exit(NULL);
     }
 
-    /* Create child process */
+    /* Check status of global variables */
+    printf("\n==========================================\n")
+    printf("both_tech: %d\n", both_tech);
+    printf("monitor: %d\n", monitor);
+    printf("iter: %d\n", iter);
+    printf("delay: %d\n", delay);
+    printf("GSV_default: %s", GSV_default);
+    printf("\n==========================================\n")
+
+    /* Create child process *
+    printf("both_tech: %d\n", both_tech);
     pid_t sensor_monitor;  // Prepare the process ID for monitoring
     if (monitor == 1) {
         sensor_monitor = fork();  // Starts new process
     }
-    printf("Why no work?\n");
+    
     /* Checks if child process is running */
     if (sensor_monitor == 0) {
         printf("Parent process ID: %d \n", getppid());
