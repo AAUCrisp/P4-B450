@@ -3,10 +3,11 @@
 #include "../Libraries.cpp"      // File with all our includes
 #endif
 
-#ifndef SHM_READ
+/*#ifndef SHM_READ
 #define SHM_READ
 #include "shm_read.cpp"
 #endif
+*/
 
 #ifndef SOCKETS_NET
 #define SOCKETS_NET
