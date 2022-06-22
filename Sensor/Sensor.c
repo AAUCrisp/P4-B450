@@ -57,6 +57,9 @@ int main(int argc, char* argv[]) {
     // const char* IP_WiFi = "192.168.1.143";  // IP of Actuator
     // const char* IP_WiFi = "192.168.1.160";  // IP of Sensor
 
+    /* misc */
+    pthread_t T1;
+
     /* Execution time variables */
     int count = 0;
     int fail_count = 0;
@@ -84,6 +87,10 @@ int main(int argc, char* argv[]) {
     char* W = "1";
     char* L = "2";
 
+    void * dummy(){
+        pthread_exit();
+    }
+
     /* Create child process */
     pid_t sensor_monitor;  // Prepare the process ID for monitoring
     if (monitor == 1) {
@@ -103,6 +110,7 @@ int main(int argc, char* argv[]) {
         printf("Why no work?2\n");
     } else {
         printf("Why no work?3\n");
+        pthread_create(&T1, NULL, dummy, NULL);
         /* Initialize SHM object reading */
         gsv = shm_read(BUFFER, GSV_KEY);
 
