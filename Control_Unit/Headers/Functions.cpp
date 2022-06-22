@@ -28,6 +28,7 @@ void WiFi_command(Sockets sock) {
             packet_ID = to_string(count);
             packet_ID.append(": ");
             packet_ID.append(coordinate);
+            count++;
         }
         if (message_only == 1) {
             cout << "  WiFi Command Function || Message Parsed from Sockets as INT is: " << data << endl;
@@ -69,6 +70,7 @@ void* LTE_command(void* socket) {
             packet_ID = to_string(count);
             packet_ID.append(": ");
             packet_ID.append(coordinate);
+            count++;
         }
         if (message_only == 1) {
             cout << "  LTE Command Function || Message Parsed from Sockets as INT is: " << data << endl;
