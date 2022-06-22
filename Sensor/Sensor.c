@@ -18,7 +18,7 @@ int main(int argc, char* argv[]) {
     // int monitor = 1;
     // int iter = 10000;
 
-    printf("\n==================\nSensor Program Started\n==================\n\n");
+    printf("\n=======================\nSensor Program Started\n=======================\n\n");
 
     // if (argc <= 1) {}
 
