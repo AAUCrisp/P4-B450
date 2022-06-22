@@ -8,6 +8,7 @@
 #include "shm_read.cpp"
 #endif
 */
+#include "shm_write_read.h"
 
 #ifndef SOCKETS_NET
 #define SOCKETS_NET
