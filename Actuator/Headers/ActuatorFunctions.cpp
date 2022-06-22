@@ -126,7 +126,7 @@ void processData(char msg[buffer]) {
     if (movement_x == 0 && movement_y == 0) {
     } else {
         Timestamp();
-        File.open("Execution.txt", std::ofstream::out | std::ofstream::app);
+        File.open("execution.txt", std::ofstream::out | std::ofstream::app);
         File << "\n\n"
              << curr_time << "\nMovement on the x-axis:" << movement_x << " mm \nMovement on the y-axis:" << movement_y << " mm";
         File.close();
