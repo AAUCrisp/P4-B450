@@ -26,16 +26,16 @@ void WiFi_command(Sockets sock) {
         }
         else {
             coordinate = convert_to_coordinate(data, use_hex);
+            auto packet_ID = std::to_string(count);
+            coordinate.append(packet_ID);
+            count++;
         }
         if(message_only == 1) {
             cout << "  WiFi Command Function || Message Parsed from Sockets as INT is: " << data << endl;
             cout << "  WiFi Command Function || Coordinate for Actuator is: " << coordinate << "\n\n\n" << endl;
         }
-        auto packet_ID = std::to_string(count);
-        coordinate.append(packet_ID);
         strcpy(WiFimsg, coordinate.c_str());
         transmit_command(&sock, WiFimsg);
-        count++;
     }    
 }
 
@@ -67,16 +67,16 @@ void* LTE_command(void* socket) {
         }
         else {
             coordinate = convert_to_coordinate(data, use_hex);
+            auto packet_ID = std::to_string(count);
+            coordinate.append(packet_ID);
+            count++;
         }
         if(message_only == 1) {
             cout << "  LTE Command Function || Message Parsed from Sockets as INT is: " << data << endl;
             cout << "  LTE Command Function || Coordinate for Actuator is: " << coordinate << "\n\n\n" << endl;
         }
-        auto packet_ID = std::to_string(count);
-        coordinate.append(packet_ID);
         strcpy(LTEmsg, coordinate.c_str());
         transmit_command(sock, LTEmsg);
-        count++;
     }
 }
 
