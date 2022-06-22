@@ -89,7 +89,7 @@ int main(int argc, char* argv[]) {
     if (monitor == 1) {
         sensor_monitor = fork();  // Starts new process
     }
-    printf("Why no work?");
+    printf("Why no work?\n");
     /* Checks if child process is running */
     if (sensor_monitor == 0) {
         printf("Parent process ID: %d \n", getppid());
@@ -101,6 +101,7 @@ int main(int argc, char* argv[]) {
         printf("  ERROR: DIDN'T START THE MONITORING PROCESS!!\n");  // Should never get this far!
         // }
     } else {
+        printf("Why no work?2\n");
         /* Initialize SHM object reading */
         gsv = shm_read(BUFFER, GSV_KEY);
 
