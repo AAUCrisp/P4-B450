@@ -3,6 +3,7 @@
         "assert.h": "c",
         "*.tcc": "c",
         "socketfunctions.h": "c",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "fstream": "cpp"
     }
 }
