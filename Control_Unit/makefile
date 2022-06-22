@@ -7,8 +7,6 @@ git:
 ControlUnit: Control_Unit.cpp Sockets.o shm_read.o 
 # ControlUnit: Control_Unit.cpp Sockets.o RSSI.o shm_write.o shm_read.o
 	g++ -pthread Control_Unit.cpp Sockets.o -o ControlUnit -lrt
-	touch ControlUnit
-	
 
 SignalMonitoring: SignalMonitoring.cpp Sockets.o RSSI.o shm_write.o shm_read.o
 	g++ -pthread SignalMonitoring.cpp Sockets.o RSSI.o -o SignalMonitoring -lrt
