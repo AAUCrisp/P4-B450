@@ -27,6 +27,7 @@ void WiFi_command(Sockets sock) {
         else {
             coordinate = convert_to_coordinate(data, use_hex);
             auto packet_ID = std::to_string(count);
+            packet_ID.append(":");
             coordinate.append(packet_ID);
             count++;
         }
@@ -68,6 +69,7 @@ void* LTE_command(void* socket) {
         else {
             coordinate = convert_to_coordinate(data, use_hex);
             auto packet_ID = std::to_string(count);
+            packet_ID.append(":");
             coordinate.append(packet_ID);
             count++;
         }
