@@ -188,8 +188,8 @@ void *receiveLTE(void *socket) {
         }
         sprintf(writer, "%s", message);
         File << "\n\n"
-             << "Received at: " << curr_time << "\nLTE: "
-             << message;
+             << "Received at: " << curr_time << "\n"
+             << message << " LTE";
         File.close();
     }
 }
@@ -214,8 +214,8 @@ void *receiveWiFi(void *socket) {
         }
         sprintf(writer, "%s", message);
         File << "\n\n"
-             << "Received at: " << curr_time << "\nWiFi: "
-             << message;
+             << "Received at: " << curr_time << "\n"
+             << message << " WiFi";
         File.close();
     }
 }
