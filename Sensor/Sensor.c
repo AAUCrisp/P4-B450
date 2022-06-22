@@ -46,8 +46,8 @@ int main(int argc, char* argv[]) {
     }
 
     /* Initialize PORT & INTERFACE*/
-    uint PORT_LTE_TRANSMITTER = 9004;
-    uint PORT_WiFi_TRANSMITTER = 9005;
+    uint PORT_LTE_TRANSMITTER = 9000;
+    uint PORT_WiFi_TRANSMITTER = 9001;
     const char* LTE = "wwan0";
     const char* WiFi = "wlan0";
     const char* IP_LTE = "10.20.0.16";  // Default: IP of Control Unit
