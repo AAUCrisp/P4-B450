@@ -4,17 +4,19 @@ git:
 	git pull
 
 
-#ControlUnit: Control_Unit.cpp Sockets.o shm_read.o 
-#	g++ -pthread Control_Unit.cpp Sockets.o -o ControlUnit -lrt
+ControlUnit: Control_Unit.cpp Sockets.o shm_read.o 
+	g++ -pthread Control_Unit.cpp Sockets.o -o ControlUnit -lrt
 
-#SignalMonitoring: SignalMonitoring.cpp Sockets.o RSSI.o shm_write.o shm_read.o
-#	g++ -pthread SignalMonitoring.cpp Sockets.o RSSI.o -o SignalMonitoring -lrt
-#	touch SignalMonitoring
-Control_Unit: ControlUnit.o Sockets.o shm_read.o
-	g++ -pthread Control_Unit.o Sockets.o -o ControlUnit -lrt
+SignalMonitoring: SignalMonitoring.cpp Sockets.o RSSI.o shm_write.o shm_read.o
+	g++ -pthread SignalMonitoring.cpp Sockets.o RSSI.o -o SignalMonitoring -lrt
+	touch SignalMonitoring
 
-SignalMonitoring: SignalMonitoring.o Sockets.o RSSI.o shm_write.o shm_read.o
-	g++ -pthread SignalMonitoring.o Sockets.o RSSI.o shm_write.o shm_read.o -o SignalMonitoring -lrt
+#NYT FIX:
+#Control_Unit: ControlUnit.o Sockets.o shm_read.o
+#	g++ -pthread Control_Unit.o Sockets.o -o ControlUnit -lrt
+#NYT FIX:
+#SignalMonitoring: SignalMonitoring.o Sockets.o RSSI.o shm_write.o shm_read.o
+#	g++ -pthread SignalMonitoring.o Sockets.o RSSI.o shm_write.o shm_read.o -o SignalMonitoring -lrt
 
 ControlUnit.o: Control_Unit.cpp
 	g++ -c -g -o -pthread Control_Unit.cpp
