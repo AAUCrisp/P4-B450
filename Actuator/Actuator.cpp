@@ -90,7 +90,7 @@ int main() {
 
         while (1) {
             
-            //printf("COMMANDS from shared memory: %s\n", COMMANDS);
+            printf("COMMANDS from shared memory: %s\n", COMMANDS);
 
             snprintf(msg, sizeof(msg), "%s", COMMANDS);  // Is "msg" even used for anything???
 
@@ -114,9 +114,9 @@ int main() {
             Execution_Sum += elapsed;
             count++;
             // printf("count: %d\n", count);
-            if (count == iter) {
+            /*if (count == iter) {
                 break;
-            }
+            }*/
         }
     }
     /* Stop timing all code */
