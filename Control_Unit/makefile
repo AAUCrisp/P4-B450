@@ -2,7 +2,6 @@ all: git SignalMonitoring ControlUnit
 
 git:
 	git pull
-	make
 
 # ControlUnit: Control_Unit.cpp Sockets.o RSSI.o Headers/shm_write_read.h
 ControlUnit: Control_Unit.cpp Sockets.o shm_read.o 
