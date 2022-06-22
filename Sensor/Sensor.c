@@ -92,13 +92,13 @@ int main(int argc, char* argv[]) {
     }
 
     /* Check status of global variables */
-    printf("\n==========================================\n");
-    printf("both_tech: %d\n", both_tech);
+    printf("\n===================================\n");
+    printf("\nboth_tech: %d\n", both_tech);
     printf("monitor: %d\n", monitor);
     printf("iter: %d\n", iter);
     printf("delay: %d\n", delay);
-    printf("GSV_default: %s", GSV_default);
-    printf("\n==========================================\n");
+    printf("GSV_default: %s\n", GSV_default);
+    printf("\n===================================\n");
 
     /* Create child process */
     //printf("both_tech: %d\n", both_tech);
