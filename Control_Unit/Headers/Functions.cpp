@@ -25,18 +25,18 @@ void WiFi_command(Sockets sock) {
             coordinate = grid[data];
         } else {
             coordinate = convert_to_coordinate(data, use_hex);
+            auto packet_ID = std::to_string(count);
+            packet_ID.append(":");
+            coordinate.append(packet_ID);
+            cout << "  Packet ID + Coordinate for Actuator is: " << coordinate << "\n\n\n"
+                 << endl;
+            count++;
         }
         if (message_only == 1) {
             cout << "  WiFi Command Function || Message Parsed from Sockets as INT is: " << data << endl;
             cout << "  WiFi Command Function || Coordinate for Actuator is: " << coordinate << "\n\n\n"
                  << endl;
         }
-        auto packet_ID = std::to_string(count);
-        packet_ID.append(":");
-        coordinate.append(packet_ID);
-        cout << "  Packet ID + Coordinate for Actuator is: " << coordinate << "\n\n\n"
-             << endl;
-        count++;
         strcpy(WiFimsg, coordinate.c_str());
         transmit_command(&sock, WiFimsg);
     }
@@ -69,16 +69,18 @@ void* LTE_command(void* socket) {
             coordinate = grid[data];
         } else {
             coordinate = convert_to_coordinate(data, use_hex);
+            auto packet_ID = std::to_string(count);
+            packet_ID.append(":");
+            coordinate.append(packet_ID);
+            cout << "  Packet ID + Coordinate for Actuator is: " << coordinate << "\n\n\n"
+                 << endl;
+            count++;
         }
         if (message_only == 1) {
             cout << "  LTE Command Function || Message Parsed from Sockets as INT is: " << data << endl;
             cout << "  LTE Command Function || Coordinate for Actuator is: " << coordinate << "\n\n\n"
                  << endl;
         }
-        auto packet_ID = std::to_string(count);
-        packet_ID.append(":");
-        coordinate.append(packet_ID);
-        count++;
         strcpy(LTEmsg, coordinate.c_str());
         transmit_command(sock, LTEmsg);
     }
