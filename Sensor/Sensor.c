@@ -101,15 +101,13 @@ int main(int argc, char* argv[]) {
         printf("  ERROR: DIDN'T START THE MONITORING PROCESS!!\n");  // Should never get this far!
         // }
     } else {
-
         /* Initialize SHM object reading */
         gsv = shm_read(BUFFER, GSV_KEY);
 
         /* Start timing all code */
         clock_gettime(CLOCK_REALTIME, &begin_program);
-
+        printf("\nSensor || GSV from shared memory: %s\n", (char*)gsv);
         while (1) {
-            usleep(1);
             printf("\nSensor || GSV from shared memory: %s\n", (char*)gsv);
 
             // printf("\nGSV converted: %d\n", GSV);
