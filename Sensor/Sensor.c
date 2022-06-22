@@ -106,7 +106,7 @@ int main(int argc, char* argv[]) {
 
         /* Start timing all code */
         clock_gettime(CLOCK_REALTIME, &begin_program);
-        printf("\nSensor || GSV from shared memory: %s\n", (char*)gsv);
+        printf("Why no work?");
         while (1) {
             printf("\nSensor || GSV from shared memory: %s\n", (char*)gsv);
 

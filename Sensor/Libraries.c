@@ -25,7 +25,7 @@
 #define VARIABLES
     // General Settings
     static int both_tech = 0;      // Troubleshooting with both technologies
-    static int monitor = 1;         // Disable/Enable Start of Signal Monitoring
+    static int monitor = 0;         // Disable/Enable Start of Signal Monitoring
     static int iter = 0;         // Disable/Enable Start of Signal Monitoring
     static int delay = 1000;    // Standard Delay between sensing
     static char* GSV_default = "0";     // Default GSV  0=both, 1=WiFi, 2=LTE
