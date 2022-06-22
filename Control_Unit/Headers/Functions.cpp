@@ -32,7 +32,7 @@ void WiFi_command(Sockets sock) {
             cout << "  WiFi Command Function || Coordinate for Actuator is: " << coordinate << "\n\n\n" << endl;
         }
         auto packet_ID = std::to_string(count);
-        coordinate.append(ID, coordinate);
+        coordinate.append(packet_ID);
         strcpy(WiFimsg, coordinate.c_str());
         transmit_command(&sock, WiFimsg);
         count++;
@@ -73,7 +73,7 @@ void* LTE_command(void* socket) {
             cout << "  LTE Command Function || Coordinate for Actuator is: " << coordinate << "\n\n\n" << endl;
         }
         auto packet_ID = std::to_string(count);
-        coordinate.append(ID, coordinate);
+        coordinate.append(packet_ID);
         strcpy(LTEmsg, coordinate.c_str());
         transmit_command(sock, LTEmsg);
         count++;
