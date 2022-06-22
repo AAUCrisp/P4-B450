@@ -2,6 +2,7 @@ void WiFi_command(Sockets sock) {
     void* message;
     char msgDump[32];
     int data;
+    int ID;
     string coordinate;
     char* WiFimsg = (char*) malloc(9);
 
@@ -17,7 +18,7 @@ void WiFi_command(Sockets sock) {
         if(troubleshooting_print == 1) {
             cout << "  WiFi Command Function || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
         }
-        sscanf((const char*)message, "%d %[^\n]", &data, msgDump);
+        sscanf((const char*)message, "%d: %d %[^\n]", &ID, &data, msgDump);
         if(use_grid == 1) {
             coordinate = grid[data];
         }
@@ -38,6 +39,7 @@ void* LTE_command(void* socket) {
     void* message;
     char msgDump[32];
     int data;
+    int ID;
     string coordinate;
     char* LTEmsg = (char*) malloc(9);
     printf("\n\n  ======================\n   LTE Listener Started\n  ======================\n\n");
@@ -52,7 +54,7 @@ void* LTE_command(void* socket) {
         if(troubleshooting_print == 1) {
            cout << "  LTE Command Function || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
         }
-        sscanf((const char*)message, "%d %[^\n]", &data, msgDump);
+        sscanf((const char*)message, "%d: %d %[^\n]",&ID, &data, msgDump);
         if(use_grid == 1) {
             coordinate = grid[data];
         }
