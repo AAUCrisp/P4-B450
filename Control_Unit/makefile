@@ -11,10 +11,11 @@ SignalMonitoring: SignalMonitoring.cpp Sockets.o RSSI.o shm_write.o shm_read.o
 	g++ -pthread SignalMonitoring.cpp Sockets.o RSSI.o -o SignalMonitoring -lrt
 	touch SignalMonitoring
 
-#NYT FIX:
+#NYT FIX: HUSK OG FIX HEADERS OG INCLUDES...
 #Control_Unit: ControlUnit.o Sockets.o shm_read.o
 #	g++ -pthread Control_Unit.o Sockets.o -o ControlUnit -lrt
-#NYT FIX:
+
+#NYT FIX: HUSK OG FIX HEADERS OG INCLUDES...
 #SignalMonitoring: SignalMonitoring.o Sockets.o RSSI.o shm_write.o shm_read.o
 #	g++ -pthread SignalMonitoring.o Sockets.o RSSI.o shm_write.o shm_read.o -o SignalMonitoring -lrt
 
