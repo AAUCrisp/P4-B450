@@ -109,8 +109,8 @@ int main(int argc, char* argv[]) {
         // }
         printf("Why no work?2\n");
     } else {
-        printf("Why no work?3\n");
-        pthread_create(&T1, NULL, dummy, NULL);
+        //printf("Why no work?3\n");
+        //pthread_create(&T1, NULL, dummy, NULL);
         /* Initialize SHM object reading */
         gsv = shm_read(BUFFER, GSV_KEY);
 
