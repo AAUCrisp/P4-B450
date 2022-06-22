@@ -2,6 +2,7 @@
     "files.associations": {
         "assert.h": "c",
         "*.tcc": "c",
-        "socketfunctions.h": "c"
+        "socketfunctions.h": "c",
+        "iostream": "cpp"
     }
 }

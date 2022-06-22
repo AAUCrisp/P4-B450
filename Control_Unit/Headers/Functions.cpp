@@ -29,6 +29,8 @@ void WiFi_command(Sockets sock) {
             auto packet_ID = std::to_string(count);
             packet_ID.append(":");
             coordinate.append(packet_ID);
+            cout << "  Packet ID + Coordinate for Actuator is: " << coordinate << "\n\n\n"
+                 << endl;
             count++;
         }
         if(message_only == 1) {
