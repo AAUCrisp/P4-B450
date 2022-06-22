@@ -14,11 +14,11 @@ SensorMonitoring: SensorMonitoring.c shm_read_write.o SocketFunctions.o
 
 SocketFunctions.o: Headers/SocketFunctions.c Headers/SocketFunctions.h Headers/shm_read_write.h
 	gcc -c Headers/SocketFunctions.c -lrt
-	touch Headers/SocketFunctions.c
+	touch Headers/SocketFunctions
 
 shm_read_write.o: Headers/shm_read_write.c Headers/shm_read_write.h
 	gcc -c Headers/shm_read_write.c -lrt
-	touch Headers/shm_read_write.c
+	touch Headers/shm_read_write
 	
 # Dependencies 
 Dependencies = $(wildcard */*.c)
