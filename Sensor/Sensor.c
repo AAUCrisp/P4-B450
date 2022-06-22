@@ -136,9 +136,10 @@ int main(int argc, char* argv[]) {
 
             /* Start timing code execution of code */
             clock_gettime(CLOCK_REALTIME, &begin);
+            sprintf(buffer, "%d", count);
             sprintf(buffer, "%d", generate(1, 25000000));
 
-            // printf("\nSensor || After Random Int Generation\n");
+            printf("\nSensor || After Random Int Generation\n");
 
             /*if (both_tech == 1) {
                 printf("\nSensor || Troubleshooting for Both Technologies\n");
