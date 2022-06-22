@@ -31,7 +31,7 @@ void WiFi_command(Sockets sock) {
             cout << "  WiFi Command Function || Message Parsed from Sockets as INT is: " << data << endl;
             cout << "  WiFi Command Function || Coordinate for Actuator is: " << coordinate << "\n\n\n" << endl;
         }
-        packet_ID = std::to_string(count);
+        auto packet_ID = std::to_string(count);
         coordinate.append(ID, coordinate);
         strcpy(WiFimsg, coordinate.c_str());
         transmit_command(&sock, WiFimsg);
@@ -72,7 +72,7 @@ void* LTE_command(void* socket) {
             cout << "  LTE Command Function || Message Parsed from Sockets as INT is: " << data << endl;
             cout << "  LTE Command Function || Coordinate for Actuator is: " << coordinate << "\n\n\n" << endl;
         }
-        packet_ID = std::to_string(count);
+        auto packet_ID = std::to_string(count);
         coordinate.append(ID, coordinate);
         strcpy(LTEmsg, coordinate.c_str());
         transmit_command(sock, LTEmsg);
