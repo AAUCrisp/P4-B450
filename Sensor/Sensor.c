@@ -81,6 +81,7 @@ int main(int argc, char* argv[]) {
     const char* GSV_KEY = "GSV_KEY";
     int* SHM_BUFFER[BUFFER];
     char buffer[BUFFER];
+    char ID;
 
     char* gsv;
     char* B = "0";
@@ -136,9 +137,10 @@ int main(int argc, char* argv[]) {
 
             /* Start timing code execution of code */
             clock_gettime(CLOCK_REALTIME, &begin);
-            sprintf(buffer, "%d", count);
-            printf("Packet ID: %s\n", buffer);
-            sprintf(buffer, "%d", generate(1, 25000000));
+            ID = count;
+            // sprintf(buffer, "%d", ID);
+            // printf("Packet ID: %s\n", buffer);
+            sprintf(buffer, "%s %d", ID,generate(1, 25000000));
             printf("Packet ID + random int: %s\n", buffer);
 
 
