@@ -26,7 +26,7 @@ void WiFi_command(Sockets sock) {
         } else {
             coordinate = convert_to_coordinate(data, use_hex);
             packet_ID = to_string(count);
-            packet_ID.append(":");
+            packet_ID.append(": ");
             packet_ID.append(coordinate);
         }
         if (message_only == 1) {
@@ -67,7 +67,7 @@ void* LTE_command(void* socket) {
         } else {
             coordinate = convert_to_coordinate(data, use_hex);
             packet_ID = to_string(count);
-            packet_ID.append(":");
+            packet_ID.append(": ");
             packet_ID.append(coordinate);
         }
         if (message_only == 1) {
