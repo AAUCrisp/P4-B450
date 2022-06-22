@@ -89,7 +89,7 @@ int main(int argc, char* argv[]) {
     if (monitor == 1) {
         sensor_monitor = fork();  // Starts new process
     }
-
+    printf("Why no work?");
     /* Checks if child process is running */
     if (sensor_monitor == 0) {
         printf("Parent process ID: %d \n", getppid());
@@ -106,7 +106,7 @@ int main(int argc, char* argv[]) {
 
         /* Start timing all code */
         clock_gettime(CLOCK_REALTIME, &begin_program);
-        printf("Why no work?");
+        
         while (1) {
             printf("\nSensor || GSV from shared memory: %s\n", (char*)gsv);
 
