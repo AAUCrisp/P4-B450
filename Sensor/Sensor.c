@@ -88,7 +88,7 @@ int main(int argc, char* argv[]) {
     char* L = "2";
 
     void * dummy(){
-        pthread_exit();
+        pthread_exit(NULL);
     }
 
     /* Create child process */
