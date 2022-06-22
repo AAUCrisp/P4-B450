@@ -118,7 +118,7 @@ int main(int argc, char* argv[]) {
         clock_gettime(CLOCK_REALTIME, &begin_program);
 
         while (1) {
-            printf("\nSensor || GSV from shared memory: %s\n", (char*)gsv);
+            //printf("\nSensor || GSV from shared memory: %s\n", (char*)gsv);
 
             // printf("\nGSV converted: %d\n", GSV);
             /*if (monitor == 1) {
