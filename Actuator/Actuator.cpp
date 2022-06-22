@@ -114,9 +114,9 @@ int main() {
             Execution_Sum += elapsed;
             count++;
             printf("count: %d\n", count);
-            /*if (count == iter) {
+            if (count == iter) {
                 break;
-            }*/
+            }
         }
     }
     /* Stop timing all code */
