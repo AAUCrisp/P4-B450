@@ -2,12 +2,13 @@ all: git SignalMonitoring ControlUnit
 
 git:
 	git pull
+	make
 
 # ControlUnit: Control_Unit.cpp Sockets.o RSSI.o Headers/shm_write_read.h
 ControlUnit: Control_Unit.cpp Sockets.o shm_read.o 
+# ControlUnit: Control_Unit.cpp Sockets.o RSSI.o shm_write.o shm_read.o
 	g++ -pthread Control_Unit.cpp Sockets.o -o ControlUnit -lrt
 	touch ControlUnit
-# ControlUnit: Control_Unit.cpp Sockets.o RSSI.o shm_write.o shm_read.o
 	
 
 SignalMonitoring: SignalMonitoring.cpp Sockets.o RSSI.o shm_write.o shm_read.o
