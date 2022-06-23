@@ -33,7 +33,7 @@ void WiFi_command(Sockets sock) {
         if (troubleshooting_print == 1) {
             cout << "  WiFi Command Function || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
         }
-        sscanf((const char*)message, "%d: %d %[^\n]", &ID, &data, msgDump);
+        //sscanf((const char*)message, "%d: %d %[^\n]", &ID, &data, msgDump);
         if (use_grid == 1) {
             coordinate = grid[data];
         } else {
@@ -77,7 +77,7 @@ void* LTE_command(void* socket) {
         if (troubleshooting_print == 1) {
             cout << "  LTE Command Function || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
         }
-        sscanf((const char*)message, "%d: %d %[^\n]", &ID, &data, msgDump);
+        //sscanf((const char*)message, "%d: %d %[^\n]", &ID, &data, msgDump);
         if (use_grid == 1) {
             coordinate = grid[data];
         } else {
@@ -87,10 +87,9 @@ void* LTE_command(void* socket) {
             packet_ID.append(coordinate);
             count++;
         }
-        cout << "  LTE Command Function || Message Parsed from Sockets as INT is: " << data << endl;
-        cout << "  LTE Command Function || Coordinate for Actuator is: " << packet_ID << "\n\n\n"
-             << endl;
         if (message_only == 1) {
+        cout << "  LTE Command Function || Message Parsed from Sockets as INT is: " << data << endl;
+        cout << "  LTE Command Function || Coordinate for Actuator is: " << packet_ID << "\n\n\n" << endl;
         }
         char LTEmsg[packet_ID.size() + 1];
         strcpy(LTEmsg, packet_ID.c_str());
