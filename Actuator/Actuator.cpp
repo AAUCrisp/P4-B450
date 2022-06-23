@@ -79,7 +79,7 @@ int main() {
         printf("Actuator monitoring process ID is: %d \n", getpid());
         char path[] = "./ActuatorMonitoring";
         const char* args[] = {"./ActuatorMonitoring", NULL};
-        //execvp(path, (char* const*)args); // test
+        //execvp(path, (char* const*)args);
 
     } else {
         /* Initialize SHM object reading */
