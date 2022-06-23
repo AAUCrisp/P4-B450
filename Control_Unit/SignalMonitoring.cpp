@@ -26,7 +26,7 @@ pthread_t wifi, lte;
 
 // Both = 0     WiFi = 1        LTE = 2
 char* gsv =  (char*) "0";  // Global Signal Variable   W = WiFi   L = LTE    B = Both
-const char* GSV_KEY = "GSV_KEY";
+//const char* GSV_KEY = "GSV_KEY";
 char* gsv_writer;
 
 /* Signal Quality Settings */
@@ -158,7 +158,7 @@ int main(int argc, char *argv[]) {
 
     printf("\n\n  ============================\n   Monitoring Process Started\n  ============================\n\n");
     int counter = 0;
-    
+
     /* Initialize shared memory */
     gsv_writer = (char*)shm_write(buffer, GSV_KEY);
 
