@@ -346,8 +346,6 @@ void *transmit_command_LTE(void *socket, char *message) {
     // File << "\nLTE Transmitting;" << message << "    Time;" << send_time << "\n \n";
     // File.close();
 
-    /* Open logging file */
-    fp3 = fopen("commands_log.txt", "a+");
     fprintf(fp3, "%s %s %s\n", message, send_time, "LTE");
     //fclose(fp3);
 
@@ -372,8 +370,7 @@ void *transmit_command_WiFi(void *socket, char *message) {
     // File << "WiFi Transmitting;" << message << "    Time;" << send_time;
     // File.close();
 
-    /* Open logging file */
-    fp4 = fopen("commands_log.txt", "a+");
+    
     fprintf(fp4, "%s %s %s\n", message, send_time, "WiFi");
     //fclose(fp4);
 
@@ -388,6 +385,11 @@ void *transmit_command_WiFi(void *socket, char *message) {
 // Function to check GSV and transfer via chosen technologies
 void *transmit_command(void *socket, char *message, int gsv) {
     Sockets *sock = (Sockets *)socket;
+
+    /* Open logging file */
+    fp4 = fopen("commands_log.txt", "a+");
+    fp3 = fopen("commands_log.txt", "a+");
+
     if (print_act_out == 1) {
         cout << "  ======================\n  ==== SEND COMMAND ====\n  ======= entry ========\n"
              << endl;
