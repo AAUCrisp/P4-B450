@@ -1,10 +1,10 @@
 #all: Sensor SensorMonitoring
-all: git Sensor SensorMonitoring
+all: Sensor SensorMonitoring
 
 git:
 	git pull
 	make
-	
+
 Sensor: Sensor.c SocketFunctions.o shm_read_write.o
 	gcc -pthread Sensor.c SocketFunctions.o shm_read_write.o -o Sensor -lrt
 #	touch Sensor

@@ -1,4 +1,4 @@
-all: git Actuator ActuatorMonitoring
+all: Actuator ActuatorMonitoring
 
 git:
 	git pull
