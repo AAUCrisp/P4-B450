@@ -377,7 +377,7 @@ void *transmit_command(void *socket, char *message, int gsv) {
     //printf("gsv converted: %d\n", gsv);
 
     if (print_act_out == 1) {
-        cout << "  Sending || Global Signal Variable is: " << GSV << endl;
+        cout << "  Sending || Global Signal Variable is: " << gsv << endl;
     }
     printf("Do you print this? 2\n");
     if ((gsv == 0) || (gsv == 1)) {
