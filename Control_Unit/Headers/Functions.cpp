@@ -34,10 +34,11 @@ void WiFi_command(Sockets sock) {
             cout << "  WiFi Command Function || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
         }
         sscanf((const char*)message, "%d: %d %[^\n]", &ID, &data, msgDump);
+        printf("Do I reach this?1\n");
         if (use_grid == 1) {
             coordinate = grid[data];
         } else {
-            printf("Do I reach this?");
+            printf("Do I reach this?2\n");
             coordinate = convert_to_coordinate(data, use_hex);
             packet_ID = to_string(count);
             packet_ID.append(": ");
