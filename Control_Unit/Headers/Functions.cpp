@@ -33,7 +33,7 @@ void WiFi_command(Sockets sock) {
         if (troubleshooting_print == 1) {
             cout << "  WiFi Command Function || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
         }
-        //sscanf((const char*)message, "%d: %d %[^\n]", &ID, &data, msgDump);
+        sscanf((const char*)message, "%d: %d %[^\n]", &ID, &data, msgDump);
         if (use_grid == 1) {
             coordinate = grid[data];
         } else {
@@ -50,7 +50,7 @@ void WiFi_command(Sockets sock) {
         }
         char WiFimsg[packet_ID.size() + 1];
         strcpy(WiFimsg, packet_ID.c_str());
-        std::cout << WiFimsg;
+        std::cout << "is this WiFimsg? " << WiFimsg;
         transmit_command(&sock, WiFimsg);
     }
 }
@@ -93,7 +93,7 @@ void* LTE_command(void* socket) {
         }
         char LTEmsg[packet_ID.size() + 1];
         strcpy(LTEmsg, packet_ID.c_str());
-        std::cout << LTEmsg;
+        std::cout << "is this LTEmsg? " << LTEmsg;
         transmit_command(sock, LTEmsg);
     }
 }
