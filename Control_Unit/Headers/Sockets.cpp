@@ -332,7 +332,7 @@ void *transmit_command_LTE(void *socket, char *message) {
         printf("  Sending || LTE (Actuator) || Sending Command to Actuator: %s\n", message);
         printf("  Sending || LTE (Actuator) || Message transmitted at: %s\n\n", curr_time);
     }
-    printf("Do you print this? 6\n");
+    
     return 0;
 }
 
@@ -353,7 +353,7 @@ void *transmit_command_WiFi(void *socket, char *message) {
         printf("  Sending || WiFi (Actuator) || Sending Command to Actuator: %s\n", message);
         printf("  Sending || WiFi (Actuator) || Message transmitted at: %s\n\n", curr_time);
     }
-    printf("Do you print this? 5\n");
+    
     return 0;
 }
 
@@ -385,20 +385,20 @@ void *transmit_command(void *socket, char *message, int gsv) {
         cout << "  Sending || Global Signal Variable is: " << gsv << endl;
     if (print_act_out == 1) {
     }
-    printf("Do you print this? 2\n");
+    
     if ((gsv == 0) || (gsv == 1)) {
         if (print_act_out == 1) {
         }
             cout << "  Sending || Transfer command via WiFi" << endl;
         transmit_command_WiFi(sock, message);
-        printf("Do you print this? 3\n");
+        
     }
     if ((gsv == 0) || (gsv == 2)) {
         if (print_act_out == 1) {
         }
             cout << "  Sending || Transfer command via LTE" << endl;
         transmit_command_LTE(sock, message);
-        printf("Do you print this? 4\n");
+        
     }
     if (print_act_out == 1) {
         cout << "\n  ======== end ==========\n  ==== SEND COMMAND ====\n  ======================\n"
