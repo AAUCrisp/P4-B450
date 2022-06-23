@@ -71,7 +71,7 @@ void WiFi_command(Sockets sock) {
         // std::cout << "is this WiFimsg? " << WiFimsg;
 
         /* Read from shared memory, pass to transmit function */
-        int gsv = atoi(GSV_read);
+        //int gsv = atoi(GSV_read); //Convert to integer
         printf("converted GSV: %d\n", gsv);
         //transmit_command(&sock, WiFimsg, gsv);
         //free(WiFimsg);
@@ -132,7 +132,7 @@ void* LTE_command(void* socket) {
         // std::cout << "is this LTEmsg? " << LTEmsg;
 
         /* Read from shared memory, pass to transmit function */
-        int gsv = atoi(GSV_read);
+        //int gsv = atoi(GSV_read); //Convert to integer
         printf("converted GSV: %d\n", gsv);
         //transmit_command(sock, LTEmsg, gsv);
         //free(LTEmsg);
