@@ -272,7 +272,7 @@ void Argument_Setup(int argc, char* argv[]) {
 
                         if (firstCharacter == '-' && j == i + 1) {
                             cout << "  ===== Verbose Enabled =====" << endl;
-                            message_only = 0;  // Print messages only
+                            message_only = 1;  // Print messages only
                             troubleshooting_print = 1;
                             print_sen_in = 1;   // Print incoming Sensor related things
                             print_act_out = 1;  // Print outgoing Actuator related things
