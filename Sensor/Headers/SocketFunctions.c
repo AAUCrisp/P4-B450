@@ -27,6 +27,10 @@ int TX_LTE, TX_WiFi;
 /* Define threads */
 pthread_t T1, T2;
 
+/* File descriptor */
+FILE *fp1;
+FILE *fp2;
+
 /* Function to create receiver sockets */
 void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
     /* Time struct for socket timeout */
@@ -186,6 +190,9 @@ void *transmitLTE(void *socket, char *message) {
     Sockets *sock = (Sockets *)socket;
     char sendLTE[BUFFER];
 
+    /* Open logging file */
+    fp1 = fopen("log.txt", "a+");
+
     if (print_out == 1) {
         printf("Sensor || LTE socket: %d\n", sock->sockLTE_TRANSMITTER);
     }
@@ -204,11 +211,16 @@ void *transmitLTE(void *socket, char *message) {
     if (print_out == 1) {
         printf("Sensor || LTE || Message transmitted at %s\n\n", curr_timeLTE);
     }
+    fprintf(fp1, "%s %s\n", sendLTE, "LTE");
+    fclose(fp1);
 }
 
 void *transmitWiFi(void *socket, char *message) {
     Sockets *sock = (Sockets *)socket;
     char sendWiFi[BUFFER];
+
+    /* Open logging file */
+    fp2 = fopen("log.txt", "a+");
 
     if (print_out == 1) {
         printf("Sensor || WiFi socket: %d\n", sock->sockLTE_TRANSMITTER);
@@ -228,4 +240,7 @@ void *transmitWiFi(void *socket, char *message) {
     if (print_out == 1) {
         printf("Sensor || WiFi || Message transmitted at %s\n\n", curr_timeWiFi);
     }
+    fprintf(fp2, "%s %s\n", sendWiFi, "WiFi");
+    fclose(fp1
+    2);
 }

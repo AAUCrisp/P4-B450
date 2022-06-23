@@ -48,20 +48,20 @@ int main(int argc, char* argv[]) {
     /* Initialize PORT & INTERFACE*/
     uint PORT_LTE_TRANSMITTER = 9000;
     uint PORT_WiFi_TRANSMITTER = 9001;
-    //const char* LTE = "wwan0";
-    //const char* WiFi = "wlan0";
-    //const char* IP_LTE = "10.20.0.16";  // Default: IP of Control Unit
-    // const char* IP_LTE = "10.20.0.13";      // IP of Actuator
-    // const char* IP_LTE = "10.20.0.10";      // IP of Sensor
-    //const char* IP_WiFi = "192.168.1.136";  // Default: IP of Control Unit
-    // const char* IP_WiFi = "192.168.1.143";  // IP of Actuator
-    // const char* IP_WiFi = "192.168.1.160";  // IP of Sensor
-    //const char* IP_WiFi = "10.42.0.1"; // Default: IP of Control Unit (AP)
+    // const char* LTE = "wwan0";
+    // const char* WiFi = "wlan0";
+    // const char* IP_LTE = "10.20.0.16";  // Default: IP of Control Unit
+    //  const char* IP_LTE = "10.20.0.13";      // IP of Actuator
+    //  const char* IP_LTE = "10.20.0.10";      // IP of Sensor
+    // const char* IP_WiFi = "192.168.1.136";  // Default: IP of Control Unit
+    //  const char* IP_WiFi = "192.168.1.143";  // IP of Actuator
+    //  const char* IP_WiFi = "192.168.1.160";  // IP of Sensor
+    // const char* IP_WiFi = "10.42.0.1"; // Default: IP of Control Unit (AP)
 
-     const char* LTE = "lo";             // Test loopback
-     const char* WiFi = "lo";            // Test loopback
-     const char* IP_LTE = "127.0.0.1";   // Test loopback
-     const char* IP_WiFi = "127.0.0.1";  // Test loopback
+    const char* LTE = "lo";             // Test loopback
+    const char* WiFi = "lo";            // Test loopback
+    const char* IP_LTE = "127.0.0.1";   // Test loopback
+    const char* IP_WiFi = "127.0.0.1";  // Test loopback
 
     /* misc */
     pthread_t T1;
@@ -93,10 +93,6 @@ int main(int argc, char* argv[]) {
     char* W = "1";
     char* L = "2";
 
-    void* dummy() {
-        pthread_exit(NULL);
-    }
-
     /* Check status of global variables */
     printf("\n===================================\n");
     printf("\nboth_tech: %d\n", both_tech);
@@ -127,6 +123,7 @@ int main(int argc, char* argv[]) {
     } else {
         // printf("Why no work?3\n");
         // pthread_create(&T1, NULL, dummy, NULL);
+
         /* Initialize SHM object reading */
         gsv = shm_read(BUFFER, GSV_KEY);
 
@@ -143,9 +140,9 @@ int main(int argc, char* argv[]) {
             /* Start timing code execution of code */
             clock_gettime(CLOCK_REALTIME, &begin);
 
-            // With packet ID : 
+            // With packet ID :
             sprintf(buffer, "%d: %d", count, generate(1, 25000000));
-            //sprintf(buffer, "%d", generate(1, 25000000));
+            // sprintf(buffer, "%d", generate(1, 25000000));
             printf("Packet ID + random int: %s\n", buffer);
 
             /*if (both_tech == 1) {
