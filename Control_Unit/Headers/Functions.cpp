@@ -32,6 +32,12 @@ void WiFi_command(Sockets sock) {
         cout << "  WiFi Command Function || WiFi Actuator Socket: " << sock.act_WiFi << endl;
         cout << "  WiFi Command Function || LTE Actuator Socket: " << sock.act_LTE << endl;
     }
+
+    /* Initialize shared memory */
+    const char* GSV_KEY = "GSV_KEY";
+    const char* GSV_read;
+    GSV_read = (char*)shm_read(32, GSV_KEY);
+
     while (1) {
         message = (void*)receiveWiFi((void*)&sock);
         if (troubleshooting_print == 1) {
@@ -65,6 +71,7 @@ void WiFi_command(Sockets sock) {
 
         /* Read from shared memory, pass to transmit function */
         int gsv = atoi(GSV_read);
+        printf("converted GSV: %d\n", gsv);
         transmit_command(&sock, WiFimsg, gsv);
     }
 }
@@ -86,6 +93,12 @@ void* LTE_command(void* socket) {
         cout << "  LTE Command Function || WiFi Actuator Socket: " << sock->act_WiFi << endl;
         cout << "  LTE Command Function || LTE Actuator Socket: " << sock->act_LTE << endl;
     }
+
+    /* Initialize shared memory */
+    const char* GSV_KEY = "GSV_KEY";
+    const char* GSV_read;
+    GSV_read = (char*)shm_read(32, GSV_KEY);
+
     while (1) {
         message = (void*)receiveLTE((void*)sock);
         if (troubleshooting_print == 1) {
@@ -117,6 +130,7 @@ void* LTE_command(void* socket) {
 
         /* Read from shared memory, pass to transmit function */
         int gsv = atoi(GSV_read);
+        printf("converted GSV: %d\n", gsv);
         transmit_command(sock, LTEmsg, gsv);
     }
 }

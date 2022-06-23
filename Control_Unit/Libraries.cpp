@@ -57,8 +57,4 @@ using namespace std;
     static char* GSV_sleep = (char*) "";        // Change sleep delay
     static char* GSV_sleep_arg = (char*) "";    // The amount of seconds it sleeps
 
-    // Shared memory variable
-    static const char* GSV_KEY = "GSV_KEY";
-    static const char* GSV_read;
-
 #endif
