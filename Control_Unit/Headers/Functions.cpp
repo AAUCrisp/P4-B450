@@ -107,7 +107,7 @@ void* LTE_command(void* socket) {
                  << endl;
         }
         // char LTEmsg[packet_ID.size() + 1];
-        char LTEmsg* = (char*)malloc(9);
+        char* LTEmsg = (char*)malloc(9);
         // strcpy(LTEmsg, packet_ID.c_str());
         strcpy(LTEmsg, coordinate.c_str());
         // std::cout << "is this LTEmsg? " << LTEmsg;
