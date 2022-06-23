@@ -83,7 +83,7 @@ void WiFi_command(Sockets sock) {
         transmit_command(&sock, WiFimsg, gsv);
         char *timeWiFi = Timestamp();
 
-        /* Open logging file */
+        /* Writing to logging file */
         fp3 = fopen("commands_log.txt", "a+");
         fprintf(fp3, "%s %s %s\n", WiFimsg, timeWiFi, "WiFi");
         fclose(fp3);
@@ -156,7 +156,7 @@ void* LTE_command(void* socket) {
         transmit_command(sock, LTEmsg, gsv);
         char* timeLTE = Timestamp();
 
-        /* Open logging file */
+        /* Writing to logging file */
         fp4 = fopen("commands_log.txt", "a+");
         fprintf(fp4, "%s %s %s\n", LTEmsg, timeLTE, "LTE");
         fclose(fp4);

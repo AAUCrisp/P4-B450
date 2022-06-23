@@ -119,9 +119,9 @@ int main(int argc, char* argv[]) {
         execv(path, args);
         printf("  ERROR: DIDN'T START THE MONITORING PROCESS!!\n");  // Should never get this far!
         // }
-        printf("Why no work?2\n");
+        
     } else {
-        // printf("Why no work?3\n");
+        
         // pthread_create(&T1, NULL, dummy, NULL);
 
         /* Initialize SHM object reading */
@@ -142,7 +142,9 @@ int main(int argc, char* argv[]) {
 
             // With packet ID :
             sprintf(buffer, "%d: %d", count, generate(1, 25000000));
+            // Without packet ID :
             // sprintf(buffer, "%d", generate(1, 25000000));
+            
             printf("Packet ID + random int: %s\n", buffer);
 
             /*if (both_tech == 1) {
