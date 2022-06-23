@@ -403,7 +403,7 @@ void *transmit_command(void *socket, char *message) {
     }
     int LenWiFi = sizeof(sock->Client_act_WiFi);
     const char *GSV;
-    const char *GSV_KEY1 = "GSV_KEY";
+    const char *GSV_KEY = "GSV_KEY";
     GSV = (char*)shm_read(32, GSV_KEY);
     int gsv = atoi(GSV);
     if (print_act_out == 1) {
