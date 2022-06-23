@@ -3,13 +3,12 @@
 #include "Libraries.cpp"      // File with all our includes
 #endif
 
-/*
+
 #ifndef SHM_WRITE
 #define SHM_WRITE
-#include "Headers/shm_write.cpp"
-#endif
-*/
 #include "Headers/shm_read_write.h"
+#endif
+
 
 #ifndef SOCKETS_MON
 #define SOCKETS_MON
