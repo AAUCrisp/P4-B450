@@ -42,7 +42,8 @@ int main(int argc, char *argv[]) {
     const char* Actuator_IP_LTE = "10.20.0.13";     // Default: Actuator IP
     // const char* Actuator_IP_LTE = "10.20.0.16";     // Control IP
     // const char* Actuator_IP_LTE = "10.20.0.10";     // Sensor IP
-    const char* Actuator_IP_WiFi = "192.168.1.143";     //Default: Actuator IP
+    //const char* Actuator_IP_WiFi = "192.168.1.143";     //Default: Actuator IP
+    const char* Actuator_IP_WiFi = "10.42.0.118";     //Default: Actuator IP (AP)
     // const char* Actuator_IP_WiFi = "192.168.1.136";     // Control IP
     // const char* Actuator_IP_WiFi = "192.168.1.160";     // Sensor IP
 
