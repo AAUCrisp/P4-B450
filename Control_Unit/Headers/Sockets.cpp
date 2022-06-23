@@ -408,6 +408,8 @@ void *transmit_command(void *socket, char *message) {
     const char *GSV_KEY = "GSV_KEY";
     GSV = (char*)shm_read(32, GSV_KEY);
     int gsv = atoi(GSV);
+    printf("GSV: %s\n", (char*)GSV);
+    printf("gsv converted: %d\n", gsv);
     printf("Do you print this? 1\n");
     if (print_act_out == 1) {
         cout << "  Sending || Global Signal Variable is: " << GSV << endl;
