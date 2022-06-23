@@ -75,6 +75,7 @@ int main(int argc, char *argv[]) {
     pid_t signal_monitor;     // Prepare the process ID for monitoring
     if(monitor == 1) {
         signal_monitor = fork();  // Starts new process
+        printf("signal_monitor value: %d\n", signal_monitor);
     }
     if (signal_monitor == 0) {
         if(troubleshooting_print == 1) {

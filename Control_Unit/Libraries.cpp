@@ -28,7 +28,7 @@ using namespace std;
 #define VARIABLES
     // General Settings
     static int force_tech = 0;      // Troubleshooting with both technologies
-    static int monitor = 0;         // Disable/Enable Start of Signal Monitoring
+    static int monitor = 1;         // Disable/Enable Start of Signal Monitoring
 
     // Grid Settings
     static int use_grid = 0;        // Usage of RAM Grid
