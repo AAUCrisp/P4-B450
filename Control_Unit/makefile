@@ -1,7 +1,8 @@
-all: git SignalMonitoring ControlUnit
+all: SignalMonitoring ControlUnit
 
 git:
 	git pull
+	make
 
 #NYT FIX: HUSK OG FIX HEADERS OG INCLUDES...
 ControlUnit: ControlUnit.o Sockets.o shm_read_write.o
