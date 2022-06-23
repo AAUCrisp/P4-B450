@@ -7,14 +7,10 @@ git:
 #NYT FIX: HUSK OG FIX HEADERS OG INCLUDES...
 ControlUnit: ControlUnit.o Sockets.o shm_read_write.o
 	g++ -pthread ControlUnit.o Sockets.o shm_read_write.o -o ControlUnit -lrt
-	touch ControlUnit
-	touch ControlUnit.cpp
 
 #NYT FIX: HUSK OG FIX HEADERS OG INCLUDES...
 SignalMonitoring: SignalMonitoring.o Sockets.o RSSI.o shm_read_write.o Functions.o
 	g++ -pthread SignalMonitoring.o Sockets.o RSSI.o shm_read_write.o Functions.o -o SignalMonitoring -lrt
-	touch SignalMonitoring
-	touch SignalMonitoring.cpp
 
 ControlUnit.o: ControlUnit.cpp
 	g++ -c -g  -pthread ControlUnit.cpp -lrt
