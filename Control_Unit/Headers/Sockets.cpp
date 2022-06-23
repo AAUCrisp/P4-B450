@@ -399,7 +399,7 @@ void *transmit_command(void *socket, char *message, int gsv) {
              << endl;
     }
     
-    return message;
+    //return message;
 }
 
 /* -------- end ------------
