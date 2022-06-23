@@ -3,14 +3,12 @@
 #include "Libraries.cpp"      // File with all our includes
 #endif
 
-/*
+
 #ifndef SHM_WRITE
 #define SHM_WRITE
-#include "Headers/shm_write.cpp"
-#endif
-*/
-
 #include "Headers/shm_read_write.h"
+#endif
+
 
 #ifndef SOCKETS_MON
 #define SOCKETS_MON
@@ -229,14 +227,14 @@ int main(int argc, char *argv[]) {
         sprintf(gsv_writer, "%s", gsv); // Write selected technology to shared memory
 
         if (gsv == "1" || gsv == "0") {
-            NEW_transmit_GSV_WiFi(&sock, (char*)gsv);
+            transmit_GSV_WiFi(&sock, (char*)gsv);
 
             if(troubleshooting_print == 1) {
                 printf("  GSV || Sent via WiFi\n");
             }
         }
         if (gsv == "2" || gsv == "0") {
-            NEW_transmit_GSV_LTE(&sock, (char*)gsv);
+            transmit_GSV_LTE(&sock, (char*)gsv);
 
             if(troubleshooting_print == 1) {
                 printf("  GSV || Sent via LTE\n");
