@@ -158,7 +158,7 @@ void *receiveLTE(void *socket) {
         printf("\n\n  Incoming || LTE (Sensor) || Message is: %s\n", message_LTE);
         printf("  Incoming || LTE (Sensor) || Message received at: %s\n\n", curr_time);
     }
-    sscanf(message_LTE, "%d %[^\n]", &sensor_int, msg_time);
+    sscanf((const char*)message_LTE, "%d %[^\n]", &sensor_int, msg_time);
     File.open("log.txt", std::ofstream::out | std::ofstream::app);
     File << "\n\n"
          << sensor_int << ";" << msg_time << ";"
@@ -182,6 +182,7 @@ void *receiveWiFi(void *socket) {
         printf("\n\n  Incoming || WiFi (Sensor) || Message is: %s\n", message_WiFi);
         printf("  Incoming || WiFi (Sensor) || Message received at: %s \n\n", curr_time);
     }
+    sscanf((const char*)message_WiFi, "%d %[^\n]", &sensor_int, msg_time);
     File.open("log.txt", std::ofstream::out | std::ofstream::app);
     File << "\n\n"
          << sensor_int << ";" << msg_time << ";"
@@ -404,13 +405,13 @@ void *transmit_command(void *socket, char *message) {
              << message << endl;
     }
     int LenWiFi = sizeof(sock->Client_act_WiFi);
-    const char *GSV;
-    const char *GSV_KEY = "GSV_KEY";
-    int stop = 0;
 
+    const char *GSV_KEY = "GSV_KEY";
+    const char *GSV; 
     GSV = (char *)shm_read(32, GSV_KEY);
 
     int gsv = atoi(GSV);
+    
     printf("GSV: %s\n", (char *)GSV);
     printf("gsv converted: %d\n", gsv);
 
@@ -447,6 +448,7 @@ void *transmit_command(void *socket, char *message) {
         cout << "\n  ======== end ==========\n  ==== SEND COMMAND ====\n  ======================\n"
              << endl;
     }
+    
     return message;
 }
 
