@@ -72,7 +72,7 @@ void WiFi_command(Sockets sock) {
 
         /* Read from shared memory, pass to transmit function */
         //int gsv = atoi(GSV_read); //Convert to integer
-        printf("converted GSV: %d\n", gsv);
+        printf("converted GSV: %s\n", (char*)GSV_read);
         //transmit_command(&sock, WiFimsg, gsv);
         //free(WiFimsg);
     }
@@ -133,7 +133,7 @@ void* LTE_command(void* socket) {
 
         /* Read from shared memory, pass to transmit function */
         //int gsv = atoi(GSV_read); //Convert to integer
-        printf("converted GSV: %d\n", gsv);
+        printf("converted GSV: %s\n", (char*)GSV_read);
         //transmit_command(sock, LTEmsg, gsv);
         //free(LTEmsg);
     }
