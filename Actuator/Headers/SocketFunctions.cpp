@@ -206,7 +206,7 @@ void *receiveLTE(void *socket) {
 
         // fprintf(fp1, "Received at: %s\n %s    LTE : ", curr_time, message);
 
-        fprintf(fp1, "%s %s\n %s %s\n\n", "Received at: ", curr_time, message, " LTE");
+        fprintf(fp1, "%s %s\n%s %s\n\n", "Received at: ", curr_time, message, " LTE");
 
         fclose(fp1);
         // File.close();
@@ -244,7 +244,7 @@ void *receiveWiFi(void *socket) {
         // fputs(message, fp2);
         // fputs(" WiFi\n\n", fp2);
 
-        fprintf(fp2, "%s %s\n %s %s\n\n", "Received at:", curr_time, message, "WiFi");
+        fprintf(fp2, "%s %s\n%s %s\n\n", "Received at:", curr_time, message, "WiFi");
 
         fclose(fp2);
         // File.close();
