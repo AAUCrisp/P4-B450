@@ -62,7 +62,10 @@ void WiFi_command(Sockets sock) {
         // strcpy(WiFimsg, packet_ID.c_str()); with packet ID
         strcpy(WiFimsg, coordinate.c_str());
         // std::cout << "is this WiFimsg? " << WiFimsg;
-        transmit_command(&sock, WiFimsg);
+
+        /* Read from shared memory, pass to transmit function */
+        int gsv = atoi(GSV_read);
+        transmit_command(&sock, WiFimsg, gsv);
     }
 }
 
@@ -111,6 +114,9 @@ void* LTE_command(void* socket) {
         // strcpy(LTEmsg, packet_ID.c_str());
         strcpy(LTEmsg, coordinate.c_str());
         // std::cout << "is this LTEmsg? " << LTEmsg;
+
+        /* Read from shared memory, pass to transmit function */
+        int gsv = atoi(GSV_read);
         transmit_command(sock, LTEmsg);
     }
 }

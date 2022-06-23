@@ -16,6 +16,8 @@
 #include "Headers/Functions.cpp"
 #endif
 
+#include "shm_read_write.h"
+
 
 /* Main running code */
 int main(int argc, char *argv[]) {
@@ -61,8 +63,12 @@ int main(int argc, char *argv[]) {
     /* Create sockets */
     Sockets sock;
     Sockets_Receiver(&sock, PORT_LTE_RECEIVER, PORT_WiFi_RECEIVER, LTE, WiFi);
-    
     Sockets_Actuator(&sock, Actuator_IP_LTE, Actuator_IP_WiFi, PORT_LTE_ACTUATOR, PORT_WiFi_ACTUATOR, LTE, WiFi);
+
+    /* Initialize shared memory */
+    static const char* GSV_KEY = "GSV_KEY";
+    static const char* GSV_read;
+    GSV_read = (char*)shm_read(32, GSV_KEY);
 
     if(troubleshooting_print == 1) {
         printf("  Sensor LTE socket from Main(): %d\n", sock.sockLTE_RECEIVER);
