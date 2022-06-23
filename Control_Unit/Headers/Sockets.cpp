@@ -360,11 +360,11 @@ void *transmit_command_LTE(void *socket, char *message) {
     File << "\nLTE Transmitting;" << message << "    Time;" << send_time << "\n \n";
     File.close();
 
-    if (print_act_out == 1 || message_only == 1) {
+        if (print_act_out == 1 || message_only == 1) {
         printf("  Sending || LTE (Actuator) || Sending Command to Actuator: %s\n", message);
         printf("  Sending || LTE (Actuator) || Message transmitted at: %s\n\n", curr_time);
     }
-
+    
     return 0;
 }
 
@@ -385,7 +385,7 @@ void *transmit_command_WiFi(void *socket, char *message) {
         printf("  Sending || WiFi (Actuator) || Sending Command to Actuator: %s\n", message);
         printf("  Sending || WiFi (Actuator) || Message transmitted at: %s\n\n", curr_time);
     }
-
+    
     return 0;
 }
 
@@ -406,13 +406,16 @@ void *transmit_command(void *socket, char *message) {
     int LenWiFi = sizeof(sock->Client_act_WiFi);
     const char *GSV;
     const char *GSV_KEY = "GSV_KEY";
-
-    GSV = (char *)shm_read(32, GSV_KEY);
+    int stop = 0;
+    if (stop == 0) {
+        GSV = (char *)shm_read(32, GSV_KEY);
+        stop = 1;
+    }
 
     int gsv = atoi(GSV);
-    // printf("GSV: %s\n", (char *)GSV);
-    // printf("gsv converted: %d\n", gsv);
-
+    printf("GSV: %s\n", (char *)GSV);
+    printf("gsv converted: %d\n", gsv);
+    
     if (print_act_out == 1) {
         cout << "  Sending || Global Signal Variable is: " << GSV << endl;
     }
@@ -427,7 +430,7 @@ void *transmit_command(void *socket, char *message) {
             gsv = 2;
         }
     }
-
+    
     if ((gsv == 0) || (gsv == 1)) {
         if (print_act_out == 1) {
             cout << "  Sending || Transfer command via WiFi" << endl;
