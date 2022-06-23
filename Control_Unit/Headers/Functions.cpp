@@ -1,3 +1,17 @@
+#ifndef LIBRARIES
+#define LIBRARIES
+#include "../Libraries.cpp"  // File with all our includes
+#endif
+#ifndef SOCKETS_CONT
+#define SOCKETS_CONT
+#include "Sockets.h"
+// #include "Headers/Sockets.cpp"
+#endif
+#ifndef CONVERTER
+#define CONVERTER
+#include "../converter.cpp"
+#endif
+
 void WiFi_command(Sockets sock) {
     void* message;
     char msgDump[32];
@@ -6,7 +20,6 @@ void WiFi_command(Sockets sock) {
     int count = 0;
     string packet_ID;
     string coordinate;
-    char* WiFimsg = (char*)malloc(9);
 
     printf("\n\n  =======================\n   WiFi Listener Started\n  =======================\n\n");
 
@@ -35,7 +48,9 @@ void WiFi_command(Sockets sock) {
             cout << "  WiFi Command Function || Coordinate for Actuator is: " << packet_ID << "\n\n\n"
                  << endl;
         }
+        char WiFimsg[packet_ID.size()+1];
         strcpy(WiFimsg, packet_ID.c_str());
+        std::cout << WiFimsg;
         transmit_command(&sock, WiFimsg);
     }
 }
@@ -49,7 +64,7 @@ void* LTE_command(void* socket) {
     int count = 0;
     string packet_ID;
     string coordinate;
-    char* LTEmsg = (char*)malloc(9);
+    
     printf("\n\n  ======================\n   LTE Listener Started\n  ======================\n\n");
 
     if (troubleshooting_print == 1) {
@@ -77,7 +92,9 @@ void* LTE_command(void* socket) {
             cout << "  LTE Command Function || Coordinate for Actuator is: " << packet_ID << "\n\n\n"
                  << endl;
         }
+        char LTEmsg[packet_ID.size() + 1];
         strcpy(LTEmsg, packet_ID.c_str());
+        std::cout << LTEmsg;
         transmit_command(sock, LTEmsg);
     }
 }
