@@ -376,21 +376,21 @@ void *transmit_command(void *socket, char *message, int gsv) {
     //printf("GSV: %s\n", (char *)GSV);
     //printf("gsv converted: %d\n", gsv);
 
-    if (print_act_out == 1) {
         cout << "  Sending || Global Signal Variable is: " << gsv << endl;
+    if (print_act_out == 1) {
     }
     printf("Do you print this? 2\n");
     if ((gsv == 0) || (gsv == 1)) {
         if (print_act_out == 1) {
-            cout << "  Sending || Transfer command via WiFi" << endl;
         }
+            cout << "  Sending || Transfer command via WiFi" << endl;
         transmit_command_WiFi(sock, message);
         printf("Do you print this? 3\n");
     }
     if ((gsv == 0) || (gsv == 2)) {
         if (print_act_out == 1) {
-            cout << "  Sending || Transfer command via LTE" << endl;
         }
+            cout << "  Sending || Transfer command via LTE" << endl;
         transmit_command_LTE(sock, message);
         printf("Do you print this? 4\n");
     }
