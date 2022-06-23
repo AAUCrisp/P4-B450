@@ -37,6 +37,7 @@ void WiFi_command(Sockets sock) {
         if (use_grid == 1) {
             coordinate = grid[data];
         } else {
+            printf("Do I reach this?");
             coordinate = convert_to_coordinate(data, use_hex);
             packet_ID = to_string(count);
             packet_ID.append(": ");
