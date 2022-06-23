@@ -356,11 +356,11 @@ void *transmit_command_LTE(void *socket, char *message) {
     TX_LTE = sendto(sock->act_LTE, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_LTE, LenLTE);
     send_time = Timestamp();
 
-    //File.open("log.txt", std::ofstream::out | std::ofstream::app);
-    //File << "\nLTE Transmitting;" << message << "    Time;" << send_time << "\n \n";
-    //File.close();
+    File.open("log.txt", std::ofstream::out | std::ofstream::app);
+    File << "\nLTE Transmitting;" << message << "    Time;" << send_time << "\n \n";
+    File.close()
 
-    if (print_act_out == 1 || message_only == 1) {
+        if (print_act_out == 1 || message_only == 1) {
         printf("  Sending || LTE (Actuator) || Sending Command to Actuator: %s\n", message);
         printf("  Sending || LTE (Actuator) || Message transmitted at: %s\n\n", curr_time);
     }
@@ -377,9 +377,9 @@ void *transmit_command_WiFi(void *socket, char *message) {
     }
     TX_WiFi = sendto(sock->act_WiFi, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_WiFi, LenWiFi);
     send_time = Timestamp();
-    //File.open("log.txt", std::ofstream::out | std::ofstream::app);
-    //File << "WiFi Transmitting;" << message << "    Time;" << send_time;
-    //File.close();
+    File.open("log.txt", std::ofstream::out | std::ofstream::app);
+    File << "WiFi Transmitting;" << message << "    Time;" << send_time;
+    File.close();
 
     if (print_act_out == 1 || message_only == 1) {
         printf("  Sending || WiFi (Actuator) || Sending Command to Actuator: %s\n", message);
@@ -390,8 +390,8 @@ void *transmit_command_WiFi(void *socket, char *message) {
 }
 
 // Function to check GSV and transfer via chosen technologies
-//const char *GSV_KEY2 = "GSV_KEY";
-//const char *GSV_actuator = (char *)shm_read(32, GSV_KEY2);
+// const char *GSV_KEY2 = "GSV_KEY";
+// const char *GSV_actuator = (char *)shm_read(32, GSV_KEY2);
 
 void *transmit_command(void *socket, char *message) {
     Sockets *sock = (Sockets *)socket;
@@ -406,9 +406,13 @@ void *transmit_command(void *socket, char *message) {
     int LenWiFi = sizeof(sock->Client_act_WiFi);
     const char *GSV;
     const char *GSV_KEY = "GSV_KEY";
-    GSV = (char*)shm_read(32, GSV_KEY);
+    int stop = 0;
+    if (stop == 0) {
+        GSV = (char *)shm_read(32, GSV_KEY);
+        stop = 1;
+    }
     int gsv = atoi(GSV);
-    printf("GSV: %s\n", (char*)GSV);
+    printf("GSV: %s\n", (char *)GSV);
     printf("gsv converted: %d\n", gsv);
     printf("Do you print this? 1\n");
     if (print_act_out == 1) {
