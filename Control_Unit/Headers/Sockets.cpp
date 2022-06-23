@@ -78,8 +78,7 @@ int TX_LTE, TX_WiFi;
 /* File descriptor */
 FILE *fp1;
 FILE *fp2;
-static FILE *fp3;
-static FILE *fp4;
+
 
 /* Function to timestamp packets */
 char *Timestamp() {
