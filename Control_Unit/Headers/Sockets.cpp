@@ -405,9 +405,9 @@ void *transmit_command(void *socket, char *message) {
     const char *GSV;
     const char *GSV_KEY1 = "GSV_KEY1";
     GSV = (char*)shm_read(32, GSV_KEY1);
-    int gsv = atoi(GSV_actuator);
+    int gsv = atoi(GSV);
     if (print_act_out == 1) {
-        cout << "  Sending || Global Signal Variable is: " << GSV_actuator << endl;
+        cout << "  Sending || Global Signal Variable is: " << GSV << endl;
     }
     if (force_tech > 0) {
         if (force_tech == 1) {
