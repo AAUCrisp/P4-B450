@@ -50,7 +50,7 @@ Eth: 192.168.1.117
 <ins>**Client must be started with sudo:       "./[ClientName]"**</ins>  
 
 
-
+## Commands:
 <ins>**Git:**</ins>
     - `sudo apt-get install git`        Install Git on your machine    
     - `git clone https://github.com/AAUCrisp/P4-B450.git`       To get the repository to your computer  
