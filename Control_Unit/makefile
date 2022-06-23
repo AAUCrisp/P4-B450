@@ -1,7 +1,6 @@
 all: SignalMonitoring ControlUnit
 
 git:
-	make clean
 	git pull
 	make
 
