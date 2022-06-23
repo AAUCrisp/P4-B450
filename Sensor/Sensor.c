@@ -56,7 +56,7 @@ int main(int argc, char* argv[]) {
     //const char* IP_WiFi = "192.168.1.136";  // Default: IP of Control Unit
     // const char* IP_WiFi = "192.168.1.143";  // IP of Actuator
     // const char* IP_WiFi = "192.168.1.160";  // IP of Sensor
-    const char* IP_WiFi = "10.42.0.1" // Default: IP of Control Unit (AP)
+    const char* IP_WiFi = "10.42.0.1"; // Default: IP of Control Unit (AP)
 
 
     // const char* LTE = "lo";             // Test loopback
