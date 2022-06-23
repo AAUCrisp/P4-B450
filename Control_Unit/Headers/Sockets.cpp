@@ -392,9 +392,8 @@ void *transmit_command_WiFi(void *socket, char *message) {
 // Function to check GSV and transfer via chosen technologies
 // const char *GSV_KEY2 = "GSV_KEY";
 // const char *GSV_actuator = (char *)shm_read(32, GSV_KEY2);
-const char *GSV;
 const char *GSV_KEY1 = "GSV_KEY";
-GSV = (char *)shm_read(32, GSV_KEY1);
+const char *GSV = (char *)shm_read(32, GSV_KEY1);
 
 void *transmit_command(void *socket, char *message) {
     Sockets *sock = (Sockets *)socket;
