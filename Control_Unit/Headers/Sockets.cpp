@@ -407,10 +407,8 @@ void *transmit_command(void *socket, char *message) {
     const char *GSV;
     const char *GSV_KEY = "GSV_KEY";
     int stop = 0;
-    if (stop == 0) {
-        GSV = (char *)shm_read(32, GSV_KEY);
-        stop = 1;
-    }
+
+    GSV = (char *)shm_read(32, GSV_KEY);
 
     int gsv = atoi(GSV);
     printf("GSV: %s\n", (char *)GSV);
