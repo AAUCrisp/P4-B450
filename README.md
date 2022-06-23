@@ -53,3 +53,13 @@ Eth: 192.168.1.117
     - `sudo ifconfig wwan0 [4G IP] netmask 255.255.255.0`       Add netmask for wwan0
     - `sudo ip route add 10.20.0.0/24 dev wwan0`                Add ip routing for wwan0
     - `sudo mmcli -m 0 --signal-setup=1`                        LTE refresh rate
+
+    - 'sudo nmcli c show'                                                          Show all created connections
+    - 'sudo nmcli c up Hotspot'                                                Activate AP
+    - 'sudo nmcli c up Control-Unit'                                         Activate Control-Unit
+    - 'sudo nmcli c up Bamses_Hytte'                                       Activate Bamses_Hytte
+    - 'sudo nmcli dev wifi list'                                                   Show wifi list
+    - 'sudo nmcli c delete id [ifname]'                                      Delete connection
+
+
+    
