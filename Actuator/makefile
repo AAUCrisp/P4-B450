@@ -11,23 +11,23 @@ ActuatorMonitoring: ActuatorMonitoring.o shm_read_write.o SocketFunctions.o
 
 Actuator.o: Actuator.cpp
 	g++ -c -g -pthread Actuator.cpp -lrt
-	touch Actuator
+#	touch Actuator
 
 ActuatorMonitoring.o: ActuatorMonitoring.cpp
 	g++ -c -g ActuatorMonitoring.cpp -lrt
-	touch ActuatorMonitoring
+#	touch ActuatorMonitoring
 
 shm_read_write.o: Headers/shm_read_write.cpp Headers/shm_read_write.h
 	g++ -c -g Headers/shm_read_write.cpp -lrt
-	touch Headers/shm_read_write
+#	touch Headers/shm_read_write
 
 ActuatorFunctions.o: Headers/ActuatorFunctions.cpp Headers/ActuatorFunctions.h
 	g++ -c -g Headers/ActuatorFunctions.cpp -lrt
-	touch Headers/ActuatorFunctions
+#	touch Headers/ActuatorFunctions
 
 SocketFunctions.o: Headers/SocketFunctions.cpp Headers/SocketFunctions.h
 	g++ -c -g Headers/SocketFunctions.cpp -lrt
-	touch Headers/SocketFunctions
+#	touch Headers/SocketFunctions
 
 clean:
 	rm -f Actuator ActuatorMonitoring
