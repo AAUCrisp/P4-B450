@@ -411,7 +411,7 @@ void *transmit_command(void *socket, char *message) {
         GSV = (char *)shm_read(32, GSV_KEY);
         stop = 1;
         printf("stop: %d\n", stop);
-        printf("Do I enter this 1 time only?: %d\n");
+        printf("Do I enter this 1 time only?\n");
     }
 
     int gsv = atoi(GSV);
