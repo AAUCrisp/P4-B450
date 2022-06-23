@@ -49,9 +49,6 @@ int rsrp_average;
 
 
 int main(int argc, char *argv[]) {
-    /* Initialize shared memory */
-    gsv_writer = (char*)shm_write(buffer, GSV_KEY);
-
     // If Arguments is inserted
     if(argc > 1) {      // If the program is run with arguments
         int child = 0;
@@ -161,6 +158,9 @@ int main(int argc, char *argv[]) {
 
     printf("\n\n  ============================\n   Monitoring Process Started\n  ============================\n\n");
     int counter = 0;
+    
+    /* Initialize shared memory */
+    gsv_writer = (char*)shm_write(buffer, GSV_KEY);
 
     while (1) {
         wifi_rssi[counter] = RSSI_VAL();
