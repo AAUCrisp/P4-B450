@@ -180,9 +180,9 @@ void *receiveLTE(void *socket) {
     unsigned int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
 
     // File.open("log.txt", std::ofstream::out | std::ofstream::app);
-    fp1 = fopen("log.txt", "a+");
 
     while (1) {
+        fp1 = fopen("log.txt", "a+");
         printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
         RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
         Timestamp();
@@ -202,7 +202,8 @@ void *receiveLTE(void *socket) {
         fputs("\n", fp1);
         fputs(message, fp1);
         fputs(" LTE\n\n", fp1);
-        //fclose(fp1);
+        fclose(fp1);
+        // File.close();
     }
 }
 
@@ -213,10 +214,10 @@ void *receiveWiFi(void *socket) {
     char *writer = (char *)shm_write(SHM_BUFFER, COMMANDS_KEY);
     unsigned int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
 
-    //File.open("log.txt", std::ofstream::out | std::ofstream::app);
-    fp2 = fopen("log.txt", "a+");
+    // File.open("log.txt", std::ofstream::out | std::ofstream::app);
 
     while (1) {
+        fp2 = fopen("log.txt", "a+");
         printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
         Timestamp();
@@ -236,7 +237,7 @@ void *receiveWiFi(void *socket) {
         fputs(message, fp2);
         fputs(" WiFi\n\n", fp2);
 
-        //fclose(fp2);
-        //File.close();
+        fclose(fp2);
+        // File.close();
     }
 }

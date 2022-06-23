@@ -51,7 +51,7 @@ int main() {
     pthread_t T1, T2;
     char* curr_time;
     int* Processed_Data;
-    int iter = 1000000;
+    int iter = 0;
 
     /* Execution time variables */
     int count = 0;
