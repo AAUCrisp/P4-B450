@@ -7,6 +7,10 @@
 #include "Sockets.h"
 // #include "Headers/Sockets.cpp"
 #endif
+#ifndef SHM
+#define SHM
+#include "shm_read_write.h"
+#endif
 #ifndef CONVERTER
 #define CONVERTER
 #include "../converter.cpp"
@@ -326,6 +330,11 @@ void Argument_Setup(int argc, char* argv[]) {
                 GSV_tech = (char*)"-t";
                 GSV_arg_used = (char*)"-a";
 
+                // Make ready to write to Shared Memory
+                const char* GSV_KEY = "GSV_KEY";
+                char* gsv_writer;
+                gsv_writer = (char*)shm_write(32, GSV_KEY);
+
                 if (argc > i + 1) {
                     string current = argv[i + 1];
                     firstCharacter = current.at(0);
@@ -334,19 +343,24 @@ void Argument_Setup(int argc, char* argv[]) {
                         cout << "  ===== Forced Use of Both Technologies Enabled =====" << endl;
                         GSV_tech_arg = (char*)"b";
                         force_tech = 1;
+                        sprintf(gsv_writer, "%s", "0"); // Write selected technology to shared memory
+
                     } else if ((string)argv[i + 1] == "w" || (string)argv[i + 1] == "wifi") {
                         cout << "  ===== Forced Use of WiFi =====" << endl;
                         GSV_tech_arg = (char*)"w";
                         force_tech = 2;
+                        sprintf(gsv_writer, "%s", "1"); // Write selected technology to shared memory
                     } else if ((string)argv[i + 1] == "l" || (string)argv[i + 1] == "lte") {
                         cout << "  ===== Forced Use of LTE =====" << endl;
                         GSV_tech_arg = (char*)"l";
                         force_tech = 3;
+                        sprintf(gsv_writer, "%s", "2"); // Write selected technology to shared memory
                     }
                 } else {
                     cout << "  ===== Forced Use of Both Technologies Enabled =====" << endl;
                     GSV_tech_arg = (char*)"b";
                     force_tech = 1;
+                    sprintf(gsv_writer, "%s", "0"); // Write selected technology to shared memory
                 }
             }
 

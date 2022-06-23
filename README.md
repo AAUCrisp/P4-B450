@@ -21,6 +21,7 @@ Eth: 192.168.1.185
 `-b` to force both LTE & WiFi  
 `-i <int>` to run a specific amount of times  
 `-m` to disable the Signal Monitor process  
+`-d <int>` to set the delay between "sensing" and sending data  
 
 WiFi: 192.168.1.160  
 LTE: 10.20.0.10  
