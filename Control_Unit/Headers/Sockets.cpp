@@ -388,8 +388,8 @@ void *transmit_command_WiFi(void *socket, char *message) {
 }
 
 // Function to check GSV and transfer via chosen technologies
-const char *GSV_KEY2 = "GSV_KEY";
-const char *GSV_actuator = (char *)shm_read(32, GSV_KEY2);
+//const char *GSV_KEY2 = "GSV_KEY";
+//const char *GSV_actuator = (char *)shm_read(32, GSV_KEY2);
 
 void *transmit_command(void *socket, char *message) {
     Sockets *sock = (Sockets *)socket;
@@ -402,9 +402,9 @@ void *transmit_command(void *socket, char *message) {
              << message << endl;
     }
     int LenWiFi = sizeof(sock->Client_act_WiFi);
-    //const char *GSV;
-    //const char *GSV_KEY1 = "GSV_KEY1";
-    //GSV = (char*)shm_read(32, GSV_KEY1);
+    const char *GSV;
+    const char *GSV_KEY1 = "GSV_KEY1";
+    GSV = (char*)shm_read(32, GSV_KEY1);
     int gsv = atoi(GSV_actuator);
     if (print_act_out == 1) {
         cout << "  Sending || Global Signal Variable is: " << GSV_actuator << endl;
