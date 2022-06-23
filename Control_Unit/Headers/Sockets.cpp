@@ -358,7 +358,7 @@ void *transmit_command_LTE(void *socket, char *message) {
 
     File.open("log.txt", std::ofstream::out | std::ofstream::app);
     File << "\nLTE Transmitting;" << message << "    Time;" << send_time << "\n \n";
-    File.close()
+    File.close();
 
         if (print_act_out == 1 || message_only == 1) {
         printf("  Sending || LTE (Actuator) || Sending Command to Actuator: %s\n", message);
