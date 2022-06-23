@@ -14,8 +14,9 @@ Use `-help` for full info on arguments.
 ##### Example:
 `./ControlUnit -m -t b -v`  
 `./SignalMonitoring -t b -v`  
-  
-WiFi: 192.168.1.136  
+##### IP addresses:  
+WiFi: 192.168.1.136 (Bamses_Hytte)  
+WiFi: 10.42.0.1   (AP)  
 LTE: 10.20.0.16  
 Eth: 192.168.1.185  
 
@@ -28,8 +29,9 @@ Eth: 192.168.1.185
 ##### Example:
 `./Sensor -m -d 1000 -i 10000`  
 `./SensorMonitoring`  
-
-WiFi: 192.168.1.160  
+##### IP addresses:
+WiFi: 192.168.1.160 (Bamses_Hytte)  
+WiFi: 10.42.0.118   (AP)  
 LTE: 10.20.0.10  
 Eth: 192.168.1.119  
 
@@ -37,8 +39,9 @@ Eth: 192.168.1.119
 ##### Example:
 `./Actuator`  
 `./ActuatorMonitoring`  
-
-WiFi: 192.168.1.143  
+##### IP addresses:
+WiFi: 192.168.1.143 (Bamses_Hytte)  
+WiFi: 10.42.0.119   (AP)  
 LTE: 10.20.0.13  
 Eth: 192.168.1.117  
 
