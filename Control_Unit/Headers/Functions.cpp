@@ -33,26 +33,31 @@ void WiFi_command(Sockets sock) {
         if (troubleshooting_print == 1) {
             cout << "  WiFi Command Function || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
         }
+        // with packet ID : sscanf((const char*)message, "%d: %d %[^\n]", &ID, &data, msgDump);
         sscanf((const char*)message, "%d: %d %[^\n]", &ID, &data, msgDump);
-        printf("Do I reach this?1\n");
+       // printf("Do I reach this?1\n");
         if (use_grid == 1) {
             coordinate = grid[data];
         } else {
-            printf("Do I reach this?2\n");
+           // printf("Do I reach this?2\n");
             coordinate = convert_to_coordinate(data, use_hex);
+            /*
             packet_ID = to_string(count);
             packet_ID.append(": ");
             packet_ID.append(coordinate);
-            count++;
+            count++; 
+            */
         }
         if (message_only == 1) {
             cout << "  WiFi Command Function || Message Parsed from Sockets as INT is: " << data << endl;
             cout << "  WiFi Command Function || Coordinate for Actuator is: " << packet_ID << "\n\n\n"
                  << endl;
         }
-        char WiFimsg[packet_ID.size() + 1];
-        strcpy(WiFimsg, packet_ID.c_str());
-        std::cout << "is this WiFimsg? " << WiFimsg;
+        //char WiFimsg[packet_ID.size() + 1] with packet ID;
+        char WiFimsg[coordinate.size() + 1];
+        //strcpy(WiFimsg, packet_ID.c_str()); with packet ID
+        strcpy(WiFimsg, coordinate.c_str());
+       // std::cout << "is this WiFimsg? " << WiFimsg;
         transmit_command(&sock, WiFimsg);
     }
 }
@@ -79,23 +84,28 @@ void* LTE_command(void* socket) {
         if (troubleshooting_print == 1) {
             cout << "  LTE Command Function || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
         }
-        sscanf((const char*)message, "%d: %d %[^\n]", &ID, &data, msgDump);
+        // With packet ID : sscanf((const char*)message, "%d: %d %[^\n]", &ID, &data, msgDump);
+        sscanf((const char*)message, "%d %[^\n]", &data, msgDump);
         if (use_grid == 1) {
             coordinate = grid[data];
         } else {
             coordinate = convert_to_coordinate(data, use_hex);
+            /*
             packet_ID = to_string(count);
             packet_ID.append(": ");
             packet_ID.append(coordinate);
             count++;
+            */
         }
         if (message_only == 1) {
         cout << "  LTE Command Function || Message Parsed from Sockets as INT is: " << data << endl;
         cout << "  LTE Command Function || Coordinate for Actuator is: " << packet_ID << "\n\n\n" << endl;
         }
-        char LTEmsg[packet_ID.size() + 1];
-        strcpy(LTEmsg, packet_ID.c_str());
-        std::cout << "is this LTEmsg? " << LTEmsg;
+        // char LTEmsg[packet_ID.size() + 1];
+        char LTEmsg[coordinate.size() + 1];
+        //strcpy(LTEmsg, packet_ID.c_str());
+        strcpy(LTEmsg, coordinate.c_str());
+       // std::cout << "is this LTEmsg? " << LTEmsg;
         transmit_command(sock, LTEmsg);
     }
 }
