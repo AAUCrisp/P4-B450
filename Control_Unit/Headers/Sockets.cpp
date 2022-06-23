@@ -394,7 +394,7 @@ void *transmit_command_WiFi(void *socket, char *message) {
 // const char *GSV_KEY2 = "GSV_KEY";
 // const char *GSV_actuator = (char *)shm_read(32, GSV_KEY2);
 
-void *transmit_command(void *socket, char *message) {
+void *transmit_command(void *socket, char *message, int gsv) {
     Sockets *sock = (Sockets *)socket;
     if (print_act_out == 1) {
         cout << "  ======================\n  ==== SEND COMMAND ====\n  ======= entry ========\n"
@@ -406,14 +406,14 @@ void *transmit_command(void *socket, char *message) {
     }
     int LenWiFi = sizeof(sock->Client_act_WiFi);
 
-    const char *GSV_KEY = "GSV_KEY";
-    const char *GSV; 
-    GSV = (char *)shm_read(32, GSV_KEY);
+    //const char *GSV_KEY = "GSV_KEY";
+    //const char *GSV; 
+    //GSV = (char *)shm_read(32, GSV_KEY);
 
-    int gsv = atoi(GSV);
+    //int gsv = atoi(GSV);
     
-    printf("GSV: %s\n", (char *)GSV);
-    printf("gsv converted: %d\n", gsv);
+    //printf("GSV: %s\n", (char *)GSV);
+    //printf("gsv converted: %d\n", gsv);
 
     if (print_act_out == 1) {
         cout << "  Sending || Global Signal Variable is: " << GSV << endl;
