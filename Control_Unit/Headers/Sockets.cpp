@@ -60,8 +60,8 @@ typedef struct _time_struct {
 
 /* Define buffers & PORT number */
 #define BUFFER 1024
-char message_LTE[BUFFER];
-char message_WiFi[BUFFER];
+char *message_LTE[BUFFER];
+char *message_WiFi[BUFFER];
 char *receive_LTE;
 char *receive_WiFi;
 char curr_time[128];
@@ -182,6 +182,7 @@ void *receiveWiFi(void *socket) {
         printf("\n\n  Incoming || WiFi (Sensor) || Message is: %s\n", message_WiFi);
         printf("  Incoming || WiFi (Sensor) || Message received at: %s \n\n", curr_time);
     }
+    sscanf(message_WiFi, "%d %[^\n]", &sensor_int, msg_time);
     File.open("log.txt", std::ofstream::out | std::ofstream::app);
     File << "\n\n"
          << sensor_int << ";" << msg_time << ";"
@@ -392,8 +393,6 @@ void *transmit_command_WiFi(void *socket, char *message) {
 // Function to check GSV and transfer via chosen technologies
 // const char *GSV_KEY2 = "GSV_KEY";
 // const char *GSV_actuator = (char *)shm_read(32, GSV_KEY2);
-const char *GSV_KEY1 = "GSV_KEY";
-const char *GSV = (char *)shm_read(32, GSV_KEY1);
 
 void *transmit_command(void *socket, char *message) {
     Sockets *sock = (Sockets *)socket;
@@ -406,9 +405,13 @@ void *transmit_command(void *socket, char *message) {
              << message << endl;
     }
     int LenWiFi = sizeof(sock->Client_act_WiFi);
-    
 
-    int gsv = atoi(GSV);
+    const char *GSV_KEY1 = "GSV_KEY";
+    const char *GSV; 
+    //(char *)shm_read(32, GSV_KEY1);
+
+    //int gsv = atoi(GSV);
+    int gsv = 0;
     printf("GSV: %s\n", (char *)GSV);
     printf("gsv converted: %d\n", gsv);
 
@@ -445,6 +448,7 @@ void *transmit_command(void *socket, char *message) {
         cout << "\n  ======== end ==========\n  ==== SEND COMMAND ====\n  ======================\n"
              << endl;
     }
+    
     return message;
 }
 
