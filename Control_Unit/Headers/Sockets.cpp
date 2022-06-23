@@ -303,6 +303,10 @@ void *transmit_GSV_WiFi(void *socket) {
     }
     GSV = shm_read(32, GSV_KEY);
     TX_WiFi = sendto(sock->sockWiFi_TRANSMITTER, GSV, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, LenWiFi);
+    if (TX_WiFi == -1) {
+        perror("failed to transmit via WiFi");
+        exit(0);
+    }
     if(print_GSV == 1) {
         printf("  GSV || WiFi || Technology Variable is: %s\n", GSV);
         printf("  GSV || WiFi || Message transmitted at: %s\n\n", curr_time);
