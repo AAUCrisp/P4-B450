@@ -79,7 +79,7 @@ void* LTE_command(void* socket) {
         if (troubleshooting_print == 1) {
             cout << "  LTE Command Function || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
         }
-        //sscanf((const char*)message, "%d: %d %[^\n]", &ID, &data, msgDump);
+        sscanf((const char*)message, "%d: %d %[^\n]", &ID, &data, msgDump);
         if (use_grid == 1) {
             coordinate = grid[data];
         } else {
