@@ -48,11 +48,13 @@ int main(int argc, char *argv[]) {
     //const char* Actuator_IP_WiFi = "10.42.0.118";     //Default: Actuator IP (AP)
     // const char* Actuator_IP_WiFi = "192.168.1.136";     // Control IP
     // const char* Actuator_IP_WiFi = "192.168.1.160";     // Sensor IP
+    //const char* LTE = "wwan0";
+    //const char* WiFi = "wlan0";
 
     const char* Actuator_IP_LTE = "127.0.0.1"; //test loopback
     const char* Actuator_IP_WiFi = "127.0.0.1";  // test loopback
-    const char* LTE = "wwan0";
-    const char* WiFi = "wlan0";
+    const char* LTE = "lo";
+    const char* WiFi = "lo";
 
     /* Misc */
     pthread_t T1;
