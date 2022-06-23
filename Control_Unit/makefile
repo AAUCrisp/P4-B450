@@ -1,9 +1,8 @@
 all: SignalMonitoring ControlUnit
 
 git:
-	git pull
 	make clean
-	timeout 1
+	git pull
 	make
 
 #NYT FIX: HUSK OG FIX HEADERS OG INCLUDES...
