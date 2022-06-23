@@ -50,7 +50,7 @@ void WiFi_command(Sockets sock) {
             coordinate = grid[data];
         } else {
             // printf("Do I reach this?2\n");
-            coordinate = convert_to_coordinate(data, use_hex);
+            //coordinate = convert_to_coordinate(data, use_hex); //VIRKER MÅSKE
             /*
             packet_ID = to_string(count);
             packet_ID.append(": ");
@@ -67,8 +67,8 @@ void WiFi_command(Sockets sock) {
         //char* WiFimsg = (char*)malloc(99);
         char WiFimsg[coordinate.size()+1];
         // strcpy(WiFimsg, packet_ID.c_str()); with packet ID
-        
-        //strcpy(WiFimsg, coordinate.c_str());  // DEN HER VIRKER (MÅSKE)
+
+        strcpy(WiFimsg, coordinate.c_str());  // DEN HER VIRKER (MÅSKE)
 
         // std::cout << "is this WiFimsg? " << WiFimsg;
 
@@ -113,7 +113,7 @@ void* LTE_command(void* socket) {
         if (use_grid == 1) {
             coordinate = grid[data];
         } else {
-            coordinate = convert_to_coordinate(data, use_hex);
+            //coordinate = convert_to_coordinate(data, use_hex); // VIRKER MÅSKE
             /*
             packet_ID = to_string(count);
             packet_ID.append(": ");
@@ -131,7 +131,7 @@ void* LTE_command(void* socket) {
         char LTEmsg[coordinate.size() + 1];
         // strcpy(LTEmsg, packet_ID.c_str());
 
-        //strcpy(LTEmsg, coordinate.c_str()); // DEN HER VIRKER (MÅSKE)
+        strcpy(LTEmsg, coordinate.c_str()); // DEN HER VIRKER (MÅSKE)
 
         // std::cout << "is this LTEmsg? " << LTEmsg;
 
