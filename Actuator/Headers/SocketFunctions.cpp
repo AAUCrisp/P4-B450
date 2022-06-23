@@ -217,7 +217,7 @@ void *receiveWiFi(void *socket) {
     // File.open("log.txt", std::ofstream::out | std::ofstream::app);
 
     while (1) {
-        fp1 = fopen("log.txt", "a+");
+        fp2 = fopen("log.txt", "a+");
         printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
         Timestamp();
@@ -231,13 +231,13 @@ void *receiveWiFi(void *socket) {
         /*File << "\n\n"
              << "Received at: " << curr_time << "\n"
              << message << " WiFi";*/
-        fputs("Received at: ", fp1);
-        fputs(curr_time, fp1);
-        fputs("\n", fp1);
-        fputs(message, fp1);
-        fputs(" WiFi\n\n", fp1);
+        fputs("Received at: ", fp2);
+        fputs(curr_time, fp2);
+        fputs("\n", fp2);
+        fputs(message, fp2);
+        fputs(" WiFi\n\n", fp2);
 
-        fclose(fp1);
+        fclose(fp2);
         // File.close();
     }
 }
