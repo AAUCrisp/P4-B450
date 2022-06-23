@@ -12,8 +12,8 @@ Use `-help` for full info on arguments.
 `-v`to print out shit... *no arguments* for all, or `m` for important messages  
 `-s <int>` to set how often it monitors  
 ##### Example:
-`./ControlUnit -m -t b -v`
-`./SignalMonitoring -t b -v`
+`./ControlUnit -m -t b -v`  
+`./SignalMonitoring -t b -v`  
   
 WiFi: 192.168.1.136  
 LTE: 10.20.0.16  
@@ -26,8 +26,8 @@ Eth: 192.168.1.185
 `-m` to disable the Signal Monitor process  
 `-d <int>` to set the delay between "sensing" and sending data  
 ##### Example:
-`./Sensor -m -d 1000 -i 10000`
-`./SensorMonitoring`
+`./Sensor -m -d 1000 -i 10000`  
+`./SensorMonitoring`  
 
 WiFi: 192.168.1.160  
 LTE: 10.20.0.10  
@@ -35,8 +35,8 @@ Eth: 192.168.1.119
 
 ## Actuator:
 ##### Example:
-`./Actuator`
-`./ActuatorMonitoring`
+`./Actuator`  
+`./ActuatorMonitoring`  
 
 WiFi: 192.168.1.143  
 LTE: 10.20.0.13  
