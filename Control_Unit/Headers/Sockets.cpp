@@ -347,7 +347,7 @@ void *transmit_command_LTE(void *socket, char *message) {
     // File.close();
 
     /* Open logging file */
-    fp3 = fopen("commands log.txt", "a+");
+    fp3 = fopen("commands_log.txt", "a+");
     fprintf(fp3, "%s %s %s\n", message, send_time, "LTE");
     fclose(fp3);
 
@@ -373,7 +373,7 @@ void *transmit_command_WiFi(void *socket, char *message) {
     // File.close();
 
     /* Open logging file */
-    fp4 = fopen("commands log.txt", "a+");
+    fp4 = fopen("commands_log.txt", "a+");
     fprintf(fp3, "%s %s %s\n", message, send_time, "WiFi");
     fclose(fp4);
 
