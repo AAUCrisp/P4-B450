@@ -34,10 +34,6 @@ typedef struct _time_struct{
 
 #endif
 
-/* Global file descriptors for writing commands */
-static FILE *fp3;
-static FILE *fp4;
-
 /* Function to create receiver socket */
 void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi);
 

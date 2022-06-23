@@ -25,6 +25,9 @@ void WiFi_command(Sockets sock) {
     string packet_ID;
     string coordinate;
 
+    /* File descriptor for writing commands */
+    FILE* fp3;
+
     printf("\n\n  =======================\n   WiFi Listener Started\n  =======================\n\n");
 
     if (troubleshooting_print == 1) {
@@ -37,9 +40,6 @@ void WiFi_command(Sockets sock) {
     const char* GSV_KEY = "GSV_KEY";
     const char* GSV_read;
     GSV_read = (char*)shm_read(32, GSV_KEY);
-
-    /* Open logging file */
-    fp3 = fopen("commands_log.txt", "a+");
 
     while (1) {
         message = (void*)receiveWiFi((void*)&sock);
@@ -63,7 +63,7 @@ void WiFi_command(Sockets sock) {
         }
         if (message_only == 1) {
             cout << "  WiFi Command Function || Message Parsed from Sockets as INT is: " << data << endl;
-            //cout << "  WiFi Command Function || Coordinate for Actuator is: " << coordinate << "\n\n\n" //Without packet ID
+            // cout << "  WiFi Command Function || Coordinate for Actuator is: " << coordinate << "\n\n\n" //Without packet ID
             cout << "  WiFi Command Function || Coordinate for Actuator is: " << packet_ID << "\n\n\n"
                  << endl;
         }
@@ -76,10 +76,17 @@ void WiFi_command(Sockets sock) {
 
         // std::cout << "is this WiFimsg? " << WiFimsg;
 
+
         /* Read from shared memory, pass to transmit function */
         int gsv = atoi(GSV_read);  // Convert to integer
         // printf("converted GSV: %s\n", (char*)GSV_read);
         transmit_command(&sock, WiFimsg, gsv);
+        char *timeWiFi = Timestamp();
+
+        /* Open logging file */
+        fp3 = fopen("commands_log.txt", "a+");
+        fprintf(fp3, "%s %s %s\n", WiFimsg, timeWiFi, "WiFi");
+        fclose(fp3);
     }
 }
 
@@ -93,6 +100,9 @@ void* LTE_command(void* socket) {
     string packet_ID;
     string coordinate;
 
+    /* File descriptor for writing commands */
+    FILE* fp4;
+
     printf("\n\n  ======================\n   LTE Listener Started\n  ======================\n\n");
 
     if (troubleshooting_print == 1) {
@@ -105,9 +115,6 @@ void* LTE_command(void* socket) {
     const char* GSV_KEY = "GSV_KEY";
     const char* GSV_read;
     GSV_read = (char*)shm_read(32, GSV_KEY);
-
-    /* Open logging file */
-    fp4 = fopen("commands_log.txt", "a+");
 
     while (1) {
         message = (void*)receiveLTE((void*)sock);
@@ -129,7 +136,7 @@ void* LTE_command(void* socket) {
         }
         if (message_only == 1) {
             cout << "  LTE Command Function || Message Parsed from Sockets as INT is: " << data << endl;
-            //cout << "  LTE Command Function || Coordinate for Actuator is: " << coordinate << "\n\n\n" //Without packet ID
+            // cout << "  LTE Command Function || Coordinate for Actuator is: " << coordinate << "\n\n\n" //Without packet ID
             cout << "  LTE Command Function || Coordinate for Actuator is: " << packet_ID << "\n\n\n"
                  << endl;
         }
@@ -142,10 +149,17 @@ void* LTE_command(void* socket) {
 
         // std::cout << "is this LTEmsg? " << LTEmsg;
 
+
         /* Read from shared memory, pass to transmit function */
         int gsv = atoi(GSV_read);  // Convert to integer
         // printf("converted GSV: %s\n", (char*)GSV_read);
         transmit_command(sock, LTEmsg, gsv);
+        char* timeLTE = Timestamp();
+
+        /* Open logging file */
+        fp4 = fopen("commands_log.txt", "a+");
+        fprintf(fp4, "%s %s %s\n", LTEmsg, timeLTE, "LTE");
+        fclose(fp4);
     }
 }
 
