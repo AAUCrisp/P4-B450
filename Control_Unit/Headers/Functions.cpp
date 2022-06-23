@@ -14,7 +14,7 @@
 
 void WiFi_command(Sockets sock) {
     void* message;
-    char msgDump[1024];
+    char msgDump[32];
     int data;
     int ID;
     int count = 0;
@@ -58,7 +58,7 @@ void WiFi_command(Sockets sock) {
 void* LTE_command(void* socket) {
     Sockets* sock = (Sockets*)socket;
     void* message;
-    char msgDump[1024];
+    char msgDump[32];
     int data;
     int ID;
     int count = 0;
