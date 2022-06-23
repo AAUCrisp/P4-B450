@@ -276,12 +276,12 @@ void *transmit_GSV_LTE(void *socket) {
     Sockets *sock = (Sockets *)socket;
     int LenLTE = sizeof(sock->ClientLTE_TRANSMITTER);
     const char *GSV;
-    const char *GSV_KEY = "GSV_KEY";
-    GSV = shm_read(32, GSV_KEY);
+    const char *GSV_KEY2 = "GSV_KEY2";
+    GSV = shm_read(32, GSV_KEY2);
     if(print_GSV == 1) {
         printf("\n\n  GSV || LTE || Transmit Socket: %d\n", sock->sockLTE_TRANSMITTER);
     }
-    GSV = shm_read(32, GSV_KEY);
+    GSV = shm_read(32, GSV_KEY2);
     TX_LTE = sendto(sock->sockLTE_TRANSMITTER, GSV, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, LenLTE);
     if(print_GSV == 1) {
         printf("  GSV || LTE || Technology Variable is: %s\n", GSV);
@@ -297,11 +297,11 @@ void *transmit_GSV_WiFi(void *socket) {
     Sockets *sock = (Sockets *)socket;
     int LenWiFi = sizeof(sock->ClientWiFi_TRANSMITTER);
     const char *GSV;
-    const char *GSV_KEY = "GSV_KEY";
+    const char *GSV_KEY3 = "GSV_KEY3";
     if(print_GSV == 1) {
         printf("\n\n  GSV || WiFi || Transmit Socket: %d\n", sock->sockWiFi_TRANSMITTER);
     }
-    GSV = shm_read(32, GSV_KEY);
+    GSV = shm_read(32, GSV_KEY3);
     TX_WiFi = sendto(sock->sockWiFi_TRANSMITTER, GSV, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, LenWiFi);
     if(print_GSV == 1) {
         printf("  GSV || WiFi || Technology Variable is: %s\n", GSV);
@@ -403,8 +403,8 @@ void *transmit_command(void *socket, char *message) {
     }
     int LenWiFi = sizeof(sock->Client_act_WiFi);
     //const char *GSV;
-    //const char *GSV_KEY = "GSV_KEY";
-    //GSV = (char*)shm_read(32, GSV_KEY);
+    //const char *GSV_KEY1 = "GSV_KEY1";
+    //GSV = (char*)shm_read(32, GSV_KEY1);
     int gsv = atoi(GSV_actuator);
     if (print_act_out == 1) {
         cout << "  Sending || Global Signal Variable is: " << GSV_actuator << endl;
