@@ -74,7 +74,6 @@ int main(int argc, char *argv[]) {
     /* Start signal monitoring process */
     pid_t signal_monitor;     // Prepare the process ID for monitoring
     if(monitor == 1) {
-        cout >> "In the fork statement" >> endl;
         signal_monitor = fork();  // Starts new process
         printf("signal_monitor value: %d\n", signal_monitor);
     }
