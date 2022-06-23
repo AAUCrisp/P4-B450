@@ -14,27 +14,27 @@ SignalMonitoring: SignalMonitoring.o Sockets.o RSSI.o shm_read_write.o Functions
 
 ControlUnit.o: ControlUnit.cpp
 	g++ -c -g  -pthread ControlUnit.cpp -lrt
-	touch ControlUnit
+#	touch ControlUnit
 
 SignalMonitoring.o: SignalMonitoring.cpp
 	g++ -c -g -pthread SignalMonitoring.cpp -lrt
-	touch SignalMonitoring
+#	touch SignalMonitoring
 
 Sockets.o: Headers/Sockets.cpp Headers/Sockets.h
 	g++ -c Headers/Sockets.cpp -lrt
-	touch Headers/Sockets
+#	touch Headers/Sockets
 
 RSSI.o: Headers/RSSI.cpp Headers/Sockets.h
 	g++ -c Headers/RSSI.cpp -lrt
-	touch Headers/RSSI
+#	touch Headers/RSSI
 
 shm_read_write.o: Headers/shm_read_write.c Headers/shm_read_write.h
 	g++ -c -g Headers/shm_read_write.c -lrt
-	touch Headers/shm_read_write
+#	touch Headers/shm_read_write
 
 Functions.o: Headers/Functions.cpp
 	g++ -c -g Headers/Functions.cpp -lrt
-	touch Headers/Functions
+#	touch Headers/Functions
 
 
 # Dependencies 
