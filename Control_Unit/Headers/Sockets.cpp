@@ -271,49 +271,10 @@ void Sockets_Actuator(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, ui
     sock->Client_act_WiFi.sin_addr.s_addr = inet_addr(IP_WiFi);
 }
 
-// Function to transmit GSV via LTE (OLD)
-/*
-void *transmit_GSV_LTE(void *socket) {
-    Sockets *sock = (Sockets *)socket;
-    int LenLTE = sizeof(sock->ClientLTE_TRANSMITTER);
-    const char *GSV;
-    const char *GSV_KEY2 = "GSV_KEY2";
-    GSV = shm_read(32, GSV_KEY2);
-    if(print_GSV == 1) {
-        printf("\n\n  GSV || LTE || Transmit Socket: %d\n", sock->sockLTE_TRANSMITTER);
-    }
-    GSV = shm_read(32, GSV_KEY2);
-    TX_LTE = sendto(sock->sockLTE_TRANSMITTER, GSV, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, LenLTE);
-    if(print_GSV == 1) {
-        printf("  GSV || LTE || Technology Variable is: %s\n", GSV);
-        printf("  GSV || LTE || Message transmitted at: %s\n\n", curr_time);
-    }
-    pthread_exit(NULL);
-}
-*/
 
-// Function to transmit GSV via WiFi (OLD)
-/*
-void *transmit_GSV_WiFi(void *socket) {
-    Sockets *sock = (Sockets *)socket;
-    int LenWiFi = sizeof(sock->ClientWiFi_TRANSMITTER);
-    const char *GSV;
-    const char *GSV_KEY3 = "GSV_KEY3";
-    if(print_GSV == 1) {
-        printf("\n\n  GSV || WiFi || Transmit Socket: %d\n", sock->sockWiFi_TRANSMITTER);
-    }
-    GSV = shm_read(32, GSV_KEY3);
-    TX_WiFi = sendto(sock->sockWiFi_TRANSMITTER, GSV, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, LenWiFi);
-    if(print_GSV == 1) {
-        printf("  GSV || WiFi || Technology Variable is: %s\n", GSV);
-        printf("  GSV || WiFi || Message transmitted at: %s\n\n", curr_time);
-    }
-    pthread_exit(NULL);
-}
-*/
 
-// Function to transmit GSV via LTE (NEW)
-void NEW_transmit_GSV_LTE(void *socket, char *gsv) {
+// Function to transmit GSV via LTE
+void transmit_GSV_LTE(void *socket, char *gsv) {
     Sockets *sock = (Sockets *)socket;
     int LenLTE = sizeof(sock->ClientLTE_TRANSMITTER);
 
@@ -329,8 +290,8 @@ void NEW_transmit_GSV_LTE(void *socket, char *gsv) {
     }
 }
 
-// Function to transmit GSV via WiFi (NEW)
-void NEW_transmit_GSV_WiFi(void *socket, char *gsv) {
+// Function to transmit GSV via WiFi
+void transmit_GSV_WiFi(void *socket, char *gsv) {
     Sockets *sock = (Sockets *)socket;
     int LenWiFi = sizeof(sock->ClientWiFi_TRANSMITTER);
 
