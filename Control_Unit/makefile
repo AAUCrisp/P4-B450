@@ -2,6 +2,7 @@ all: SignalMonitoring ControlUnit
 
 git:
 	git pull
+	make clean
 	make
 
 #NYT FIX: HUSK OG FIX HEADERS OG INCLUDES...
