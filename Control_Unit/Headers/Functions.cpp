@@ -63,10 +63,10 @@ void WiFi_command(Sockets sock) {
             cout << "  WiFi Command Function || Coordinate for Actuator is: " << coordinate << "\n\n\n"
                  << endl;
         }
-        char WiFimsg[packet_ID.size() + 1]  // with packet ID;
-                                            // char* WiFimsg = (char*)malloc(99);
-                                            // char WiFimsg[coordinate.size() + 1];
-            strcpy(WiFimsg, packet_ID.c_str());  // with packet ID
+        char WiFimsg[packet_ID.size() + 1];  // with packet ID;
+                                             // char* WiFimsg = (char*)malloc(99);
+                                             // char WiFimsg[coordinate.size() + 1];
+        strcpy(WiFimsg, packet_ID.c_str());  // with packet ID
 
         // strcpy(WiFimsg, coordinate.c_str());  // DEN HER VIRKER (MÅSKE)
 
@@ -74,7 +74,7 @@ void WiFi_command(Sockets sock) {
 
         /* Read from shared memory, pass to transmit function */
         int gsv = atoi(GSV_read);  // Convert to integer
-        //printf("converted GSV: %s\n", (char*)GSV_read);
+        // printf("converted GSV: %s\n", (char*)GSV_read);
         transmit_command(&sock, WiFimsg, gsv);
     }
 }
@@ -136,7 +136,7 @@ void* LTE_command(void* socket) {
 
         /* Read from shared memory, pass to transmit function */
         int gsv = atoi(GSV_read);  // Convert to integer
-        //printf("converted GSV: %s\n", (char*)GSV_read);
+        // printf("converted GSV: %s\n", (char*)GSV_read);
         transmit_command(sock, LTEmsg, gsv);
     }
 }
