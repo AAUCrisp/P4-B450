@@ -18,7 +18,7 @@
 
 void WiFi_command(Sockets sock) {
     void* message;
-    char msgDump[1];
+    char msgDump[32];
     int data;
     int ID;
     int count = 0;
@@ -44,7 +44,7 @@ void WiFi_command(Sockets sock) {
             cout << "  WiFi Command Function || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
         }
         // with packet ID : sscanf((const char*)message, "%d: %d %[^\n]", &ID, &data, msgDump);
-        sscanf((const char*)message, "%d %[^\n]", &data, msgDump);
+       // sscanf((const char*)message, "%d %[^\n]", &data, msgDump); //VIRKER MÅSKE
         // printf("Do I reach this?1\n");
         if (use_grid == 1) {
             coordinate = grid[data];
@@ -83,7 +83,7 @@ void WiFi_command(Sockets sock) {
 void* LTE_command(void* socket) {
     Sockets* sock = (Sockets*)socket;
     void* message;
-    char msgDump[1];
+    char msgDump[32];
     int data;
     int ID;
     int count = 0;
@@ -109,7 +109,7 @@ void* LTE_command(void* socket) {
             cout << "  LTE Command Function || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
         }
         // With packet ID : sscanf((const char*)message, "%d: %d %[^\n]", &ID, &data, msgDump);
-        sscanf((const char*)message, "%d %[^\n]", &data, msgDump);
+        //sscanf((const char*)message, "%d %[^\n]", &data, msgDump); //VIRKER MÅSKE
         if (use_grid == 1) {
             coordinate = grid[data];
         } else {
