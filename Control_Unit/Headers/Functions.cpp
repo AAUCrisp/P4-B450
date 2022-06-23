@@ -342,25 +342,21 @@ void Argument_Setup(int argc, char* argv[]) {
                     if ((firstCharacter == '-') || (string)argv[i + 1] == "b" || (string)argv[i + 1] == "both") {
                         cout << "  ===== Forced Use of Both Technologies Enabled =====" << endl;
                         GSV_tech_arg = (char*)"b";
-                        force_tech = 1;
-                        sprintf(gsv_writer, "%s", "0");  // Write selected technology to shared memory
+                        sprintf(gsv_writer, "%s", "0"); // Write selected technology to shared memory
 
                     } else if ((string)argv[i + 1] == "w" || (string)argv[i + 1] == "wifi") {
                         cout << "  ===== Forced Use of WiFi =====" << endl;
                         GSV_tech_arg = (char*)"w";
-                        force_tech = 2;
-                        sprintf(gsv_writer, "%s", "1");  // Write selected technology to shared memory
+                        sprintf(gsv_writer, "%s", "1"); // Write selected technology to shared memory
                     } else if ((string)argv[i + 1] == "l" || (string)argv[i + 1] == "lte") {
                         cout << "  ===== Forced Use of LTE =====" << endl;
                         GSV_tech_arg = (char*)"l";
-                        force_tech = 3;
-                        sprintf(gsv_writer, "%s", "2");  // Write selected technology to shared memory
+                        sprintf(gsv_writer, "%s", "2"); // Write selected technology to shared memory
                     }
                 } else {
                     cout << "  ===== Forced Use of Both Technologies Enabled =====" << endl;
                     GSV_tech_arg = (char*)"b";
-                    force_tech = 1;
-                    sprintf(gsv_writer, "%s", "0");  // Write selected technology to shared memory
+                    sprintf(gsv_writer, "%s", "0"); // Write selected technology to shared memory
                 }
             }
 
