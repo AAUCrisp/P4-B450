@@ -242,7 +242,7 @@ void *receiveWiFi(void *socket) {
         //fputs(message, fp2);
         //fputs(" WiFi\n\n", fp2);
 
-        fprintf(fp2, "Received at: %s\n %s WiFi", curr_time, message);
+        fprintf(fp2, "Received at: %s\n %s WiFi : ", curr_time, message);
 
         fclose(fp2);
         // File.close();
