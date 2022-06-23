@@ -418,17 +418,6 @@ void *transmit_command(void *socket, char *message) {
     if (print_act_out == 1) {
         cout << "  Sending || Global Signal Variable is: " << GSV << endl;
     }
-    if (force_tech > 0) {
-        if (force_tech == 1) {
-            gsv = 0;
-        }
-        if (force_tech == 2) {
-            gsv = 1;
-        }
-        if (force_tech == 3) {
-            gsv = 2;
-        }
-    }
     printf("Do you print this? 2\n");
     if ((gsv == 0) || (gsv == 1)) {
         if (print_act_out == 1) {
