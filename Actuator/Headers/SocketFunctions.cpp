@@ -182,7 +182,7 @@ void *receiveLTE(void *socket) {
     // File.open("log.txt", std::ofstream::out | std::ofstream::app);
 
     while (1) {
-        fp1 = fopen("Logs/log.txt", "a+");
+        fp1 = fopen("Logs/log.txt", "w");
         printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
         RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
         Timestamp();
@@ -224,7 +224,7 @@ void *receiveWiFi(void *socket) {
     // File.open("log.txt", std::ofstream::out | std::ofstream::app);
 
     while (1) {
-        fp2 = fopen("Logs/log.txt", "a+");
+        fp2 = fopen("Logs/log.txt", "w");
         printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
         Timestamp();
