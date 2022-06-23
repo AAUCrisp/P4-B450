@@ -345,7 +345,7 @@ void *transmit_command_LTE(void *socket, char *message) {
     // File << "\nLTE Transmitting;" << message << "    Time;" << send_time << "\n \n";
     // File.close();
 
-    fprintf(fp3, "%s %s %s\n", message, send_time, "LTE");
+    //fprintf(fp3, "%s %s %s\n", message, send_time, "LTE");
     //fclose(fp3);
 
     printf("  Sending || LTE (Actuator) || Sending Command to Actuator: %s\n", message);
@@ -370,7 +370,7 @@ void *transmit_command_WiFi(void *socket, char *message) {
     // File.close();
 
     
-    fprintf(fp4, "%s %s %s\n", message, send_time, "WiFi");
+    //fprintf(fp4, "%s %s %s\n", message, send_time, "WiFi");
     //fclose(fp4);
 
     printf("  Sending || WiFi (Actuator) || Sending Command to Actuator: %s\n", message);
