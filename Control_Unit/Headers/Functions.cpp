@@ -117,7 +117,7 @@ void* LTE_command(void* socket) {
 
         /* Read from shared memory, pass to transmit function */
         int gsv = atoi(GSV_read);
-        transmit_command(sock, LTEmsg);
+        transmit_command(sock, LTEmsg, gsv);
     }
 }
 
@@ -348,21 +348,21 @@ void Argument_Setup(int argc, char* argv[]) {
                     if ((firstCharacter == '-') || (string)argv[i + 1] == "b" || (string)argv[i + 1] == "both") {
                         cout << "  ===== Forced Use of Both Technologies Enabled =====" << endl;
                         GSV_tech_arg = (char*)"b";
-                        sprintf(gsv_writer, "%s", "0"); // Write selected technology to shared memory
+                        sprintf(gsv_writer, "%s", "0");  // Write selected technology to shared memory
 
                     } else if ((string)argv[i + 1] == "w" || (string)argv[i + 1] == "wifi") {
                         cout << "  ===== Forced Use of WiFi =====" << endl;
                         GSV_tech_arg = (char*)"w";
-                        sprintf(gsv_writer, "%s", "1"); // Write selected technology to shared memory
+                        sprintf(gsv_writer, "%s", "1");  // Write selected technology to shared memory
                     } else if ((string)argv[i + 1] == "l" || (string)argv[i + 1] == "lte") {
                         cout << "  ===== Forced Use of LTE =====" << endl;
                         GSV_tech_arg = (char*)"l";
-                        sprintf(gsv_writer, "%s", "2"); // Write selected technology to shared memory
+                        sprintf(gsv_writer, "%s", "2");  // Write selected technology to shared memory
                     }
                 } else {
                     cout << "  ===== Forced Use of Both Technologies Enabled =====" << endl;
                     GSV_tech_arg = (char*)"b";
-                    sprintf(gsv_writer, "%s", "0"); // Write selected technology to shared memory
+                    sprintf(gsv_writer, "%s", "0");  // Write selected technology to shared memory
                 }
             }
 
