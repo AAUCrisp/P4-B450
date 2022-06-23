@@ -47,7 +47,7 @@ void WiFi_command(Sockets sock) {
        // sscanf((const char*)message, "%d %[^\n]", &data, msgDump); //VIRKER MÅSKE
         // printf("Do I reach this?1\n");
         if (use_grid == 1) {
-            coordinate = grid[data];
+            //coordinate = grid[data]; //VIRKER MÅSKE
         } else {
             // printf("Do I reach this?2\n");
             //coordinate = convert_to_coordinate(data, use_hex); //VIRKER MÅSKE
@@ -111,7 +111,7 @@ void* LTE_command(void* socket) {
         // With packet ID : sscanf((const char*)message, "%d: %d %[^\n]", &ID, &data, msgDump);
         //sscanf((const char*)message, "%d %[^\n]", &data, msgDump); //VIRKER MÅSKE
         if (use_grid == 1) {
-            coordinate = grid[data];
+            //coordinate = grid[data]; //VIRKER MÅSKE
         } else {
             //coordinate = convert_to_coordinate(data, use_hex); // VIRKER MÅSKE
             /*
