@@ -21,16 +21,9 @@
 
 #define buffer 32
 
-
 pthread_t wifi, lte;
 
-// Both = 0     WiFi = 1        LTE = 2
-char* gsv =  (char*) "0";  // Global Signal Variable   W = WiFi   L = LTE    B = Both
-const char* GSV_KEY1 = "GSV_KEY";
-char* gsv_writer;
-
 /* Signal Quality Settings */
-
 // WiFi
 int rssi_bad = -80;
 int rssi_mid = -70;
@@ -160,7 +153,11 @@ int main(int argc, char *argv[]) {
     int counter = 0;
 
     /* Initialize shared memory */
-    gsv_writer = (char*)shm_write(buffer, GSV_KEY1);
+    // Both = 0     WiFi = 1        LTE = 2
+    char* gsv = (char*)"0";  // Global Signal Variable   W = WiFi   L = LTE    B = Both
+    const char* GSV_KEY = "GSV_KEY";
+    char* gsv_writer;
+    gsv_writer = (char*)shm_write(buffer, GSV_KEY);
 
     while (1) {
         wifi_rssi[counter] = RSSI_VAL();

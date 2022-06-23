@@ -76,6 +76,7 @@ int main(int argc, char *argv[]) {
     if(monitor == 1) {
         cout >> "In the fork statement"
         signal_monitor = fork();  // Starts new process
+        printf("signal_monitor value: %d\n", signal_monitor);
     }
     if (signal_monitor == 0) {
         if(troubleshooting_print == 1) {
@@ -85,7 +86,7 @@ int main(int argc, char *argv[]) {
 
         char* path = (char*) "./SignalMonitoring";                 // Path of the file for new process to run
         char* args[] = { (char*)"./SignalMonitoring&", GSV_arg_used, GSV_print, GSV_sleep, GSV_sleep_arg, GSV_tech, GSV_tech_arg, (char*) NULL};       // Command for the function to execute, always ended on NULL argument
-        execv(path, args);                                  // Tells the new process to "reset" and run a different code instead
+        //execv(path, args);                                  // Tells the new process to "reset" and run a different code instead
         printf("  ERROR: DIDN'T START THE MONITORING PROCESS!!\n");  // Should never get this far!
     } 
 
