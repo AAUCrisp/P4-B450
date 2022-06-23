@@ -349,10 +349,10 @@ void *transmit_command_LTE(void *socket, char *message) {
     /* Open logging file */
     fp3 = fopen("commands_log.txt", "a+");
     fprintf(fp3, "%s %s %s\n", message, send_time, "LTE");
-    fclose(fp3);
+    //fclose(fp3);
 
     printf("  Sending || LTE (Actuator) || Sending Command to Actuator: %s\n", message);
-    printf("  Sending || LTE (Actuator) || Message transmitted at: %s\n\n", curr_time);
+    printf("  Sending || LTE (Actuator) || Message transmitted at: %s\n\n", send_time);
     if (print_act_out == 1 || message_only == 1) {
     }
 
@@ -375,10 +375,10 @@ void *transmit_command_WiFi(void *socket, char *message) {
     /* Open logging file */
     fp4 = fopen("commands_log.txt", "a+");
     fprintf(fp4, "%s %s %s\n", message, send_time, "WiFi");
-    fclose(fp4);
+    //fclose(fp4);
 
     printf("  Sending || WiFi (Actuator) || Sending Command to Actuator: %s\n", message);
-    printf("  Sending || WiFi (Actuator) || Message transmitted at: %s\n\n", curr_time);
+    printf("  Sending || WiFi (Actuator) || Message transmitted at: %s\n\n", send_time);
     if (print_act_out == 1 || message_only == 1) {
     }
 
