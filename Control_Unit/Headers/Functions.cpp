@@ -64,7 +64,7 @@ void WiFi_command(Sockets sock) {
                  << endl;
         }
         // char WiFimsg[packet_ID.size() + 1] with packet ID;
-        char* WiFimsg = (char*)malloc(9);
+        char* WiFimsg = (char*)malloc(99);
         // strcpy(WiFimsg, packet_ID.c_str()); with packet ID
         strcpy(WiFimsg, coordinate.c_str());
         // std::cout << "is this WiFimsg? " << WiFimsg;
@@ -73,7 +73,7 @@ void WiFi_command(Sockets sock) {
         int gsv = atoi(GSV_read);
         printf("converted GSV: %d\n", gsv);
         transmit_command(&sock, WiFimsg, gsv);
-        free(WiFimsg);
+        //free(WiFimsg);
     }
 }
 
@@ -124,7 +124,7 @@ void* LTE_command(void* socket) {
                  << endl;
         }
         // char LTEmsg[packet_ID.size() + 1];
-        char* LTEmsg = (char*)malloc(9);
+        char* LTEmsg = (char*)malloc(99);
         // strcpy(LTEmsg, packet_ID.c_str());
         strcpy(LTEmsg, coordinate.c_str());
         // std::cout << "is this LTEmsg? " << LTEmsg;
@@ -133,7 +133,7 @@ void* LTE_command(void* socket) {
         int gsv = atoi(GSV_read);
         printf("converted GSV: %d\n", gsv);
         transmit_command(sock, LTEmsg, gsv);
-        free(LTEmsg);
+        //free(LTEmsg);
     }
 }
 
