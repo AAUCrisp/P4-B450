@@ -411,7 +411,7 @@ void *transmit_command(void *socket, char *message) {
     (char *)shm_read(32, GSV_KEY);
 
     int gsv = atoi(GSV);
-    int gsv = 0;
+    
     printf("GSV: %s\n", (char *)GSV);
     printf("gsv converted: %d\n", gsv);
 
