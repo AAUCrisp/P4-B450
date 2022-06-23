@@ -241,6 +241,5 @@ void *transmitWiFi(void *socket, char *message) {
         printf("Sensor || WiFi || Message transmitted at %s\n\n", curr_timeWiFi);
     }
     fprintf(fp2, "%s %s\n", sendWiFi, "WiFi");
-    fclose(fp1
-    2);
+    fclose(fp2);
 }
