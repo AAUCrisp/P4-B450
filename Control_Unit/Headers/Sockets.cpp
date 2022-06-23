@@ -374,7 +374,7 @@ void *transmit_command_WiFi(void *socket, char *message) {
 
     /* Open logging file */
     fp4 = fopen("commands_log.txt", "a+");
-    fprintf(fp3, "%s %s %s\n", message, send_time, "WiFi");
+    fprintf(fp4, "%s %s %s\n", message, send_time, "WiFi");
     fclose(fp4);
 
     printf("  Sending || WiFi (Actuator) || Sending Command to Actuator: %s\n", message);

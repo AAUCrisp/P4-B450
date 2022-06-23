@@ -51,7 +51,7 @@ int main() {
     pthread_t T1, T2;
     char* curr_time;
     int* Processed_Data;
-    int iter = 0;
+    int iter = 100000;
 
     /* Execution time variables */
     int count = 0;
@@ -113,7 +113,9 @@ int main() {
             }
             Execution_Sum += elapsed;
             count++;
+
             printf("count: %d\n", count);
+
             if (count == iter) {
                 break;
             }
