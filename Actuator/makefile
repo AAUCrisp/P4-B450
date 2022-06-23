@@ -2,7 +2,6 @@ all: Git Actuator ActuatorMonitoring
 
 Git:
 	git pull
-	make
 
 Actuator: Actuator.o shm_read_write.o ActuatorFunctions.o
 	g++ -pthread Actuator.o shm_read_write.o ActuatorFunctions.o -o Actuator -lrt
@@ -33,6 +32,6 @@ SocketFunctions.o: Headers/SocketFunctions.cpp Headers/SocketFunctions.h
 clean:
 	rm -f Actuator ActuatorMonitoring
 	rm *.o
-	rm -f Headers/ActuatorFunctions Headers/shm_read_write Headers/SocketFunctions
+#	rm -f Headers/ActuatorFunctions Headers/shm_read_write Headers/SocketFunctions
 	rm *.txt
 	@echo "clean completed!"
