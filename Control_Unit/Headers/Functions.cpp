@@ -65,7 +65,7 @@ void WiFi_command(Sockets sock) {
         }
         // char WiFimsg[packet_ID.size() + 1] with packet ID;
         //char* WiFimsg = (char*)malloc(99);
-        char* WiFimsg[coordinate.size()+1];
+        char WiFimsg[coordinate.size()+1];
         // strcpy(WiFimsg, packet_ID.c_str()); with packet ID
         strcpy(WiFimsg, coordinate.c_str());
         // std::cout << "is this WiFimsg? " << WiFimsg;
@@ -126,7 +126,7 @@ void* LTE_command(void* socket) {
         }
         // char LTEmsg[packet_ID.size() + 1];
         //char* LTEmsg = (char*)malloc(99);
-        char* LTEmsg[coordinate.size() + 1];
+        char LTEmsg[coordinate.size() + 1];
         // strcpy(LTEmsg, packet_ID.c_str());
         strcpy(LTEmsg, coordinate.c_str());
         // std::cout << "is this LTEmsg? " << LTEmsg;
