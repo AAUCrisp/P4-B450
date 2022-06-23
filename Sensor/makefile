@@ -30,6 +30,6 @@ shm_read_write.o: Headers/shm_read_write.c Headers/shm_read_write.h
 clean:
 	rm -f Sensor SensorMonitoring
 	rm *.o
-	rm -f Headers/shm_read_write Headers/SocketFunctions
+#	rm -f Headers/shm_read_write Headers/SocketFunctions
 	rm *.txt
 	@echo "clean completed!"
