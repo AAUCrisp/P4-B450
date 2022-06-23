@@ -78,8 +78,8 @@ int TX_LTE, TX_WiFi;
 /* File descriptor */
 FILE *fp1;
 FILE *fp2;
-FILE *fp3;
-FILE *fp4;
+static FILE *fp3;
+static FILE *fp4;
 
 /* Function to timestamp packets */
 char *Timestamp() {
@@ -385,10 +385,6 @@ void *transmit_command_WiFi(void *socket, char *message) {
 // Function to check GSV and transfer via chosen technologies
 void *transmit_command(void *socket, char *message, int gsv) {
     Sockets *sock = (Sockets *)socket;
-
-    /* Open logging file */
-    fp4 = fopen("commands_log.txt", "a+");
-    fp3 = fopen("commands_log.txt", "a+");
 
     if (print_act_out == 1) {
         cout << "  ======================\n  ==== SEND COMMAND ====\n  ======= entry ========\n"

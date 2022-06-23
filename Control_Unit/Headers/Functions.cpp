@@ -38,6 +38,9 @@ void WiFi_command(Sockets sock) {
     const char* GSV_read;
     GSV_read = (char*)shm_read(32, GSV_KEY);
 
+    /* Open logging file */
+    fp3 = fopen("commands_log.txt", "a+");
+
     while (1) {
         message = (void*)receiveWiFi((void*)&sock);
         if (troubleshooting_print == 1) {
@@ -102,6 +105,9 @@ void* LTE_command(void* socket) {
     const char* GSV_KEY = "GSV_KEY";
     const char* GSV_read;
     GSV_read = (char*)shm_read(32, GSV_KEY);
+
+    /* Open logging file */
+    fp4 = fopen("commands_log.txt", "a+");
 
     while (1) {
         message = (void*)receiveLTE((void*)sock);
