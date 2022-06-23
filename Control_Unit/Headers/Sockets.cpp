@@ -392,6 +392,7 @@ void *transmit_command_WiFi(void *socket, char *message) {
 // Function to check GSV and transfer via chosen technologies
 // const char *GSV_KEY2 = "GSV_KEY";
 // const char *GSV_actuator = (char *)shm_read(32, GSV_KEY2);
+int stop = 0;
 
 void *transmit_command(void *socket, char *message) {
     Sockets *sock = (Sockets *)socket;
@@ -406,13 +407,13 @@ void *transmit_command(void *socket, char *message) {
     int LenWiFi = sizeof(sock->Client_act_WiFi);
     const char *GSV;
     const char *GSV_KEY = "GSV_KEY";
-    int stop = 0;
+
     if (stop == 0) {
         GSV = (char *)shm_read(32, GSV_KEY);
         printf("stop: %d\n", stop);
         printf("Do I enter this 1 time only?\n");
+        stop = 1;
     }
-    stop = 1;
 
     int gsv = atoi(GSV);
     // printf("GSV: %s\n", (char *)GSV);
