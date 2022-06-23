@@ -69,10 +69,17 @@ char msg_time[128];
 char send_tech[128];
 char *send_time;
 int sensor_int;
+
 /* Misc */
 int bindLTE, bindWiFi;
 int RX_LTE, RX_WiFi;
 int TX_LTE, TX_WiFi;
+
+/* File descriptor */
+FILE *fp1;
+FILE *fp2;
+FILE *fp3;
+FILE *fp4;
 
 /* Function to timestamp packets */
 char *Timestamp() {
@@ -144,10 +151,14 @@ void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *
     printf("  Sensor Connection || LTE & WiFi Receiving Sockets sucessfully bound\n");
 }
 
-/* Function to receive LTE packets */
+/* Function to receive random integer via LTE */
 void *receiveLTE(void *socket) {
     Sockets *sock = (Sockets *)socket;
     int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
+
+    /* Open logging file */
+    fp1 = fopen("log.txt", "a+");
+
     if (print_sen_in == 1) {
         printf("\n\n  Incoming || LTE (Sensor) || Receive Socket: %d\n", sock->sockLTE_RECEIVER);
     }
@@ -158,22 +169,28 @@ void *receiveLTE(void *socket) {
         printf("\n\n  Incoming || LTE (Sensor) || Message is: %s\n", message_LTE);
         printf("  Incoming || LTE (Sensor) || Message received at: %s\n\n", curr_time);
     }
-    sscanf((const char*)message_LTE, "%d %[^\n]", &sensor_int, msg_time);
+    sscanf((const char *)message_LTE, "%d %[^\n]", &sensor_int, msg_time);
 
     // PRØV AT FJERNE LOGGING
-    //File.open("log.txt", std::ofstream::out | std::ofstream::app);
-    //File << "\n\n"
+    // File.open("log.txt", std::ofstream::out | std::ofstream::app);
+    // File << "\n\n"
     //     << sensor_int << ";" << msg_time << ";"
     //     << "LTE Sensor: Received at time: " << curr_time << "\n";
-    //File.close();
+    // File.close();
+
+    fprintf(fp1, "%s %s\n", message_LTE, "LTE");
+    fclose(fp1);
 
     return message_LTE;
 }
 
-/* Function to receive WiFi packets */
+/* Function to receive random integer via WiFi */
 void *receiveWiFi(void *socket) {
     Sockets *sock = (Sockets *)socket;
     int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
+
+    /* Open logging file */
+    fp2 = fopen("log.txt", "a+");
 
     if (print_sen_in == 1) {
         printf("\n\n  Incoming || WiFi (Sensor) || Receive Socket: %d\n", sock->sockWiFi_RECEIVER);
@@ -185,15 +202,18 @@ void *receiveWiFi(void *socket) {
         printf("\n\n  Incoming || WiFi (Sensor) || Message is: %s\n", message_WiFi);
         printf("  Incoming || WiFi (Sensor) || Message received at: %s \n\n", curr_time);
     }
-    sscanf((const char*)message_WiFi, "%d %[^\n]", &sensor_int, msg_time);
+    sscanf((const char *)message_WiFi, "%d %[^\n]", &sensor_int, msg_time);
 
-    //PRØV AT FJERNE LOGGING
-    //File.open("log.txt", std::ofstream::out | std::ofstream::app);
-    //File << "\n\n"
-    //     << sensor_int << ";" << msg_time << ";"
-    //     << "WiFi Sensor: Received at Time" << curr_time << "\n";
-    //File.close();
-    
+    // PRØV AT FJERNE LOGGING
+    // File.open("log.txt", std::ofstream::out | std::ofstream::app);
+    // File << "\n\n"
+    //      << sensor_int << ";" << msg_time << ";"
+    //      << "WiFi Sensor: Received at Time" << curr_time << "\n";
+    // File.close();
+
+    fprintf(fp2, "%s %s\n", message_WiFi, "WiFi");
+    fclose(fp2);
+
     return message_WiFi;
 }
 
@@ -277,8 +297,6 @@ void Sockets_Actuator(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, ui
     sock->Client_act_WiFi.sin_addr.s_addr = inet_addr(IP_WiFi);
 }
 
-
-
 // Function to transmit GSV via LTE
 void transmit_GSV_LTE(void *socket, char *gsv) {
     Sockets *sock = (Sockets *)socket;
@@ -324,15 +342,20 @@ void *transmit_command_LTE(void *socket, char *message) {
     TX_LTE = sendto(sock->act_LTE, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_LTE, LenLTE);
     send_time = Timestamp();
 
-    //File.open("log.txt", std::ofstream::out | std::ofstream::app);
-    //File << "\nLTE Transmitting;" << message << "    Time;" << send_time << "\n \n";
-    //File.close();
+    // File.open("log.txt", std::ofstream::out | std::ofstream::app);
+    // File << "\nLTE Transmitting;" << message << "    Time;" << send_time << "\n \n";
+    // File.close();
 
+    /* Open logging file */
+    fp3 = fopen("commands log.txt", "a+");
+    fprintf(fp3, "%s %s %s\n", message, send_time, "LTE");
+    fclose(fp3);
+
+    printf("  Sending || LTE (Actuator) || Sending Command to Actuator: %s\n", message);
+    printf("  Sending || LTE (Actuator) || Message transmitted at: %s\n\n", curr_time);
     if (print_act_out == 1 || message_only == 1) {
-        printf("  Sending || LTE (Actuator) || Sending Command to Actuator: %s\n", message);
-        printf("  Sending || LTE (Actuator) || Message transmitted at: %s\n\n", curr_time);
     }
-    
+
     return 0;
 }
 
@@ -345,22 +368,24 @@ void *transmit_command_WiFi(void *socket, char *message) {
     }
     TX_WiFi = sendto(sock->act_WiFi, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_WiFi, LenWiFi);
     send_time = Timestamp();
-    //File.open("log.txt", std::ofstream::out | std::ofstream::app);
-    //File << "WiFi Transmitting;" << message << "    Time;" << send_time;
-    //File.close();
+    // File.open("log.txt", std::ofstream::out | std::ofstream::app);
+    // File << "WiFi Transmitting;" << message << "    Time;" << send_time;
+    // File.close();
 
+    /* Open logging file */
+    fp4 = fopen("commands log.txt", "a+");
+    fprintf(fp3, "%s %s %s\n", message, send_time, "WiFi");
+    fclose(fp4);
+
+    printf("  Sending || WiFi (Actuator) || Sending Command to Actuator: %s\n", message);
+    printf("  Sending || WiFi (Actuator) || Message transmitted at: %s\n\n", curr_time);
     if (print_act_out == 1 || message_only == 1) {
-        printf("  Sending || WiFi (Actuator) || Sending Command to Actuator: %s\n", message);
-        printf("  Sending || WiFi (Actuator) || Message transmitted at: %s\n\n", curr_time);
     }
-    
+
     return 0;
 }
 
 // Function to check GSV and transfer via chosen technologies
-// const char *GSV_KEY2 = "GSV_KEY";
-// const char *GSV_actuator = (char *)shm_read(32, GSV_KEY2);
-
 void *transmit_command(void *socket, char *message, int gsv) {
     Sockets *sock = (Sockets *)socket;
     if (print_act_out == 1) {
@@ -373,38 +398,27 @@ void *transmit_command(void *socket, char *message, int gsv) {
     }
     int LenWiFi = sizeof(sock->Client_act_WiFi);
 
-    //const char *GSV_KEY = "GSV_KEY";
-    //const char *GSV; 
-    //GSV = (char *)shm_read(32, GSV_KEY);
-
-    //int gsv = atoi(GSV);
-    
-    //printf("GSV: %s\n", (char *)GSV);
-    //printf("gsv converted: %d\n", gsv);
-
-        cout << "  Sending || Global Signal Variable is: " << gsv << endl;
+    cout << "  Sending || Global Signal Variable is: " << gsv << endl;
     if (print_act_out == 1) {
     }
-    
+
     if ((gsv == 0) || (gsv == 1)) {
         if (print_act_out == 1) {
         }
-            cout << "  Sending || Transfer command via WiFi" << endl;
+        cout << "  Sending || Transfer command via WiFi" << endl;
         transmit_command_WiFi(sock, message);
-        
     }
     if ((gsv == 0) || (gsv == 2)) {
         if (print_act_out == 1) {
         }
-            cout << "  Sending || Transfer command via LTE" << endl;
+        cout << "  Sending || Transfer command via LTE" << endl;
         transmit_command_LTE(sock, message);
-        
     }
     if (print_act_out == 1) {
         cout << "\n  ======== end ==========\n  ==== SEND COMMAND ====\n  ======================\n"
              << endl;
     }
-    
+
     return 0;
 }
 
