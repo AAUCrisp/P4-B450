@@ -2,6 +2,7 @@ all: Git Actuator ActuatorMonitoring
 
 Git:
 	git pull
+	make
 
 Actuator: Actuator.o shm_read_write.o ActuatorFunctions.o
 	g++ -pthread Actuator.o shm_read_write.o ActuatorFunctions.o -o Actuator -lrt
