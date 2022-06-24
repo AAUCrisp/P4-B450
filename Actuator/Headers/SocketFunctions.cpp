@@ -187,10 +187,11 @@ void *receiveLTE(void *socket) {
     while (1) {
         fp1 = fopen("Logs/log.txt", "a+");
         printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
+        EXECUTION = false;
+        cout << "EXECUTION variable: " << EXECUTION << "\n";
         if (recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE) != 0) {
             EXECUTION = true;
-            cout << "EXECUTION variable: "
-                 << EXECUTION << "\n";
+            cout << "EXECUTION variable: " << EXECUTION << "\n";
             Timestamp();
 
             if (print_COMMANDS == 1) {
@@ -237,11 +238,11 @@ void *receiveWiFi(void *socket) {
     while (1) {
         fp2 = fopen("Logs/log.txt", "a+");
         printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
-
+        EXECUTION = false;
+        cout << "EXECUTION variable: " << EXECUTION << "\n";
         if (recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi) != 0) {
             EXECUTION = true;
-            cout << "EXECUTION variable: "
-                 << EXECUTION << "\n";
+            cout << "EXECUTION variable: " << EXECUTION << "\n";
             Timestamp();
 
             if (print_COMMANDS == 1) {
@@ -265,9 +266,6 @@ void *receiveWiFi(void *socket) {
 
             fclose(fp2);
             // File.close();
-        } else {
-            cout << "EXECUTION variable: " << EXECUTION << "\n";
-            EXECUTION = false;
         }
     }
 }
