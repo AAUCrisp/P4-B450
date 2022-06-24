@@ -273,7 +273,7 @@ void *receiveWiFi(void *socket) {
             EXECUTION = true;
             STOP = 1;
             sprintf(stopshit, "%d", STOP);
-            cout << "if STOP variable: " << STOP << "\n";
+            cout << "if STOP variable: " << stopshit << "\n";
             cout << "if EXECUTION variable: " << EXECUTION << "\n";
             testvar = 1;
             cout << "if testvar: " << testvar << "\n";
@@ -281,7 +281,7 @@ void *receiveWiFi(void *socket) {
             EXECUTION = false;
             STOP = 0;
             sprintf(stopshit, "%d", STOP);
-            cout << "else if STOP variable: " << STOP << "\n";
+            cout << "else if STOP variable: " << stopshit << "\n";
             cout << "else if EXECUTION variable: " << EXECUTION << "\n";
             cout << " == message: " << message << "\n";
             cout << " == temp_msg: " << temp_msg << "\n";

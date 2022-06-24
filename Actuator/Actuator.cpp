@@ -96,7 +96,7 @@ int main() {
 
         while (1) {
             cout << "start STOP variable: " << STOP << "\n";
-            if ((int)STOP == 1) {
+            if ((int)stopshit == 1) {
                 cout << "if STOP variable: " << STOP << "\n";
                 printf("COMMANDS from shared memory: %s\n", COMMANDS);
 
@@ -124,7 +124,7 @@ int main() {
 
                 printf("count: %d\n", count);
 
-                if ((int)STOP == 0) {
+                if ((int)stopshit == 0) {
                     break;
                 }
             } else {
