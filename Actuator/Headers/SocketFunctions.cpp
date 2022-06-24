@@ -56,6 +56,7 @@ char *receive;
 int bindLTE, bindWiFi;
 int RX_LTE, RX_WiFi;
 int TX_LTE, TX_WiFi;
+static bool EXECUTION = false;
 
 /* Define threads */
 pthread_t T1, T2;
@@ -184,33 +185,37 @@ void *receiveLTE(void *socket) {
     while (1) {
         fp1 = fopen("Logs/log.txt", "a+");
         printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
-        RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
-        Timestamp();
+        if (RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE)) {
+            EXECUTION = true;
+            Timestamp();
 
-        if (print_COMMANDS == 1) {
-            // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
-            printf("LTE || Message from LTE received at: %s\n", curr_time);
-            printf("LTE || Message: %s from Control Unit \n\n", message);
+            if (print_COMMANDS == 1) {
+                // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
+                printf("LTE || Message from LTE received at: %s\n", curr_time);
+                printf("LTE || Message: %s from Control Unit \n\n", message);
+            }
+            sprintf(writer, "%s", message);
+            /*File << "\n\n"
+                 << "Received at: " << curr_time << "\n"
+                 << message << " LTE";
+            File.close();*/
+
+            // fputs("Received at: ", fp1);
+            // fputs(curr_time, fp1);
+            // fputs("\n", fp1);
+            // fputs(message, fp1);
+            // fputs(" LTE\n\n", fp1);
+
+            // fprintf(fp1, "Received at: %s\n %s    LTE : ", curr_time, message);
+
+            // fprintf(fp1, "%s %s\n%s %s\n\n", "Received at:", curr_time, message, "LTE");
+            fprintf(fp1, "%s %s %s\n", message, curr_time, "LTE");
+
+            fclose(fp1);
+            // File.close();
+        } else {
+            EXECUTION = false;
         }
-        sprintf(writer, "%s", message);
-        /*File << "\n\n"
-             << "Received at: " << curr_time << "\n"
-             << message << " LTE";
-        File.close();*/
-
-        // fputs("Received at: ", fp1);
-        // fputs(curr_time, fp1);
-        // fputs("\n", fp1);
-        // fputs(message, fp1);
-        // fputs(" LTE\n\n", fp1);
-
-        // fprintf(fp1, "Received at: %s\n %s    LTE : ", curr_time, message);
-
-        // fprintf(fp1, "%s %s\n%s %s\n\n", "Received at:", curr_time, message, "LTE");
-        fprintf(fp1, "%s %s %s\n", message, curr_time, "LTE");
-
-        fclose(fp1);
-        // File.close();
     }
 }
 
@@ -226,7 +231,7 @@ void *receiveWiFi(void *socket) {
     while (1) {
         fp2 = fopen("Logs/log.txt", "a+");
         printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
-        
+
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
         Timestamp();
 

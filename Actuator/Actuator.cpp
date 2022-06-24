@@ -27,8 +27,9 @@
 //#include "Headers/ActuatorFunctions.cpp"
 //#include "Headers/SocketFunctions.h"
 #include <iostream>
-#include "Headers/shm_read_write.h"
+
 #include "Headers/ActuatorFunctions.h"
+#include "Headers/shm_read_write.h"
 
 using namespace std;
 
@@ -70,8 +71,8 @@ int main() {
     char msg[1024];
 
     /* Create child process */
-    pid_t Actuator_monitor;     // Prepare the process ID for monitoring
-    //Actuator_monitor = fork();  // Starts new process
+    pid_t Actuator_monitor;  // Prepare the process ID for monitoring
+    // Actuator_monitor = fork();  // Starts new process
 
     /* Checks if child process is running */
     if (Actuator_monitor == 0) {
@@ -79,7 +80,7 @@ int main() {
         printf("Actuator monitoring process ID is: %d \n", getpid());
         char path[] = "./ActuatorMonitoring";
         const char* args[] = {"./ActuatorMonitoring", NULL};
-        //execvp(path, (char* const*)args);
+        // execvp(path, (char* const*)args);
 
     } else {
         /* Initialize SHM object reading */
@@ -89,35 +90,38 @@ int main() {
         clock_gettime(CLOCK_REALTIME, &begin_program);
 
         while (1) {
-            
-            printf("COMMANDS from shared memory: %s\n", COMMANDS);
+            if (EXECUTION == true) {
+                printf("COMMANDS from shared memory: %s\n", COMMANDS);
 
-            snprintf(msg, sizeof(msg), "%s", COMMANDS);  // Is "msg" even used for anything???
+                snprintf(msg, sizeof(msg), "%s", COMMANDS);  // Is "msg" even used for anything???
 
-            /* Start timing code execution of code */
-            clock_gettime(CLOCK_REALTIME, &begin);
+                /* Start timing code execution of code */
+                clock_gettime(CLOCK_REALTIME, &begin);
 
-            processData(COMMANDS);
+                processData(COMMANDS);
 
-            /* Stop timing code execution of code */
-            clock_gettime(CLOCK_REALTIME, &end);
+                /* Stop timing code execution of code */
+                clock_gettime(CLOCK_REALTIME, &end);
 
-            seconds = end.tv_sec - begin.tv_sec;
-            nanoseconds = end.tv_nsec - begin.tv_nsec;
+                seconds = end.tv_sec - begin.tv_sec;
+                nanoseconds = end.tv_nsec - begin.tv_nsec;
 
-            /* Calculation of elapsed time sum */
-            elapsed = seconds + nanoseconds * 1e-9;
-            if (elapsed > 10000) {
-                fail_count++;
-                elapsed = 0;
-            }
-            Execution_Sum += elapsed;
-            count++;
+                /* Calculation of elapsed time sum */
+                elapsed = seconds + nanoseconds * 1e-9;
+                if (elapsed > 10000) {
+                    fail_count++;
+                    elapsed = 0;
+                }
+                Execution_Sum += elapsed;
+                count++;
 
-            printf("count: %d\n", count);
+                printf("count: %d\n", count);
 
-            if (count == iter) {
-                break;
+                if (EXECUTION == false) {
+                    break;
+                }
+            } else {
+                printf("Not receiving data\n");
             }
         }
     }
