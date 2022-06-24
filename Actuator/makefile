@@ -1,14 +1,14 @@
-all: Actuator ActuatorMonitoring
+all: Actuator.out ActuatorMonitoring.out
 
 git:
 	git pull
 	make
 	rm Logs/log.txt Logs/processed_commands.txt
 
-Actuator: Actuator.o shm_read_write.o ActuatorFunctions.o
+Actuator.out: Actuator.o shm_read_write.o ActuatorFunctions.o
 	g++ -pthread Actuator.o shm_read_write.o ActuatorFunctions.o -o Actuator.out -lrt
 
-ActuatorMonitoring: ActuatorMonitoring.o shm_read_write.o SocketFunctions.o
+ActuatorMonitoring.out: ActuatorMonitoring.o shm_read_write.o SocketFunctions.o
 	g++ -pthread ActuatorMonitoring.o shm_read_write.o SocketFunctions.o -o ActuatorMonitoring.out -lrt
 
 Actuator.o: Actuator.cpp
@@ -34,6 +34,7 @@ SocketFunctions.o: Headers/SocketFunctions.cpp Headers/SocketFunctions.h
 clean:
 	rm -f Actuator ActuatorMonitoring
 	rm *.o
+	rm *.out
 #	rm -f Headers/ActuatorFunctions Headers/shm_read_write Headers/SocketFunctions
 #	rm *.txt
 	@echo "clean completed!"
