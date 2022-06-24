@@ -180,9 +180,9 @@ void *receiveLTE(void *socket) {
     unsigned int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
 
     // File.open("log.txt", std::ofstream::out | std::ofstream::app);
-    fp1 = fopen("log.txt", "a+");
 
     while (1) {
+        fp1 = fopen("Logs/log.txt", "w");
         printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
         RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
         Timestamp();
@@ -197,12 +197,20 @@ void *receiveLTE(void *socket) {
              << "Received at: " << curr_time << "\n"
              << message << " LTE";
         File.close();*/
-        fputs("Received at: ", fp1);
-        fputs(curr_time, fp1);
-        fputs("\n", fp1);
-        fputs(message, fp1);
-        fputs(" LTE\n\n", fp1);
-        //fclose(fp1);
+
+        // fputs("Received at: ", fp1);
+        // fputs(curr_time, fp1);
+        // fputs("\n", fp1);
+        // fputs(message, fp1);
+        // fputs(" LTE\n\n", fp1);
+
+        // fprintf(fp1, "Received at: %s\n %s    LTE : ", curr_time, message);
+
+        // fprintf(fp1, "%s %s\n%s %s\n\n", "Received at:", curr_time, message, "LTE");
+        fprintf(fp1, "%s %s %s\n", message, curr_time, "LTE");
+
+        fclose(fp1);
+        // File.close();
     }
 }
 
@@ -213,10 +221,10 @@ void *receiveWiFi(void *socket) {
     char *writer = (char *)shm_write(SHM_BUFFER, COMMANDS_KEY);
     unsigned int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
 
-    //File.open("log.txt", std::ofstream::out | std::ofstream::app);
-    fp2 = fopen("log.txt", "a+");
+    // File.open("log.txt", std::ofstream::out | std::ofstream::app);
 
     while (1) {
+        fp2 = fopen("Logs/log.txt", "w");
         printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
         Timestamp();
@@ -230,13 +238,17 @@ void *receiveWiFi(void *socket) {
         /*File << "\n\n"
              << "Received at: " << curr_time << "\n"
              << message << " WiFi";*/
-        fputs("Received at: ", fp2);
-        fputs(curr_time, fp2);
-        fputs("\n", fp2);
-        fputs(message, fp2);
-        fputs(" WiFi\n\n", fp2);
 
-        //fclose(fp2);
-        //File.close();
+        // fputs("Received at: ", fp2);
+        // fputs(curr_time, fp2);
+        // fputs("\n", fp2);
+        // fputs(message, fp2);
+        // fputs(" WiFi\n\n", fp2);
+
+        // fprintf(fp2, "%s %s\n%s %s\n\n", "Received at:", curr_time, message, "WiFi");
+        fprintf(fp2, "%s %s %s\n", message, curr_time, "WiFi");
+
+        fclose(fp2);
+        // File.close();
     }
 }

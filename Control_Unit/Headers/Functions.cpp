@@ -7,6 +7,10 @@
 #include "Sockets.h"
 // #include "Headers/Sockets.cpp"
 #endif
+#ifndef SHM
+#define SHM
+#include "shm_read_write.h"
+#endif
 #ifndef CONVERTER
 #define CONVERTER
 #include "../converter.cpp"
@@ -21,6 +25,9 @@ void WiFi_command(Sockets sock) {
     string packet_ID;
     string coordinate;
 
+    /* File descriptor for writing commands */
+    FILE* fp3;
+
     printf("\n\n  =======================\n   WiFi Listener Started\n  =======================\n\n");
 
     if (troubleshooting_print == 1) {
@@ -28,16 +35,27 @@ void WiFi_command(Sockets sock) {
         cout << "  WiFi Command Function || WiFi Actuator Socket: " << sock.act_WiFi << endl;
         cout << "  WiFi Command Function || LTE Actuator Socket: " << sock.act_LTE << endl;
     }
+
+    /* Initialize shared memory */
+    const char* GSV_KEY = "GSV_KEY";
+    const char* GSV_read;
+    GSV_read = (char*)shm_read(32, GSV_KEY);
+
     while (1) {
         message = (void*)receiveWiFi((void*)&sock);
         if (troubleshooting_print == 1) {
             cout << "  WiFi Command Function || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
         }
+        // with packet ID :
         sscanf((const char*)message, "%d: %d %[^\n]", &ID, &data, msgDump);
+        // sscanf((const char*)message, "%d %[^\n]", &data, msgDump); //VIRKER MÅSKE
+        //  printf("Do I reach this?1\n");
         if (use_grid == 1) {
-            coordinate = grid[data];
+            coordinate = grid[data];  // VIRKER MÅSKE
         } else {
-            coordinate = convert_to_coordinate(data, use_hex);
+            // printf("Do I reach this?2\n");
+            coordinate = convert_to_coordinate(data, use_hex);  // VIRKER MÅSKE
+
             packet_ID = to_string(count);
             packet_ID.append(": ");
             packet_ID.append(coordinate);
@@ -45,13 +63,30 @@ void WiFi_command(Sockets sock) {
         }
         if (message_only == 1) {
             cout << "  WiFi Command Function || Message Parsed from Sockets as INT is: " << data << endl;
+            // cout << "  WiFi Command Function || Coordinate for Actuator is: " << coordinate << "\n\n\n" //Without packet ID
             cout << "  WiFi Command Function || Coordinate for Actuator is: " << packet_ID << "\n\n\n"
                  << endl;
         }
-        char WiFimsg[packet_ID.size()+1];
-        strcpy(WiFimsg, packet_ID.c_str());
-        std::cout << WiFimsg;
-        transmit_command(&sock, WiFimsg);
+        char WiFimsg[packet_ID.size() + 1];  // with packet ID;
+                                             // char* WiFimsg = (char*)malloc(99);
+                                             // char WiFimsg[coordinate.size() + 1];
+        strcpy(WiFimsg, packet_ID.c_str());  // with packet ID
+
+        // strcpy(WiFimsg, coordinate.c_str());  // DEN HER VIRKER (MÅSKE)
+
+        // std::cout << "is this WiFimsg? " << WiFimsg;
+
+
+        /* Read from shared memory, pass to transmit function */
+        int gsv = atoi(GSV_read);  // Convert to integer
+        // printf("converted GSV: %s\n", (char*)GSV_read);
+        transmit_command(&sock, WiFimsg, gsv);
+        char *timeWiFi = Timestamp();
+
+        /* Writing to logging file */
+        fp3 = fopen("Logs/commands_log.txt", "w");
+        fprintf(fp3, "%s %s %s\n", WiFimsg, timeWiFi, "WiFi");
+        fclose(fp3);
     }
 }
 
@@ -64,7 +99,10 @@ void* LTE_command(void* socket) {
     int count = 0;
     string packet_ID;
     string coordinate;
-    
+
+    /* File descriptor for writing commands */
+    FILE* fp4;
+
     printf("\n\n  ======================\n   LTE Listener Started\n  ======================\n\n");
 
     if (troubleshooting_print == 1) {
@@ -72,16 +110,25 @@ void* LTE_command(void* socket) {
         cout << "  LTE Command Function || WiFi Actuator Socket: " << sock->act_WiFi << endl;
         cout << "  LTE Command Function || LTE Actuator Socket: " << sock->act_LTE << endl;
     }
+
+    /* Initialize shared memory */
+    const char* GSV_KEY = "GSV_KEY";
+    const char* GSV_read;
+    GSV_read = (char*)shm_read(32, GSV_KEY);
+
     while (1) {
         message = (void*)receiveLTE((void*)sock);
         if (troubleshooting_print == 1) {
             cout << "  LTE Command Function || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
         }
+        // With packet ID :
         sscanf((const char*)message, "%d: %d %[^\n]", &ID, &data, msgDump);
+        // sscanf((const char*)message, "%d %[^\n]", &data, msgDump);  // VIRKER MÅSKE
         if (use_grid == 1) {
-            coordinate = grid[data];
+            coordinate = grid[data];  // VIRKER MÅSKE
         } else {
-            coordinate = convert_to_coordinate(data, use_hex);
+            coordinate = convert_to_coordinate(data, use_hex);  // VIRKER MÅSKE
+
             packet_ID = to_string(count);
             packet_ID.append(": ");
             packet_ID.append(coordinate);
@@ -89,13 +136,30 @@ void* LTE_command(void* socket) {
         }
         if (message_only == 1) {
             cout << "  LTE Command Function || Message Parsed from Sockets as INT is: " << data << endl;
+            // cout << "  LTE Command Function || Coordinate for Actuator is: " << coordinate << "\n\n\n" //Without packet ID
             cout << "  LTE Command Function || Coordinate for Actuator is: " << packet_ID << "\n\n\n"
                  << endl;
         }
-        char LTEmsg[packet_ID.size() + 1];
-        strcpy(LTEmsg, packet_ID.c_str());
-        std::cout << LTEmsg;
-        transmit_command(sock, LTEmsg);
+        char LTEmsg[packet_ID.size() + 1];  // med packet ID
+                                            // char* LTEmsg = (char*)malloc(99);
+                                            // char LTEmsg[coordinate.size() + 1];
+        strcpy(LTEmsg, packet_ID.c_str());  // med packet ID
+
+        // strcpy(LTEmsg, coordinate.c_str());  // DEN HER VIRKER (MÅSKE)
+
+        // std::cout << "is this LTEmsg? " << LTEmsg;
+
+
+        /* Read from shared memory, pass to transmit function */
+        int gsv = atoi(GSV_read);  // Convert to integer
+        // printf("converted GSV: %s\n", (char*)GSV_read);
+        transmit_command(sock, LTEmsg, gsv);
+        char* timeLTE = Timestamp();
+
+        /* Writing to logging file */
+        fp4 = fopen("Logs/commands_log.txt", "w");
+        fprintf(fp4, "%s %s %s\n", LTEmsg, timeLTE, "LTE");
+        fclose(fp4);
     }
 }
 
@@ -256,7 +320,7 @@ void Argument_Setup(int argc, char* argv[]) {
 
                         if (firstCharacter == '-' && j == i + 1) {
                             cout << "  ===== Verbose Enabled =====" << endl;
-                            message_only = 0;  // Print messages only
+                            message_only = 1;  // Print messages only
                             troubleshooting_print = 1;
                             print_sen_in = 1;   // Print incoming Sensor related things
                             print_act_out = 1;  // Print outgoing Actuator related things
@@ -314,6 +378,11 @@ void Argument_Setup(int argc, char* argv[]) {
                 GSV_tech = (char*)"-t";
                 GSV_arg_used = (char*)"-a";
 
+                // Make ready to write to Shared Memory
+                const char* GSV_KEY = "GSV_KEY";
+                char* gsv_writer;
+                gsv_writer = (char*)shm_write(32, GSV_KEY);
+
                 if (argc > i + 1) {
                     string current = argv[i + 1];
                     firstCharacter = current.at(0);
@@ -321,20 +390,21 @@ void Argument_Setup(int argc, char* argv[]) {
                     if ((firstCharacter == '-') || (string)argv[i + 1] == "b" || (string)argv[i + 1] == "both") {
                         cout << "  ===== Forced Use of Both Technologies Enabled =====" << endl;
                         GSV_tech_arg = (char*)"b";
-                        force_tech = 1;
+                        sprintf(gsv_writer, "%s", "0");  // Write selected technology to shared memory
+
                     } else if ((string)argv[i + 1] == "w" || (string)argv[i + 1] == "wifi") {
                         cout << "  ===== Forced Use of WiFi =====" << endl;
                         GSV_tech_arg = (char*)"w";
-                        force_tech = 2;
+                        sprintf(gsv_writer, "%s", "1");  // Write selected technology to shared memory
                     } else if ((string)argv[i + 1] == "l" || (string)argv[i + 1] == "lte") {
                         cout << "  ===== Forced Use of LTE =====" << endl;
                         GSV_tech_arg = (char*)"l";
-                        force_tech = 3;
+                        sprintf(gsv_writer, "%s", "2");  // Write selected technology to shared memory
                     }
                 } else {
                     cout << "  ===== Forced Use of Both Technologies Enabled =====" << endl;
                     GSV_tech_arg = (char*)"b";
-                    force_tech = 1;
+                    sprintf(gsv_writer, "%s", "0");  // Write selected technology to shared memory
                 }
             }
 

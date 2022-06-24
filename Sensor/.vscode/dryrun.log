@@ -1,0 +1,13 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/ubeyd/P4-B450/Sensor'
+git pull
+gcc -c Headers/SocketFunctions.c -lrt
+touch Headers/SocketFunctions
+gcc -c Headers/shm_read_write.c -lrt
+touch Headers/shm_read_write
+gcc -pthread Sensor.c SocketFunctions.o shm_read_write.o -o Sensor -lrt
+touch Sensor
+gcc -pthread SensorMonitoring.c shm_read_write.o SocketFunctions.o -o SensorMonitoring -lrt
+touch SensorMonitoring
+make: Leaving directory '/home/ubeyd/P4-B450/Sensor'
+ 
