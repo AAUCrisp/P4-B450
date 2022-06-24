@@ -187,9 +187,10 @@ void *receiveLTE(void *socket) {
     while (1) {
         fp1 = fopen("Logs/log.txt", "a+");
         printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
-        if (RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE)) {
+        if (recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE) != 0) {
             EXECUTION = true;
-            cout << "EXECUTION variable: " << EXECUTION;
+            cout << "EXECUTION variable: "
+                 << EXECUTION << "\n";
             Timestamp();
 
             if (print_COMMANDS == 1) {
@@ -217,7 +218,8 @@ void *receiveLTE(void *socket) {
             fclose(fp1);
             // File.close();
         } else {
-            cout << "EXECUTION variable: " << EXECUTION;
+            cout << "EXECUTION variable: "
+                 << EXECUTION << "\n";
             EXECUTION = false;
         }
     }
@@ -236,9 +238,10 @@ void *receiveWiFi(void *socket) {
         fp2 = fopen("Logs/log.txt", "a+");
         printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
 
-        if (RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi)) {
+        if (recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi) != 0) {
             EXECUTION = true;
-            cout << "EXECUTION variable: " << EXECUTION;
+            cout << "EXECUTION variable: "
+                 << EXECUTION << "\n";
             Timestamp();
 
             if (print_COMMANDS == 1) {
@@ -263,7 +266,7 @@ void *receiveWiFi(void *socket) {
             fclose(fp2);
             // File.close();
         } else {
-            cout << "EXECUTION variable: " << EXECUTION;
+            cout << "EXECUTION variable: " << EXECUTION << "\n";
             EXECUTION = false;
         }
     }
