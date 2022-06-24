@@ -51,7 +51,7 @@ int main() {
     pthread_t T1, T2;
     char* curr_time;
     int* Processed_Data;
-    int iter = 100000;
+    int iter = 1000000;
 
     /* Execution time variables */
     int count = 0;
@@ -90,7 +90,7 @@ int main() {
 
         while (1) {
             
-            //printf("COMMANDS from shared memory: %s\n", COMMANDS);
+            printf("COMMANDS from shared memory: %s\n", COMMANDS);
 
             snprintf(msg, sizeof(msg), "%s", COMMANDS);  // Is "msg" even used for anything???
 
@@ -113,7 +113,7 @@ int main() {
             }
             Execution_Sum += elapsed;
             count++;
-            // printf("count: %d\n", count);
+            printf("count: %d\n", count);
             if (count == iter) {
                 break;
             }

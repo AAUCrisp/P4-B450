@@ -52,10 +52,10 @@ void *receiveWiFi(void *socket);
 void *receive_data();
 
 /* Function to transmit LTE packets */
-void *transmit_GSV_LTE(void *socket);
+void NEW_transmit_GSV_LTE(void *socket, char *gsv);
 
 /* Function to transmit WiFi packets */
-void *transmit_GSV_WiFi(void *socket);
+void NEW_transmit_GSV_WiFi(void *socket, char *gsv);
 
 /* Function to transmit LTE packets */
 void *transmit_command_LTE(void *socket, char* message);

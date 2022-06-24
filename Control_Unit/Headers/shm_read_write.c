@@ -17,8 +17,6 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "Semaphore.h"
-
 void* shm_read(const int SIZE, const char* name) {
     /* shared memory file descriptor */
     int shm_fd;

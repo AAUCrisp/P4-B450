@@ -3,10 +3,14 @@
 #include "Libraries.cpp"      // File with all our includes
 #endif
 
+/*
 #ifndef SHM_WRITE
 #define SHM_WRITE
 #include "Headers/shm_write.cpp"
 #endif
+*/
+
+#include "Headers/shm_read_write.h"
 
 #ifndef SOCKETS_MON
 #define SOCKETS_MON
@@ -23,6 +27,7 @@ pthread_t wifi, lte;
 // Both = 0     WiFi = 1        LTE = 2
 char* gsv =  (char*) "0";  // Global Signal Variable   W = WiFi   L = LTE    B = Both
 const char* GSV_KEY = "GSV_KEY";
+char* gsv_writer;
 
 /* Signal Quality Settings */
 
@@ -44,7 +49,8 @@ int rsrp_average;
 
 
 int main(int argc, char *argv[]) {
-
+    /* Initialize shared memory */
+    gsv_writer = (char*)shm_write(buffer, GSV_KEY);
 
     // If Arguments is inserted
     if(argc > 1) {      // If the program is run with arguments
@@ -136,10 +142,16 @@ int main(int argc, char *argv[]) {
     /* Initialize PORT & INTERFACE*/
     uint PORT_LTE_TRANSMITTER = 9002;
     uint PORT_WiFi_TRANSMITTER = 9003;
-    const char* LTE = "wwan0"; // Interface for 4G
-    const char* WiFi = "wlan0"; // Interface for WiFi
-    const char* IP_LTE = "10.20.0.10"; // IP of server
-    const char* IP_WiFi = "192.168.1.160"; // IP of server 
+    //const char* LTE = "wwan0"; // Interface for 4G
+    //const char* WiFi = "wlan0"; // Interface for WiFi
+    //const char* IP_LTE = "10.20.0.10"; // IP of server
+    //const char* IP_WiFi = "192.168.1.160"; // IP of server
+
+    const char* LTE = "lo";              // test loopback
+    const char* WiFi = "lo";             // test loopback
+    const char* IP_LTE = "127.0.0.1";      // test loopback
+    const char* IP_WiFi = "127.0.0.1";  // test loopback
+
     pthread_t wifi, lte;
 
     /* Create sockets */
@@ -216,23 +228,18 @@ int main(int argc, char *argv[]) {
             }
         }
 
-        shm_write(gsv, buffer, GSV_KEY);  // Write selected technology to shared memory
+        sprintf(gsv_writer, "%s", gsv); // Write selected technology to shared memory
 
         if (gsv == "1" || gsv == "0") {
-            int threadWiFi = pthread_create(&wifi, NULL, transmit_GSV_WiFi, (void*)&sock);
+            NEW_transmit_GSV_WiFi(&sock, (char*)gsv);
 
-            if (threadWiFi != 0) {
-                perror("GSV || WiFi thread was not created");
-            } 
             if(troubleshooting_print == 1) {
                 printf("  GSV || Sent via WiFi\n");
             }
         }
         if (gsv == "2" || gsv == "0") {
-            int threadLTE = pthread_create(&lte, NULL, transmit_GSV_LTE, (void*)&sock);
-            if (threadLTE != 0) {
-                perror("GSV || LTE thread was not created");
-            }
+            NEW_transmit_GSV_LTE(&sock, (char*)gsv);
+
             if(troubleshooting_print == 1) {
                 printf("  GSV || Sent via LTE\n");
             }

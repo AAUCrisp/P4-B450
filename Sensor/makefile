@@ -30,5 +30,6 @@ test: Libraries.c $(Dependencies)
 clean:
 	rm -f Sensor SensorMonitoring
 	rm *.o
-#	rm *.txt
+	rm -f Headers/shm_read_write Headers/SocketFunctions
+	rm *.txt
 	@echo "clean completed!"

@@ -104,6 +104,7 @@ void update_last_coordinate(int number1, int number2) {
 void processData(char msg[buffer]) {
     int movement_x;
     int movement_y;
+    
     bytes_read = sscanf(msg, "%[^:%s]:%s:", tempx, tempy);  // Parses the received char array, into two seperate char arrays
     // cout << "Temp X is: " << tempx << endl;                 // prints out the char arrays containing x and y coordinates.
     // cout << "Temp Y is: " << tempy << endl;
@@ -125,7 +126,7 @@ void processData(char msg[buffer]) {
     if (movement_x == 0 && movement_y == 0) {
     } else {
         Timestamp();
-        File.open("log.txt", std::ofstream::out | std::ofstream::app);
+        File.open("execution.txt", std::ofstream::out | std::ofstream::app);
         File << "\n\n"
              << curr_time << "\nMovement on the x-axis:" << movement_x << " mm \nMovement on the y-axis:" << movement_y << " mm";
         File.close();

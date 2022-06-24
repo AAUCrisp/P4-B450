@@ -27,9 +27,9 @@ LTE: 10.20.0.10
 Eth: 192.168.1.119  
 
 ## Actuator:
-WiFi: 192.168.1.143  
+WiFi: 10.42.0.118  
 LTE: 10.20.0.13  
-Eth: 192.168.1.117  
+Eth: 192.168.1.164  
 
 ## Reminders:
 <ins>**Server must not be started with sudo:   "./[ServerName]"**</ins>  

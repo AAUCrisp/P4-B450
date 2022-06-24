@@ -48,14 +48,19 @@ int main(int argc, char* argv[]) {
     /* Initialize PORT & INTERFACE*/
     uint PORT_LTE_TRANSMITTER = 9000;
     uint PORT_WiFi_TRANSMITTER = 9001;
-    const char* LTE = "wwan0";
-    const char* WiFi = "wlan0";
-    const char* IP_LTE = "10.20.0.16";  // Default: IP of Control Unit
+    // const char* LTE = "wwan0";
+    // const char* WiFi = "wlan0";
+    // const char* IP_LTE = "10.20.0.16";  // Default: IP of Control Unit
     // const char* IP_LTE = "10.20.0.13";      // IP of Actuator
     // const char* IP_LTE = "10.20.0.10";      // IP of Sensor
-    const char* IP_WiFi = "192.168.1.136";  // Default: IP of Control Unit
+    // const char* IP_WiFi = "192.168.1.136";  // Default: IP of Control Unit
     // const char* IP_WiFi = "192.168.1.143";  // IP of Actuator
     // const char* IP_WiFi = "192.168.1.160";  // IP of Sensor
+
+    const char* LTE = "lo";             // Test loopback
+    const char* WiFi = "lo";            // Test loopback
+    const char* IP_LTE = "127.0.0.1";   // Test loopback
+    const char* IP_WiFi = "127.0.0.1";  // Test loopback
 
     /* misc */
     pthread_t T1;
@@ -87,7 +92,7 @@ int main(int argc, char* argv[]) {
     char* W = "1";
     char* L = "2";
 
-    void * dummy(){
+    void* dummy() {
         pthread_exit(NULL);
     }
 
@@ -101,12 +106,12 @@ int main(int argc, char* argv[]) {
     printf("\n===================================\n");
 
     /* Create child process */
-    //printf("both_tech: %d\n", both_tech);
+    // printf("both_tech: %d\n", both_tech);
     pid_t sensor_monitor;  // Prepare the process ID for monitoring
     if (monitor == 1) {
         sensor_monitor = fork();  // Starts new process
     }
-    
+
     /* Checks if child process is running */
     if (sensor_monitor == 0) {
         printf("Parent process ID: %d \n", getppid());
@@ -119,8 +124,8 @@ int main(int argc, char* argv[]) {
         // }
         printf("Why no work?2\n");
     } else {
-        //printf("Why no work?3\n");
-        //pthread_create(&T1, NULL, dummy, NULL);
+        // printf("Why no work?3\n");
+        // pthread_create(&T1, NULL, dummy, NULL);
         /* Initialize SHM object reading */
         gsv = shm_read(BUFFER, GSV_KEY);
 
@@ -128,7 +133,7 @@ int main(int argc, char* argv[]) {
         clock_gettime(CLOCK_REALTIME, &begin_program);
 
         while (1) {
-            //printf("\nSensor || GSV from shared memory: %s\n", (char*)gsv);
+            // printf("\nSensor || GSV from shared memory: %s\n", (char*)gsv);
 
             // printf("\nGSV converted: %d\n", GSV);
             /*if (monitor == 1) {
@@ -136,9 +141,9 @@ int main(int argc, char* argv[]) {
 
             /* Start timing code execution of code */
             clock_gettime(CLOCK_REALTIME, &begin);
-            sprintf(buffer, "%d", generate(1, 25000000));
 
-            // printf("\nSensor || After Random Int Generation\n");
+            sprintf(buffer, "%d: %d", count, generate(1, 25000000));
+            printf("Packet ID + random int: %s\n", buffer);
 
             /*if (both_tech == 1) {
                 printf("\nSensor || Troubleshooting for Both Technologies\n");
