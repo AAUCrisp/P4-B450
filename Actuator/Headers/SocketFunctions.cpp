@@ -277,7 +277,7 @@ void *receiveWiFi(void *socket) {
             cout << "if EXECUTION variable: " << EXECUTION << "\n";
             testvar = 1;
             cout << "if testvar: " << testvar << "\n";
-        } else if (message == temp_msg && testvar == 0) {
+        } else if ((strcmp(message, temp_msg) == 0) && testvar == 0) {
             EXECUTION = false;
             STOP = 0;
             sprintf(stopshit, "%d", STOP);
@@ -290,10 +290,5 @@ void *receiveWiFi(void *socket) {
         cout << "if else if testvar: " << testvar << "\n";
         cout << "if else if message: " << message << "\n";
         cout << "if else if temp_msg: " << temp_msg << "\n";
-
-        if ((strcmp(message, temp_msg) == 0) && testvar == 0){
-            printf("Hello :)\n");
-        }
-
     }
 }
