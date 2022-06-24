@@ -24,6 +24,7 @@
 #include <sstream>
 #include <string>
 
+#include "ExecutionVariable.h"
 #include "shm_read_write.h"
 
 typedef struct _sockets {

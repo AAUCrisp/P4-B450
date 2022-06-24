@@ -30,6 +30,7 @@
 
 #include "Headers/ActuatorFunctions.h"
 #include "Headers/shm_read_write.h"
+#include "ExecutionVariable.h"
 
 using namespace std;
 
