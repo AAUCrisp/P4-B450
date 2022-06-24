@@ -109,9 +109,11 @@ int main(int argc, char* argv[]) {
 
     if (monitor == 1) {
         sensor_monitor = fork();  // Starts new process
+        printf("sensor_monitor value after fork():%d\n", sensor_monitor);
 
         /* Checks if child process is running */
         if (sensor_monitor == 0) {
+            printf("sensor_monitor value inside sensor_monitor == 0:%d\n", sensor_monitor);
             printf("Parent process ID: %d \n", getppid());
             printf("Sensor monitoring process ID is: %d \n", getpid());
             char path[] = "./SensorMonitoring";
