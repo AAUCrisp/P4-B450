@@ -18,7 +18,7 @@ Use `-help` for full info on arguments.
 WiFi: 192.168.1.136 (Bamses_Hytte)  
 WiFi: 10.42.0.1   (AP)  
 LTE: 10.20.0.16  
-Eth: 192.168.1.185  
+Eth: 192.168.1.142  
 
 ## Sensor: 
 ### Has argument settings 
@@ -33,7 +33,7 @@ Eth: 192.168.1.185
 WiFi: 192.168.1.160 (Bamses_Hytte)  
 WiFi: 10.42.0.119   (AP)  
 LTE: 10.20.0.10  
-Eth: 192.168.1.119  
+Eth: 192.168.1.181
 
 ## Actuator:
 ##### Example:
@@ -43,7 +43,7 @@ Eth: 192.168.1.119
 WiFi: 192.168.1.143 (Bamses_Hytte)  
 WiFi: 10.42.0.118   (AP)  
 LTE: 10.20.0.13  
-Eth: 192.168.1.117  
+Eth: 192.168.1.164  
 
 ## Reminders:
 <ins>**Server must not be started with sudo:   "./[ServerName]"**</ins>  
