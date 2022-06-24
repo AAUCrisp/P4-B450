@@ -3,6 +3,7 @@ all: Actuator ActuatorMonitoring
 git:
 	git pull
 	make
+	rm Logs/log.txt Logs/execution_log.txt
 
 Actuator: Actuator.o shm_read_write.o ActuatorFunctions.o
 	g++ -pthread Actuator.o shm_read_write.o ActuatorFunctions.o -o Actuator -lrt

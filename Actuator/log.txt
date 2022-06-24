@@ -1,9 +1,0 @@
-
-
-[13:53:58.029 22/6/2022]
-Movement on the x-axis:-2147483648 mm 
-Movement on the y-axis:-2147483648 mm
-
-[13:53:58.034 22/6/2022]
-Movement on the x-axis:-2147451136 mm 
-Movement on the y-axis:-2147451136 mm
