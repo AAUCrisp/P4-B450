@@ -235,29 +235,34 @@ void *receiveWiFi(void *socket) {
         fp2 = fopen("Logs/log.txt", "a+");
         printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
 
-        RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
-        Timestamp();
+        if (RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi)) {
+            EXECUTION = true;
+            Timestamp();
 
-        if (print_COMMANDS == 1) {
-            // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
-            printf("WiFi || Message from WiFi received at: %s \n", curr_time);
-            printf("WiFi || Message: %s from Control Unit \n\n", message);
+            if (print_COMMANDS == 1) {
+                // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
+                printf("WiFi || Message from WiFi received at: %s \n", curr_time);
+                printf("WiFi || Message: %s from Control Unit \n\n", message);
+            }
+            sprintf(writer, "%s", message);
+            /*File << "\n\n"
+                 << "Received at: " << curr_time << "\n"
+                 << message << " WiFi";*/
+
+            // fputs("Received at: ", fp2);
+            // fputs(curr_time, fp2);
+            // fputs("\n", fp2);
+            // fputs(message, fp2);
+            // fputs(" WiFi\n\n", fp2);
+
+            // fprintf(fp2, "%s %s\n%s %s\n\n", "Received at:", curr_time, message, "WiFi");
+            fprintf(fp2, "%s %s %s\n", message, curr_time, "WiFi");
+
+            fclose(fp2);
+            // File.close();
+        } else {
+            cout << "EXECUTION variable: " << EXECUTION;
+            EXECUTION = false;
         }
-        sprintf(writer, "%s", message);
-        /*File << "\n\n"
-             << "Received at: " << curr_time << "\n"
-             << message << " WiFi";*/
-
-        // fputs("Received at: ", fp2);
-        // fputs(curr_time, fp2);
-        // fputs("\n", fp2);
-        // fputs(message, fp2);
-        // fputs(" WiFi\n\n", fp2);
-
-        // fprintf(fp2, "%s %s\n%s %s\n\n", "Received at:", curr_time, message, "WiFi");
-        fprintf(fp2, "%s %s %s\n", message, curr_time, "WiFi");
-
-        fclose(fp2);
-        // File.close();
     }
 }
