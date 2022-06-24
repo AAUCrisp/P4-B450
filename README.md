@@ -31,7 +31,7 @@ Eth: 192.168.1.185
 `./SensorMonitoring`  
 ##### IP addresses:
 WiFi: 192.168.1.160 (Bamses_Hytte)  
-WiFi: 10.42.0.118   (AP)  
+WiFi: 10.42.0.119   (AP)  
 LTE: 10.20.0.10  
 Eth: 192.168.1.119  
 
@@ -41,7 +41,7 @@ Eth: 192.168.1.119
 `./ActuatorMonitoring`  
 ##### IP addresses:
 WiFi: 192.168.1.143 (Bamses_Hytte)  
-WiFi: 10.42.0.119   (AP)  
+WiFi: 10.42.0.118   (AP)  
 LTE: 10.20.0.13  
 Eth: 192.168.1.117  
 
