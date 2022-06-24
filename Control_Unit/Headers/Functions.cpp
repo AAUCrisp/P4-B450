@@ -34,6 +34,7 @@ void WiFi_command(Sockets sock) {
         cout << "  WiFi Command Function || WiFi Sensor Socket: " << sock.sockWiFi_RECEIVER << endl;
         cout << "  WiFi Command Function || WiFi Actuator Socket: " << sock.act_WiFi << endl;
         cout << "  WiFi Command Function || LTE Actuator Socket: " << sock.act_LTE << endl;
+        usleep(1);
     }
 
     /* Initialize shared memory */
@@ -109,6 +110,7 @@ void* LTE_command(void* socket) {
         cout << "  LTE Command Function || LTE Sensor Socket: " << sock->sockLTE_RECEIVER << endl;
         cout << "  LTE Command Function || WiFi Actuator Socket: " << sock->act_WiFi << endl;
         cout << "  LTE Command Function || LTE Actuator Socket: " << sock->act_LTE << endl;
+        usleep(1);
     }
 
     /* Initialize shared memory */
