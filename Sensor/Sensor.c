@@ -105,26 +105,28 @@ int main(int argc, char* argv[]) {
     /* Create child process */
     // printf("both_tech: %d\n", both_tech);
     pid_t sensor_monitor;  // Prepare the process ID for monitoring
-    printf("sensor_monitor default value:%d\n", sensor_monitor);
+    printf("sensor_monitor default value:%d\n" , sensor_monitor);
 
     if (monitor == 1) {
         sensor_monitor = fork();  // Starts new process
-        printf("sensor_monitor value after fork():%d\n", sensor_monitor);
+    }
+    printf("sensor_monitor value after fork():%d\n" , sensor_monitor);
 
-        /* Checks if child process is running */
-        if (sensor_monitor == 0) {
-            printf("sensor_monitor value inside sensor_monitor == 0:%d\n", sensor_monitor);
-            printf("Parent process ID: %d \n", getppid());
-            printf("Sensor monitoring process ID is: %d \n", getpid());
-            char path[] = "./SensorMonitoring";
-            char* args[] = {"./SensorMonitoring", NULL};
-            // if (monitor == 1) {
-            execv(path, args);
-            printf("  ERROR: DIDN'T START THE MONITORING PROCESS!!\n");  // Should never get this far!
-            // }
-        }
+    /* Checks if child process is running */
+    if (sensor_monitor == 0 && monitor == 1) {
+        printf("sensor_monitor value if child process is running:%d\n", sensor_monitor);
+        printf("Parent process ID: %d \n", getppid());
+        printf("Sensor monitoring process ID is: %d \n", getpid());
+        char path[] = "./SensorMonitoring";
+        char* args[] = {"./SensorMonitoring", NULL};
+        // if (monitor == 1) {
+        execv(path, args);
+        printf("  ERROR: DIDN'T START THE MONITORING PROCESS!!\n");  // Should never get this far!
+        // }
 
     } else {
+        // pthread_create(&T1, NULL, dummy, NULL);
+
         /* Initialize SHM object reading */
         gsv = shm_read(BUFFER, GSV_KEY);
 
