@@ -249,16 +249,10 @@ void *receiveWiFi(void *socket) {
     while (1) {
         fp2 = fopen("Logs/log.txt", "a+");
         printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
-        if ((strcmp(message, temp_msg) == 0) && testvar == 0) {
-            EXECUTION = false;
-            STOP = 0;
-            sprintf(stopshit, "%d", STOP);
-            cout << "else if STOP variable: " << stopshit << "\n";
-            cout << "else if EXECUTION variable: " << EXECUTION << "\n";
-            cout << " == message: " << message << "\n";
-            cout << " == temp_msg: " << temp_msg << "\n";
-        }
+        cout << recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi) << "\n";
+
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
+        printf("what is RX_wifi: %d \n", RX_WiFi);
         Timestamp();
 
         printf("What is message?: %s\n", message);
@@ -277,7 +271,6 @@ void *receiveWiFi(void *socket) {
             strcpy(temp_msg, message);
             cout << "message: " << message << "\n";
             cout << "temp_msg: " << temp_msg << "\n";
-
 
             EXECUTION = true;
             STOP = 1;
