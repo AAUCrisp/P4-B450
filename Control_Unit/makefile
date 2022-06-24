@@ -1,4 +1,4 @@
-all: SignalMonitoring ControlUnit
+all: SignalMonitoring.out ControlUnit.out
 
 git:
 	git pull
@@ -6,11 +6,11 @@ git:
 	rm Logs/log.txt Logs/commands_log.txt
 
 #NYT FIX: HUSK OG FIX HEADERS OG INCLUDES...
-ControlUnit: ControlUnit.o Sockets.o shm_read_write.o
+ControlUnit.out: ControlUnit.o Sockets.o shm_read_write.o
 	g++ -pthread ControlUnit.o Sockets.o shm_read_write.o -o ControlUnit.out -lrt
 
 #NYT FIX: HUSK OG FIX HEADERS OG INCLUDES...
-SignalMonitoring: SignalMonitoring.o Sockets.o RSSI.o shm_read_write.o Functions.o
+SignalMonitoring.out: SignalMonitoring.o Sockets.o RSSI.o shm_read_write.o Functions.o
 	g++ -pthread SignalMonitoring.o Sockets.o RSSI.o shm_read_write.o Functions.o -o SignalMonitoring.out -lrt
 
 ControlUnit.o: ControlUnit.cpp
@@ -49,6 +49,7 @@ Functions.o: Headers/Functions.cpp
 clean:
 	rm -f ControlUnit SignalMonitoring
 	rm *.o
+	rm *.out
 #	rm -f Headers/RSSI Headers/shm_read_write Headers/Sockets Headers/Functions
 #	rm *.txt
 	@echo "clean completed!"

@@ -1,16 +1,16 @@
 #all: Sensor SensorMonitoring
-all: Sensor SensorMonitoring
+all: Sensor.out SensorMonitoring.out
 
 git:
 	git pull
 	make
 	rm Logs/log.txt
 
-Sensor: Sensor.c SocketFunctions.o shm_read_write.o
+Sensor.out: Sensor.c SocketFunctions.o shm_read_write.o
 	gcc -pthread Sensor.c SocketFunctions.o shm_read_write.o -o Sensor.out -lrt
 #	touch Sensor
 
-SensorMonitoring: SensorMonitoring.c shm_read_write.o SocketFunctions.o
+SensorMonitoring.out: SensorMonitoring.c shm_read_write.o SocketFunctions.o
 	gcc -pthread SensorMonitoring.c shm_read_write.o SocketFunctions.o -o SensorMonitoring.out -lrt
 #	touch SensorMonitoring
 
@@ -32,5 +32,6 @@ shm_read_write.o: Headers/shm_read_write.c Headers/shm_read_write.h
 clean:
 	rm -f Sensor SensorMonitoring
 	rm *.o
+	rm *.out
 #	rm -f Headers/shm_read_write Headers/SocketFunctions
 	@echo "clean completed!"
