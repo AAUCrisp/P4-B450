@@ -291,9 +291,9 @@ void *receiveWiFi(void *socket) {
         cout << "if else if message: " << message << "\n";
         cout << "if else if temp_msg: " << temp_msg << "\n";
 
-        if (message == temp_msg && testvar == 0){
+        if ((strcmp(message, temp_msg) == 0) && testvar == 0){
             printf("Hello :)\n");
         }
-        
+
     }
 }
