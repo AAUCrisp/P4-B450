@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "variables.h": "c",
-        "wait.h": "c",
-        "semaphore.h": "c",
-        "time.h": "c",
-        "unistd.h": "c"
-    }
-}
