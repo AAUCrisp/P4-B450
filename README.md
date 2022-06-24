@@ -73,6 +73,8 @@ Eth: 192.168.1.117
     - 'sudo nmcli c up Bamses_Hytte'                            Activate Bamses_Hytte
     - 'sudo nmcli dev wifi list'                                Show wifi list
     - 'sudo nmcli c delete id [ifname]'                         Delete connection
+    - 'sudo ping -I wwan0 10.20.0.xx -i 0'                      Check connectivity for 4G
+    - 'sudo ping -I wwan0 10.42.0.xx -i 0'                      Check connectivity for WiFi
 
 
     
