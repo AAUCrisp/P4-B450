@@ -2,6 +2,7 @@
 #define EXECUTIONVARIABLE_H
 
 /* Execution timing variable */
-static bool EXECUTION = false;
+static bool EXECUTION;
+static int testvar;
 
 #endif

@@ -187,9 +187,14 @@ void *receiveLTE(void *socket) {
     while (1) {
         fp1 = fopen("Logs/log.txt", "a+");
         printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
-        // EXECUTION = false;
+        
         cout << "EXECUTION variable: " << EXECUTION << "\n";
-        if (recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE) != 0) {
+        
+        printf("RX_LTE before: %d\n", RX_LTE);
+        RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
+        printf("RX_LTE after: %d\n", RX_LTE);
+
+         if (testvar != 0) {
             EXECUTION = true;
             cout << "EXECUTION variable: " << EXECUTION << "\n";
             Timestamp();
@@ -218,7 +223,8 @@ void *receiveLTE(void *socket) {
 
             fclose(fp1);
             // File.close();
-        } else {
+        }
+        else {
             EXECUTION = false;
             cout << "EXECUTION variable: " << EXECUTION << "\n";
         }
@@ -237,10 +243,16 @@ void *receiveWiFi(void *socket) {
     while (1) {
         fp2 = fopen("Logs/log.txt", "a+");
         printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
-        // EXECUTION = false;
+        
         cout << "start EXECUTION variable: " << EXECUTION << "\n";
-        if (recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi) != 0) {
+        
+        printf("RX_WiFi before: %d\n", RX_WiFi);
+        RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
+        printf("RX_WiFi after: %d\n", RX_WiFi);
+
+        if (testvar != 0) {
             EXECUTION = true;
+            testvar = 1;
             cout << "recvfrom EXECUTION variable: " << EXECUTION << "\n";
             Timestamp();
 
@@ -266,7 +278,8 @@ void *receiveWiFi(void *socket) {
             fclose(fp2);
             // File.close();
         }
-        EXECUTION = false;
+        if (testvar == 1)
+            EXECUTION = false;
         cout << "else EXECUTION variable: " << EXECUTION << "\n";
     }
 }
