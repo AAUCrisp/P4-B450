@@ -156,7 +156,7 @@ void *receiveLTE(void *socket) {
     int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
 
     /* Open logging file */
-    fp1 = fopen("Logs/log.txt", "w");
+    fp1 = fopen("Logs/log.txt", "a+");
 
     if (print_sen_in == 1) {
         printf("\n\n  Incoming || LTE (Sensor) || Receive Socket: %d\n", sock->sockLTE_RECEIVER);
@@ -189,7 +189,7 @@ void *receiveWiFi(void *socket) {
     int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
 
     /* Open logging file */
-    fp2 = fopen("Logs/log.txt", "w");
+    fp2 = fopen("Logs/log.txt", "a+");
 
     if (print_sen_in == 1) {
         printf("\n\n  Incoming || WiFi (Sensor) || Receive Socket: %d\n", sock->sockWiFi_RECEIVER);

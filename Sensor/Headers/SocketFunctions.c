@@ -191,7 +191,7 @@ void *transmitLTE(void *socket, char *message) {
     char sendLTE[BUFFER];
 
     /* Open logging file */
-    fp1 = fopen("Logs/log.txt", "w+");
+    fp1 = fopen("Logs/log.txt", "a+");
 
     if (print_out == 1) {
         printf("Sensor || LTE socket: %d\n", sock->sockLTE_TRANSMITTER);
@@ -220,7 +220,7 @@ void *transmitWiFi(void *socket, char *message) {
     char sendWiFi[BUFFER];
 
     /* Open logging file */
-    fp2 = fopen("Logs/log.txt", "w+");
+    fp2 = fopen("Logs/log.txt", "a+");
 
     if (print_out == 1) {
         printf("Sensor || WiFi socket: %d\n", sock->sockLTE_TRANSMITTER);
