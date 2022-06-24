@@ -27,6 +27,8 @@
 #include "ExecutionVariable.h"
 #include "shm_read_write.h"
 
+using namespace std;
+
 typedef struct _sockets {
     /* Receiver sockets*/
     int sockLTE_RECEIVER;
