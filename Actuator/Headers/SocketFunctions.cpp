@@ -258,16 +258,21 @@ void *receiveWiFi(void *socket) {
 
         if (message != temp_msg) {
             strcpy(temp_msg, message);
+
             EXECUTION = true;
+            STOP = 1;
+            cout << "if STOP variable: " << STOP << "\n";
             cout << "if EXECUTION variable: " << EXECUTION << "\n";
             testvar = 1;
-            cout << "testvar: " << testvar << "\n";
+            cout << "if testvar: " << testvar << "\n";
         } else if (message == temp_msg && testvar == 0) {
             EXECUTION = false;
+            STOP = 0;
+            cout << "else if STOP variable: " << STOP << "\n";
             cout << "else if EXECUTION variable: " << EXECUTION << "\n";
         }
         testvar = 0;
-        cout << "testvar: " << testvar << "\n";
+        cout << "if else if testvar: " << testvar << "\n";
 
     }
 }
