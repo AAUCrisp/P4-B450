@@ -214,6 +214,7 @@ void *receiveLTE(void *socket) {
             fclose(fp1);
             // File.close();
         } else {
+            cout << "EXECUTION variable: " << EXECUTION;
             EXECUTION = false;
         }
     }
