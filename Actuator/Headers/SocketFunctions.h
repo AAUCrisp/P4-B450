@@ -15,6 +15,9 @@ typedef struct _sockets {
     struct sockaddr_in ClientWiFi_TRANSMITTER;
 } Sockets;
 
+/* Execution timing variable */
+static bool EXECUTION = false;
+
 /* Function to create receiver socket */
 void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi);
 

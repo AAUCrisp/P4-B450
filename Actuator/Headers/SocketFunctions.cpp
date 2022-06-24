@@ -56,7 +56,6 @@ char *receive;
 int bindLTE, bindWiFi;
 int RX_LTE, RX_WiFi;
 int TX_LTE, TX_WiFi;
-static bool EXECUTION = false;
 
 /* Define threads */
 pthread_t T1, T2;
