@@ -288,6 +288,7 @@ void *receiveWiFi(void *socket) {
         }
         testvar = 0;
         cout << "if else if testvar: " << testvar << "\n";
-
+        cout << "if else if message: " << message << "\n";
+        cout << "if else if temp_msg: " << temp_msg << "\n";
     }
 }
