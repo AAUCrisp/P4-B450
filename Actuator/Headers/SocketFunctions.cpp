@@ -189,6 +189,7 @@ void *receiveLTE(void *socket) {
         printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
         if (RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE)) {
             EXECUTION = true;
+            cout << "EXECUTION variable: " << EXECUTION;
             Timestamp();
 
             if (print_COMMANDS == 1) {
@@ -237,6 +238,7 @@ void *receiveWiFi(void *socket) {
 
         if (RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi)) {
             EXECUTION = true;
+            cout << "EXECUTION variable: " << EXECUTION;
             Timestamp();
 
             if (print_COMMANDS == 1) {
