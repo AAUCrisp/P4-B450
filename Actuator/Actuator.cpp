@@ -91,7 +91,9 @@ int main() {
         clock_gettime(CLOCK_REALTIME, &begin_program);
 
         while (1) {
+            cout << "start EXECUTION variable: " << EXECUTION << "\n";
             if (EXECUTION == true) {
+                cout << "if EXECUTION variable: " << EXECUTION << "\n";
                 printf("COMMANDS from shared memory: %s\n", COMMANDS);
 
                 snprintf(msg, sizeof(msg), "%s", COMMANDS);  // Is "msg" even used for anything???
