@@ -379,7 +379,7 @@ void *transmit_command(void *socket, char *message, int gsv) {
         cout << "\n  Sending || Mutual Transmit Function || Message passed to function: \n"
              << message << endl;
     }
-    int LenWiFi = sizeof(sock->Client_act_WiFi);
+    //int LenWiFi = sizeof(sock->Client_act_WiFi); Burde ik stå her
 
     cout << "  Sending || Global Signal Variable is: " << gsv << endl;
     if (print_act_out == 1) {

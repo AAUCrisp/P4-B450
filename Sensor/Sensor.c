@@ -156,11 +156,11 @@ int main(int argc, char* argv[]) {
             }*/
 
             // printf("Sensor || Before Transmitting\n");
-            if (strcmp(gsv, B) == 0 || strcmp(gsv, W) == 0) {
+            if (strcmp(gsv, B) == 0 || strcmp(gsv, L) == 0) {
                 transmitLTE(&sock, (char*)buffer);
             }
 
-            if (strcmp(gsv, B) == 0 || strcmp(gsv, L) == 0) {
+            if (strcmp(gsv, B) == 0 || strcmp(gsv, W) == 0) {
                 transmitWiFi(&sock, (char*)buffer);
             }
 
