@@ -48,20 +48,20 @@ int main(int argc, char* argv[]) {
     /* Initialize PORT & INTERFACE*/
     uint PORT_LTE_TRANSMITTER = 9000;
     uint PORT_WiFi_TRANSMITTER = 9001;
-    const char* LTE = "wwan0";
-    const char* WiFi = "wlan0";
-    const char* IP_LTE = "10.20.0.16";  // Default: IP of Control Unit
-                                        //  const char* IP_LTE = "10.20.0.13";      // IP of Actuator
-                                        //  const char* IP_LTE = "10.20.0.10";      // IP of Sensor
-    const char* IP_WiFi = "10.42.0.1";  // Default: IP of Control Unit (AP)
+    // const char* LTE = "wwan0";
+    // const char* WiFi = "wlan0";
+    // const char* IP_LTE = "10.20.0.16";  // Default: IP of Control Unit
+    // const char* IP_WiFi = "10.42.0.1";  // Default: IP of Control Unit (AP)
+    //   const char* IP_LTE = "10.20.0.13";      // IP of Actuator
+    //   const char* IP_LTE = "10.20.0.10";      // IP of Sensor
     // const char* IP_WiFi = "192.168.1.136";  // Default: IP of Control Unit
     //  const char* IP_WiFi = "192.168.1.143";  // IP of Actuator
     //  const char* IP_WiFi = "192.168.1.160";  // IP of Sensor
 
-    // const char* LTE = "lo";             // Test loopback
-    // const char* WiFi = "lo";            // Test loopback
-    // const char* IP_LTE = "127.0.0.1";   // Test loopback
-    // const char* IP_WiFi = "127.0.0.1";  // Test loopback
+    const char* LTE = "lo";             // Test loopback
+    const char* WiFi = "lo";            // Test loopback
+    const char* IP_LTE = "127.0.0.1";   // Test loopback
+    const char* IP_WiFi = "127.0.0.1";  // Test loopback
 
     /* misc */
     pthread_t T1;
@@ -105,12 +105,12 @@ int main(int argc, char* argv[]) {
     /* Create child process */
     // printf("both_tech: %d\n", both_tech);
     pid_t sensor_monitor;  // Prepare the process ID for monitoring
-    printf("sensor_monitor default value:%d\n" , sensor_monitor);
+    printf("sensor_monitor default value:%d\n", sensor_monitor);
 
     if (monitor == 1) {
         sensor_monitor = fork();  // Starts new process
     }
-    printf("sensor_monitor value after fork():%d\n" , sensor_monitor);
+    printf("sensor_monitor value after fork():%d\n", sensor_monitor);
 
     /* Checks if child process is running */
     if (sensor_monitor == 0 && monitor == 1) {
