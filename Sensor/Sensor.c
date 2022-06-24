@@ -100,11 +100,13 @@ int main(int argc, char* argv[]) {
     printf("iter: %d\n", iter);
     printf("delay: %d\n", delay);
     printf("GSV_default: %s\n", GSV_default);
-    printf("\n===================================\n");
+    printf("\n===================================\n\n");
 
     /* Create child process */
     // printf("both_tech: %d\n", both_tech);
     pid_t sensor_monitor;  // Prepare the process ID for monitoring
+    printf("sensor_monitor default value:%d\n" , sensor_monitor);
+    
     if (monitor == 1) {
         sensor_monitor = fork();  // Starts new process
     }

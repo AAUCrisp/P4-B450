@@ -27,7 +27,7 @@ Eth: 192.168.1.185
 `-m` to disable the Signal Monitor process  
 `-d <int>` to set the delay between "sensing" and sending data  
 ##### Example:
-`./Sensor -m -d 1000 -i 10000`  
+`./Sensor -b -m -d 1000 -i 10000`  
 `./SensorMonitoring`  
 ##### IP addresses:
 WiFi: 192.168.1.160 (Bamses_Hytte)  
