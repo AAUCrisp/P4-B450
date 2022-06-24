@@ -239,21 +239,21 @@ void *receiveWiFi(void *socket) {
     char *writer = (char *)shm_write(SHM_BUFFER, COMMANDS_KEY);
     unsigned int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
 
+    /* Shared memory object variables */
+    const char *stop_key = "STOP_KEY";
+    char *stopshit;
+    stopshit = (char *)shm_write(32, stop_key);
+
     // File.open("log.txt", std::ofstream::out | std::ofstream::app);
 
     while (1) {
         fp2 = fopen("Logs/log.txt", "a+");
         printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
-        if (message == temp_msg && testvar == 0) {
-            EXECUTION = false;
-            STOP = 0;
-            cout << "else if STOP variable: " << STOP << "\n";
-            cout << "else if EXECUTION variable: " << EXECUTION << "\n";
-            cout << " == message: " << message << "\n";
-            cout << " == temp_msg: " << temp_msg << "\n";
-        }
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
         Timestamp();
+
+        printf("What is message?: %s\n", message);
+        printf("What is temp_msg?: %s\n", temp_msg);
 
         if (print_COMMANDS == 1) {
             // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
@@ -272,11 +272,20 @@ void *receiveWiFi(void *socket) {
 
             EXECUTION = true;
             STOP = 1;
+            sprintf(stopshit, "%d", STOP);
             cout << "if STOP variable: " << STOP << "\n";
             cout << "if EXECUTION variable: " << EXECUTION << "\n";
             testvar = 1;
             cout << "if testvar: " << testvar << "\n";
-        } else 
+        } else if (message == temp_msg && testvar == 0) {
+            EXECUTION = false;
+            STOP = 0;
+            sprintf(stopshit, "%d", STOP);
+            cout << "else if STOP variable: " << STOP << "\n";
+            cout << "else if EXECUTION variable: " << EXECUTION << "\n";
+            cout << " == message: " << message << "\n";
+            cout << " == temp_msg: " << temp_msg << "\n";
+        }
         testvar = 0;
         cout << "if else if testvar: " << testvar << "\n";
 

@@ -71,6 +71,9 @@ int main() {
     char* COMMANDS;
     char msg[1024];
 
+    const char* stop_key = "STOP_KEY";
+    char* stopshit;
+
     /* Create child process */
     pid_t Actuator_monitor;  // Prepare the process ID for monitoring
     // Actuator_monitor = fork();  // Starts new process
@@ -86,13 +89,14 @@ int main() {
     } else {
         /* Initialize SHM object reading */
         COMMANDS = (char*)shm_read(32, COMMANDS_KEY);
+        stopshit = (char*)shm_read(32, stop_key);
 
         /* Start timing all code */
         clock_gettime(CLOCK_REALTIME, &begin_program);
 
         while (1) {
             cout << "start STOP variable: " << STOP << "\n";
-            if (STOP == 1) {
+            if ((int)STOP == 1) {
                 cout << "if STOP variable: " << STOP << "\n";
                 printf("COMMANDS from shared memory: %s\n", COMMANDS);
 
@@ -120,7 +124,7 @@ int main() {
 
                 printf("count: %d\n", count);
 
-                if (STOP == 0) {
+                if ((int)STOP == 0) {
                     break;
                 }
             } else {
