@@ -25,7 +25,7 @@
 #include <string>
 
 //#include "Headers/ActuatorFunctions.cpp"
-//#include "Headers/SocketFunctions.h"
+#include "Headers/SocketFunctions.h"
 #include <iostream>
 
 #include "Headers/ActuatorFunctions.h"
