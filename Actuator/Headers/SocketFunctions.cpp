@@ -258,6 +258,9 @@ void *receiveWiFi(void *socket) {
 
         if (message != temp_msg) {
             strcpy(temp_msg, message);
+            cout << "message: " << message << "\n";
+            cout << "temp_msg: " << temp_msg << "\n";
+
 
             EXECUTION = true;
             STOP = 1;
@@ -270,6 +273,8 @@ void *receiveWiFi(void *socket) {
             STOP = 0;
             cout << "else if STOP variable: " << STOP << "\n";
             cout << "else if EXECUTION variable: " << EXECUTION << "\n";
+            cout << " == message: " << message << "\n";
+            cout << " == temp_msg: " << temp_msg << "\n";
         }
         testvar = 0;
         cout << "if else if testvar: " << testvar << "\n";
