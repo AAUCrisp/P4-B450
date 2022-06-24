@@ -49,7 +49,7 @@ int print_COMMANDS = 1;
 /* Define buffers & PORT number */
 #define BUFFER 1024
 #define SHM_BUFFER 100
-char message[BUFFER];
+char message;
 char curr_time[128];
 char *curr_timeLTE;
 char *curr_timeWiFi;
@@ -189,7 +189,7 @@ void *receiveLTE(void *socket) {
         printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
         
         cout << "EXECUTION variable: " << EXECUTION << "\n";
-        
+
         printf("RX_LTE before: %d\n", RX_LTE);
         RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
         printf("RX_LTE after: %d\n", RX_LTE);
