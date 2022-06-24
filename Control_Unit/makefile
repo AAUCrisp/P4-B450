@@ -49,6 +49,6 @@ Functions.o: Headers/Functions.cpp
 clean:
 	rm -f ControlUnit SignalMonitoring
 	rm *.o
-	rm -f Headers/RSSI Headers/shm_read_write Headers/Sockets Headers/Functions
-	rm *.txt
+#	rm -f Headers/RSSI Headers/shm_read_write Headers/Sockets Headers/Functions
+#	rm *.txt
 	@echo "clean completed!"

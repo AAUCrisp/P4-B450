@@ -35,5 +35,5 @@ clean:
 	rm -f Actuator ActuatorMonitoring
 	rm *.o
 #	rm -f Headers/ActuatorFunctions Headers/shm_read_write Headers/SocketFunctions
-	rm *.txt
+#	rm *.txt
 	@echo "clean completed!"
