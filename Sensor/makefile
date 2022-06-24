@@ -4,6 +4,7 @@ all: Sensor SensorMonitoring
 git:
 	git pull
 	make
+	rm Logs/log.txt
 
 Sensor: Sensor.c SocketFunctions.o shm_read_write.o
 	gcc -pthread Sensor.c SocketFunctions.o shm_read_write.o -o Sensor -lrt
@@ -32,5 +33,4 @@ clean:
 	rm -f Sensor SensorMonitoring
 	rm *.o
 #	rm -f Headers/shm_read_write Headers/SocketFunctions
-	rm *.txt
 	@echo "clean completed!"
