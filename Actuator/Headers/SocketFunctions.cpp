@@ -238,10 +238,10 @@ void *receiveWiFi(void *socket) {
         fp2 = fopen("Logs/log.txt", "a+");
         printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
         //EXECUTION = false;
-        cout << "EXECUTION variable: " << EXECUTION << "\n";
+        cout << "start EXECUTION variable: " << EXECUTION << "\n";
         if (recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi) != 0) {
             EXECUTION = true;
-            cout << "EXECUTION variable: " << EXECUTION << "\n";
+            cout << "recvfrom EXECUTION variable: " << EXECUTION << "\n";
             Timestamp();
 
             if (print_COMMANDS == 1) {
@@ -267,7 +267,7 @@ void *receiveWiFi(void *socket) {
             // File.close();
         } else {
             EXECUTION = false;
-            cout << "EXECUTION variable: " << EXECUTION << "\n";
+            cout << "else EXECUTION variable: " << EXECUTION << "\n";
         }
     }
 }
