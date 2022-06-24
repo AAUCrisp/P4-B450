@@ -6,10 +6,10 @@ git:
 	rm Logs/log.txt Logs/processed_commands.txt
 
 Actuator: Actuator.o shm_read_write.o ActuatorFunctions.o
-	g++ -pthread Actuator.o shm_read_write.o ActuatorFunctions.o -o Actuator -lrt
+	g++ -pthread Actuator.o shm_read_write.o ActuatorFunctions.o -o Actuator.out -lrt
 
 ActuatorMonitoring: ActuatorMonitoring.o shm_read_write.o SocketFunctions.o
-	g++ -pthread ActuatorMonitoring.o shm_read_write.o SocketFunctions.o -o ActuatorMonitoring -lrt
+	g++ -pthread ActuatorMonitoring.o shm_read_write.o SocketFunctions.o -o ActuatorMonitoring.out -lrt
 
 Actuator.o: Actuator.cpp
 	g++ -c -g -pthread Actuator.cpp -lrt

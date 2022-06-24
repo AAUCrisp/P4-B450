@@ -8,7 +8,7 @@ Group 450, Spring Semester 2022
 Use `-help` for full info on arguments.  
   
 ##### If running Signal Monitoring on it's own it takes:  
-`-t <arg>` to force both LTE & WiFi  *no arguments* or `b / both` for both, `w / wifi` for WiFi & `l / lte` for LTE  
+`-t <arg>` to force the use of specific technology; *no arguments* or `b / both` for both LTE & WiFi , `w / wifi` for WiFi & `l / lte` for LTE  
 `-v`to print out shit... *no arguments* for all, or `m` for important messages  
 `-s <int>` to set how often it monitors  
 ##### Example:

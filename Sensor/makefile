@@ -7,11 +7,11 @@ git:
 	rm Logs/log.txt
 
 Sensor: Sensor.c SocketFunctions.o shm_read_write.o
-	gcc -pthread Sensor.c SocketFunctions.o shm_read_write.o -o Sensor -lrt
+	gcc -pthread Sensor.c SocketFunctions.o shm_read_write.o -o Sensor.out -lrt
 #	touch Sensor
 
 SensorMonitoring: SensorMonitoring.c shm_read_write.o SocketFunctions.o
-	gcc -pthread SensorMonitoring.c shm_read_write.o SocketFunctions.o -o SensorMonitoring -lrt
+	gcc -pthread SensorMonitoring.c shm_read_write.o SocketFunctions.o -o SensorMonitoring.out -lrt
 #	touch SensorMonitoring
 
 SocketFunctions.o: Headers/SocketFunctions.c Headers/SocketFunctions.h Headers/shm_read_write.h
