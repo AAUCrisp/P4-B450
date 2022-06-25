@@ -3,7 +3,11 @@
 
 #include <iostream>
 #include <iomanip>
+#include <fstream>
+
 using namespace std;
+
+ofstream FileProcess;
 
 //void logData(int *Arr);
 
