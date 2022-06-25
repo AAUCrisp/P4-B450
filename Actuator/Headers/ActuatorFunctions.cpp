@@ -137,7 +137,7 @@ void processData(char msg[buffer]) {
         //FileProcess << "\n\n" << curr_time2 << "\nMovement on the x-axis:" << movement_x << " mm \nMovement on the y-axis:" << movement_y << " mm";
         //FileProcess.close();
         fprintf(FileProcess1, "%s\n%s %d %s\n%s %d %s\n", curr_time2, "Movement on the x-axis:", movement_x, "mm", "Movement on the y - axis:", movement_y, "mm");
-        fprintf(FileProcess2, "%s\n%s %d %s\n%s %d %s\n", curr_time2, "Movement on the x-axis:", movement_x, "mm", "Movement on the y - axis:", movement_y, "mm");
+        //fprintf(FileProcess2, "%s\n%s %d %s\n%s %d %s\n", curr_time2, "Movement on the x-axis:", movement_x, "mm", "Movement on the y - axis:", movement_y, "mm");
     }
 
     update_last_coordinate(x, y);
