@@ -203,7 +203,7 @@ void *receiveLTE(void *socket) {
         int nready = select(maxshit, &rset, NULL, NULL, 0);
         printf("nready: %d\n", nready);
 
-        if (FD_ISSET(sock->sockLTE_RECEIVER, &rset)) {
+        if (FD_ISSET(maxshit, &rset)) {
             printf("Do I reach this even?\n");
             RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, sizeof(message), 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
             Timestamp();
