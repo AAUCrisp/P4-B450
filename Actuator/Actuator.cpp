@@ -95,7 +95,6 @@ int main() {
         clock_gettime(CLOCK_REALTIME, &begin_program);
 
         while (1) {
-            cout << "start STOP variable: " << stopshit << "\n";
             if (strcmp(stopshit, (char*)"1") == 0) {
                 cout << "if STOP variable: " << stopshit << "\n";
                 printf("COMMANDS from shared memory: %s\n", COMMANDS);
@@ -130,6 +129,7 @@ int main() {
             } else {
                 sleep(1);
                 printf("Not receiving data\n");
+                cout << "start STOP variable: " << stopshit << "\n";
             }
         }
     }

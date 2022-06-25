@@ -230,6 +230,7 @@ void *receiveLTE(void *socket) {
             STOP = 0;
             sprintf(stopshit, "%d", STOP);
             printf("select value: %d\n", nready);
+            printf("stop_key value: %s\n", stopshit2);
         }
     }
 }
