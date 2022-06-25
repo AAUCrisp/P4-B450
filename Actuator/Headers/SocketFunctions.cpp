@@ -211,6 +211,16 @@ void *receiveLTE(void *socket) {
         printf("RX_LTE: %d\n", RX_LTE);
         if (RX_LTE == -1) {
             sock->STOP_LTE = 1;
+            sleep(1);
+            cout << "\n\n====================================================="
+                 << endl;
+            cout << "\nLTE : Execution_Sum: " << sock->Execution_Sum_LTE << endl;
+            printf("LTE : Total failed counts: %d\n", sock->fail_count_LTE);
+            printf("LTE : Total packets received via LTE: %d\n\n", sock->packet_count_LTE);
+            cout << "=====================================================\n\n"
+                 << endl;
+            sleep(10);
+            return 0;
         } else {
             sock->STOP_LTE = 0;
             printf("Do I reach this if RX_LTE != -1?\n");
@@ -248,16 +258,6 @@ void *receiveLTE(void *socket) {
         sock->Execution_Sum_LTE += elapsed;
         sock->packet_count_LTE++;
     }
-    sleep(1);
-    cout << "\n\n====================================================="
-         << endl;
-    cout << "\nLTE : Execution_Sum: " << sock->Execution_Sum_LTE << endl;
-    printf("LTE : Total failed counts: %d\n", sock->fail_count_LTE);
-    printf("LTE : Total packets received via LTE: %d\n\n", sock->packet_count_LTE);
-    cout << "=====================================================\n\n"
-         << endl;
-    sleep(10);
-    return 0;
 }
 
 /* Function to receive WiFi packets */
@@ -283,6 +283,16 @@ void *receiveWiFi(void *socket) {
         printf("RX_WiFi: %d\n", RX_LTE);
         if (RX_WiFi == -1) {
             sock->STOP_WiFi = 1;
+            sleep(1);
+            cout << "\n\n====================================================="
+                 << endl;
+            cout << "\nWiFi : Execution_Sum: " << sock->Execution_Sum_WiFi << endl;
+            printf("WiFi : Total failed counts: %d\n", sock->fail_count_WiFi);
+            printf("WiFi : Total packets received via WiFi: %d\n\n", sock->packet_count_WiFi);
+            cout << "=====================================================\n\n"
+                 << endl;
+            sleep(10);
+            return 0;
         } else {
             sock->STOP_WiFi = 0;
             printf("Do I reach this if RX_WiFi != -1?\n");
@@ -320,14 +330,4 @@ void *receiveWiFi(void *socket) {
         sock->Execution_Sum_WiFi += elapsed;
         sock->packet_count_WiFi++;
     }
-    sleep(1);
-    cout << "\n\n====================================================="
-         << endl;
-    cout << "\nWiFi : Execution_Sum: " << sock->Execution_Sum_WiFi << endl;
-    printf("WiFi : Total failed counts: %d\n", sock->fail_count_WiFi);
-    printf("WiFi : Total packets received via WiFi: %d\n\n", sock->packet_count_WiFi);
-    cout << "=====================================================\n\n"
-         << endl;
-    sleep(10);
-    return 0;
 }
