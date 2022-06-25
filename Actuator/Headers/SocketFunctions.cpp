@@ -25,6 +25,7 @@
 #include <string>
 
 #include "ExecutionVariable.h"
+#include "Headers/ActuatorFunctions.h"
 #include "shm_read_write.h"
 
 using namespace std;
@@ -190,49 +191,51 @@ void *receiveLTE(void *socket) {
     char *stopshit2;
     stopshit = (char *)shm_write(1024, stop_key);
 
-    /* Start timing all code */
-    clock_gettime(CLOCK_REALTIME, &begin_program);
+    /* Execution time variables */
+    struct timespec begin, end;
+    unsigned long seconds = 0;
+    unsigned long nanoseconds = 0;
+    double elapsed = 0;
 
-    while (STOP == 0) {
-            // printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
-            RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
-            Timestamp();
+    while (STOP != 2) {
+        // printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
+        RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
+        Timestamp();
+        packet_count_LTE++;
+        fp1 = fopen("Logs/log.txt", "a+");
+        fprintf(fp1, "%s %s %s\n", message, curr_time, "LTE");
+        fclose(fp1);
 
-            if (print_COMMANDS == 1) {
-                // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
-                printf("LTE || Message from LTE received at: %s\n", curr_time);
-                printf("LTE || Message: %s from Control Unit \n\n", message);
-            }
+        if (print_COMMANDS == 1) {
+            // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
+            printf("LTE || Message from LTE received at: %s\n", curr_time);
+            printf("LTE || Message: %s from Control Unit \n\n", message);
+        }
 
-            /* Start timing code execution of code */
-            clock_gettime(CLOCK_REALTIME, &begin);
+        /* Start timing code execution of code */
+        clock_gettime(CLOCK_REALTIME, &begin);
 
-            processData(message);
+        processData(message);
 
-            /* Stop timing code execution of code */
-            clock_gettime(CLOCK_REALTIME, &end);
+        /* Stop timing code execution of code */
+        clock_gettime(CLOCK_REALTIME, &end);
 
-            seconds = end.tv_sec - begin.tv_sec;
-            nanoseconds = end.tv_nsec - begin.tv_nsec;
+        seconds = end.tv_sec - begin.tv_sec;
+        nanoseconds = end.tv_nsec - begin.tv_nsec;
 
-            /* Calculation of elapsed time sum */
-            elapsed = seconds + nanoseconds * 1e-9;
-            if (elapsed > 10000) {
-                fail_count++;
-                elapsed = 0;
-            }
-            Execution_Sum += elapsed;
-            count++;
-
-            printf("count: %d\n", count);
-
-            fp1 = fopen("Logs/log.txt", "a+");
-            fprintf(fp1, "%s %s %s\n", message, curr_time, "LTE");
-            fclose(fp1);
-           
-           if (RX_LTE == -1) {
-               STOP = 1;
-           }
+        /* Calculation of elapsed time sum */
+        elapsed = seconds + nanoseconds * 1e-9;
+        if (elapsed > 10000) {
+            fail_count++;
+            elapsed = 0;
+        }
+        Execution_Sum += elapsed;
+      
+        if (RX_LTE == -1) {
+            STOP++;
+        } else {
+            STOP = 0;
+        }
     }
 }
 
@@ -250,7 +253,7 @@ void *receiveWiFi(void *socket) {
 
     // File.open("log.txt", std::ofstream::out | std::ofstream::app);
 
-    while (1) {
+    while (STOP != 2) {
         fp2 = fopen("Logs/log.txt", "a+");
         printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
         cout << recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi) << "\n";
@@ -296,5 +299,11 @@ void *receiveWiFi(void *socket) {
         cout << "if else if testvar: " << testvar << "\n";
         cout << "if else if message: " << message << "\n";
         cout << "if else if temp_msg: " << temp_msg << "\n";
+
+        if (RX_LTE == -1) {
+            STOP++;
+        } else {
+            STOP = 0;
+        }
     }
 }

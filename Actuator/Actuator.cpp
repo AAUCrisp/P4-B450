@@ -56,15 +56,10 @@ int main() {
     int iter = 1000000;
 
     /* Execution time variables */
-    static int count = 0;
-    static int fail_count = 0;
-    static long double Execution_Sum = 0;
+    struct timespec begin_program, end_program;
+    unsigned long seconds = 0;
+    unsigned long nanoseconds = 0;
     long double Execution_Average = 0;
-
-    static struct timespec begin, end, begin_program, end_program;
-    static unsigned long seconds = 0;
-    static unsigned long nanoseconds = 0;
-    static double elapsed = 0;
 
     /* Shared memory object variables */
     const char* COMMANDS_KEY = "COMMANDS_KEY";
@@ -73,7 +68,7 @@ int main() {
 
     const char* stop_key = "STOP_KEY";
     char* stopshit;
-    
+
     /* Initialize PORT & INTERFACE*/
     uint PORT_LTE_RECEIVER = 9004;
     uint PORT_WiFi_RECEIVER = 9005;
@@ -101,6 +96,9 @@ int main() {
         // execvp(path, (char* const*)args);
 
     } else {
+        /* Start timing all code */
+        clock_gettime(CLOCK_REALTIME, &begin_program);
+
         pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
         receiveWiFi(&sock);
     }
@@ -119,7 +117,7 @@ int main() {
     long milliseconds = (long)(time_spent * 1000) % 1000;
 
     /* Calculation of execution average */
-    Execution_Average = Execution_Sum / iter;
+    Execution_Average = Execution_Sum / (packet_count_WiFi + packet_count_LTE);
 
     printf("\n\n===================================\n\n");
     printf("Execution Sum:     %Lf sec\n", Execution_Sum);
@@ -129,5 +127,7 @@ int main() {
     printf("Total Time:  \n            Hours: %ld  \n          Minutes: %ld  \n          Seconds: %ld \n     Milliseconds: %ld\n", hours, minutes, seconds2, milliseconds);
     printf("________________________\n\n");
     printf("Total failed counts: %d\n", fail_count);
+    printf("Total packets received via WiFi: %d\n", packet_count_WiFi);
+    printf("Total packets received via LTE: %d\n", packet_count_LTE);
     printf("\n===================================\n\n");
 }
