@@ -25,7 +25,7 @@
 #include <string>
 
 #include "ActuatorFunctions.h"
-//#include "ExecutionVariable.h"
+#include "FileDescriptor.h"
 #include "shm_read_write.h"
 
 using namespace std;
@@ -207,7 +207,7 @@ void *receiveLTE(void *socket) {
 
     while (sock->STOP_LTE != 1) {
         // printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
-        fp1 = fopen("Logs/log.txt", "a+");
+        FileProcess.open("Logs/processed_commands.txt", std::ofstream::out | std::ofstream::app);
         RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
         //printf("RX_LTE: %d\n", RX_LTE);
         if (RX_LTE == -1) {
@@ -219,6 +219,7 @@ void *receiveLTE(void *socket) {
         }
         Timestamp();
 
+        fp1 = fopen("Logs/log.txt", "a+");
         fprintf(fp1, "%s %s %s\n", message, curr_time, "LTE");
         fclose(fp1);
 
@@ -228,6 +229,8 @@ void *receiveLTE(void *socket) {
             printf("LTE || Message: %s from Control Unit \n\n", message);
         }
 
+        FileProcess.open("Logs/processed_commands.txt", std::ofstream::out | std::ofstream::app);
+
         /* Start timing code execution of code */
         clock_gettime(CLOCK_REALTIME, &begin);
 
@@ -235,6 +238,7 @@ void *receiveLTE(void *socket) {
 
         /* Stop timing code execution of code */
         clock_gettime(CLOCK_REALTIME, &end);
+        FileProcess.close();
 
         seconds = end.tv_sec - begin.tv_sec;
         nanoseconds = end.tv_nsec - begin.tv_nsec;
@@ -269,7 +273,6 @@ void *receiveWiFi(void *socket) {
 
     while (sock->STOP_WiFi != 1) {
         // printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
-        fp2 = fopen("Logs/log.txt", "a+");
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
         //printf("RX_WiFi: %d\n", RX_LTE);
         if (RX_WiFi == -1) {
@@ -281,14 +284,18 @@ void *receiveWiFi(void *socket) {
         }
         Timestamp();
 
+        fp2 = fopen("Logs/log.txt", "a+");
         fprintf(fp2, "%s %s %s\n", message, curr_time, "WiFi");
         fclose(fp2);
+
 
         if (print_COMMANDS == 1) {
             // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
             printf("WiFi || Message from WiFi received at: %s \n", curr_time);
             printf("WiFi || Message: %s from Control Unit \n\n", message);
         }
+
+        FileProcess.open("Logs/processed_commands.txt", std::ofstream::out | std::ofstream::app);
 
         /* Start timing code execution of code */
         clock_gettime(CLOCK_REALTIME, &begin);
@@ -297,6 +304,7 @@ void *receiveWiFi(void *socket) {
 
         /* Stop timing code execution of code */
         clock_gettime(CLOCK_REALTIME, &end);
+        FileProcess.close();
 
         seconds = end.tv_sec - begin.tv_sec;
         nanoseconds = end.tv_nsec - begin.tv_nsec;

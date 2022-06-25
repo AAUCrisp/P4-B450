@@ -1,6 +1,0 @@
-#ifndef EXECUTIONVARIABLE_H
-#define EXECUTIONVARIABLE_H
-
-
-
-#endif
