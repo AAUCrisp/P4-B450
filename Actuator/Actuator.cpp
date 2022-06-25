@@ -123,7 +123,7 @@ int main() {
     /* Calculation of total time execution */
     double time_spent = ((end_program.tv_sec - begin_program.tv_sec) +
                          (end_program.tv_nsec - begin_program.tv_nsec) / BILLION) -
-                        5;
+                        10;
 
     /* Conversion of time spent to HH:MM:SS.MS */
     long hours = (long)time_spent / 3600;
