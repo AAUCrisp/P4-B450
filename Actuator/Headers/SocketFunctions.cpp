@@ -237,6 +237,7 @@ void *receiveLTE(void *socket) {
             STOP = 0;
         }
     }
+    return;
 }
 
 /* Function to receive WiFi packets */
@@ -306,4 +307,5 @@ void *receiveWiFi(void *socket) {
             STOP = 0;
         }
     }
+    return;
 }
