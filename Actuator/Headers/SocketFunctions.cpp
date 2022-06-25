@@ -24,8 +24,8 @@
 #include <sstream>
 #include <string>
 
-#include "ExecutionVariable.h"
 #include "ActuatorFunctions.h"
+#include "ExecutionVariable.h"
 #include "shm_read_write.h"
 
 using namespace std;
@@ -179,7 +179,7 @@ int generate(int Min, int Max) {
 }
 
 /* Function to receive LTE packets */
-void *receiveLTE(void *socket) {
+void receiveLTE(void *socket) {
     Sockets *sock = (Sockets *)socket;
     const char *COMMANDS_KEY = "COMMANDS_KEY";
     char *writer = (char *)shm_write(SHM_BUFFER, COMMANDS_KEY);
@@ -230,18 +230,17 @@ void *receiveLTE(void *socket) {
             elapsed = 0;
         }
         Execution_Sum += elapsed;
-      
+
         if (RX_LTE == -1) {
             STOP++;
         } else {
             STOP = 0;
         }
     }
-    return 0;
 }
 
 /* Function to receive WiFi packets */
-void *receiveWiFi(void *socket) {
+void receiveWiFi(void *socket) {
     Sockets *sock = (Sockets *)socket;
     const char *COMMANDS_KEY = "COMMANDS_KEY";
     char *writer = (char *)shm_write(SHM_BUFFER, COMMANDS_KEY);
@@ -307,5 +306,4 @@ void *receiveWiFi(void *socket) {
             STOP = 0;
         }
     }
-    return 0;
 }
