@@ -132,7 +132,7 @@ int main() {
     printf("\n\n===================================\n\n");
     printf("Execution Sum:     %Lf sec\n", Execution_Sum);
     printf("Execution average: %Lf sec\n\n", Execution_Average);
-    printf("Total time: %f sec\n", time_spent);
+    printf("Total time: %f sec\n", (time_spent - 5));
     printf("________________________\n");
     printf("Total Time:  \n            Hours: %ld  \n          Minutes: %ld  \n          Seconds: %ld \n     Milliseconds: %ld\n", hours, minutes, seconds2, milliseconds);
     printf("________________________\n\n");
