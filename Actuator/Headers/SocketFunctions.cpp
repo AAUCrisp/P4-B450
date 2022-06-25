@@ -188,27 +188,33 @@ void *receiveLTE(void *socket) {
     const char *stop_key = "STOP_KEY";
     char *stopshit;
     stopshit = (char *)shm_write(32, stop_key);
-    int test_count1 = 0;
-    int test_count2 = 0;
+
+    /* select() test variables */
+    fd_set rset;
+    FD_ZERO(&rset);
+    FD_SET(sock->sockLTE_RECEIVER, &rset);
 
     while (1) {
         fp1 = fopen("Logs/log.txt", "a+");
         printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
-        printf("RX_LTE bytes before receiving: %d\n", RX_LTE);
-        RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, sizeof(message), 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
-        Timestamp();
-        printf("RX_LTE bytes after receiving: %d\n", RX_LTE);
+        int nready = select(sock->sockLTE_RECEIVER, &rset, NULL, NULL, NULL);
 
-        sprintf(stopshit, "%d", STOP);
+        if (FD_ISSET(sock->sockLTE_RECEIVER, &rset)) {
+            RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, sizeof(message), 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
+            Timestamp();
+            sprintf(stopshit, "%d", STOP);
 
-        if (print_COMMANDS == 1) {
-            // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
-            printf("LTE || Message from LTE received at: %s\n", curr_time);
-            printf("LTE || Message: %s from Control Unit \n\n", message);
+            if (print_COMMANDS == 1) {
+                // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
+                printf("LTE || Message from LTE received at: %s\n", curr_time);
+                printf("LTE || Message: %s from Control Unit \n\n", message);
+            }
+            sprintf(writer, "%s", message);
+            fprintf(fp1, "%s %s %s\n", message, curr_time, "LTE");
+            fclose(fp1);
+        } else {
+            printf("I am not receving stuff\n");
         }
-        sprintf(writer, "%s", message);
-        fprintf(fp1, "%s %s %s\n", message, curr_time, "LTE");
-        fclose(fp1);
     }
 }
 
