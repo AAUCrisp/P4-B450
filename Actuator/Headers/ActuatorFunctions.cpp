@@ -112,7 +112,7 @@ void update_last_coordinate(int number1, int number2) {
 }
 
 /* This functions Parses the received message into a specified format. And finds the difference between the current and last coordinates. */
-char processData(char msg[buffer]) {
+char* processData(char msg[buffer]) {
     int movement_x;
     int movement_y;
     
