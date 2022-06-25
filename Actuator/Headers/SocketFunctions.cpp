@@ -200,7 +200,8 @@ void *receiveLTE(void *socket) {
     while (1) {
         fp1 = fopen("Logs/log.txt", "a+");
         printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
-        int nready = select(sock->sockLTE_RECEIVER, &rset, NULL, NULL, NULL);
+        int nready = select(maxshit, &rset, NULL, NULL, NULL);
+        printf("nready: %d\n", nready);
 
         if (FD_ISSET(sock->sockLTE_RECEIVER, &rset)) {
             RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, sizeof(message), 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
