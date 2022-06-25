@@ -28,11 +28,7 @@
 #include <iostream>
 
 #include "Headers/ActuatorFunctions.h"
-
-
 #include "Headers/ExecutionVariable.h"
-
-
 #include "Headers/SocketFunctions.h"
 #include "Headers/shm_read_write.h"
 
@@ -106,9 +102,12 @@ int main() {
         // execvp(path, (char* const*)args);
 
     } else {
+        sock.packet_count_LTE = 0;
+        sock.packet_count_WiFi = 0;
+        cout << "packet count LTE: " << sock.packet_count_LTE << endl;
+        cout << "packet count WiFi: " << sock.packet_count_WiFi << endl;
+        
         /* Start timing all code */
-        cout << "packet count LTE: "<< sock.packet_count_LTE << endl;
-        cout << "packet count WiFi: "<< sock.packet_count_WiFi << endl;
         clock_gettime(CLOCK_REALTIME, &begin_program);
 
         pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
@@ -123,7 +122,8 @@ int main() {
 
     /* Calculation of total time execution */
     double time_spent = ((end_program.tv_sec - begin_program.tv_sec) +
-                        (end_program.tv_nsec - begin_program.tv_nsec) / BILLION) -5;
+                         (end_program.tv_nsec - begin_program.tv_nsec) / BILLION) -
+                        5;
 
     /* Conversion of time spent to HH:MM:SS.MS */
     long hours = (long)time_spent / 3600;

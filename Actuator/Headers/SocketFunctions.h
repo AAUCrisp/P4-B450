@@ -17,9 +17,12 @@ typedef struct _sockets {
     /* Execution timing variable */
     int packet_count_LTE;
     int packet_count_WiFi;
-    int fail_count;
-    long double Execution_Sum;
-    int STOP;
+    int fail_count_LTE;
+    int fail_count_WiFi;
+    long double Execution_Sum_LTE;
+    long double Execution_Sum_WiFi;
+    int STOP_LTE;
+    int STOP_WiFI;
 
 } Sockets;
 

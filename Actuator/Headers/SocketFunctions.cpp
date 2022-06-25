@@ -46,9 +46,12 @@ typedef struct _sockets {
     /* Execution timing variable */
     int packet_count_LTE;
     int packet_count_WiFi;
-    int fail_count;
-    long double Execution_Sum;
-    int STOP;
+    int fail_count_LTE;
+    int fail_count_WiFi;
+    long double Execution_Sum_LTE;
+    long double Execution_Sum_WiFi;
+    int STOP_LTE;
+    int STOP_WiFI;
 
 } Sockets;
 
@@ -197,19 +200,20 @@ void *receiveLTE(void *socket) {
     unsigned long nanoseconds = 0;
     double elapsed = 0;
 
-    // int packet_count_LTE = DATA->packet_count_LTE;
-    // int fail_count = DATA->fail_count;
-    // long double Execution_Sum = DATA->Execution_Sum;
-    // int STOP = DATA->STOP;
-
     sock->packet_count_LTE = 0;
-    sock->fail_count = 0;
-    sock->Execution_Sum = 0;
-    sock->STOP = 0;
+    sock->fail_count_LTE = 0;
+    sock->Execution_Sum_LTE = 0;
+    sock->STOP_LTE = 0;
 
-    while (sock->STOP != 2) {
+    while (sock->STOP_LTE != 1) {
         // printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
         RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
+        printf("RX_LTE: %d\n", RX_LTE);
+        if (RX_LTE == -1) {
+            sock->STOP_LTE++;
+        } else {
+            sock->STOP_LTE = 0;
+        }
         Timestamp();
 
         fp1 = fopen("Logs/log.txt", "a+");
@@ -236,20 +240,14 @@ void *receiveLTE(void *socket) {
         /* Calculation of elapsed time sum */
         elapsed = seconds + nanoseconds * 1e-9;
         if (elapsed > 10000) {
-            sock->fail_count++;
+            sock->fail_count_LTE++;
             elapsed = 0;
         }
-        sock->Execution_Sum += elapsed;
+        sock->Execution_Sum_LTE += elapsed;
         sock->packet_count_LTE++;
-        printf("RX_LTE: %d\n", RX_LTE);
-        if (RX_LTE == -1) {
-            sock->STOP++;
-        } else {
-            sock->STOP = 0;
-        }
     }
-    cout << "\nLTE : Execution_Sum: " << sock->Execution_Sum << endl;
-    printf("LTE : Total failed counts: %d\n", sock->fail_count);
+    cout << "\nLTE : Execution_Sum: " << sock->Execution_Sum_LTE << endl;
+    printf("LTE : Total failed counts: %d\n", sock->fail_count_LTE);
     printf("LTE : Total packets received via LTE: %d\n\n", sock->packet_count_LTE);
     sleep(10);
     return 0;
@@ -258,44 +256,64 @@ void *receiveLTE(void *socket) {
 /* Function to receive WiFi packets */
 void *receiveWiFi(void *socket) {
     Sockets *sock = (Sockets *)socket;
-    const char *COMMANDS_KEY = "COMMANDS_KEY";
-    char *writer = (char *)shm_write(SHM_BUFFER, COMMANDS_KEY);
     unsigned int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
 
-    /* Shared memory object variables */
-    const char *stop_key = "STOP_KEY";
-    char *stopshit;
-    stopshit = (char *)shm_write(32, stop_key);
+    /* Execution time variables */
+    struct timespec begin, end;
+    unsigned long seconds = 0;
+    unsigned long nanoseconds = 0;
+    double elapsed = 0;
 
     sock->packet_count_WiFi = 0;
-    sock->STOP = 0;
+    sock->fail_count_WiFi = 0;
+    sock->Execution_Sum_WiFi = 0;
+    sock->STOP_WiFi = 0;
 
-    while (sock->STOP != 1) {
-        fp2 = fopen("Logs/log.txt", "a+");
-        printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
+    while (sock->STOP_WiFi != 1) {
+        //printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
 
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
-
-        Timestamp();
-
-        if (print_COMMANDS == 1) {
-            // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
-            printf("WiFi || Message from WiFi received at: %s \n", curr_time);
-            printf("WiFi || Message: %s from Control Unit \n\n", message);
-        }
-        fprintf(fp2, "%s %s %s\n", message, curr_time, "WiFi");
-        fclose(fp2);
-        sock->packet_count_WiFi++;
-
         printf("RX_WiFi: %d\n", RX_LTE);
         if (RX_WiFi == -1) {
             sock->STOP++;
         } else {
             sock->STOP = 0;
         }
+        Timestamp();
+
+        fp2 = fopen("Logs/log.txt", "a+");
+        fprintf(fp2, "%s %s %s\n", message, curr_time, "WiFi");
+        fclose(fp2);
+
+        if (print_COMMANDS == 1) {
+            // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
+            printf("WiFi || Message from WiFi received at: %s \n", curr_time);
+            printf("WiFi || Message: %s from Control Unit \n\n", message);
+        }
+
+        /* Start timing code execution of code */
+        clock_gettime(CLOCK_REALTIME, &begin);
+
+        processData(message);
+
+        /* Stop timing code execution of code */
+        clock_gettime(CLOCK_REALTIME, &end);
+
+        seconds = end.tv_sec - begin.tv_sec;
+        nanoseconds = end.tv_nsec - begin.tv_nsec;
+
+        /* Calculation of elapsed time sum */
+        elapsed = seconds + nanoseconds * 1e-9;
+        if (elapsed > 10000) {
+            sock->fail_count_WiFi++;
+            elapsed = 0;
+        }
+        sock->Execution_Sum_WiFi += elapsed;
+        sock->packet_count_WiFi++;
+
     }
-    cout << "\nWiFi : Execution_Sum: " << sock->Execution_Sum << endl;
-    printf("WiFi : Total failed counts: %d\n", sock->fail_count);
+    cout << "\nWiFi : Execution_Sum: " << sock->Execution_Sum_WiFi << endl;
+    printf("WiFi : Total failed counts: %d\n", sock->fail_count_WiFi);
     printf("WiFi : Total packets received via WiFi: %d\n\n", sock->packet_count_WiFi);
     sleep(10);
     return 0;
