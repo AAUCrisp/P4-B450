@@ -190,20 +190,24 @@ void *receiveLTE(void *socket) {
     stopshit = (char *)shm_write(32, stop_key);
 
     /* select() test variables */
-    fd_set rset;
+    fd_set readfds;
 
     int maxshit = sock->sockLTE_RECEIVER;
     printf("maxshit: %d\n", maxshit);
 
+    struct timeval tv;
+    tv.tv_sec = 1;
+    tv.tv_usec = 0;
+
     while (1) {
         fp1 = fopen("Logs/log.txt", "a+");
         printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
-        FD_ZERO(&rset);
-        FD_SET(maxshit, &rset);
-        int nready = select(maxshit, &rset, NULL, NULL, 0);
+        FD_ZERO(&readfds);
+        FD_SET(maxshit, &readfds);
+        int nready = select(maxshit+1, &readfds, NULL, NULL, &tv);
         printf("nready: %d\n", nready);
 
-        if (FD_ISSET(maxshit, &rset)) {
+        if (nready > 0) {
             printf("Do I reach this even?\n");
             RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, sizeof(message), 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
             Timestamp();
