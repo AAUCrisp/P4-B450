@@ -135,17 +135,19 @@ int main() {
     Execution_Average = (sock.Execution_Sum_WiFi + sock.Execution_Sum_LTE) / (sock.packet_count_WiFi + sock.packet_count_LTE);
 
     printf("\n\n===================================\n\n");
-    printf("Total Execution Sum:     %Lf sec\n", (sock.Execution_Sum_LTE+sock.Execution_Sum_WiFi));
-    printf("WiFi Execution Sum:     %Lf sec\n", sock.Execution_Sum_WiFi);
-    printf("LTE Execution Sum:     %Lf sec\n", sock.Execution_Sum_LTE);
-    printf("Total Execution average: %Lf sec\n\n", Execution_Average);
-    printf("Total time: %f sec\n", time_spent);
+    printf("Execution time sums:\n");
+    printf("    Total Execution Sum:     %Lf sec\n", (sock.Execution_Sum_LTE+sock.Execution_Sum_WiFi));
+    printf("    WiFi Execution Sum:      %Lf sec\n", sock.Execution_Sum_WiFi);
+    printf("    LTE Execution Sum:       %Lf sec\n", sock.Execution_Sum_LTE);
+    printf("Execution time average & Total program time:\n");
+    printf("    Total Execution average: %Lf sec\n\n", Execution_Average);
+    printf("    Total time: %f sec\n", time_spent);
     printf("________________________\n\n");
     printf("Total Time:  \n            Hours: %ld  \n          Minutes: %ld  \n          Seconds: %ld \n     Milliseconds: %ld\n", hours, minutes, seconds2, milliseconds);
     printf("________________________\n\n");
-    printf("Total failed counts via WiFi: %d\n", sock.fail_count_WiFi);
-    printf("Total failed counts via LTE: %d\n", sock.fail_count_LTE);
-    printf("Total packets received via WiFi: %d\n", sock.packet_count_WiFi);
-    printf("Total packets received via LTE: %d\n", sock.packet_count_LTE);
+    printf("Total failed counts via WiFi:       %d\n", sock.fail_count_WiFi);
+    printf("Total failed counts via LTE:        %d\n", sock.fail_count_LTE);
+    printf("Total packets received via WiFi:    %d\n", sock.packet_count_WiFi);
+    printf("Total packets received via LTE:     %d\n", sock.packet_count_LTE);
     printf("\n===================================\n\n");
 }
