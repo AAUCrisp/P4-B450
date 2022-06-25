@@ -50,7 +50,7 @@ char tempx[buffer];
 char tempy[buffer];
 char curr_time2[128];
 
-char coordinates[buffer];
+char *coordinates[buffer];
 char x[buffer];
 char y[buffer];
 //std::ofstream FileProcess;
