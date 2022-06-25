@@ -229,7 +229,7 @@ void *receiveLTE(void *socket) {
         if (nready == 0) {
             printf("nready == 0: %d\n", nready);
             printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
-            STOP = 1;
+            STOP = 0;
             sprintf(stopshit, "%d", STOP);
         }
     }
