@@ -30,7 +30,7 @@ using namespace std;
 #include "ActuatorFunctions.h"
 #include "FileDescriptors.h"
 
-//#include "hex.h"
+#include "hex.h"
 
 /* Variables used to create and bind sockets, receive from sockets, and error handle on sockets */
 #define buffer 1024
