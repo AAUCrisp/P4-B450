@@ -106,7 +106,7 @@ int main() {
         sock.packet_count_WiFi = 0;
         cout << "packet count LTE: " << sock.packet_count_LTE << endl;
         cout << "packet count WiFi: " << sock.packet_count_WiFi << endl;
-        
+
         /* Start timing all code */
         clock_gettime(CLOCK_REALTIME, &begin_program);
 
@@ -135,13 +135,14 @@ int main() {
     Execution_Average = sock.Execution_Sum / (sock.packet_count_WiFi + sock.packet_count_LTE);
 
     printf("\n\n===================================\n\n");
-    printf("Execution Sum:     %Lf sec\n", sock.Execution_Sum);
-    printf("Execution average: %Lf sec\n\n", Execution_Average);
+    printf("Total Execution Sum:     %Lf sec\n", (sock.Execution_Sum_LTE+sock.Execution_Sum_WiFi));
+    printf("Total Execution average: %Lf sec\n\n", Execution_Average);
     printf("Total time: %f sec\n", time_spent);
     printf("________________________\n");
     printf("Total Time:  \n            Hours: %ld  \n          Minutes: %ld  \n          Seconds: %ld \n     Milliseconds: %ld\n", hours, minutes, seconds2, milliseconds);
     printf("________________________\n\n");
-    printf("Total failed counts: %d\n", sock.fail_count);
+    printf("Total failed counts via WiFi: %d\n", sock.fail_count_WiFi);
+    printf("Total failed counts via LTE: %d\n", sock.fail_count_LTE);
     printf("Total packets received via WiFi: %d\n", sock.packet_count_WiFi);
     printf("Total packets received via LTE: %d\n", sock.packet_count_LTE);
     printf("\n===================================\n\n");
