@@ -51,8 +51,6 @@ char tempy[buffer];
 char curr_time2[128];
 
 char *coordinates[buffer];
-char x[buffer];
-char y[buffer];
 //std::ofstream FileProcess;
 
 /* --- Conversion from Integer to Hex-chars --- */
