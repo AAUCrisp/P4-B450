@@ -233,11 +233,12 @@ void *receiveLTE(void *socket) {
         /* Start timing code execution of code */
         clock_gettime(CLOCK_REALTIME, &begin);
 
-        processData(message);
+        char *Coordinates = processData(message);
+        fprintf(FileProcess1, "%s\n", Coordinates);
 
         /* Stop timing code execution of code */
         clock_gettime(CLOCK_REALTIME, &end);
-       
+
         fclose(FileProcess1);
 
         seconds = end.tv_sec - begin.tv_sec;
@@ -299,7 +300,8 @@ void *receiveWiFi(void *socket) {
         /* Start timing code execution of code */
         clock_gettime(CLOCK_REALTIME, &begin);
 
-        processData(message);
+        char *Coordinates = processData(message);
+        fprintf(FileProcess2, "%s\n", Coordinates);
 
         /* Stop timing code execution of code */
         clock_gettime(CLOCK_REALTIME, &end);
