@@ -132,7 +132,7 @@ int main() {
     long milliseconds = (long)(time_spent * 1000) % 1000;
 
     /* Calculation of execution average */
-    Execution_Average = sock.Execution_Sum / (sock.packet_count_WiFi + sock.packet_count_LTE);
+    Execution_Average = (sock.Execution_Sum_WiFi + sock.Execution_Sum_LTE) / (sock.packet_count_WiFi + sock.packet_count_LTE);
 
     printf("\n\n===================================\n\n");
     printf("Total Execution Sum:     %Lf sec\n", (sock.Execution_Sum_LTE+sock.Execution_Sum_WiFi));
