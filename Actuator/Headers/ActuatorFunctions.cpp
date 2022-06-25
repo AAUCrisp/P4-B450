@@ -32,6 +32,7 @@
 //#include "hex.h"
 
 using namespace std;
+
 /* Variables used to create and bind sockets, receive from sockets, and error handle on sockets */
 #define buffer 1024
 char ActuatorBuffer[1024];
