@@ -8,6 +8,6 @@ typedef struct _ExecutionVariables {
     int fail_count = 0;
     long double Execution_Sum = 0;
     int STOP = 0;
-} ExeVars;
+} ExecutionVariables;
 
 #endif

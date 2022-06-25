@@ -25,7 +25,7 @@
 #include <string>
 
 #include "ActuatorFunctions.h"
-#include "ExecutionVariable.h"
+//#include "ExecutionVariable.h"
 #include "shm_read_write.h"
 
 using namespace std;
@@ -43,14 +43,7 @@ typedef struct _sockets {
     struct sockaddr_in ClientLTE_TRANSMITTER;
     struct sockaddr_in ClientWiFi_TRANSMITTER;
 
-    /* Execution timing variable */
-    int packet_count_LTE;
-    int packet_count_WiFi;
-    int fail_count;
-    long double Execution_Sum;
-    int STOP;
-
-} Sockets, ExeVar;
+} Sockets;
 
 /* Troubleshooting Options */
 int print_COMMANDS = 1;
@@ -189,7 +182,6 @@ int generate(int Min, int Max) {
 /* Function to receive LTE packets */
 void *receiveLTE(void *socket) {
     Sockets *sock = (Sockets *)socket;
-    ExeVar *DATA = (ExeVar *)socket;
     unsigned int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
 
     /* Execution time variables */
@@ -198,10 +190,10 @@ void *receiveLTE(void *socket) {
     unsigned long nanoseconds = 0;
     double elapsed = 0;
 
-    int packet_count_LTE = DATA->packet_count_LTE;
-    int fail_count = DATA->fail_count;
-    long double Execution_Sum = DATA->Execution_Sum;
-    int STOP = DATA->STOP;
+    //int packet_count_LTE = DATA->packet_count_LTE;
+    //int fail_count = DATA->fail_count;
+    //long double Execution_Sum = DATA->Execution_Sum;
+    //int STOP = DATA->STOP;
 
     while (STOP != 2) {
         // printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
@@ -248,7 +240,6 @@ void *receiveLTE(void *socket) {
     printf("Total failed counts: %d\n", fail_count);
     printf("Total packets received via LTE: %d\n", packet_count_LTE);
     return 0;
-    pthread_exit(NULL);
 }
 
 /* Function to receive WiFi packets */
