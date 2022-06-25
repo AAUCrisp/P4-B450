@@ -48,7 +48,7 @@ int print_COMMANDS = 1;
 
 /* Define buffers & PORT number */
 #define BUFFER 1024
-#define SHM_BUFFER 100
+#define SHM_BUFFER 1024
 char message[BUFFER];
 char curr_time[128];
 char *curr_timeLTE;
