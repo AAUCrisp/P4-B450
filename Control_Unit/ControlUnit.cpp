@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) {
     uint PORT_LTE_RECEIVER = 9000;
     uint PORT_WiFi_RECEIVER = 9001;
     uint PORT_LTE_ACTUATOR = 9004;
-    uint PORT_WiFi_ACTUATOR = 9005;
+    uint PORT_WiFi_ACTUATOR = 9005234;
     //const char* LTE = "wwan0";
     //const char* WiFi = "wlan0";
     //const char* Actuator_IP_LTE = "10.20.0.13";    // Default: Actuator IP
@@ -51,9 +51,9 @@ int main(int argc, char* argv[]) {
     //  const char* Actuator_IP_WiFi = "192.168.1.160";     // Sensor IP
 
     const char* Actuator_IP_LTE = "127.0.0.1";   // test loopback
-    const char* Actuator_IP_WiFi = "127.0.0.1";  // test loopback
+    const char* Actuator_IP_WiFi = "";  // test loopback
     const char* LTE = "lo";                      // test loopback
-    const char* WiFi = "lo";                     // test loopback
+    const char* WiFi = "";                     // test loopback
 
     /* Misc */
     pthread_t T1;
