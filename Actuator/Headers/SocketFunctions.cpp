@@ -270,7 +270,7 @@ void *receiveWiFi(void *socket) {
     sock->packet_count_WiFi = 0;
     sock->STOP = 0;
 
-    while (sock->STOP != 2) {
+    while (sock->STOP != 1) {
         fp2 = fopen("Logs/log.txt", "a+");
         printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
 
