@@ -193,7 +193,6 @@ void *receiveLTE(void *socket) {
     double elapsed = 0;
 
     int packet_count_LTE = 0;
-    int packet_count_WiFi = 0;
     int fail_count = 0;
     long double Execution_Sum = 0;
     int STOP = 0;
@@ -257,6 +256,7 @@ void *receiveWiFi(void *socket) {
     char *stopshit;
     stopshit = (char *)shm_write(32, stop_key);
     int STOP = 0;
+    int packet_count_WiFi;
 
     while (STOP != 2) {
         fp2 = fopen("Logs/log.txt", "a+");
