@@ -196,15 +196,13 @@ void *receiveLTE(void *socket) {
     printf("maxshit: %d\n", maxshit);
 
     struct timeval tv;
-    tv.tv_sec = 5;
+    tv.tv_sec = 0;
     tv.tv_usec = 0;
 
     while (1) {
-        fp1 = fopen("Logs/log.txt", "a+");
-        printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
         FD_ZERO(&readfds);
         FD_SET(maxshit, &readfds);
-        int nready = select(maxshit+1, &readfds, NULL, NULL, &tv);
+        int nready = select(maxshit + 1, &readfds, NULL, NULL, &tv);
         printf("nready: %d\n", nready);
 
         if (nready > 0) {
@@ -221,10 +219,12 @@ void *receiveLTE(void *socket) {
             sprintf(writer, "%s", message);
             fprintf(fp1, "%s %s %s\n", message, curr_time, "LTE");
             fclose(fp1);
-        } else {
-            printf("I am not receving stuff\n");
         }
-        printf("Out of else?\n");
+
+        if (nready == 0) {
+            fp1 = fopen("Logs/log.txt", "a+");
+            printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
+        }
     }
 }
 
