@@ -66,6 +66,8 @@ int main() {
     char* COMMANDS;
     char msg[1024];
 
+    processData(msg);
+
     const char* stop_key = "STOP_KEY";
     char* stopshit;
 
