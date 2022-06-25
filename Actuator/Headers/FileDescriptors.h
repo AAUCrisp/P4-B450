@@ -5,7 +5,6 @@
 #include <iomanip>
 #include <iostream>
 
-using namespace std;
-ofstream FileProcess;
+std::ofstream FileProcess;
 
 #endif
