@@ -198,7 +198,7 @@ void *receiveLTE(void *socket) {
     int fail_count = 0;
     long double Execution_Sum = 0;
 
-    while (STOP != 2) {
+    while (int STOP != 2) {
         // printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
         RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
         Timestamp();
@@ -255,52 +255,22 @@ void *receiveWiFi(void *socket) {
 
     // File.open("log.txt", std::ofstream::out | std::ofstream::app);
 
-    while (STOP != 2) {
+    while (int STOP != 2) {
         fp2 = fopen("Logs/log.txt", "a+");
         printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
-        cout << recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi) << "\n";
 
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
-        printf("what is RX_wifi: %d \n", RX_WiFi);
+       
         Timestamp();
 
-        printf("What is message?: %s\n", message);
-        printf("What is temp_msg?: %s\n", temp_msg);
 
         if (print_COMMANDS == 1) {
             // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
             printf("WiFi || Message from WiFi received at: %s \n", curr_time);
             printf("WiFi || Message: %s from Control Unit \n\n", message);
         }
-        sprintf(writer, "%s", message);
         fprintf(fp2, "%s %s %s\n", message, curr_time, "WiFi");
         fclose(fp2);
-
-        if (message != temp_msg) {
-            strcpy(temp_msg, message);
-            cout << "message: " << message << "\n";
-            cout << "temp_msg: " << temp_msg << "\n";
-
-            EXECUTION = true;
-            STOP = 1;
-            sprintf(stopshit, "%d", STOP);
-            cout << "if STOP variable: " << stopshit << "\n";
-            cout << "if EXECUTION variable: " << EXECUTION << "\n";
-            testvar = 1;
-            cout << "if testvar: " << testvar << "\n";
-        } else if ((strcmp(message, temp_msg) == 0) && testvar == 0) {
-            EXECUTION = false;
-            STOP = 0;
-            sprintf(stopshit, "%d", STOP);
-            cout << "else if STOP variable: " << stopshit << "\n";
-            cout << "else if EXECUTION variable: " << EXECUTION << "\n";
-            cout << " == message: " << message << "\n";
-            cout << " == temp_msg: " << temp_msg << "\n";
-        }
-        testvar = 0;
-        cout << "if else if testvar: " << testvar << "\n";
-        cout << "if else if message: " << message << "\n";
-        cout << "if else if temp_msg: " << temp_msg << "\n";
 
         if (RX_LTE == -1) {
             STOP++;
