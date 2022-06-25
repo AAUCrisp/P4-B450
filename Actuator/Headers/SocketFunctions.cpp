@@ -42,9 +42,15 @@ typedef struct _sockets {
     int sockWiFi_TRANSMITTER;
     struct sockaddr_in ClientLTE_TRANSMITTER;
     struct sockaddr_in ClientWiFi_TRANSMITTER;
-} Sockets;
 
+    /* Execution timing variable */
+    int packet_count_LTE;
+    int packet_count_WiFi;
+    int fail_count;
+    long double Execution_Sum;
+    int STOP;
 
+} Sockets, ExeVar;
 
 /* Troubleshooting Options */
 int print_COMMANDS = 1;
@@ -183,7 +189,7 @@ int generate(int Min, int Max) {
 /* Function to receive LTE packets */
 void *receiveLTE(void *socket) {
     Sockets *sock = (Sockets *)socket;
-    ExeVars hans;
+    Exevar *ExecutionVariables = (Exevar *)socket;
     unsigned int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
 
     /* Execution time variables */
@@ -192,16 +198,12 @@ void *receiveLTE(void *socket) {
     unsigned long nanoseconds = 0;
     double elapsed = 0;
 
-    int packet_count_LTE = 0;
-    int fail_count = 0;
-    long double Execution_Sum = 0;
-    int STOP = 0;
 
-    while (STOP != 2) {
+    while (ExecutionVariables.STOP != 2) {
         // printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
         RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
         Timestamp();
-        packet_count_LTE++;
+        ExecutionVariables.packet_count_LTE++;
         fp1 = fopen("Logs/log.txt", "a+");
         fprintf(fp1, "%s %s %s\n", message, curr_time, "LTE");
         fclose(fp1);
@@ -226,27 +228,28 @@ void *receiveLTE(void *socket) {
         /* Calculation of elapsed time sum */
         elapsed = seconds + nanoseconds * 1e-9;
         if (elapsed > 10000) {
-            fail_count++;
+            ExecutionVariables.fail_count++;
             elapsed = 0;
         }
-        Execution_Sum += elapsed;
+        ExecutionVariables.Execution_Sum += elapsed;
 
         if (RX_LTE == -1) {
-            STOP++;
+            ExecutionVariables.STOP++;
         } else {
-            STOP = 0;
+            ExecutionVariables.STOP = 0;
         }
     }
-    cout << "Execution_Sum: " << Execution_Sum << endl;
-    printf("Total failed counts: %d\n", fail_count);
-    printf("Total packets received via LTE: %d\n", packet_count_LTE);
+    cout << "Execution_Sum: " << ExecutionVariables.Execution_Sum << endl;
+    printf("Total failed counts: %d\n", ExecutionVariables.fail_count);
+    printf("Total packets received via LTE: %d\n", ExecutionVariables.packet_count_LTE);
     return 0;
+    pthread_exit(NULL);
 }
 
 /* Function to receive WiFi packets */
 void *receiveWiFi(void *socket) {
     Sockets *sock = (Sockets *)socket;
-    ExeVars hans;
+    Exevar *ExecutionVariables = (Exevar *)socket;
     const char *COMMANDS_KEY = "COMMANDS_KEY";
     char *writer = (char *)shm_write(SHM_BUFFER, COMMANDS_KEY);
     unsigned int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
@@ -255,19 +258,18 @@ void *receiveWiFi(void *socket) {
     const char *stop_key = "STOP_KEY";
     char *stopshit;
     stopshit = (char *)shm_write(32, stop_key);
-    int STOP = 0;
-    int packet_count_WiFi;
+    
 
-    while (STOP != 2) {
+    while (ExecutionVariables.STOP != 2) {
         fp2 = fopen("Logs/log.txt", "a+");
         printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
 
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
 
         Timestamp();
-        packet_count_WiFi++;
+        ExecutionVariables.packet_count_WiFi++;
 
-            if (print_COMMANDS == 1) {
+        if (print_COMMANDS == 1) {
             // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
             printf("WiFi || Message from WiFi received at: %s \n", curr_time);
             printf("WiFi || Message: %s from Control Unit \n\n", message);
@@ -276,9 +278,9 @@ void *receiveWiFi(void *socket) {
         fclose(fp2);
 
         if (RX_LTE == -1) {
-            STOP++;
+            ExecutionVariables.STOP++;
         } else {
-            STOP = 0;
+            ExecutionVariables.STOP = 0;
         }
     }
     return 0;

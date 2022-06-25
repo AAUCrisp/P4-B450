@@ -60,7 +60,7 @@ int main() {
     int iter = 1000000;
 
     /* Execution time variables */
-    ExeVars hans;
+    ExeVar DATA;
     struct timespec begin_program, end_program;
     unsigned long seconds = 0;
     unsigned long nanoseconds = 0;
@@ -130,17 +130,17 @@ int main() {
     long milliseconds = (long)(time_spent * 1000) % 1000;
 
     /* Calculation of execution average */
-    Execution_Average = Execution_Sum / (packet_count_WiFi + packet_count_LTE);
+    Execution_Average = DATA.Execution_Sum / (DATA.packet_count_WiFi + DATA.packet_count_LTE);
 
     printf("\n\n===================================\n\n");
-    printf("Execution Sum:     %Lf sec\n", Execution_Sum);
+    printf("Execution Sum:     %Lf sec\n", DATA.Execution_Sum);
     printf("Execution average: %Lf sec\n\n", Execution_Average);
     printf("Total time: %f sec\n", time_spent);
     printf("________________________\n");
     printf("Total Time:  \n            Hours: %ld  \n          Minutes: %ld  \n          Seconds: %ld \n     Milliseconds: %ld\n", hours, minutes, seconds2, milliseconds);
     printf("________________________\n\n");
-    printf("Total failed counts: %d\n", fail_count);
-    printf("Total packets received via WiFi: %d\n", packet_count_WiFi);
-    printf("Total packets received via LTE: %d\n", packet_count_LTE);
+    printf("Total failed counts: %d\n", DATA.fail_count);
+    printf("Total packets received via WiFi: %d\n", DATA.packet_count_WiFi);
+    printf("Total packets received via LTE: %d\n", DATA.packet_count_LTE);
     printf("\n===================================\n\n");
 }
