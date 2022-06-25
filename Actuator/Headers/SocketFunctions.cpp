@@ -204,10 +204,11 @@ void *receiveLTE(void *socket) {
         FD_ZERO(&readfds);
         FD_SET(maxshit, &readfds);
         int nready = select(maxshit + 1, &readfds, NULL, NULL, &tv);
-        printf("in while readfds: %d\n", readfds);
+        cout << "readfds: " << readfds << "\n";
+        
         if (FD_ISSET(maxshit, &readfds)) {
             printf("select value: %d\n", nready);
-            printf("in while readfds: %d\n", readfds);
+            cout << "readfds: " << readfds << "\n";
 
             fp1 = fopen("Logs/log.txt", "a+");
             // printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
