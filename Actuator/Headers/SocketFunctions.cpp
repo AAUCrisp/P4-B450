@@ -224,7 +224,7 @@ void *receiveLTE(void *socket) {
             sprintf(writer, "%s", message);
             fprintf(fp1, "%s %s %s\n", message, curr_time, "LTE");
             fclose(fp1);
-            
+            printf("stop_key value: %s\n", );
 
         } else if (nready == 0) {
             sleep(1);

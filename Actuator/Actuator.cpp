@@ -128,7 +128,7 @@ int main() {
                     break;
                 }
             } else {
-                usleep(1000);
+                sleep(1);
                 printf("Not receiving data\n");
             }
         }
