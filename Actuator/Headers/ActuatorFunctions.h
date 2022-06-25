@@ -12,12 +12,11 @@ void update_last_coordinate(int number1, int number2);
 
 void processData(char msg[]);
 
-string int_to_hex(int data, int back);
+//string int_to_hex(int data, int back);
 
 /* Function to generate timestamp */
 char *Timestamp();
 
-
-int hex_to_int(string data);
+//int hex_to_int(string data);
 
 #endif
