@@ -81,11 +81,11 @@ int main() {
 
     /* Initialize PORT & INTERFACE*/
     uint PORT_LTE_RECEIVER = 9004;
-    uint PORT_WiFi_RECEIVER = 9005555;
+    uint PORT_WiFi_RECEIVER = 9005;
     // const char* LTE = "wwan0";
     // const char* WiFi = "wlan0";
     const char* LTE = "lo";
-    const char* WiFi = "";
+    const char* WiFi = "enp0s3";
 
     /* Create sockets */
     Sockets sock;
