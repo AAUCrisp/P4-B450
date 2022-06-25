@@ -196,7 +196,7 @@ void *receiveLTE(void *socket) {
     printf("maxshit: %d\n", maxshit);
 
     struct timeval tv;
-    tv.tv_sec = 10;
+    tv.tv_sec = 0;
     tv.tv_usec = 0;
 
     while (1) {
@@ -223,11 +223,11 @@ void *receiveLTE(void *socket) {
             sprintf(writer, "%s", message);
             fprintf(fp1, "%s %s %s\n", message, curr_time, "LTE");
             fclose(fp1);
-            if (nready == 0) {
-                STOP = 0;
-                sprintf(stopshit, "%d", STOP);
-                printf("select value: %d\n", nready);
-            }
+
+        } else if (nready == 0) {
+            STOP = 0;
+            sprintf(stopshit, "%d", STOP);
+            printf("select value: %d\n", nready);
         }
     }
 }
