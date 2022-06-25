@@ -187,7 +187,7 @@ void *receiveLTE(void *socket) {
     /* Shared memory object variables */
     const char *stop_key = "STOP_KEY";
     char *stopshit;
-    stopshit = (char *)shm_write(32, stop_key);
+    stopshit = (char *)shm_write(1024, stop_key);
 
     /* select() test variables */
     fd_set readfds;
@@ -208,7 +208,7 @@ void *receiveLTE(void *socket) {
         if (nready > 0) {
             //printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
             printf("select value: %d\n", nready);
-            RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, sizeof(message), 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
+            RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
             Timestamp();
 
             STOP = 1;
