@@ -24,10 +24,9 @@
 #include <sstream>
 #include <string>
 
-#ifndef EXECUTIONVARIABLE_H
-#define EXECUTIONVARIABLE_H
+
 #include "ExecutionVariable.h"
-#endif
+
 
 #include "ActuatorFunctions.h"
 #include "shm_read_write.h"
@@ -254,7 +253,7 @@ void *receiveWiFi(void *socket) {
     char *stopshit;
     stopshit = (char *)shm_write(32, stop_key);
     int STOP = 0;
-    
+
     while (STOP != 2) {
         fp2 = fopen("Logs/log.txt", "a+");
         printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);

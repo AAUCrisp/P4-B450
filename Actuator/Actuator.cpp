@@ -29,10 +29,9 @@
 
 #include "Headers/ActuatorFunctions.h"
 
-#ifndef EXECUTIONVARIABLE_H
-#define EXECUTIONVARIABLE_H
+
 #include "Headers/ExecutionVariable.h"
-#endif
+
 
 #include "Headers/SocketFunctions.h"
 #include "Headers/shm_read_write.h"
