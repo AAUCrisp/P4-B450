@@ -28,7 +28,7 @@
 #include "FileDescriptors.h"
 #include "shm_read_write.h"
 
-using namespace std;
+//using namespace std;
 
 typedef struct _sockets {
     /* Receiver sockets */

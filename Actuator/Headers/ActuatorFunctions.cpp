@@ -23,7 +23,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-using namespace std;
+//using namespace std;
 
 //#include "SocketFunctions.h"
 
