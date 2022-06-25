@@ -73,6 +73,14 @@ int main() {
 
     const char* stop_key = "STOP_KEY";
     char* stopshit;
+    
+    /* Initialize PORT & INTERFACE*/
+    uint PORT_LTE_RECEIVER = 9004;
+    uint PORT_WiFi_RECEIVER = 9005;
+    // const char* LTE = "wwan0";
+    // const char* WiFi = "wlan0";
+    const char* LTE = "lo";
+    const char* WiFi = "lo";
 
     /* Create sockets */
     Sockets sock;
