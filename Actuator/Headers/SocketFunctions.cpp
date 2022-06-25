@@ -248,9 +248,9 @@ void *receiveLTE(void *socket) {
             sock->STOP = 0;
         }
     }
-    cout << "LTE : Execution_Sum: " << sock->Execution_Sum << endl;
+    cout << "\nLTE : Execution_Sum: " << sock->Execution_Sum << endl;
     printf("LTE : Total failed counts: %d\n", sock->fail_count);
-    printf("LTE : Total packets received via LTE: %d\n", sock->packet_count_LTE);
+    printf("LTE : Total packets received via LTE: %d\n\n", sock->packet_count_LTE);
     sleep(10);
     return 0;
 }
@@ -294,9 +294,9 @@ void *receiveWiFi(void *socket) {
             sock->STOP = 0;
         }
     }
-    cout << "WiFi : Execution_Sum: " << sock->Execution_Sum << endl;
+    cout << "\nWiFi : Execution_Sum: " << sock->Execution_Sum << endl;
     printf("WiFi : Total failed counts: %d\n", sock->fail_count);
-    printf("WiFi : Total packets received via WiFi: %d\n", sock->packet_count_WiFi);
+    printf("WiFi : Total packets received via WiFi: %d\n\n", sock->packet_count_WiFi);
     sleep(10);
     return 0;
 }
