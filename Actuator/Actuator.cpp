@@ -56,15 +56,15 @@ int main() {
     int iter = 1000000;
 
     /* Execution time variables */
-    int count = 0;
-    int fail_count = 0;
-    long double Execution_Sum = 0;
+    static int count = 0;
+    static int fail_count = 0;
+    static long double Execution_Sum = 0;
     long double Execution_Average = 0;
 
-    struct timespec begin, end, begin_program, end_program;
-    unsigned long seconds = 0;
-    unsigned long nanoseconds = 0;
-    double elapsed = 0;
+    static struct timespec begin, end, begin_program, end_program;
+    static unsigned long seconds = 0;
+    static unsigned long nanoseconds = 0;
+    static double elapsed = 0;
 
     /* Shared memory object variables */
     const char* COMMANDS_KEY = "COMMANDS_KEY";
@@ -87,55 +87,10 @@ int main() {
         // execvp(path, (char* const*)args);
 
     } else {
-        /* Initialize SHM object reading */
-        COMMANDS = (char*)shm_read(32, COMMANDS_KEY);
-        stopshit = (char*)shm_read(32, stop_key);
-
-        /* Start timing all code */
-        clock_gettime(CLOCK_REALTIME, &begin_program);
-
-        while (1) {
-            if (strcmp(stopshit, (char*)"1") == 0) {
-                cout << "if STOP variable: " << stopshit << "\n";
-                printf("COMMANDS from shared memory: %s\n", COMMANDS);
-
-                snprintf(msg, sizeof(msg), "%s", COMMANDS);  // Is "msg" even used for anything???
-
-                /* Start timing code execution of code */
-                clock_gettime(CLOCK_REALTIME, &begin);
-
-                processData(COMMANDS);
-
-                /* Stop timing code execution of code */
-                clock_gettime(CLOCK_REALTIME, &end);
-
-                seconds = end.tv_sec - begin.tv_sec;
-                nanoseconds = end.tv_nsec - begin.tv_nsec;
-
-                /* Calculation of elapsed time sum */
-                elapsed = seconds + nanoseconds * 1e-9;
-                if (elapsed > 10000) {
-                    fail_count++;
-                    elapsed = 0;
-                }
-                Execution_Sum += elapsed;
-                count++;
-
-                printf("count: %d\n", count);
-
-                if (strcmp(stopshit, (char*)"0") == 0) {
-                    // break;
-                    cout << "inside break STOP variable: " << stopshit << "\n";
-                    printf("inside break\n");
-                    sleep(5);
-                }
-            } else {
-                sleep(1);
-                printf("Not receiving data\n");
-                cout << "start STOP variable: " << stopshit << "\n";
-            }
-        }
+        pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
+        receiveWiFi(&sock);
     }
+
     /* Stop timing all code */
     clock_gettime(CLOCK_REALTIME, &end_program);
 

@@ -75,8 +75,8 @@ FILE *fp2;
 void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
     /* Time struct for socket timeout */
     struct timeval tv2;
-    tv2.tv_sec = 0;
-    tv2.tv_usec = 500000;
+    tv2.tv_sec = 5;
+    tv2.tv_usec = 0;
 
     /* Create socket receiver */
     sock->sockLTE_RECEIVER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -87,8 +87,8 @@ void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *
     /* Setting up socket options & specifying interface for receiver */
     setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
     setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
-    // setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
-    // setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
+    setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
+    setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
 
     /* Error checking */
     if (sock->sockLTE_RECEIVER == -1) {
@@ -190,50 +190,49 @@ void *receiveLTE(void *socket) {
     char *stopshit2;
     stopshit = (char *)shm_write(1024, stop_key);
 
-    /* select() test variables */
-    fd_set readfds;
+    /* Start timing all code */
+    clock_gettime(CLOCK_REALTIME, &begin_program);
 
-    int maxshit = sock->sockLTE_RECEIVER;
-    printf("maxshit: %d\n", maxshit);
-
-    struct timeval tv;
-    tv.tv_sec = 0;
-    tv.tv_usec = 0;
-
-    while (1) {
-        FD_ZERO(&readfds);
-        FD_SET(maxshit, &readfds);
-        int nready = select(maxshit + 1, &readfds, NULL, NULL, &tv);
-        
-        if (FD_ISSET(maxshit, &readfds)) {
-            printf("select value: %d\n", nready);
-            //maxshit++;
-
-            fp1 = fopen("Logs/log.txt", "a+");
+    while (STOP == 0) {
             // printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
             RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
             Timestamp();
-
-            STOP = 1;
-            sprintf(stopshit, "%d", STOP);
 
             if (print_COMMANDS == 1) {
                 // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
                 printf("LTE || Message from LTE received at: %s\n", curr_time);
                 printf("LTE || Message: %s from Control Unit \n\n", message);
             }
-            sprintf(writer, "%s", message);
+
+            /* Start timing code execution of code */
+            clock_gettime(CLOCK_REALTIME, &begin);
+
+            processData(message);
+
+            /* Stop timing code execution of code */
+            clock_gettime(CLOCK_REALTIME, &end);
+
+            seconds = end.tv_sec - begin.tv_sec;
+            nanoseconds = end.tv_nsec - begin.tv_nsec;
+
+            /* Calculation of elapsed time sum */
+            elapsed = seconds + nanoseconds * 1e-9;
+            if (elapsed > 10000) {
+                fail_count++;
+                elapsed = 0;
+            }
+            Execution_Sum += elapsed;
+            count++;
+
+            printf("count: %d\n", count);
+
+            fp1 = fopen("Logs/log.txt", "a+");
             fprintf(fp1, "%s %s %s\n", message, curr_time, "LTE");
             fclose(fp1);
-            stopshit2 = (char *)shm_read(32, stop_key);
-            printf("stop_key value: %s\n", stopshit2);
-        } else if (nready == 0) {
-            usleep(1000);
-            STOP = 0;
-            sprintf(stopshit, "%d", STOP);
-            printf("select value: %d\n", nready);
-            printf("stop_key value: %s\n", stopshit2);
-        }
+           
+           if (RX_LTE == -1) {
+               STOP = 1;
+           }
     }
 }
 
