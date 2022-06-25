@@ -110,10 +110,7 @@ int main() {
         clock_gettime(CLOCK_REALTIME, &begin_program);
 
         pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
-        pthread_join(T1, NULL);
-        printf("Do I print this?\n");
         receiveWiFi(&sock);
-        printf("Do I print this?2\n");
     }
 
     /* Stop timing all code */
@@ -130,17 +127,17 @@ int main() {
     long milliseconds = (long)(time_spent * 1000) % 1000;
 
     /* Calculation of execution average */
-    Execution_Average = Execution_Sum / (packet_count_WiFi + packet_count_LTE);
+    Execution_Average = sock.Execution_Sum / (sock.packet_count_WiFi + sock.packet_count_LTE);
 
     printf("\n\n===================================\n\n");
-    printf("Execution Sum:     %Lf sec\n", Execution_Sum);
+    printf("Execution Sum:     %Lf sec\n", sock.Execution_Sum);
     printf("Execution average: %Lf sec\n\n", Execution_Average);
     printf("Total time: %f sec\n", time_spent);
     printf("________________________\n");
     printf("Total Time:  \n            Hours: %ld  \n          Minutes: %ld  \n          Seconds: %ld \n     Milliseconds: %ld\n", hours, minutes, seconds2, milliseconds);
     printf("________________________\n\n");
-    printf("Total failed counts: %d\n", fail_count);
-    printf("Total packets received via WiFi: %d\n", packet_count_WiFi);
-    printf("Total packets received via LTE: %d\n", packet_count_LTE);
+    printf("Total failed counts: %d\n", sock.fail_count);
+    printf("Total packets received via WiFi: %d\n", sock.packet_count_WiFi);
+    printf("Total packets received via LTE: %d\n", sock.packet_count_LTE);
     printf("\n===================================\n\n");
 }

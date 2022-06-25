@@ -14,6 +14,13 @@ typedef struct _sockets {
     struct sockaddr_in ClientLTE_TRANSMITTER;
     struct sockaddr_in ClientWiFi_TRANSMITTER;
 
+    /* Execution timing variable */
+    int packet_count_LTE;
+    int packet_count_WiFi;
+    int fail_count;
+    long double Execution_Sum;
+    int STOP;
+
 } Sockets;
 
 /* Function to create receiver socket */
