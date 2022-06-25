@@ -205,10 +205,12 @@ void *receiveLTE(void *socket) {
         FD_SET(maxshit, &readfds);
         int nready = select(maxshit + 1, &readfds, NULL, NULL, &tv);
         
-        if (nready == 1) {
+        if (nready > 0) {
             //printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
+            printf("select value: %d\n", nready);
             RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, sizeof(message), 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
             Timestamp();
+
             STOP = 1;
             sprintf(stopshit, "%d", STOP);
 
@@ -220,13 +222,10 @@ void *receiveLTE(void *socket) {
             sprintf(writer, "%s", message);
             fprintf(fp1, "%s %s %s\n", message, curr_time, "LTE");
             fclose(fp1);
-        }
-
-        if (nready == 0) {
-            usleep(10000);
-            cout << "Waiting to receive...\n";
+        } else {
             STOP = 0;
             sprintf(stopshit, "%d", STOP);
+            printf("select value: %d\n", nready);
         }
     }
 }
