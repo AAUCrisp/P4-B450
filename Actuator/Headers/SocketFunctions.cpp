@@ -204,7 +204,7 @@ void *receiveLTE(void *socket) {
         FD_SET(maxshit, &readfds);
         int nready = select(maxshit+1, &readfds, NULL, NULL, &tv);
 
-        if (FD_ISSET(maxshit+1, &readfds)) {
+        if (FD_ISSET(maxshit, &readfds)) {
             
             printf("select value: %d\n", nready);
 
@@ -227,7 +227,7 @@ void *receiveLTE(void *socket) {
             
 
         } else if (nready == 0) {
-            sleep(5);
+            sleep(1);
             STOP = 0;
             sprintf(stopshit, "%d", STOP);
             printf("select value: %d\n", nready);
