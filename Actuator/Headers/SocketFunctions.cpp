@@ -212,7 +212,7 @@ void *receiveLTE(void *socket) {
             printf("Do I reach this even?\n");
             RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, sizeof(message), 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
             Timestamp();
-            STOP = 1
+            STOP = 1;
             sprintf(stopshit, "%d", STOP);
 
             if (print_COMMANDS == 1) {
