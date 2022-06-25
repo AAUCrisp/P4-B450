@@ -25,6 +25,7 @@
 #include <string>
 
 #include "ActuatorFunctions.h"
+#include "FileDescriptors.h"
 #include "shm_read_write.h"
 
 using namespace std;
