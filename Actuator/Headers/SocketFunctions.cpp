@@ -228,7 +228,7 @@ void *receiveLTE(void *socket) {
             printf("LTE || Message: %s from Control Unit \n\n", message);
         }
 
-        FileProcess2 = fopen("Logs/processed_commands.txt", "a+");
+        FileProcess1 = fopen("Logs/processed_commands.txt", "a+");
 
         /* Start timing code execution of code */
         clock_gettime(CLOCK_REALTIME, &begin);
@@ -238,7 +238,7 @@ void *receiveLTE(void *socket) {
         /* Stop timing code execution of code */
         clock_gettime(CLOCK_REALTIME, &end);
        
-        fclose(FileProcess2);
+        fclose(FileProcess1);
 
         seconds = end.tv_sec - begin.tv_sec;
         nanoseconds = end.tv_nsec - begin.tv_nsec;
@@ -294,7 +294,7 @@ void *receiveWiFi(void *socket) {
             printf("WiFi || Message: %s from Control Unit \n\n", message);
         }
 
-        FileProcess1 = fopen("Logs/processed_commands.txt", "a+");
+        FileProcess2 = fopen("Logs/processed_commands.txt", "a+");
 
         /* Start timing code execution of code */
         clock_gettime(CLOCK_REALTIME, &begin);
@@ -303,7 +303,7 @@ void *receiveWiFi(void *socket) {
 
         /* Stop timing code execution of code */
         clock_gettime(CLOCK_REALTIME, &end);
-        fclose(FileProcess1);
+        fclose(FileProcess2);
 
         seconds = end.tv_sec - begin.tv_sec;
         nanoseconds = end.tv_nsec - begin.tv_nsec;
