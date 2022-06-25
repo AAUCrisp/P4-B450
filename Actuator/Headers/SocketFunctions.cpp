@@ -44,6 +44,8 @@ typedef struct _sockets {
     struct sockaddr_in ClientWiFi_TRANSMITTER;
 } Sockets;
 
+
+
 /* Troubleshooting Options */
 int print_COMMANDS = 1;
 
@@ -181,6 +183,7 @@ int generate(int Min, int Max) {
 /* Function to receive LTE packets */
 void *receiveLTE(void *socket) {
     Sockets *sock = (Sockets *)socket;
+    ExeVars hans;
     unsigned int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
 
     /* Execution time variables */
@@ -195,11 +198,11 @@ void *receiveLTE(void *socket) {
     //long double Execution_Sum = 0;
     //int STOP = 0;
 
-    while (ExecutionVariables::STOP != 2) {
+    while (hans->STOP != 2) {
         // printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
         RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
         Timestamp();
-        ExecutionVariables::packet_count_LTE++;
+        hans->packet_count_LTE++;
         fp1 = fopen("Logs/log.txt", "a+");
         fprintf(fp1, "%s %s %s\n", message, curr_time, "LTE");
         fclose(fp1);
@@ -224,26 +227,27 @@ void *receiveLTE(void *socket) {
         /* Calculation of elapsed time sum */
         elapsed = seconds + nanoseconds * 1e-9;
         if (elapsed > 10000) {
-            ExecutionVariables::fail_count++;
+            hans->fail_count++;
             elapsed = 0;
         }
-        ExecutionVariables::Execution_Sum += elapsed;
+        hans->Execution_Sum += elapsed;
 
         if (RX_LTE == -1) {
-            ExecutionVariables::STOP++;
+            hans->STOP++;
         } else {
-            ExecutionVariables::STOP = 0;
+            hans->STOP = 0;
         }
     }
-    cout << "Execution_Sum: " << ExecutionVariables::Execution_Sum << endl;
-    printf("Total failed counts: %d\n", ExecutionVariables::fail_count);
-    printf("Total packets received via LTE: %d\n", ExecutionVariables::packet_count_LTE);
+    cout << "Execution_Sum: " << hans->Execution_Sum << endl;
+    printf("Total failed counts: %d\n", hans->fail_count);
+    printf("Total packets received via LTE: %d\n", hans->packet_count_LTE);
     return 0;
 }
 
 /* Function to receive WiFi packets */
 void *receiveWiFi(void *socket) {
     Sockets *sock = (Sockets *)socket;
+    ExeVars hans;
     const char *COMMANDS_KEY = "COMMANDS_KEY";
     char *writer = (char *)shm_write(SHM_BUFFER, COMMANDS_KEY);
     unsigned int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
@@ -254,14 +258,14 @@ void *receiveWiFi(void *socket) {
     stopshit = (char *)shm_write(32, stop_key);
     //int STOP = 0;
 
-    while (ExecutionVariables::STOP != 2) {
+    while (hans->STOP != 2) {
         fp2 = fopen("Logs/log.txt", "a+");
         printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
 
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
 
         Timestamp();
-        ExecutionVariables::packet_count_WiFi++;
+        hans->packet_count_WiFi++;
 
             if (print_COMMANDS == 1) {
             // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
@@ -272,9 +276,9 @@ void *receiveWiFi(void *socket) {
         fclose(fp2);
 
         if (RX_LTE == -1) {
-            ExecutionVariables::STOP++;
+            hans->STOP++;
         } else {
-            ExecutionVariables::STOP = 0;
+            hans->STOP = 0;
         }
     }
     return 0;
