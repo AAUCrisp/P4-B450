@@ -24,8 +24,12 @@
 #include <sstream>
 #include <string>
 
-#include "ActuatorFunctions.h"
+#ifndef EXECUTIONVARIABLE_H
+#define EXECUTIONVARIABLE_H
 #include "ExecutionVariable.h"
+#endif
+
+#include "ActuatorFunctions.h"
 #include "shm_read_write.h"
 
 using namespace std;
