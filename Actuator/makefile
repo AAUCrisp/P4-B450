@@ -27,7 +27,7 @@ ActuatorFunctions.o: Headers/ActuatorFunctions.cpp Headers/ActuatorFunctions.h
 	g++ -c -g Headers/ActuatorFunctions.cpp -lrt
 #	touch Headers/ActuatorFunctions
 
-SocketFunctions.o: Headers/SocketFunctions.cpp Headers/SocketFunctions.h
+SocketFunctions.o: Headers/SocketFunctions.cpp Headers/SocketFunctions.h Headers/ActuatorFunctions.h
 	g++ -c -g Headers/SocketFunctions.cpp -lrt
 #	touch Headers/SocketFunctions
 
