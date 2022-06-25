@@ -207,7 +207,7 @@ void *receiveLTE(void *socket) {
 
     while (sock->STOP_LTE != 1) {
         // printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
-        FileProcess.open("Logs/processed_commands.txt", std::ofstream::out | std::ofstream::app);
+        FileProcess.open("Logs/processed_commands.txt", ofstream::out | ofstream::app);
         RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
         // printf("RX_LTE: %d\n", RX_LTE);
         if (RX_LTE == -1) {
@@ -294,7 +294,7 @@ void *receiveWiFi(void *socket) {
             printf("WiFi || Message: %s from Control Unit \n\n", message);
         }
 
-        FileProcess.open("Logs/processed_commands.txt", std::ofstream::out | std::ofstream::app);
+        FileProcess.open("Logs/processed_commands.txt", ofstream::out | ofstream::app);
 
         /* Start timing code execution of code */
         clock_gettime(CLOCK_REALTIME, &begin);
