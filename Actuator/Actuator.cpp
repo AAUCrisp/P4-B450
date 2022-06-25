@@ -25,12 +25,12 @@
 #include <string>
 
 //#include "Headers/ActuatorFunctions.cpp"
-#include "Headers/SocketFunctions.h"
 #include <iostream>
 
 #include "Headers/ActuatorFunctions.h"
-#include "Headers/shm_read_write.h"
 #include "Headers/ExecutionVariable.h"
+#include "Headers/SocketFunctions.h"
+#include "Headers/shm_read_write.h"
 
 using namespace std;
 
@@ -124,38 +124,42 @@ int main() {
                 printf("count: %d\n", count);
 
                 if (strcmp(stopshit, (char*)"0") == 0) {
-                    break;
+                    // break;
+                    cout << "start STOP variable: " << stopshit << "\n";
+                    printf("inside break\n");
                 }
-            } else {
-                sleep(1);
-                printf("Not receiving data\n");
-                cout << "start STOP variable: " << stopshit << "\n";
             }
         }
+        else {
+            sleep(1);
+            printf("Not receiving data\n");
+            cout << "start STOP variable: " << stopshit << "\n";
+        }
     }
-    /* Stop timing all code */
-    clock_gettime(CLOCK_REALTIME, &end_program);
+}
+/* Stop timing all code */
+clock_gettime(CLOCK_REALTIME, &end_program);
 
-    /* Calculation of total time execution */
-    double time_spent = (end_program.tv_sec - begin_program.tv_sec) +
-                        (end_program.tv_nsec - begin_program.tv_nsec) / BILLION;
+/* Calculation of total time execution */
+double time_spent = (end_program.tv_sec - begin_program.tv_sec) +
+                    (end_program.tv_nsec - begin_program.tv_nsec) / BILLION;
 
-    /* Conversion of time spent to HH:MM:SS.MS */
-    long hours = (long)time_spent / 3600;
-    long minutes = ((long)time_spent / 60) % 60;
-    long seconds2 = (long)time_spent % 60;
-    long milliseconds = (long)(time_spent * 1000) % 1000;
+/* Conversion of time spent to HH:MM:SS.MS */
+long hours = (long)time_spent / 3600;
+long minutes = ((long)time_spent / 60) % 60;
+long seconds2 = (long)time_spent % 60;
+long milliseconds = (long)(time_spent * 1000) % 1000;
 
-    /* Calculation of execution average */
-    Execution_Average = Execution_Sum / iter;
+/* Calculation of execution average */
+Execution_Average = Execution_Sum / iter;
 
-    printf("\n\n===================================\n\n");
-    printf("Execution Sum:     %Lf sec\n", Execution_Sum);
-    printf("Execution average: %Lf sec\n\n", Execution_Average);
-    printf("Total time: %f sec\n", time_spent);
-    printf("________________________\n");
-    printf("Total Time:  \n            Hours: %ld  \n          Minutes: %ld  \n          Seconds: %ld \n     Milliseconds: %ld\n", hours, minutes, seconds2, milliseconds);
-    printf("________________________\n\n");
-    printf("Total failed counts: %d\n", fail_count);
-    printf("\n===================================\n\n");
+printf("\n\n===================================\n\n");
+printf("Execution Sum:     %Lf sec\n", Execution_Sum);
+printf("Execution average: %Lf sec\n\n", Execution_Average);
+printf("Total time: %f sec\n", time_spent);
+printf("________________________\n");
+printf("Total Time:  \n            Hours: %ld  \n          Minutes: %ld  \n          Seconds: %ld \n     Milliseconds: %ld\n", hours, minutes, seconds2, milliseconds);
+printf("________________________\n\n");
+printf("Total failed counts: %d\n", fail_count);
+printf("\n===================================\n\n");
 }
