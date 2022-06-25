@@ -189,7 +189,7 @@ int generate(int Min, int Max) {
 /* Function to receive LTE packets */
 void *receiveLTE(void *socket) {
     Sockets *sock = (Sockets *)socket;
-    Exevar *ExecutionVariables = (Exevar *)socket;
+    ExeVar *ExecutionVariables = (ExeVar *)socket;
     unsigned int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
 
     /* Execution time variables */
@@ -249,7 +249,7 @@ void *receiveLTE(void *socket) {
 /* Function to receive WiFi packets */
 void *receiveWiFi(void *socket) {
     Sockets *sock = (Sockets *)socket;
-    Exevar *ExecutionVariables = (Exevar *)socket;
+    ExeVar *ExecutionVariables = (ExeVar *)socket;
     const char *COMMANDS_KEY = "COMMANDS_KEY";
     char *writer = (char *)shm_write(SHM_BUFFER, COMMANDS_KEY);
     unsigned int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
