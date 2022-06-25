@@ -227,6 +227,7 @@ void *receiveLTE(void *socket) {
             
 
         } else if (nready == 0) {
+            sleep(1);
             STOP = 0;
             sprintf(stopshit, "%d", STOP);
             printf("select value: %d\n", nready);
