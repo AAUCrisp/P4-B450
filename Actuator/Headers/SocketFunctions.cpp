@@ -197,10 +197,10 @@ void *receiveLTE(void *socket) {
     unsigned long nanoseconds = 0;
     double elapsed = 0;
 
-    //int packet_count_LTE = DATA->packet_count_LTE;
-    //int fail_count = DATA->fail_count;
-    //long double Execution_Sum = DATA->Execution_Sum;
-    //int STOP = DATA->STOP;
+    // int packet_count_LTE = DATA->packet_count_LTE;
+    // int fail_count = DATA->fail_count;
+    // long double Execution_Sum = DATA->Execution_Sum;
+    // int STOP = DATA->STOP;
 
     sock->packet_count_LTE = 0;
     sock->fail_count = 0;
@@ -266,14 +266,17 @@ void *receiveWiFi(void *socket) {
     char *stopshit;
     stopshit = (char *)shm_write(32, stop_key);
 
-    while (STOP != 2) {
+    sock->packet_count_WiFI = 0;
+    sock->STOP = 0;
+
+    while (sock->STOP != 2) {
         fp2 = fopen("Logs/log.txt", "a+");
         printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
 
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
 
         Timestamp();
-        packet_count_WiFi++;
+        sock->packet_count_WiFi++;
 
         if (print_COMMANDS == 1) {
             // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
@@ -284,9 +287,9 @@ void *receiveWiFi(void *socket) {
         fclose(fp2);
 
         if (RX_LTE == -1) {
-            STOP++;
+            sock->STOP++;
         } else {
-            STOP = 0;
+            sock->STOP = 0;
         }
     }
     return 0;
