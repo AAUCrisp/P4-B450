@@ -205,7 +205,6 @@ void *receiveLTE(void *socket) {
         int nready = select(maxshit+1, &readfds, NULL, NULL, &tv);
 
         if (nready > 0) {
-            int startthis = 1;
             printf("select value: %d\n", nready);
 
             fp1 = fopen("Logs/log.txt", "a+");
@@ -226,6 +225,7 @@ void *receiveLTE(void *socket) {
             fclose(fp1);
 
         } else if (nready == 0) {
+            usleep(10000);
             STOP = 0;
             sprintf(stopshit, "%d", STOP);
             printf("select value: %d\n", nready);
