@@ -45,7 +45,7 @@ int movement_y;
 char tempx[buffer];
 char tempy[buffer];
 char curr_time2[128];
-std::ofstream File;
+std::ofstream FileProcess;
 
 /* --- Conversion from Integer to Hex-chars --- */
 /*
@@ -129,10 +129,10 @@ void processData(char msg[buffer]) {
     if (movement_x == 0 && movement_y == 0) {
     } else {
         Timestamp2();
-        File.open("Logs/processed_commands.txt", std::ofstream::out | std::ofstream::app);
-        File << "\n\n"
+        FileProcess.open("Logs/processed_commands.txt", std::ofstream::out | std::ofstream::app);
+        FileProcess << "\n\n"
              << curr_time2 << "\nMovement on the x-axis:" << movement_x << " mm \nMovement on the y-axis:" << movement_y << " mm";
-        File.close();
+        FileProcess.close();
     }
 
     update_last_coordinate(x, y);
