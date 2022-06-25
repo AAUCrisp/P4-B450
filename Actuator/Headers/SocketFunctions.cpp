@@ -202,7 +202,7 @@ void *receiveLTE(void *socket) {
     while (1) {
         FD_ZERO(&readfds);
         FD_SET(maxshit, &readfds);
-        int nready = select(maxshit, &readfds, NULL, NULL, &tv);
+        int nready = select(maxshit+1, &readfds, NULL, NULL, &tv);
 
         if (nready > 0) {
             int startthis = 1;
