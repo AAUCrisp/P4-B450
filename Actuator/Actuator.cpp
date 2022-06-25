@@ -139,8 +139,9 @@ int main() {
     printf("    Total Execution Sum:     %Lf sec\n", (sock.Execution_Sum_LTE+sock.Execution_Sum_WiFi));
     printf("    WiFi Execution Sum:      %Lf sec\n", sock.Execution_Sum_WiFi);
     printf("    LTE Execution Sum:       %Lf sec\n\n", sock.Execution_Sum_LTE);
-    printf("Execution time average & Total program time:\n");
+    printf("Execution time average: \n");
     printf("    Total Execution average: %Lf sec\n\n", Execution_Average);
+    printf("Total program time: \n");
     printf("    Total time: %f sec\n", time_spent);
     printf("________________________\n\n");
     printf("Total Time:  \n            Hours: %ld  \n          Minutes: %ld  \n          Seconds: %ld \n     Milliseconds: %ld\n", hours, minutes, seconds2, milliseconds);
