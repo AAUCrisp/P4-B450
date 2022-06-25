@@ -23,15 +23,15 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-using namespace std;
 
 //#include "SocketFunctions.h"
 
 #include "ActuatorFunctions.h"
 #include "FileDescriptors.h"
 
-#include "hex.h"
+//#include "hex.h"
 
+using namespace std;
 /* Variables used to create and bind sockets, receive from sockets, and error handle on sockets */
 #define buffer 1024
 char ActuatorBuffer[1024];
