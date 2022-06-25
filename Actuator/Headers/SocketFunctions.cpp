@@ -196,7 +196,7 @@ void *receiveLTE(void *socket) {
     printf("maxshit: %d\n", maxshit);
 
     struct timeval tv;
-    tv.tv_sec = 0;
+    tv.tv_sec = 5;
     tv.tv_usec = 0;
 
     while (1) {
