@@ -204,8 +204,8 @@ void *receiveLTE(void *socket) {
         FD_SET(maxshit, &readfds);
         int nready = select(maxshit+1, &readfds, NULL, NULL, &tv);
 
-        if (nready > 0) {
-            while(1){
+        if (FD_ISSET(maxshit+1, &readfds)) {
+            
             printf("select value: %d\n", nready);
 
             fp1 = fopen("Logs/log.txt", "a+");
@@ -224,10 +224,10 @@ void *receiveLTE(void *socket) {
             sprintf(writer, "%s", message);
             fprintf(fp1, "%s %s %s\n", message, curr_time, "LTE");
             fclose(fp1);
-            }
+            
 
         } else if (nready == 0) {
-            sleep(1);
+            sleep(5);
             STOP = 0;
             sprintf(stopshit, "%d", STOP);
             printf("select value: %d\n", nready);
