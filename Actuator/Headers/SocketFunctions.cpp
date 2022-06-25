@@ -193,6 +193,11 @@ void *receiveLTE(void *socket) {
     unsigned long nanoseconds = 0;
     double elapsed = 0;
 
+    int packet_count_LTE = 0;
+    int packet_count_WiFi = 0;
+    int fail_count = 0;
+    long double Execution_Sum = 0;
+
     while (STOP != 2) {
         // printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
         RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
