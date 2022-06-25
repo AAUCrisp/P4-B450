@@ -5,8 +5,8 @@ git:
 	make
 	rm Logs/log.txt Logs/processed_commands.txt
 
-Actuator.out: Actuator.o shm_read_write.o ActuatorFunctions.o
-	g++ -pthread Actuator.o shm_read_write.o ActuatorFunctions.o -o Actuator.out -lrt
+Actuator.out: Actuator.o shm_read_write.o ActuatorFunctions.o SocketFunctions.o
+	g++ -pthread Actuator.o shm_read_write.o ActuatorFunctions.o SocketFunctions.o -o Actuator.out -lrt
 
 ActuatorMonitoring.out: ActuatorMonitoring.o shm_read_write.o SocketFunctions.o
 	g++ -pthread ActuatorMonitoring.o shm_read_write.o SocketFunctions.o -o ActuatorMonitoring.out -lrt
