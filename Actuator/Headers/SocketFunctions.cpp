@@ -235,7 +235,7 @@ void *receiveLTE(void *socket) {
             STOP = 0;
         }
     }
-    printf("Execution_Sum: %d\n", Execution_Sum);
+    cout << "Execution_Sum: " << Execution_Sum << endl;
     printf("Total failed counts: %d\n", fail_count);
     printf("Total packets received via LTE: %d\n", packet_count_LTE);
     return 0;
