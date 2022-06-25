@@ -212,7 +212,7 @@ void *receiveLTE(void *socket) {
             Timestamp();
 
             STOP = 1;
-            //sprintf(stopshit, "%d", STOP);
+            sprintf(stopshit, "%d", STOP);
 
             if (print_COMMANDS == 1) {
                 // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
@@ -221,11 +221,10 @@ void *receiveLTE(void *socket) {
             }
             sprintf(writer, "%s", message);
             fprintf(fp1, "%s %s %s\n", message, curr_time, "LTE");
-            fclose(fp1);
         } else {
             STOP = 0;
             sprintf(stopshit, "%d", STOP);
-            printf("select value: %d\n", nready);
+            fclose(fp1);
         }
     }
 }
