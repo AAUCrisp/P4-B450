@@ -179,7 +179,7 @@ int generate(int Min, int Max) {
 }
 
 /* Function to receive LTE packets */
-void receiveLTE(void *socket) {
+void *receiveLTE(void *socket) {
     Sockets *sock = (Sockets *)socket;
     const char *COMMANDS_KEY = "COMMANDS_KEY";
     char *writer = (char *)shm_write(SHM_BUFFER, COMMANDS_KEY);
@@ -240,7 +240,7 @@ void receiveLTE(void *socket) {
 }
 
 /* Function to receive WiFi packets */
-void receiveWiFi(void *socket) {
+void *receiveWiFi(void *socket) {
     Sockets *sock = (Sockets *)socket;
     const char *COMMANDS_KEY = "COMMANDS_KEY";
     char *writer = (char *)shm_write(SHM_BUFFER, COMMANDS_KEY);
