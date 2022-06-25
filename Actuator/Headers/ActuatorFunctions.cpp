@@ -138,8 +138,8 @@ char *processData(char msg[buffer]) {
         // FileProcess.close();
         // fprintf(FileProcess1, "%s\n%s %d %s\n%s %d %s\n", curr_time2, "Movement on the x-axis:", movement_x, "mm", "Movement on the y - axis:", movement_y, "mm");
         // fprintf(FileProcess2, "%s\n%s %d %s\n%s %d %s\n", curr_time2, "Movement on the x-axis:", movement_x, "mm", "Movement on the y - axis:", movement_y, "mm");
-        sprintf(coordinates, "%s\n%s %d %s\n%s %d %s\n", curr_time2, "Movement on the x-axis:", movement_x, "mm", "Movement on the y - axis:", movement_y, "mm");
-        printf("%s\n", coordinates);
+        sprintf(coordinates, "%s\n%s %d %s\n%s %d %s\n", curr_time2, "Movement on the x-axis:", movement_x, "mm", "Movement on the y-axis:", movement_y, "mm");
+        //printf("%s\n", coordinates);
     }
 
     update_last_coordinate(x, y);
