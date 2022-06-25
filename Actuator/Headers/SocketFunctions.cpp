@@ -207,7 +207,7 @@ void *receiveLTE(void *socket) {
         /* Start timing code execution of code */
         clock_gettime(CLOCK_REALTIME, &begin);
 
-        processData(message);
+        processData((char*)message);
 
         /* Stop timing code execution of code */
         clock_gettime(CLOCK_REALTIME, &end);
