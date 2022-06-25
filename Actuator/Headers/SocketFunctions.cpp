@@ -248,6 +248,7 @@ void *receiveLTE(void *socket) {
         sock->Execution_Sum_LTE += elapsed;
         sock->packet_count_LTE++;
     }
+    sleep(1);
     cout << "\n\n=====================================================\n"
          << endl;
     cout << "\nLTE : Execution_Sum: " << sock->Execution_Sum_LTE << endl;
@@ -319,6 +320,7 @@ void *receiveWiFi(void *socket) {
         sock->Execution_Sum_WiFi += elapsed;
         sock->packet_count_WiFi++;
     }
+    sleep(1);
     cout << "\n\n=====================================================\n"
          << endl;
     cout << "\nWiFi : Execution_Sum: " << sock->Execution_Sum_WiFi << endl;
