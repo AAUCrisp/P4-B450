@@ -128,9 +128,7 @@ int main() {
                     cout << "inside break STOP variable: " << stopshit << "\n";
                     printf("inside break\n");
                 }
-            }
-        }
-        else {
+            } else {
             sleep(1);
             printf("Not receiving data\n");
             cout << "start STOP variable: " << stopshit << "\n";
