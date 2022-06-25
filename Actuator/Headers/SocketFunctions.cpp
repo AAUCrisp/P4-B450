@@ -49,7 +49,7 @@ typedef struct _sockets {
     int fail_count;
     long double Execution_Sum;
     int STOP;
-    
+
 } Sockets;
 
 /* Troubleshooting Options */
@@ -252,7 +252,6 @@ void *receiveLTE(void *socket) {
 /* Function to receive WiFi packets */
 void *receiveWiFi(void *socket) {
     Sockets *sock = (Sockets *)socket;
-    ExeVar *DATA = (ExeVar *)socket;
     const char *COMMANDS_KEY = "COMMANDS_KEY";
     char *writer = (char *)shm_write(SHM_BUFFER, COMMANDS_KEY);
     unsigned int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
@@ -261,11 +260,6 @@ void *receiveWiFi(void *socket) {
     const char *stop_key = "STOP_KEY";
     char *stopshit;
     stopshit = (char *)shm_write(32, stop_key);
-
-    int packet_count_WiFi = DATA->packet_count_WiFi;
-    int fail_count = DATA->fail_count;
-    long double Execution_Sum = DATA->Execution_Sum;
-    int STOP = DATA->STOP;
 
     while (STOP != 2) {
         fp2 = fopen("Logs/log.txt", "a+");
