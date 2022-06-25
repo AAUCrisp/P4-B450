@@ -86,7 +86,6 @@ void logData(int *arr) {
 
 
 char *Timestamp2() {
-     Timestamp format : [hh:mm:ss dd/mm/yy] 
     struct tm *timeinfo;
     struct timeval tv;
     gettimeofday(&tv, NULL);
