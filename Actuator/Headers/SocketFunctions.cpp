@@ -197,8 +197,9 @@ void *receiveLTE(void *socket) {
     int packet_count_WiFi = 0;
     int fail_count = 0;
     long double Execution_Sum = 0;
+    int STOP = 0;
 
-    while (int STOP != 2) {
+    while (STOP != 2) {
         // printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
         RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
         Timestamp();
@@ -252,10 +253,9 @@ void *receiveWiFi(void *socket) {
     const char *stop_key = "STOP_KEY";
     char *stopshit;
     stopshit = (char *)shm_write(32, stop_key);
-
-    // File.open("log.txt", std::ofstream::out | std::ofstream::app);
-
-    while (int STOP != 2) {
+    int STOP = 0;
+    
+    while (STOP != 2) {
         fp2 = fopen("Logs/log.txt", "a+");
         printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
 
