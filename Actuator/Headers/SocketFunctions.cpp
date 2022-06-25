@@ -194,6 +194,9 @@ void *receiveLTE(void *socket) {
     FD_ZERO(&rset);
     FD_SET(sock->sockLTE_RECEIVER, &rset);
 
+    int maxshit = sock->sockLTE_RECEIVER;
+    printf("maxshit: %d\n", maxshit);
+
     while (1) {
         fp1 = fopen("Logs/log.txt", "a+");
         printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
