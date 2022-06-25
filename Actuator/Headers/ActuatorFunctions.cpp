@@ -49,6 +49,10 @@ int movement_y;
 char tempx[buffer];
 char tempy[buffer];
 char curr_time2[128];
+
+char coordinates[buffer];
+char x[buffer];
+char y[buffer];
 //std::ofstream FileProcess;
 
 /* --- Conversion from Integer to Hex-chars --- */
@@ -108,7 +112,7 @@ void update_last_coordinate(int number1, int number2) {
 }
 
 /* This functions Parses the received message into a specified format. And finds the difference between the current and last coordinates. */
-void processData(char msg[buffer]) {
+char processData(char msg[buffer]) {
     int movement_x;
     int movement_y;
     
@@ -136,9 +140,13 @@ void processData(char msg[buffer]) {
         //FileProcess.open("Logs/processed_commands.txt", std::ofstream::out | std::ofstream::app);
         //FileProcess << "\n\n" << curr_time2 << "\nMovement on the x-axis:" << movement_x << " mm \nMovement on the y-axis:" << movement_y << " mm";
         //FileProcess.close();
-        fprintf(FileProcess1, "%s\n%s %d %s\n%s %d %s\n", curr_time2, "Movement on the x-axis:", movement_x, "mm", "Movement on the y - axis:", movement_y, "mm");
+        //fprintf(FileProcess1, "%s\n%s %d %s\n%s %d %s\n", curr_time2, "Movement on the x-axis:", movement_x, "mm", "Movement on the y - axis:", movement_y, "mm");
         //fprintf(FileProcess2, "%s\n%s %d %s\n%s %d %s\n", curr_time2, "Movement on the x-axis:", movement_x, "mm", "Movement on the y - axis:", movement_y, "mm");
+        sprintf(coordinates, "%s\n%s %d %s\n%s %d %s\n", curr_time2, "Movement on the x-axis:", movement_x, "mm", "Movement on the y - axis:", movement_y, "mm")
+        printf("%s\n", coordinates);
     }
 
     update_last_coordinate(x, y);
+
+    return coordinates;
 }
