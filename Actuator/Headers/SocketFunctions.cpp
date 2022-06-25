@@ -277,7 +277,7 @@ void *receiveWiFi(void *socket) {
         if (RX_WiFi == -1) {
             sock->STOP_WiFi = 1;
         } else {
-            sock->STOP_WiFI = 0;
+            sock->STOP_WiFi = 0;
         }
         Timestamp();
 

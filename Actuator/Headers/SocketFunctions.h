@@ -22,7 +22,7 @@ typedef struct _sockets {
     long double Execution_Sum_LTE;
     long double Execution_Sum_WiFi;
     int STOP_LTE;
-    int STOP_WiFI;
+    int STOP_WiFi;
 
 } Sockets;
 
