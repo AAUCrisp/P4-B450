@@ -196,7 +196,7 @@ void *receiveLTE(void *socket) {
     printf("maxshit: %d\n", maxshit);
 
     struct timeval tv;
-    tv.tv_sec = 1;
+    tv.tv_sec = 5;
     tv.tv_usec = 0;
 
     while (1) {
@@ -224,6 +224,7 @@ void *receiveLTE(void *socket) {
         } else {
             printf("I am not receving stuff\n");
         }
+        printf("Out of else?\n");
     }
 }
 
