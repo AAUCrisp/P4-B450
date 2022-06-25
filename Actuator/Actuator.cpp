@@ -66,10 +66,10 @@ int main() {
     unsigned long nanoseconds = 0;
     long double Execution_Average = 0;
 
-    //int packet_count_LTE;
-    //int packet_count_WiFi;
-    //int fail_count;
-    //long double Execution_Sum;
+    int packet_count_LTE;
+    int packet_count_WiFi;
+    int fail_count;
+    long double Execution_Sum;
 
     /* Shared memory object variables */
     const char* COMMANDS_KEY = "COMMANDS_KEY";
