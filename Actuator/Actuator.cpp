@@ -117,8 +117,8 @@ int main() {
     clock_gettime(CLOCK_REALTIME, &end_program);
 
     /* Calculation of total time execution */
-    double time_spent = (end_program.tv_sec - begin_program.tv_sec) +
-                        (end_program.tv_nsec - begin_program.tv_nsec) / BILLION;
+    double time_spent = ((end_program.tv_sec - begin_program.tv_sec) +
+                        (end_program.tv_nsec - begin_program.tv_nsec) / BILLION) -5;
 
     /* Conversion of time spent to HH:MM:SS.MS */
     long hours = (long)time_spent / 3600;
@@ -132,7 +132,7 @@ int main() {
     printf("\n\n===================================\n\n");
     printf("Execution Sum:     %Lf sec\n", Execution_Sum);
     printf("Execution average: %Lf sec\n\n", Execution_Average);
-    printf("Total time: %f sec\n", (time_spent - 5));
+    printf("Total time: %f sec\n", time_spent);
     printf("________________________\n");
     printf("Total Time:  \n            Hours: %ld  \n          Minutes: %ld  \n          Seconds: %ld \n     Milliseconds: %ld\n", hours, minutes, seconds2, milliseconds);
     printf("________________________\n\n");
