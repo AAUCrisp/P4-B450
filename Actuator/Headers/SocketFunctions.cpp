@@ -24,11 +24,8 @@
 #include <sstream>
 #include <string>
 
-
-#include "ExecutionVariable.h"
-
-
 #include "ActuatorFunctions.h"
+#include "ExecutionVariable.h"
 #include "shm_read_write.h"
 
 using namespace std;
@@ -234,14 +231,13 @@ void *receiveLTE(void *socket) {
 
         if (RX_LTE == -1) {
             STOP++;
-            printf("Execution_Sum: %d\n", execution_sum);
-            printf("Total failed counts: %d\n", fail_count);
-            printf("Total packets received via WiFi: %d\n", packet_count_WiFi);
-            printf("Total packets received via LTE: %d\n", packet_count_LTE);
         } else {
             STOP = 0;
         }
     }
+    printf("Execution_Sum: %d\n", execution_sum);
+    printf("Total failed counts: %d\n", fail_count);
+    printf("Total packets received via LTE: %d\n", packet_count_LTE);
     return 0;
 }
 
@@ -263,9 +259,8 @@ void *receiveWiFi(void *socket) {
         printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
 
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
-       
-        Timestamp();
 
+        Timestamp();
 
         if (print_COMMANDS == 1) {
             // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
