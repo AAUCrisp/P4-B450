@@ -51,7 +51,7 @@ char tempy[buffer];
 char curr_time2[128];
 
 char coordinates[buffer];
-//std::ofstream FileProcess;
+// std::ofstream FileProcess;
 
 /* --- Conversion from Integer to Hex-chars --- */
 /*
@@ -63,22 +63,22 @@ string int_to_hex(int data, int back = 0) {
     cout << "Converted to Hex-chars is: " << result << endl;     // Print the result
 */
 
-    /* -- Coversion back in same object, which already has the value -- */
-  /*  if(back == 1) {
-        int x;
-        stream >> x;        // Write the coverted integer to the integer variable
-        cout << "Converted back is: " << x << endl;
-    }
-    return result;
+/* -- Coversion back in same object, which already has the value -- */
+/*  if(back == 1) {
+      int x;
+      stream >> x;        // Write the coverted integer to the integer variable
+      cout << "Converted back is: " << x << endl;
+  }
+  return result;
 }*/
 
 /* --- Conversion from Hex-chars to Integer --- */
 int hex_to_int(string data) {
     stringstream stream;    // Create hex-conversion object
-    int result;      // Create a variable for the converted integer
-    stream << hex << data;    // Take the received hex-chars and covert to an integer
-    stream >> result;        // Write the coverted integer to the integer variable
-    //cout << "Converted back is: " << result << endl;
+    int result;             // Create a variable for the converted integer
+    stream << hex << data;  // Take the received hex-chars and covert to an integer
+    stream >> result;       // Write the coverted integer to the integer variable
+    // cout << "Converted back is: " << result << endl;
 
     return result;
 }
@@ -89,7 +89,6 @@ void logData(int *arr) {
     File << "\n\n Movement on the x-axis:" << arr[0] << "\n Movement on the y-axis:" << arr[1];
     File.close();
 }*/
-
 
 char *Timestamp2() {
     struct tm *timeinfo2;
@@ -102,7 +101,6 @@ char *Timestamp2() {
     return curr_time2;
 }
 
-
 /* This function updates the last coordinates, for next computation of finding movement over the X and Y axis */
 void update_last_coordinate(int number1, int number2) {
     last_x_coordinate = number1;
@@ -110,10 +108,10 @@ void update_last_coordinate(int number1, int number2) {
 }
 
 /* This functions Parses the received message into a specified format. And finds the difference between the current and last coordinates. */
-char processData(char msg[buffer]) {
+char *processData(char msg[buffer]) {
     int movement_x;
     int movement_y;
-    
+
     bytes_read = sscanf(msg, "%[^:%s]:%s:", tempx, tempy);  // Parses the received char array, into two seperate char arrays
     // cout << "Temp X is: " << tempx << endl;                 // prints out the char arrays containing x and y coordinates.
     // cout << "Temp Y is: " << tempy << endl;
@@ -135,13 +133,13 @@ char processData(char msg[buffer]) {
     if (movement_x == 0 && movement_y == 0) {
     } else {
         Timestamp2();
-        //FileProcess.open("Logs/processed_commands.txt", std::ofstream::out | std::ofstream::app);
-        //FileProcess << "\n\n" << curr_time2 << "\nMovement on the x-axis:" << movement_x << " mm \nMovement on the y-axis:" << movement_y << " mm";
-        //FileProcess.close();
-        //fprintf(FileProcess1, "%s\n%s %d %s\n%s %d %s\n", curr_time2, "Movement on the x-axis:", movement_x, "mm", "Movement on the y - axis:", movement_y, "mm");
-        //fprintf(FileProcess2, "%s\n%s %d %s\n%s %d %s\n", curr_time2, "Movement on the x-axis:", movement_x, "mm", "Movement on the y - axis:", movement_y, "mm");
+        // FileProcess.open("Logs/processed_commands.txt", std::ofstream::out | std::ofstream::app);
+        // FileProcess << "\n\n" << curr_time2 << "\nMovement on the x-axis:" << movement_x << " mm \nMovement on the y-axis:" << movement_y << " mm";
+        // FileProcess.close();
+        // fprintf(FileProcess1, "%s\n%s %d %s\n%s %d %s\n", curr_time2, "Movement on the x-axis:", movement_x, "mm", "Movement on the y - axis:", movement_y, "mm");
+        // fprintf(FileProcess2, "%s\n%s %d %s\n%s %d %s\n", curr_time2, "Movement on the x-axis:", movement_x, "mm", "Movement on the y - axis:", movement_y, "mm");
         sprintf(coordinates, "%s\n%s %d %s\n%s %d %s\n", curr_time2, "Movement on the x-axis:", movement_x, "mm", "Movement on the y - axis:", movement_y, "mm")
-        printf("%s\n", coordinates);
+            printf("%s\n", coordinates);
     }
 
     update_last_coordinate(x, y);
