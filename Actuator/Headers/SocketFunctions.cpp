@@ -199,7 +199,7 @@ void *receiveLTE(void *socket) {
         fp1 = fopen("Logs/log.txt", "a+");
         printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
         FD_ZERO(&rset);
-        FD_SET(sock->sockLTE_RECEIVER, &rset);
+        FD_SET(maxshit, &rset);
         int nready = select(maxshit, &rset, NULL, NULL, 0);
         printf("nready: %d\n", nready);
 
