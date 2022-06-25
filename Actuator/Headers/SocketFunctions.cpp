@@ -212,7 +212,8 @@ void *receiveLTE(void *socket) {
             printf("Do I reach this even?\n");
             RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, sizeof(message), 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
             Timestamp();
-            // sprintf(stopshit, "%d", STOP);
+            STOP = 1
+            sprintf(stopshit, "%d", STOP);
 
             if (print_COMMANDS == 1) {
                 // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
@@ -228,6 +229,8 @@ void *receiveLTE(void *socket) {
         if (nready == 0) {
             printf("nready == 0: %d\n", nready);
             printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
+            STOP = 1;
+            sprintf(stopshit, "%d", STOP);
         }
     }
 }
