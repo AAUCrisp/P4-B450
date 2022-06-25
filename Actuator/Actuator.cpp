@@ -74,6 +74,12 @@ int main() {
     const char* stop_key = "STOP_KEY";
     char* stopshit;
 
+    /* Create sockets */
+    Sockets sock;
+    Sockets_Receiver(&sock, PORT_LTE_RECEIVER, PORT_WiFi_RECEIVER, LTE, WiFi);
+    printf("sockLTE_RECEIVER (OUTSIDE): %d\n", sock.sockLTE_RECEIVER);
+    printf("sockWiFi_RECEIVER (OUTSIDE): %d\n\n", sock.sockWiFi_RECEIVER);
+
     /* Create child process */
     pid_t Actuator_monitor;  // Prepare the process ID for monitoring
     // Actuator_monitor = fork();  // Starts new process
