@@ -258,6 +258,7 @@ void *receiveLTE(void *socket) {
         sock->Execution_Sum_LTE += elapsed;
         sock->packet_count_LTE++;
     }
+    return 0;
 }
 
 /* Function to receive WiFi packets */
@@ -330,4 +331,5 @@ void *receiveWiFi(void *socket) {
         sock->Execution_Sum_WiFi += elapsed;
         sock->packet_count_WiFi++;
     }
+    return 0;
 }
