@@ -10,7 +10,7 @@
 
 void update_last_coordinate(int number1, int number2);
 
-char* processData(char msg[]);
+char processData(char msg[]);
 
 //string int_to_hex(int data, int back);
 
