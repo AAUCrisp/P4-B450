@@ -181,15 +181,7 @@ int generate(int Min, int Max) {
 /* Function to receive LTE packets */
 void *receiveLTE(void *socket) {
     Sockets *sock = (Sockets *)socket;
-    const char *COMMANDS_KEY = "COMMANDS_KEY";
-    char *writer = (char *)shm_write(SHM_BUFFER, COMMANDS_KEY);
     unsigned int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
-
-    /* Shared memory object variables */
-    const char *stop_key = "STOP_KEY";
-    char *stopshit;
-    char *stopshit2;
-    stopshit = (char *)shm_write(1024, stop_key);
 
     /* Execution time variables */
     struct timespec begin, end;

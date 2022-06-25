@@ -25,6 +25,8 @@
 #include <string>
 using namespace std;
 
+#include "SocketFunctions.h"
+
 //#include "hex.h"
 
 /* Variables used to create and bind sockets, receive from sockets, and error handle on sockets */
@@ -82,8 +84,9 @@ void logData(int *arr) {
     File.close();
 }*/
 
+/*
 char *Timestamp() {
-    /* Timestamp format : [hh:mm:ss dd/mm/yy] */
+     Timestamp format : [hh:mm:ss dd/mm/yy] 
     struct tm *timeinfo;
     struct timeval tv;
     gettimeofday(&tv, NULL);
@@ -93,6 +96,7 @@ char *Timestamp() {
 
     return curr_time;
 }
+*/
 
 /* This function updates the last coordinates, for next computation of finding movement over the X and Y axis */
 void update_last_coordinate(int number1, int number2) {
