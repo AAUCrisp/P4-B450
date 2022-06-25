@@ -211,7 +211,6 @@ void *receiveLTE(void *socket) {
         //printf("RX_LTE: %d\n", RX_LTE);
         if (RX_LTE == -1) {
             sock->STOP_LTE = 1;
-            return 0;
         } else {
             sock->STOP_LTE = 0;
             //printf("Do I reach this if RX_LTE != -1?\n");
@@ -274,7 +273,6 @@ void *receiveWiFi(void *socket) {
         //printf("RX_WiFi: %d\n", RX_LTE);
         if (RX_WiFi == -1) {
             sock->STOP_WiFi = 1;
-            return 0;
         } else {
             sock->STOP_WiFi = 0;
             //printf("Do I reach this if RX_WiFi != -1?\n");
