@@ -199,7 +199,7 @@ void *receiveLTE(void *socket) {
         // printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
         RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
         Timestamp();
-        packet_count_LTE++;
+        ExecutionVariables::packet_count_LTE++;
         fp1 = fopen("Logs/log.txt", "a+");
         fprintf(fp1, "%s %s %s\n", message, curr_time, "LTE");
         fclose(fp1);
@@ -224,7 +224,7 @@ void *receiveLTE(void *socket) {
         /* Calculation of elapsed time sum */
         elapsed = seconds + nanoseconds * 1e-9;
         if (elapsed > 10000) {
-            fail_count++;
+            ExecutionVariables::fail_count++;
             elapsed = 0;
         }
         ExecutionVariables::Execution_Sum += elapsed;
@@ -261,8 +261,9 @@ void *receiveWiFi(void *socket) {
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
 
         Timestamp();
+        ExecutionVariables::packet_count_WiFi++;
 
-        if (print_COMMANDS == 1) {
+            if (print_COMMANDS == 1) {
             // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
             printf("WiFi || Message from WiFi received at: %s \n", curr_time);
             printf("WiFi || Message: %s from Control Unit \n\n", message);
