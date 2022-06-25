@@ -28,6 +28,7 @@ using namespace std;
 //#include "SocketFunctions.h"
 
 #include "ActuatorFunctions.h"
+#include "FileDescriptors.h"
 
 //#include "hex.h"
 
@@ -47,7 +48,7 @@ int movement_y;
 char tempx[buffer];
 char tempy[buffer];
 char curr_time2[128];
-std::ofstream FileProcess;
+//std::ofstream FileProcess;
 
 /* --- Conversion from Integer to Hex-chars --- */
 /*

@@ -25,6 +25,7 @@
 #include <string>
 
 #include "ActuatorFunctions.h"
+#include "FileDescriptors.h"
 #include "shm_read_write.h"
 
 using namespace std;
@@ -76,7 +77,7 @@ char temp_msg[BUFFER];
 /* Define threads */
 pthread_t T1, T2;
 
-std::ofstream File;
+// std::ofstream File;
 
 // File shit
 FILE *fp1;
@@ -208,13 +209,13 @@ void *receiveLTE(void *socket) {
         // printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
         FileProcess.open("Logs/processed_commands.txt", std::ofstream::out | std::ofstream::app);
         RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
-        //printf("RX_LTE: %d\n", RX_LTE);
+        // printf("RX_LTE: %d\n", RX_LTE);
         if (RX_LTE == -1) {
             sock->STOP_LTE = 1;
             return 0;
         } else {
             sock->STOP_LTE = 0;
-            //printf("Do I reach this if RX_LTE != -1?\n");
+            // printf("Do I reach this if RX_LTE != -1?\n");
         }
         Timestamp();
 
@@ -273,20 +274,19 @@ void *receiveWiFi(void *socket) {
     while (sock->STOP_WiFi != 1) {
         // printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
-        //printf("RX_WiFi: %d\n", RX_LTE);
+        // printf("RX_WiFi: %d\n", RX_LTE);
         if (RX_WiFi == -1) {
             sock->STOP_WiFi = 1;
             return 0;
         } else {
             sock->STOP_WiFi = 0;
-            //printf("Do I reach this if RX_WiFi != -1?\n");
+            // printf("Do I reach this if RX_WiFi != -1?\n");
         }
         Timestamp();
 
         fp2 = fopen("Logs/log.txt", "a+");
         fprintf(fp2, "%s %s %s\n", message, curr_time, "WiFi");
         fclose(fp2);
-
 
         if (print_COMMANDS == 1) {
             // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
