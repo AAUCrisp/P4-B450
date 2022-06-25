@@ -234,6 +234,10 @@ void *receiveLTE(void *socket) {
 
         if (RX_LTE == -1) {
             STOP++;
+            printf("Execution_Sum: %d\n", execution_sum);
+            printf("Total failed counts: %d\n", fail_count);
+            printf("Total packets received via WiFi: %d\n", packet_count_WiFi);
+            printf("Total packets received via LTE: %d\n", packet_count_LTE);
         } else {
             STOP = 0;
         }
