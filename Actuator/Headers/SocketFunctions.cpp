@@ -247,11 +247,13 @@ void *receiveLTE(void *socket) {
         sock->Execution_Sum_LTE += elapsed;
         sock->packet_count_LTE++;
     }
-    cout << "\n\n=====================================================\n\n" endl;
+    cout << "\n\n=====================================================\n\n"
+         << endl;
     cout << "\nLTE : Execution_Sum: " << sock->Execution_Sum_LTE << endl;
     printf("LTE : Total failed counts: %d\n", sock->fail_count_LTE);
     printf("LTE : Total packets received via LTE: %d\n\n", sock->packet_count_LTE);
-    cout << "\n\n=====================================================\n\n" endl;
+    cout << "\n\n=====================================================\n\n"
+         << endl;
     sleep(10);
     return 0;
 }
@@ -273,7 +275,7 @@ void *receiveWiFi(void *socket) {
     sock->STOP_WiFi = 0;
 
     while (sock->STOP_WiFi != 1) {
-        //printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
+        // printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
 
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
         printf("RX_WiFi: %d\n", RX_LTE);
@@ -314,13 +316,14 @@ void *receiveWiFi(void *socket) {
         }
         sock->Execution_Sum_WiFi += elapsed;
         sock->packet_count_WiFi++;
-
     }
-    "\n\n=====================================================\n\n" endl;
+    "\n\n=====================================================\n\n"
+        << endl;
     cout << "\nWiFi : Execution_Sum: " << sock->Execution_Sum_WiFi << endl;
     printf("WiFi : Total failed counts: %d\n", sock->fail_count_WiFi);
     printf("WiFi : Total packets received via WiFi: %d\n\n", sock->packet_count_WiFi);
-    "\n\n=====================================================\n\n" endl;
+    "\n\n=====================================================\n\n"
+        << endl;
     sleep(10);
     return 0;
 }
