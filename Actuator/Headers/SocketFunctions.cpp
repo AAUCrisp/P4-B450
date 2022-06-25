@@ -187,6 +187,7 @@ void *receiveLTE(void *socket) {
     /* Shared memory object variables */
     const char *stop_key = "STOP_KEY";
     char *stopshit;
+    char *stopshit2;
     stopshit = (char *)shm_write(1024, stop_key);
 
     /* select() test variables */
@@ -223,7 +224,7 @@ void *receiveLTE(void *socket) {
             sprintf(writer, "%s", message);
             fprintf(fp1, "%s %s %s\n", message, curr_time, "LTE");
             fclose(fp1);
-            char* stopshit2 = (char *)shm_read(32, stop_key);
+            stopshit2 = (char *)shm_read(32, stop_key);
             printf("stop_key value: %s\n", stopshit2);
         } else if (nready == 0) {
             sleep(1);
