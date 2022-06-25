@@ -223,11 +223,11 @@ void *receiveLTE(void *socket) {
             sprintf(writer, "%s", message);
             fprintf(fp1, "%s %s %s\n", message, curr_time, "LTE");
             fclose(fp1);
-        }
-        if (nready == 0) {
-            STOP = 0;
-            sprintf(stopshit, "%d", STOP);
-            printf("select value: %d\n", nready);
+            if (nready == 0) {
+                STOP = 0;
+                sprintf(stopshit, "%d", STOP);
+                printf("select value: %d\n", nready);
+            }
         }
     }
 }
