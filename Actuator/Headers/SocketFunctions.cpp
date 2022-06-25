@@ -266,7 +266,7 @@ void *receiveWiFi(void *socket) {
     char *stopshit;
     stopshit = (char *)shm_write(32, stop_key);
 
-    sock->packet_count_WiFI = 0;
+    sock->packet_count_WiFi = 0;
     sock->STOP = 0;
 
     while (sock->STOP != 2) {
