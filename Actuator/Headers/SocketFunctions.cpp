@@ -191,8 +191,6 @@ void *receiveLTE(void *socket) {
 
     /* select() test variables */
     fd_set rset;
-    FD_ZERO(&rset);
-    FD_SET(sock->sockLTE_RECEIVER, &rset);
 
     int maxshit = sock->sockLTE_RECEIVER;
     printf("maxshit: %d\n", maxshit);
@@ -200,7 +198,9 @@ void *receiveLTE(void *socket) {
     while (1) {
         fp1 = fopen("Logs/log.txt", "a+");
         printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
-        int nready = select(maxshit, &rset, NULL, NULL, NULL);
+        FD_ZERO(&rset);
+        FD_SET(sock->sockLTE_RECEIVER, &rset);
+        int nready = select(maxshit, &rset, NULL, NULL, 0);
         printf("nready: %d\n", nready);
 
         if (FD_ISSET(sock->sockLTE_RECEIVER, &rset)) {
