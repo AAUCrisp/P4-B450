@@ -197,15 +197,15 @@ void *receiveLTE(void *socket) {
     unsigned long nanoseconds = 0;
     double elapsed = 0;
 
-    // int packet_count_LTE = DATA->packet_count_LTE;
-    // int fail_count = DATA->fail_count;
-    // long double Execution_Sum = DATA->Execution_Sum;
-    // int STOP = DATA->STOP;
+    //int packet_count_LTE = DATA->packet_count_LTE;
+    //int fail_count = DATA->fail_count;
+    //long double Execution_Sum = DATA->Execution_Sum;
+    //int STOP = DATA->STOP;
 
-    sock.packet_count_LTE->0;
-    sock.fail_count->0;
-    sock.Execution_Sum->0;
-    sock.STOP->0;
+    sock->packet_count_LTE = 0;
+    sock->fail_count = 0;
+    sock->Execution_Sum = 0;
+    sock->STOP = 0;
 
     while (STOP != 2) {
         // printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
