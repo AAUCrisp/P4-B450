@@ -4,11 +4,11 @@
 /* Execution timing variable */
 class ExecutionVariables {
    public:
-    extern int STOP;
-    extern int packet_count_LTE;
-    extern int packet_count_WiFi;
-    extern int fail_count;
-    extern long double Execution_Sum;
+    static int STOP;
+    static int packet_count_LTE;
+    static int packet_count_WiFi;
+    static int fail_count;
+    static long double Execution_Sum;
 };
 
 #endif
