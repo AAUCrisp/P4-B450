@@ -189,13 +189,13 @@ void *receiveLTE(void *socket) {
     unsigned long nanoseconds = 0;
     double elapsed = 0;
 
-    int packet_count_LTE = 0;
-    int packet_count_WiFi = 0;
-    int fail_count = 0;
-    long double Execution_Sum = 0;
-    int STOP = 0;
+    //int packet_count_LTE = 0;
+    //int packet_count_WiFi = 0;
+    //int fail_count = 0;
+    //long double Execution_Sum = 0;
+    //int STOP = 0;
 
-    while (STOP != 2) {
+    while (ExecutionVariables::STOP != 2) {
         // printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
         RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
         Timestamp();
@@ -227,17 +227,17 @@ void *receiveLTE(void *socket) {
             fail_count++;
             elapsed = 0;
         }
-        Execution_Sum += elapsed;
+        ExecutionVariables::Execution_Sum += elapsed;
 
         if (RX_LTE == -1) {
-            STOP++;
+            ExecutionVariables::STOP++;
         } else {
-            STOP = 0;
+            ExecutionVariables::STOP = 0;
         }
     }
-    cout << "Execution_Sum: " << Execution_Sum << endl;
-    printf("Total failed counts: %d\n", fail_count);
-    printf("Total packets received via LTE: %d\n", packet_count_LTE);
+    cout << "Execution_Sum: " << ExecutionVariables::Execution_Sum << endl;
+    printf("Total failed counts: %d\n", ExecutionVariables::fail_count);
+    printf("Total packets received via LTE: %d\n", ExecutionVariables::packet_count_LTE);
     return 0;
 }
 
@@ -252,9 +252,9 @@ void *receiveWiFi(void *socket) {
     const char *stop_key = "STOP_KEY";
     char *stopshit;
     stopshit = (char *)shm_write(32, stop_key);
-    int STOP = 0;
+    //int STOP = 0;
 
-    while (STOP != 2) {
+    while (ExecutionVariables::STOP != 2) {
         fp2 = fopen("Logs/log.txt", "a+");
         printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
 
@@ -271,9 +271,9 @@ void *receiveWiFi(void *socket) {
         fclose(fp2);
 
         if (RX_LTE == -1) {
-            STOP++;
+            ExecutionVariables::STOP++;
         } else {
-            STOP = 0;
+            ExecutionVariables::STOP = 0;
         }
     }
     return 0;
