@@ -6,9 +6,9 @@ static bool EXECUTION;
 static int testvar;
 static int STOP = 0;
 
-static int packet_count_LTE = 0;
-static int packet_count_WiFi = 0;
-static int fail_count = 0;
-static long double Execution_Sum = 0;
+extern int packet_count_LTE = 0;
+extern int packet_count_WiFi = 0;
+extern int fail_count = 0;
+extern long double Execution_Sum = 0;
 
 #endif
