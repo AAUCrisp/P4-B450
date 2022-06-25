@@ -227,7 +227,7 @@ void *receiveLTE(void *socket) {
             stopshit2 = (char *)shm_read(32, stop_key);
             printf("stop_key value: %s\n", stopshit2);
         } else if (nready == 0) {
-            sleep(1);
+            sleep(5);
             STOP = 0;
             sprintf(stopshit, "%d", STOP);
             printf("select value: %d\n", nready);
