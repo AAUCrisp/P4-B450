@@ -233,7 +233,6 @@ void *receiveLTE(void *socket) {
 
         if (print_COMMANDS == 1) {
             // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
-            printf("I reach this after RX_LTE == -1\n");
             printf("LTE || Message from LTE received at: %s\n", curr_time);
             printf("LTE || Message: %s from Control Unit \n\n", message);
         }
@@ -306,7 +305,6 @@ void *receiveWiFi(void *socket) {
 
         if (print_COMMANDS == 1) {
             // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
-            printf("I reach this after RX_WiFi == -1\n");
             printf("WiFi || Message from WiFi received at: %s \n", curr_time);
             printf("WiFi || Message: %s from Control Unit \n\n", message);
         }
