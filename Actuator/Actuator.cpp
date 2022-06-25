@@ -107,10 +107,15 @@ int main() {
 
     } else {
         /* Start timing all code */
+        cout << "packet count LTE: "<< sock.packet_count_LTE << endl;
+        cout << "packet count WiFi: "<< sock.packet_count_WiFi << endl;
         clock_gettime(CLOCK_REALTIME, &begin_program);
 
         pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
         receiveWiFi(&sock);
+
+        cout << "NEW packet count LTE: " << sock.packet_count_LTE << endl;
+        cout << "NEW packet count WiFi: " << sock.packet_count_WiFi << endl;
     }
 
     /* Stop timing all code */

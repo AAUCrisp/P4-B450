@@ -251,6 +251,7 @@ void *receiveLTE(void *socket) {
     cout << "Execution_Sum: " << sock->Execution_Sum << endl;
     printf("Total failed counts: %d\n", sock->fail_count);
     printf("Total packets received via LTE: %d\n", sock->packet_count_LTE);
+    sleep(10);
     return 0;
 }
 
@@ -292,5 +293,9 @@ void *receiveWiFi(void *socket) {
             sock->STOP = 0;
         }
     }
+    cout << "Execution_Sum: " << sock->Execution_Sum << endl;
+    printf("Total failed counts: %d\n", sock->fail_count);
+    printf("Total packets received via WiFi: %d\n", sock->packet_count_WiFi);
+    sleep(10);
     return 0;
 }
