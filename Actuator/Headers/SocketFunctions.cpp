@@ -29,21 +29,21 @@
 #include "shm_read_write.h"
 
 using namespace std;
-
+/*
 typedef struct _sockets {
-    /* Receiver sockets*/
+    /Receiver sockets
     int sockLTE_RECEIVER;
     int sockWiFi_RECEIVER;
     struct sockaddr_in ServerLTE_RECEIVER;
     struct sockaddr_in ServerWiFi_RECEIVER;
 
-    /* Transmitter sockets*/
+     Transmitter sockets
     int sockLTE_TRANSMITTER;
     int sockWiFi_TRANSMITTER;
     struct sockaddr_in ClientLTE_TRANSMITTER;
     struct sockaddr_in ClientWiFi_TRANSMITTER;
 
-    /* Execution timing variable */
+    Execution timing variable 
     int packet_count_LTE;
     int packet_count_WiFi;
     int fail_count_LTE;
@@ -53,7 +53,7 @@ typedef struct _sockets {
     int STOP_LTE;
     int STOP_WiFi;
 
-} Sockets;
+} Sockets;*/
 
 /* Troubleshooting Options */
 int print_COMMANDS = 1;
