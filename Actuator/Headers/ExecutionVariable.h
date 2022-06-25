@@ -2,7 +2,7 @@
 #define EXECUTIONVARIABLE_H
 
 /* Execution timing variable */
-extern int STOP = 0;
+extern int STOP;
 extern int packet_count_LTE;
 extern int packet_count_WiFi;
 extern int fail_count;
