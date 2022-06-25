@@ -208,7 +208,7 @@ void *receiveLTE(void *socket) {
     while (sock->STOP_LTE != 1) {
         // printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
         RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
-        printf("RX_LTE: %d\n", RX_LTE);
+        //printf("RX_LTE: %d\n", RX_LTE);
         if (RX_LTE == -1) {
             sock->STOP_LTE = 1;
             sleep(1);
@@ -223,7 +223,7 @@ void *receiveLTE(void *socket) {
             return 0;
         } else {
             sock->STOP_LTE = 0;
-            printf("Do I reach this if RX_LTE != -1?\n");
+            //printf("Do I reach this if RX_LTE != -1?\n");
         }
         Timestamp();
 
@@ -281,7 +281,7 @@ void *receiveWiFi(void *socket) {
         // printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
 
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
-        printf("RX_WiFi: %d\n", RX_LTE);
+        //printf("RX_WiFi: %d\n", RX_LTE);
         if (RX_WiFi == -1) {
             sock->STOP_WiFi = 1;
             sleep(1);
@@ -296,7 +296,7 @@ void *receiveWiFi(void *socket) {
             return 0;
         } else {
             sock->STOP_WiFi = 0;
-            printf("Do I reach this if RX_WiFi != -1?\n");
+            //printf("Do I reach this if RX_WiFi != -1?\n");
         }
         Timestamp();
 
