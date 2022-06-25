@@ -1,4 +1,4 @@
-all: Actuator.out ActuatorMonitoring.out
+all: Actuator.out
 
 git:
 	git pull
@@ -8,16 +8,9 @@ git:
 Actuator.out: Actuator.o shm_read_write.o ActuatorFunctions.o SocketFunctions.o
 	g++ -pthread Actuator.o shm_read_write.o ActuatorFunctions.o SocketFunctions.o -o Actuator.out -lrt
 
-ActuatorMonitoring.out: ActuatorMonitoring.o shm_read_write.o SocketFunctions.o
-	g++ -pthread ActuatorMonitoring.o shm_read_write.o SocketFunctions.o -o ActuatorMonitoring.out -lrt
-
 Actuator.o: Actuator.cpp
 	g++ -c -g -pthread Actuator.cpp -lrt
 #	touch Actuator
-
-ActuatorMonitoring.o: ActuatorMonitoring.cpp
-	g++ -c -g ActuatorMonitoring.cpp -lrt
-#	touch ActuatorMonitoring
 
 shm_read_write.o: Headers/shm_read_write.cpp Headers/shm_read_write.h
 	g++ -c -g Headers/shm_read_write.cpp -lrt
@@ -27,12 +20,12 @@ ActuatorFunctions.o: Headers/ActuatorFunctions.cpp Headers/ActuatorFunctions.h
 	g++ -c -g Headers/ActuatorFunctions.cpp -lrt
 #	touch Headers/ActuatorFunctions
 
-SocketFunctions.o: Headers/SocketFunctions.cpp Headers/SocketFunctions.h Headers/ActuatorFunctions.h
+SocketFunctions.o: Headers/SocketFunctions.cpp Headers/SocketFunctions.h
 	g++ -c -g Headers/SocketFunctions.cpp -lrt
 #	touch Headers/SocketFunctions
 
 clean:
-	rm -f Actuator ActuatorMonitoring
+	rm -f Actuator 
 	rm *.o
 	rm *.out
 #	rm -f Headers/ActuatorFunctions Headers/shm_read_write Headers/SocketFunctions
