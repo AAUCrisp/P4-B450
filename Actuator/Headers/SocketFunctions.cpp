@@ -212,7 +212,7 @@ void *receiveLTE(void *socket) {
             Timestamp();
 
             STOP = 1;
-            sprintf(stopshit, "%d", STOP);
+            //sprintf(stopshit, "%d", STOP);
 
             if (print_COMMANDS == 1) {
                 // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
