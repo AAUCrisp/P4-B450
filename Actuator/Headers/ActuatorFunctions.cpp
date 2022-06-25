@@ -132,7 +132,7 @@ void processData(char msg[buffer]) {
         FileProcess.open("Logs/processed_commands.txt", std::ofstream::out | std::ofstream::app);
         FileProcess << "\n\n"
              << curr_time2 << "\nMovement on the x-axis:" << movement_x << " mm \nMovement on the y-axis:" << movement_y << " mm";
-        FileProcess.close();
+        //FileProcess.close();
     }
 
     update_last_coordinate(x, y);
