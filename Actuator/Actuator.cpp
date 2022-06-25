@@ -125,7 +125,7 @@ int main() {
 
                 if (strcmp(stopshit, (char*)"0") == 0) {
                     // break;
-                    cout << "start STOP variable: " << stopshit << "\n";
+                    cout << "inside break STOP variable: " << stopshit << "\n";
                     printf("inside break\n");
                 }
             }
