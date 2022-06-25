@@ -25,7 +25,7 @@
 #include <string>
 using namespace std;
 
-#include "SocketFunctions.h"
+//#include "SocketFunctions.h"
 
 //#include "hex.h"
 
@@ -84,8 +84,8 @@ void logData(int *arr) {
     File.close();
 }*/
 
-/*
-char *Timestamp() {
+
+char *Timestamp2() {
      Timestamp format : [hh:mm:ss dd/mm/yy] 
     struct tm *timeinfo;
     struct timeval tv;
@@ -96,7 +96,7 @@ char *Timestamp() {
 
     return curr_time;
 }
-*/
+
 
 /* This function updates the last coordinates, for next computation of finding movement over the X and Y axis */
 void update_last_coordinate(int number1, int number2) {
@@ -129,7 +129,7 @@ void processData(char msg[buffer]) {
     // printf("Movement_x: %d \nMovement_y: %d \n\n", movement_x, movement_y);
     if (movement_x == 0 && movement_y == 0) {
     } else {
-        Timestamp();
+        Timestamp2();
         File.open("Logs/processed_commands.txt", std::ofstream::out | std::ofstream::app);
         File << "\n\n"
              << curr_time << "\nMovement on the x-axis:" << movement_x << " mm \nMovement on the y-axis:" << movement_y << " mm";
