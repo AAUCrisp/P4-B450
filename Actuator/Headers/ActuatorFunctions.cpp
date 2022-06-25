@@ -44,7 +44,7 @@ int movement_y;
 
 char tempx[buffer];
 char tempy[buffer];
-char curr_time[128];
+char curr_time2[128];
 std::ofstream File;
 
 /* --- Conversion from Integer to Hex-chars --- */
@@ -86,14 +86,14 @@ void logData(int *arr) {
 
 
 char *Timestamp2() {
-    struct tm *timeinfo;
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
-    timeinfo = localtime(&tv.tv_sec);
+    struct tm *timeinfo2;
+    struct timeval tv2;
+    gettimeofday(&tv2, NULL);
+    timeinfo2 = localtime(&tv.tv_sec);
 
-    sprintf(curr_time, "[%d:%d:%d.%03ld %d/%d/%d]", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, tv.tv_usec / 1000, timeinfo->tm_mday, timeinfo->tm_mon + 1, timeinfo->tm_year + 1900);
+    sprintf(curr_time2, "[%d:%d:%d.%03ld %d/%d/%d]", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, tv.tv_usec / 1000, timeinfo->tm_mday, timeinfo->tm_mon + 1, timeinfo->tm_year + 1900);
 
-    return curr_time;
+    return curr_time2;
 }
 
 
