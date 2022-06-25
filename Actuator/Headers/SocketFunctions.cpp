@@ -222,6 +222,7 @@ void *receiveLTE(void *socket) {
 
         if (print_COMMANDS == 1) {
             // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
+            printf("I reach this after RX_LTE == -1\n");
             printf("LTE || Message from LTE received at: %s\n", curr_time);
             printf("LTE || Message: %s from Control Unit \n\n", message);
         }
@@ -246,9 +247,11 @@ void *receiveLTE(void *socket) {
         sock->Execution_Sum_LTE += elapsed;
         sock->packet_count_LTE++;
     }
+    cout << "\n\n=====================================================\n\n", endl;
     cout << "\nLTE : Execution_Sum: " << sock->Execution_Sum_LTE << endl;
     printf("LTE : Total failed counts: %d\n", sock->fail_count_LTE);
     printf("LTE : Total packets received via LTE: %d\n\n", sock->packet_count_LTE);
+    cout << "\n\n=====================================================\n\n", endl;
     sleep(10);
     return 0;
 }
@@ -287,6 +290,7 @@ void *receiveWiFi(void *socket) {
 
         if (print_COMMANDS == 1) {
             // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
+            printf("I reach this after RX_WiFi == -1\n");
             printf("WiFi || Message from WiFi received at: %s \n", curr_time);
             printf("WiFi || Message: %s from Control Unit \n\n", message);
         }
@@ -312,9 +316,11 @@ void *receiveWiFi(void *socket) {
         sock->packet_count_WiFi++;
 
     }
+    "\n\n=====================================================\n\n", endl;
     cout << "\nWiFi : Execution_Sum: " << sock->Execution_Sum_WiFi << endl;
     printf("WiFi : Total failed counts: %d\n", sock->fail_count_WiFi);
     printf("WiFi : Total packets received via WiFi: %d\n\n", sock->packet_count_WiFi);
+    "\n\n=====================================================\n\n", endl;
     sleep(10);
     return 0;
 }
