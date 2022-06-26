@@ -173,7 +173,7 @@ void* LTE_command(void* socket) {
         // printf("converted GSV: %s\n", (char*)GSV_read);
         if (data == 0) {
             printf("Data is 0\n");
-        } else if (strcmp(tempMsg, WiFimsg) != 0) {
+        } else if (strcmp(tempMsg, LTEmsg) != 0) {
             transmit_command(sock, LTEmsg, gsv);
             transmit_command(&sock, LTEmsg, gsv);
             strcpy(tempMsg, LTEmsg);
