@@ -434,9 +434,9 @@ void *transmit_command_WiFi(void *socket, char *message) {
 }
 
 // Function to check GSV and transfer via chosen technologies
-//void *transmit_command(void *socket, char *message, int gsv) {
+// void *transmit_command(void *socket, char *message, int gsv) {
 void *transmit_command(int socket, char *message, int gsv) {
-    Sockets *sock = socket;
+    Sockets *sock = (Sockets *)socket;
 
     if (print_act_out == 1) {
         cout << "  ======================\n  ==== SEND COMMAND ====\n  ======= entry ========\n"
