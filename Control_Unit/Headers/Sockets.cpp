@@ -193,11 +193,7 @@ void *receiveLTE(void *socket) {
     fprintf(fp1, "%s %s\n", message_LTE, "LTE");
     fclose(fp1);
 
-    if (message_LTE == 0) {
-        printf("message_LTE: %s\n", message_LTE);
-    } else {
-        return message_LTE;
-    }
+    return message_LTE;
 }
 
 /* Function to receive random integer via WiFi */
@@ -228,11 +224,7 @@ void *receiveWiFi(void *socket) {
     fprintf(fp2, "%s %s\n", message_WiFi, "WiFi");
     fclose(fp2);
 
-    if (message_WiFi == 0) {
-        printf("message_WiFi: %s\n", message_WiFi);
-    } else {
-        return message_WiFi;
-    }
+    return message_WiFi;
 }
 
 void *receive_data() {

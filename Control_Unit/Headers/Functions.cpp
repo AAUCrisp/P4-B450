@@ -77,12 +77,15 @@ void WiFi_command(Sockets sock) {
 
         // std::cout << "is this WiFimsg? " << WiFimsg;
 
-
         /* Read from shared memory, pass to transmit function */
         int gsv = atoi(GSV_read);  // Convert to integer
         // printf("converted GSV: %s\n", (char*)GSV_read);
-        transmit_command(&sock, WiFimsg, gsv);
-        char *timeWiFi = Timestamp();
+        if (data == 0) {
+            printf("Data is 0\n");
+        } else {
+            transmit_command(&sock, WiFimsg, gsv);
+        }
+        char* timeWiFi = Timestamp();
 
         /* Writing to logging file */
         fp3 = fopen("Logs/commands_log.txt", "a+");
@@ -162,11 +165,14 @@ void* LTE_command(void* socket) {
 
         // std::cout << "is this LTEmsg? " << LTEmsg;
 
-
         /* Read from shared memory, pass to transmit function */
         int gsv = atoi(GSV_read);  // Convert to integer
         // printf("converted GSV: %s\n", (char*)GSV_read);
-        transmit_command(sock, LTEmsg, gsv);
+        if (data == 0) {
+            printf("Data is 0\n");
+        } else {
+            transmit_command(sock, LTEmsg, gsv);
+        }
         char* timeLTE = Timestamp();
 
         /* Writing to logging file */
