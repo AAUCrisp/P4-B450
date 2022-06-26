@@ -182,7 +182,7 @@ void* LTE_command(void* socket) {
         if (sock->RX_LTE == -1) {
             // sock->STOP_WiFi = 1;
             //  if(sock->STOP_LTE == 2 && sock->STOP_WiFi ==1){return 0;}
-            return 0;
+            break;
         } else {
             sock->STOP_LTE = 0;
         }
