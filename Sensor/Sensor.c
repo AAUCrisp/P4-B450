@@ -71,8 +71,8 @@ int main(int argc, char* argv[]) {
     pthread_t T1;
 
     /* Execution time variables */
-    int packets_sent_LTE = 0;
-    int packets_sent_WiFi = 0;
+    int packet_count_LTE = 0;
+    int packet_count_WiFi = 0;
     int fail_count = 0;
     long double Execution_Sum = 0;
     long double Execution_Average = 0;
