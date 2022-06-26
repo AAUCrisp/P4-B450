@@ -188,14 +188,14 @@ void* LTE_command(void* socket) {
         if (strcmp(tempMsg, coordinate.c_str()) == 0) {
             printf("LTE stepbro23 ????\n");
         } else if (strcmp(tempMsg, coordinate.c_str()) != 0) {
-            int testsocketvalue = sock->act_LTE;
-            printf("testsocketvalue Actuator Socket LTE: %d\n", testsocketvalue);
             strcpy(tempMsg, coordinate.c_str());
             printf("LTE Am I stuck in here?\n");
             printf("Actuator Socket LTE: %d\n", sock->act_LTE);
             printf("tempMsg == LTEmsg\n");
             printf("%s = %s\n", tempMsg, LTEmsg);
         }
+            int testsocketvalue = sock->act_LTE;
+            printf("testsocketvalue Actuator Socket LTE: %d\n", testsocketvalue);
         printf("LTE stepbro ????\n");
         transmit_command(&sock, LTEmsg, gsv);
         // transmit_command(sock->act_LTE, LTEmsg, gsv);
