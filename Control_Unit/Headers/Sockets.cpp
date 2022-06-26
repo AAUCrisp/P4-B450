@@ -467,7 +467,7 @@ void *transmit_command_WiFi(void *socket, char *message) {
         if (print_act_out == 1) {
         }
         cout << "  Sending || Transfer command via LTE" << endl;
-        transmid_command_LTE(sock, message);
+        transmit_command_LTE(sock, message);
         //transmit_command_LTE(socketvalue, socketlength, testID, message);
     }
     if (print_act_out == 1) {
