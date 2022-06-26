@@ -353,7 +353,7 @@ void transmit_GSV_WiFi(void *socket, char *gsv) {
 void *transmit_command_LTE(void *socket, char *message) {
     Sockets *sock = (Sockets *)socket;
     int LenLTE = sizeof(sock->Client_act_LTE);
-    int msgDump[1024];
+    char msgDump[1024];
     int data;
     int ID;
 
@@ -380,7 +380,7 @@ void *transmit_command_LTE(void *socket, char *message) {
 void *transmit_command_WiFi(void *socket, char *message) {
     Sockets *sock = (Sockets *)socket;
     int LenWiFi = sizeof(sock->Client_act_WiFi);
-    int msgDump[1024];
+    char msgDump[1024];
     int data;
     int ID;
     if (print_act_out == 1) {
