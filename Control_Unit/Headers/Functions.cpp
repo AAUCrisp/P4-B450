@@ -94,8 +94,8 @@ void WiFi_command(Sockets sock) {
             printf("%s = %s\n", tempMsg, WiFimsg);
         }
         printf("WIFI stepbro ????\n");
-        //transmit_command(&sock, WiFimsg, gsv);
-        // transmit_command(sock.act_WiFi, WiFimsg, gsv);
+        // transmit_command(&sock, WiFimsg, gsv);
+        //  transmit_command(sock.act_WiFi, WiFimsg, gsv);
         char* timeWiFi = Timestamp();
         printf("\n\nActuator Socket WiFi: %d\n", sock.act_WiFi);
 
@@ -196,10 +196,13 @@ void* LTE_command(void* socket) {
             printf("\ntempMsg == LTEmsg\n");
             printf("%s = %s\n", tempMsg, LTEmsg);
         }
-            int testsocketvalue = sock->act_LTE;
-            printf("testsocketvalue Actuator Socket LTE: %d\n", testsocketvalue);
+        int testsocketvalue = sock->act_LTE;
+        int testsocketlength = sock->len_act_LTE;
+        printf("testsocketvalue Actuator Socket LTE: %d\n", testsocketvalue);
+        printf("testsocketlength Actuator Socket LTE: %d\n", testsocketlength);
+
         printf("LTE stepbro ????\n");
-        //transmit_command(&sock, LTEmsg, gsv);
+        // transmit_command(&sock, LTEmsg, gsv);
         transmit_command(testsocketvalue, LTEmsg, gsv);
         char* timeLTE = Timestamp();
         printf("Actuator Socket LTE: %d\n", sock->act_LTE);
