@@ -25,6 +25,8 @@ typedef struct _sockets {
     int act_WiFi;
     struct sockaddr_in Client_act_LTE;
     struct sockaddr_in Client_act_WiFi;
+    int len_act_LTE = sizeof(Client_act_LTE);
+    int len_act_WiFi = sizeof(Client_act_WiFi);
 
     /* Execution timing variable */
     int packet_count_LTE;
