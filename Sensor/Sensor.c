@@ -153,8 +153,8 @@ int main(int argc, char* argv[]) {
             clock_gettime(CLOCK_REALTIME, &begin);
 
             // With packet ID :
-            sprintf(buffer, "%d: %d", count, generate(1, 25000000));
             count++;
+            sprintf(buffer, "%d: %d", count, generate(1, 25000000));
             // Without packet ID :
             // sprintf(buffer, "%d", generate(1, 25000000));
 

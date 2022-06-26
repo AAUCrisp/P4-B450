@@ -187,8 +187,8 @@ void *receiveWiFi(void *socket) {
 }
 
 /* Transmit random integer via LTE */
-int loop_count_LTE1 = 0;
-int loop_count_LTE2 = 0;
+int loop_count_LTE1 = 1;
+int loop_count_LTE2 = 1;
 void *transmitLTE(void *socket, char *message) {
     Sockets *sock = (Sockets *)socket;
     char sendLTE[BUFFER];
@@ -220,8 +220,8 @@ void *transmitLTE(void *socket, char *message) {
 }
 
 /* Transmit random integer via WiFi */
-int loop_count_WiFi1 = 0;
-int loop_count_WiFi2 = 0;
+int loop_count_WiFi1 = 1;
+int loop_count_WiFi2 = 1;
 void *transmitWiFi(void *socket, char *message) {
     Sockets *sock = (Sockets *)socket;
     char sendWiFi[BUFFER];
