@@ -81,20 +81,22 @@ void WiFi_command(Sockets sock) {
         /* Read from shared memory, pass to transmit function */
         int gsv = atoi(GSV_read);  // Convert to integer
                                    // printf("converted GSV: %s\n", (char*)GSV_read);
+        transmit_command(&sock, WiFimsg, gsv);
+        char* timeWiFi = Timestamp();
+
+        /* Writing to logging file */
+        fp3 = fopen("Logs/commands_log.txt", "a+");
+        fprintf(fp3, "%s %s %s\n", WiFimsg, timeWiFi, "WiFi");
+        fclose(fp3);
+        /*
         if (strcmp(tempMsg, coordinate.c_str()) != 0) {
             strcpy(tempMsg, coordinate.c_str());
 
-            transmit_command(&sock, WiFimsg, gsv);
-            char* timeWiFi = Timestamp();
-
-            /* Writing to logging file */
-            fp3 = fopen("Logs/commands_log.txt", "a+");
-            fprintf(fp3, "%s %s %s\n", WiFimsg, timeWiFi, "WiFi");
-            fclose(fp3);
         } else {
             printf("tempMsg == WiFimsg\n");
             printf("%s = %s\n", tempMsg, WiFimsg);
         }
+        */
     }
 }
 
@@ -173,19 +175,21 @@ void* LTE_command(void* socket) {
         /* Read from shared memory, pass to transmit function */
         int gsv = atoi(GSV_read);  // Convert to integer
                                    // printf("converted GSV: %s\n", (char*)GSV_read);
+        transmit_command(&sock, LTEmsg, gsv);
+        char* timeLTE = Timestamp();
+
+        /* Writing to logging file */
+        fp4 = fopen("Logs/commands_log.txt", "a+");
+        fprintf(fp4, "%s %s %s\n", LTEmsg, timeLTE, "LTE");
+        fclose(fp4);
+        /*
         if (strcmp(tempMsg, coordinate.c_str()) != 0) {
             strcpy(tempMsg, coordinate.c_str());
 
-            transmit_command(&sock, LTEmsg, gsv);
-            char* timeLTE = Timestamp();
-
-            /* Writing to logging file */
-            fp4 = fopen("Logs/commands_log.txt", "a+");
-            fprintf(fp4, "%s %s %s\n", LTEmsg, timeLTE, "LTE");
-            fclose(fp4);
         } else {
             printf("tempMsg == LTEmsg\n");
         }
+        */
     }
 }
 
