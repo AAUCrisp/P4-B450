@@ -359,6 +359,7 @@ void *transmit_command_LTE(int socketvalue, char *message) {
     char msgID[100];
     char msgCoords[50];
 
+    printf("TRANSMIT_COMMAND_LTE socketvalue Actuator Socket: %d\n", socketvalue);
     printf("\n\n  Sending || LTE (Actuator) || Actuator Socket: %d\n", sock->act_LTE);
     if (print_act_out == 1) {
     }
