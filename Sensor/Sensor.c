@@ -78,6 +78,9 @@ int main(int argc, char* argv[]) {
     long double Execution_Sum = 0;
     long double Execution_Average = 0;
 
+    int hvormangegangeerjegherLTE = 0;
+    int hvormangegangeerjegherWiFi = 0;
+
     struct timespec begin, end, begin_program, end_program;
     unsigned long seconds = 0;
     unsigned long nanoseconds = 0;
@@ -164,11 +167,15 @@ int main(int argc, char* argv[]) {
             // printf("Sensor || Before Transmitting\n");
             if (strcmp(gsv, B) == 0 || strcmp(gsv, L) == 0) {
                 transmitLTE(&sock, (char*)buffer);
+                hvormangegangeerjegherLTE++;
+                printf("Loop count LTE: %d\n", hvormangegangeerjegherWiFi);
                 packet_count_LTE++;
             }
 
             if (strcmp(gsv, B) == 0 || strcmp(gsv, W) == 0) {
                 transmitWiFi(&sock, (char*)buffer);
+                hvormangegangeerjegherWiFi++;
+                printf("Loop count WiFi: %d\n", hvormangegangeerjegherWiFi);
                 packet_count_WiFi++;
             }
 
@@ -218,6 +225,8 @@ int main(int argc, char* argv[]) {
         printf("Total failed counts:                   %d\n", fail_count);
         printf("Total packets transmitted via WiFi:    %d\n", packet_count_WiFi);
         printf("Total packets transmitted via LTE:     %d\n", packet_count_LTE);
+        printf("Loop count LTE: %d\n", hvormangegangeerjegherWiFi);
+        printf("Loop count WiFi: %d\n", hvormangegangeerjegherWiFi);
         printf("\n===================================\n\n");
     }
 }
