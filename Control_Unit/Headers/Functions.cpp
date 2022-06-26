@@ -179,7 +179,7 @@ void* LTE_command(void* socket) {
             strcpy(tempMsg, coordinate.c_str());
             transmit_command(&sock, LTEmsg, gsv);
             char* timeLTE = Timestamp();
-            printf("\n\nActuator Socket: %d\n", sock->act.LTE);
+            printf("\n\nActuator Socket: %d\n", sock.act_LTE);
 
             /* Writing to logging file */
             fp4 = fopen("Logs/commands_log.txt", "a+");
