@@ -291,8 +291,8 @@ void Sockets_Actuator(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, ui
     setsockopt(sock->act_LTE, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
     setsockopt(sock->act_WiFi, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
     /* Setting up socket timeout */
-    setsockopt(sock->act_LTE, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
-    setsockopt(sock->act_WiFi, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
+    //setsockopt(sock->act_LTE, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
+    //setsockopt(sock->act_WiFi, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
 
     /* Error checking */
     if (sock->act_LTE == -1) {
@@ -399,6 +399,7 @@ void *transmit_command_WiFi(void *socket, char *message) {
     printf("tempmsgCoords: %s\n", tempmsgCoords);
 
     if (strcmp(tempmsgCoords, msgCoords) != 0) {
+        strcpy(tempmsgCoords, msgCoords);
         TX_WiFi = sendto(sock->act_WiFi, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_WiFi, LenWiFi);
         send_time = Timestamp();
 
@@ -406,7 +407,6 @@ void *transmit_command_WiFi(void *socket, char *message) {
         printf("  Sending || WiFi (Actuator) || Message transmitted at: %s\n\n", send_time);
         if (print_act_out == 1 || message_only == 1) {
         }
-        strcpy(tempmsgCoords, msgCoords);
     } else {
         printf("tempmsgCoords == msgCoords\n");
         printf("%s == %s\n", tempmsgCoords, msgCoords);
