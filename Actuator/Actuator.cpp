@@ -60,6 +60,12 @@ int main() {
     unsigned long nanoseconds = 0;
     long double Execution_Average = 0;
 
+    int packet_count_LTE = 0;
+    int packet_count_WiFi = 0;
+    int fail_count = 0;
+    long double Execution_Sum = 0;
+    int STOP = 0;
+
     /* Shared memory object variables */
     const char* COMMANDS_KEY = "COMMANDS_KEY";
     char* COMMANDS;
@@ -103,7 +109,6 @@ int main() {
         /* Start timing all code */
         clock_gettime(CLOCK_REALTIME, &begin_program);
 
-        /* Receive commands threads */
         pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
         receiveWiFi(&sock);
 
