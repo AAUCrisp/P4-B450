@@ -18,6 +18,8 @@
 
 //#include "Headers/shm_read_write.h"
 
+#define BILLION 1000000000.0
+
 /* Main running code */
 int main(int argc, char* argv[]) {
     // string* grid;
@@ -60,6 +62,12 @@ int main(int argc, char* argv[]) {
 
     /* Struct for message & buffer size */
     char* msg;
+
+    /* Execution time variables */
+    struct timespec begin_program, end_program;
+    unsigned long seconds = 0;
+    unsigned long nanoseconds = 0;
+    long double Execution_Average = 0;
 
     /* Create sockets */
     Sockets sock;
