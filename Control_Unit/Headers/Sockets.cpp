@@ -363,16 +363,17 @@ void *transmit_command_LTE(void *socket, char *message) {
     sscanf((char *)message, "%s %s", msgID, msgCoords);
     printf("ID: %s\n", msgID);
     printf("data: %s\n", msgCoords);
+    printf("tempmsgCoordsLTE: %s\n", tempmsgCoordsLTE);
 
     if (strcmp(tempmsgCoordsLTE, msgCoords) != 0) {
         TX_LTE = sendto(sock->act_LTE, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_LTE, LenLTE);
         send_time = Timestamp();
         strcpy(tempmsgCoordsLTE, msgCoords);
 
-       // printf("  Sending || LTE (Actuator) || Sending Command to Actuator: %s\n", message);
-       // printf("  Sending || LTE (Actuator) || Message transmitted at: %s\n\n", send_time);
-       printf("I am sending via LTE\n");
-       
+        // printf("  Sending || LTE (Actuator) || Sending Command to Actuator: %s\n", message);
+        // printf("  Sending || LTE (Actuator) || Message transmitted at: %s\n\n", send_time);
+        printf("I am sending via LTE\n");
+
         if (print_act_out == 1 || message_only == 1) {
         }
     } else {
@@ -397,14 +398,15 @@ void *transmit_command_WiFi(void *socket, char *message) {
     sscanf((char *)message, "%s %s", msgID, msgCoords);
     printf("ID: %s\n", msgID);
     printf("data: %s\n", msgCoords);
+    printf("tempmsgCoordsWiFi: %s\n", tempmsgCoordsWiFi);
 
     if (strcmp(tempmsgCoordsWiFi, msgCoords) != 0) {
         TX_WiFi = sendto(sock->act_WiFi, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_WiFi, LenWiFi);
         send_time = Timestamp();
         strcpy(tempmsgCoordsWiFi, msgCoords);
 
-       // printf("  Sending || WiFi (Actuator) || Sending Command to Actuator: %s\n", message);
-       // printf("  Sending || WiFi (Actuator) || Message transmitted at: %s\n\n", send_time);
+        // printf("  Sending || WiFi (Actuator) || Sending Command to Actuator: %s\n", message);
+        // printf("  Sending || WiFi (Actuator) || Message transmitted at: %s\n\n", send_time);
         printf("I am sending via WiFi\n");
 
         if (print_act_out == 1 || message_only == 1) {
