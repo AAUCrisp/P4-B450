@@ -170,7 +170,7 @@ void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *
 /* Function to receive random integer via LTE */
 void *receiveLTE(void *socket) {
     Sockets *sock = (Sockets *)socket;
-    int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
+    unsigned int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
 
     /* Open logging file */
     fp1 = fopen("Logs/log.txt", "a+");
@@ -196,7 +196,7 @@ void *receiveLTE(void *socket) {
 /* Function to receive random integer via WiFi */
 void *receiveWiFi(void *socket) {
     Sockets *sock = (Sockets *)socket;
-    int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
+    unsigned int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
 
     /* Open logging file */
     fp2 = fopen("Logs/log.txt", "a+");

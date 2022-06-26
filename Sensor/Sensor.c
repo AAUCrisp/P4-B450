@@ -215,8 +215,8 @@ int main(int argc, char* argv[]) {
         printf("Total Time:  \n            Hours: %ld  \n          Minutes: %ld  \n          Seconds: %ld \n     Milliseconds: %ld\n", hours, minutes, seconds, milliseconds);
         printf("________________________\n\n");
         printf("Total failed counts:                   %d\n", fail_count);
-        printf("Total packets transmitted via WiFi:    %d\n", sock.packet_count_WiFi);
-        printf("Total packets transmitted via LTE:     %d\n", sock.packet_count_LTE);
+        printf("Total packets transmitted via WiFi:    %d\n", packet_count_WiFi);
+        printf("Total packets transmitted via LTE:     %d\n", packet_count_LTE);
         printf("\n===================================\n\n");
     }
 }
