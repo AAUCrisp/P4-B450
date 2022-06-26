@@ -458,13 +458,13 @@ void *transmit_command_WiFi(void *socket, char *message) {
         if (print_act_out == 1) {
         }
         cout << "  Sending || Transfer command via WiFi" << endl;
-        transmit_command_WiFi(&testsock, message);
+        transmit_command_WiFi(testsock, message);
     }
     if ((gsv == 0) || (gsv == 2)) {
         if (print_act_out == 1) {
         }
         cout << "  Sending || Transfer command via LTE" << endl;
-        transmit_command_LTE(&testsock, message);
+        transmit_command_LTE(testsock, message);
     }
     if (print_act_out == 1) {
         cout << "\n  ======== end ==========\n  ==== SEND COMMAND ====\n  ======================\n"
