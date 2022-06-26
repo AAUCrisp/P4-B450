@@ -137,7 +137,6 @@ void WiFi_command(Sockets sock) {
         fclose(fp3);
         printf("==========\nRX_WiFi: %d\n==========\n", sock.RX_WiFi);
     }
-    return 0;
 }
 
 void* LTE_command(void* socket) {
@@ -186,7 +185,7 @@ void* LTE_command(void* socket) {
         printf("LTE - STOP_LTE: %d\n", sock->STOP_LTE);
         printf("LTE - STOP_WiFi: %d\n", sock->STOP_WiFi);
         if (sock->RX_LTE == -1) {
-            pthread(exit);
+            pthread_exit(NULL);
         } else {
             sock->STOP_LTE = 0;
         }
