@@ -80,10 +80,10 @@ void WiFi_command(Sockets sock) {
 
         /* Read from shared memory, pass to transmit function */
         int gsv = atoi(GSV_read);  // Convert to integer
-        // printf("converted GSV: %s\n", (char*)GSV_read);
+                                   // printf("converted GSV: %s\n", (char*)GSV_read);
+        transmit_command(&sock, WiFimsg, gsv);
         if (data == 0) {
             printf("Data is 0\n");
-            transmit_command(&sock, WiFimsg, gsv);
         } else if (strcmp(tempMsg, coordinate.c_str()) != 0) {
             strcpy(tempMsg, coordinate.c_str());
             char* timeWiFi = Timestamp();
@@ -172,10 +172,10 @@ void* LTE_command(void* socket) {
 
         /* Read from shared memory, pass to transmit function */
         int gsv = atoi(GSV_read);  // Convert to integer
-        // printf("converted GSV: %s\n", (char*)GSV_read);
+                                   // printf("converted GSV: %s\n", (char*)GSV_read);
+        transmit_command(&sock, LTEmsg, gsv);
         if (data == 0) {
             printf("Data is 0\n");
-            transmit_command(&sock, LTEmsg, gsv);
         } else if (strcmp(tempMsg, coordinate.c_str()) != 0) {
             strcpy(tempMsg, coordinate.c_str());
             char* timeLTE = Timestamp();
