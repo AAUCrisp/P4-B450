@@ -355,6 +355,7 @@ void *transmit_command_LTE(void *socket, char *message) {
     int LenLTE = sizeof(sock->Client_act_LTE);
     char msgID[100];
     char msgCoords[50];
+    char tempmsgCoords[50];
 
     if (print_act_out == 1) {
         printf("\n\n  Sending || LTE (Actuator) || Actuator Socket: %d\n", sock->act_LTE);
