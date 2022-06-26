@@ -207,6 +207,7 @@ void *receiveLTE(void *socket) {
 
     while (sock->STOP_LTE != 1) {
         // printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
+        fp1 = fopen("Logs/log.txt", "a+");
         RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
         printf("RX_LTE: %d\n", RX_LTE);
         printf("RX_WiFi: %d\n", RX_WiFi);
@@ -221,7 +222,6 @@ void *receiveLTE(void *socket) {
         }
         Timestamp();
 
-        fp1 = fopen("Logs/log.txt", "a+");
         fprintf(fp1, "%s %s %s\n", message, curr_time, "LTE");
         fclose(fp1);
 
@@ -277,6 +277,7 @@ void *receiveWiFi(void *socket) {
 
     while (sock->STOP_WiFi != 1) {
         // printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
+        fp2 = fopen("Logs/log.txt", "a+");
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
         printf("RX_WiFi: %d\n", RX_WiFi);
         printf("RX_LTE: %d\n", RX_LTE);
@@ -296,7 +297,6 @@ void *receiveWiFi(void *socket) {
         }
         Timestamp();
 
-        fp2 = fopen("Logs/log.txt", "a+");
         fprintf(fp2, "%s %s %s\n", message, curr_time, "WiFi");
         fclose(fp2);
 

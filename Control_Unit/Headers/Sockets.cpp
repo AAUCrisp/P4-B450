@@ -175,15 +175,16 @@ void *receiveLTE(void *socket) {
     if (print_sen_in == 1) {
         printf("\n\n  Incoming || LTE (Sensor) || Receive Socket: %d\n", sock->sockLTE_RECEIVER);
     }
+
+    /* Open logging file */
+    fp1 = fopen("Logs/log.txt", "a+");
+
     sock->RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message_LTE, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
     if (sock->RX_LTE == -1) {
         return 0;
     }
     Timestamp();
 
-    /* Open logging file */
-    fp1 = fopen("Logs/log.txt", "a+");
-    fprintf(fp1, "%s %s\n", message_LTE, "LTE");
     fprintf(fp1, "%s %s %s %s\n", message_LTE, "LTE", " : Received at ", curr_time);
     fclose(fp1);
 
@@ -204,15 +205,17 @@ void *receiveWiFi(void *socket) {
     if (print_sen_in == 1) {
         printf("\n\n  Incoming || WiFi (Sensor) || Receive Socket: %d\n", sock->sockWiFi_RECEIVER);
     }
+
+    /* Open logging file */
+    fp2 = fopen("Logs/log.txt", "a+");
+
     sock->RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message_WiFi, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
     if (sock->RX_WiFi == -1) {
         return 0;
     }
     Timestamp();
 
-    /* Open logging file */
-    fp2 = fopen("Logs/log.txt", "a+");
-    fprintf(fp2, "%s %s %s %s\n", message_WiFi, "WiFi", " : Received at ", curr_time);
+    fprintf(fp2, "%s %s %s%s\n", message_WiFi, "WiFi", ": Received at ", curr_time);
     fclose(fp2);
 
     if (print_sen_in == 1 || message_only == 1) {
