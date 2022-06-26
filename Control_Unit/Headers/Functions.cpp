@@ -86,7 +86,7 @@ void WiFi_command(Sockets sock) {
             strcpy(tempMsg, coordinate.c_str());
             transmit_command(&sock, WiFimsg, gsv);
             char* timeWiFi = Timestamp();
-            printf("\n\n  Sending || WiFi (Actuator) || Actuator Socket: %d\n", sock->act_WiFi);
+            printf("\n\nActuator Socket: %d\n", sock.act_WiFi);
 
             /* Writing to logging file */
             fp3 = fopen("Logs/commands_log.txt", "a+");
@@ -179,7 +179,7 @@ void* LTE_command(void* socket) {
             strcpy(tempMsg, coordinate.c_str());
             transmit_command(&sock, LTEmsg, gsv);
             char* timeLTE = Timestamp();
-            printf("\n\n  Sending || LTE (Actuator) || Actuator Socket: %d\n", sock->act_LTE);
+            printf("\n\nActuator Socket: %d\n", sock->act.LTE);
 
             /* Writing to logging file */
             fp4 = fopen("Logs/commands_log.txt", "a+");
