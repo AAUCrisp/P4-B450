@@ -84,9 +84,9 @@ void WiFi_command(Sockets sock) {
 
         printf("WiFimsg: %s\n", WiFimsg);
         printf("Coordinate: %s\n", coordinate.c_str());
-        if (strcmp(tempMsg, coordinate.c_str()) != 0) {
+        if (strcmp(tempMsg, coordinate.c_str()) == 0) {
             strcpy(tempMsg, coordinate.c_str());
-
+            printf("Am I stuck in here?\n");
         } else {
             // printf("tempMsg == WiFimsg\n");
             // printf("%s = %s\n", tempMsg, WiFimsg);
