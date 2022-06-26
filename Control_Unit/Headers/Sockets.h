@@ -76,8 +76,9 @@ void *transmit_command_LTE(void *socket, char* message);
 /* Function to transmit WiFi packets */
 void *transmit_command_WiFi(void *socke, char* message);
 
-/* Function to transmit WiFi packets */
-void *transmit_command(void *socket, char* message, int gsv);
+/* Function to transmit WiFi & LTE packets */
+//void *transmit_command(void *socket, char* message, int gsv);
+void *transmit_command(int socket, char* message, int gsv);
 
 /* Function to timestamp packets */
 char *Timestamp();
