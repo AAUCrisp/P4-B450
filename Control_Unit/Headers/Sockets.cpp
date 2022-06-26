@@ -352,7 +352,7 @@ void transmit_GSV_WiFi(void *socket, char *gsv) {
 // Function to transmit command via LTE
 // char tempmsgCoordsLTE[50];
 // char tempmsgCoordsLTE2[50];
-//void *transmit_command_LTE(void *socket, char *message) {
+// void *transmit_command_LTE(void *socket, char *message) {
 void *transmit_command_LTE(int socketvalue, char *message) {
     Sockets *sock;
     int LenLTE = sizeof(sock->Client_act_LTE);
@@ -435,19 +435,17 @@ void *transmit_command_WiFi(void *socket, char *message) {
 }
 
 // Function to check GSV and transfer via chosen technologies
- //void *transmit_command(void *socket, char *message, int gsv) {
+// void *transmit_command(void *socket, char *message, int gsv) {
 void *transmit_command(int socketvalue, char *message, int gsv) {
-    //Sockets *testsock = (Sockets *)socket;
-    //printf("\n\nINSIDE Actuator Socket WiFi: %d\n", testsock->act_WiFi);
+    // Sockets *testsock = (Sockets *)socket;
+    // printf("\n\nINSIDE Actuator Socket WiFi: %d\n", testsock->act_WiFi);
     printf("INSIDE Actuator Socket LTE: %d\n", socketvalue);
 
     if (print_act_out == 1) {
-        cout << "  ======================\n  ==== SEND COMMAND ====\n  ======= entry ========\n"
-             << endl;
-        //printf("\n\n  Sending || WiFi (Actuator) || Sockets in Transmit Command: %d\n", testsock->act_WiFi);
-        //printf("\n  Sending || LTE (Actuator) || Sockets in Transmit Command: %d\n", testsock->act_LTE);
-        //cout << "\n  Sending || Mutual Transmit Function || Message passed to function: \n"
-             << message << endl;
+        // cout << "  ======================\n  ==== SEND COMMAND ====\n  ======= entry ========\n" << endl;
+        // printf("\n\n  Sending || WiFi (Actuator) || Sockets in Transmit Command: %d\n", testsock->act_WiFi);
+        // printf("\n  Sending || LTE (Actuator) || Sockets in Transmit Command: %d\n", testsock->act_LTE);
+        // cout << "\n  Sending || Mutual Transmit Function || Message passed to function: \n"<< message << endl;
     }
     // int LenWiFi = sizeof(sock->Client_act_WiFi); Burde ik stå her
 
@@ -459,7 +457,7 @@ void *transmit_command(int socketvalue, char *message, int gsv) {
         if (print_act_out == 1) {
         }
         cout << "  Sending || Transfer command via WiFi" << endl;
-       // transmit_command_WiFi(testsock, message);
+        // transmit_command_WiFi(testsock, message);
     }
     if ((gsv == 0) || (gsv == 2)) {
         if (print_act_out == 1) {
