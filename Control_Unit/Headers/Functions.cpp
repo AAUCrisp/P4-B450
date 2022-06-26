@@ -16,6 +16,9 @@
 #include "../converter.cpp"
 #endif
 
+int localRX_LTE = 0;
+int localRX_WiFi = 0;
+
 void WiFi_command(Sockets sock) {
     void* message;
     char msgDump[32];
@@ -60,6 +63,8 @@ void WiFi_command(Sockets sock) {
         printf("WiFi - RX_WiFi: %d\n", sock.RX_WiFi);
         printf("WiFi - STOP_LTE: %d\n", sock.STOP_LTE);
         printf("WiFi - STOP_WiFi: %d\n", sock.STOP_WiFi);
+        localRX_WiFi = sock.RX_WiFi;
+        printf("WiFi - localRX_WiFi: %d\n", localRX_WiFi);
         if (sock.RX_WiFi == -1) {
             printf("WiFi - Am I stuck here?1\n");
             pthread_exit(NULL);
