@@ -210,11 +210,11 @@ void *receiveLTE(void *socket) {
         RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
         printf("RX_LTE: %d\n", RX_LTE);
         printf("RX_WiFi: %d\n", RX_WiFi);
-        if (RX_LTE == -1) {
+        if (RX_LTE > 0) {
+            sock->STOP_LTE = 0;
+        } else {
             sock->STOP_LTE = 1;
             return 0;
-        } else {
-            sock->STOP_LTE = 0;
         }
         Timestamp();
 
@@ -277,11 +277,12 @@ void *receiveWiFi(void *socket) {
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
         printf("RX_WiFi: %d\n", RX_WiFi);
         printf("RX_LTE: %d\n", RX_LTE);
-        if (RX_WiFi == -1) {
+        if (RX_WiFi > 0) {
+            sock->STOP_WiFi = 0;
+            sock->STOP_LTE = 0;
+        } else {
             sock->STOP_WiFi = 1;
             return 0;
-        } else {
-            sock->STOP_WiFi = 0;
         }
         Timestamp();
 
