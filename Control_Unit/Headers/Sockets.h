@@ -71,7 +71,8 @@ void transmit_GSV_LTE(void *socket, char *gsv);
 void transmit_GSV_WiFi(void *socket, char *gsv);
 
 /* Function to transmit LTE packets */
-void *transmit_command_LTE(void *socket, char* message);
+//void *transmit_command_LTE(void *socket, char* message);
+void *transmit_command_LTE(int socketvalue, char* message);
 
 /* Function to transmit WiFi packets */
 void *transmit_command_WiFi(void *socke, char* message);

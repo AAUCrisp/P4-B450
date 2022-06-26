@@ -352,8 +352,9 @@ void transmit_GSV_WiFi(void *socket, char *gsv) {
 // Function to transmit command via LTE
 // char tempmsgCoordsLTE[50];
 // char tempmsgCoordsLTE2[50];
-void *transmit_command_LTE(void *socket, char *message) {
-    Sockets *sock = (Sockets *)socket;
+//void *transmit_command_LTE(void *socket, char *message) {
+void *transmit_command_LTE(int socketvalue, char *message) {
+    Sockets *sock;
     int LenLTE = sizeof(sock->Client_act_LTE);
     char msgID[100];
     char msgCoords[50];
@@ -369,7 +370,7 @@ void *transmit_command_LTE(void *socket, char *message) {
     //  strcpy(tempmsgCoordsLTE2, msgCoords);
 
     // if (strcmp(tempmsgCoordsLTE, msgCoords) != 0 || strcmp(tempmsgCoordsLTE2, msgCoords) != 0) {
-    TX_LTE = sendto(sock->act_LTE, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_LTE, LenLTE);
+    TX_LTE = sendto(socketvalue, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_LTE, LenLTE);
     send_time = Timestamp();
     // strcpy(tempmsgCoordsLTE, msgCoords);
     // printf("INSIDE tempmsgCoordsLTE: %s\n", tempmsgCoordsLTE);
@@ -443,9 +444,9 @@ void *transmit_command(int socketvalue, char *message, int gsv) {
     if (print_act_out == 1) {
         cout << "  ======================\n  ==== SEND COMMAND ====\n  ======= entry ========\n"
              << endl;
-        printf("\n\n  Sending || WiFi (Actuator) || Sockets in Transmit Command: %d\n", testsock->act_WiFi);
-        printf("\n  Sending || LTE (Actuator) || Sockets in Transmit Command: %d\n", testsock->act_LTE);
-        cout << "\n  Sending || Mutual Transmit Function || Message passed to function: \n"
+        //printf("\n\n  Sending || WiFi (Actuator) || Sockets in Transmit Command: %d\n", testsock->act_WiFi);
+        //printf("\n  Sending || LTE (Actuator) || Sockets in Transmit Command: %d\n", testsock->act_LTE);
+        //cout << "\n  Sending || Mutual Transmit Function || Message passed to function: \n"
              << message << endl;
     }
     // int LenWiFi = sizeof(sock->Client_act_WiFi); Burde ik stå her
@@ -458,13 +459,13 @@ void *transmit_command(int socketvalue, char *message, int gsv) {
         if (print_act_out == 1) {
         }
         cout << "  Sending || Transfer command via WiFi" << endl;
-        transmit_command_WiFi(testsock, message);
+       // transmit_command_WiFi(testsock, message);
     }
     if ((gsv == 0) || (gsv == 2)) {
         if (print_act_out == 1) {
         }
         cout << "  Sending || Transfer command via LTE" << endl;
-        transmit_command_LTE(testsock, message);
+        transmit_command_LTE(socketvalue, message);
     }
     if (print_act_out == 1) {
         cout << "\n  ======== end ==========\n  ==== SEND COMMAND ====\n  ======================\n"
