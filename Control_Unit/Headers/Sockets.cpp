@@ -437,8 +437,8 @@ void *transmit_command_WiFi(void *socket, char *message) {
  void *transmit_command(void *socket, char *message, int gsv) {
 //void *transmit_command(int *socket, char *message, int gsv) {
     Sockets *testsock = (Sockets *)socket;
-    printf("\n\nINSIDE Actuator Socket WiFi: %d\n", testsock.act_WiFi);
-    printf("INSIDE Actuator Socket LTE: %d\n", testsock.act_LTE);
+    printf("\n\nINSIDE Actuator Socket WiFi: %d\n", testsock->act_WiFi);
+    printf("INSIDE Actuator Socket LTE: %d\n", testsock->act_LTE);
 
     if (print_act_out == 1) {
         cout << "  ======================\n  ==== SEND COMMAND ====\n  ======= entry ========\n"
