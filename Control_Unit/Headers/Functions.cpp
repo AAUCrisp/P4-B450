@@ -19,7 +19,7 @@
 int localRX_LTE = 0;
 int localRX_WiFi = 0;
 
-void *WiFi_command(void *socket) {
+void* WiFi_command(void* socket) {
     Sockets* sock = (Sockets*)socket;
     void* message;
     char msgDump[32];
@@ -64,10 +64,10 @@ void *WiFi_command(void *socket) {
         printf("WiFi - RX_WiFi: %d\n", sock->RX_WiFi);
         printf("WiFi - STOP_LTE: %d\n", sock->STOP_LTE);
         printf("WiFi - STOP_WiFi: %d\n", sock->STOP_WiFi);
-        
+
         if (sock->RX_WiFi == -1) {
-            while(1) {
-                if (sock->RX_WiFi == -1 && sock->RX_LTE == -1){
+            while (1) {
+                if (sock->RX_WiFi == -1 && sock->RX_LTE == -1) {
                     return 0;
                     sock->STOP_WiFi = 1;
                 }
@@ -76,7 +76,6 @@ void *WiFi_command(void *socket) {
         } else {
             sock->STOP_WiFi = 0;
         }
-        
 
         if (troubleshooting_print == 1) {
             cout << "  WiFi Command Function || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
@@ -113,7 +112,10 @@ void *WiFi_command(void *socket) {
         /* Read from shared memory, pass to transmit function */
         int gsv = atoi(GSV_read);  // Convert to integer
         // printf("WiFi converted GSV: %s\n", (char*)GSV_read);
-
+        
+        if (sock->RX_WiFi == -1) {
+            return 0;
+        }
         transmit_command(sock, WiFimsg, gsv);
         char* timeWiFi = Timestamp();
 
@@ -186,15 +188,13 @@ void* LTE_command(void* socket) {
         printf("LTE - RX_WiFi: %d\n", sock->RX_WiFi);
         printf("LTE - STOP_LTE: %d\n", sock->STOP_LTE);
         printf("LTE - STOP_WiFi: %d\n", sock->STOP_WiFi);
-        
-        
+
         if (sock->RX_LTE == -1) {
             pthread_exit(NULL);
             return 0;
         } else {
             sock->STOP_LTE = 0;
         }
-        
 
         if (troubleshooting_print == 1) {
             cout << "  LTE Command Function || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
@@ -232,6 +232,10 @@ void* LTE_command(void* socket) {
         int gsv = atoi(GSV_read);  // Convert to integer
         // printf("LTE converted GSV: %s\n", (char*)GSV_read);
 
+        if (sock->RX_LTE == -1) {
+            pthread_exit(NULL);
+            return 0;
+        }
         transmit_command(sock, LTEmsg, gsv);
         char* timeLTE = Timestamp();
 
