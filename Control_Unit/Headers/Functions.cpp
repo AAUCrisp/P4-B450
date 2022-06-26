@@ -192,7 +192,6 @@ void* LTE_command(void* socket) {
             printf("LTE Am I stuck in here?\n");
             printf("\nActuator Socket LTE: %d\n", sock->act_LTE);
             printf("Actuator Socket length LTE: %d\n", sock->len_act_LTE);
-            cout << "struct sockaddr_in Client_act_LTE:" << sock->Client_act_LTE << endl;
             cout << "int act_LTE:" << sock->act_LTE << endl;
             printf("\ntempMsg == LTEmsg\n");
             printf("%s = %s\n", tempMsg, LTEmsg);
