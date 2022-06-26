@@ -185,7 +185,7 @@ void* LTE_command(void* socket) {
             fclose(fp4);
         } else {
             printf("tempMsg == LTEmsg\n");
-            printf("%s = %s\n", tempMsg, WiFimsg);
+            printf("%s = %s\n", tempMsg, LTEmsg);
         }
     }
 }
