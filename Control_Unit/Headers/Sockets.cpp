@@ -363,12 +363,17 @@ void *transmit_command_LTE(void *socket, char *message) {
     printf("ID: %s\n", msgID);
     printf("data: %s\n", msgCoords);
 
-    TX_LTE = sendto(sock->act_LTE, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_LTE, LenLTE);
-    send_time = Timestamp();
+    if (strcmp(tempmsgCoords, msgCoords) != 0) {
+        TX_LTE = sendto(sock->act_LTE, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_LTE, LenLTE);
+        send_time = Timestamp();
 
-    printf("  Sending || LTE (Actuator) || Sending Command to Actuator: %s\n", message);
-    printf("  Sending || LTE (Actuator) || Message transmitted at: %s\n\n", send_time);
-    if (print_act_out == 1 || message_only == 1) {
+        printf("  Sending || LTE (Actuator) || Sending Command to Actuator: %s\n", message);
+        printf("  Sending || LTE (Actuator) || Message transmitted at: %s\n\n", send_time);
+        if (print_act_out == 1 || message_only == 1) {
+        }
+    } else {
+        printf("tempmsgCoords == msgCoords\n");
+        printf("%s == %s\n", tempmsgCoords, msgCoords);
     }
 
     return 0;
@@ -380,7 +385,8 @@ void *transmit_command_WiFi(void *socket, char *message) {
     int LenWiFi = sizeof(sock->Client_act_WiFi);
     char msgID[100];
     char msgCoords[50];
-    
+    char tempmsgCoords[50];
+
     if (print_act_out == 1) {
         printf("\n\n  Sending || WiFi (Actuator) || Actuator Socket: %d\n", sock->act_WiFi);
     }
@@ -388,12 +394,17 @@ void *transmit_command_WiFi(void *socket, char *message) {
     printf("ID: %s\n", msgID);
     printf("data: %s\n", msgCoords);
 
-    TX_WiFi = sendto(sock->act_WiFi, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_WiFi, LenWiFi);
-    send_time = Timestamp();
+    if (strcmp(tempmsgCoords, msgCoords) != 0) {
+        TX_WiFi = sendto(sock->act_WiFi, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_WiFi, LenWiFi);
+        send_time = Timestamp();
 
-    printf("  Sending || WiFi (Actuator) || Sending Command to Actuator: %s\n", message);
-    printf("  Sending || WiFi (Actuator) || Message transmitted at: %s\n\n", send_time);
-    if (print_act_out == 1 || message_only == 1) {
+        printf("  Sending || WiFi (Actuator) || Sending Command to Actuator: %s\n", message);
+        printf("  Sending || WiFi (Actuator) || Message transmitted at: %s\n\n", send_time);
+        if (print_act_out == 1 || message_only == 1) {
+        }
+    } else {
+        printf("tempmsgCoords == msgCoords\n");
+        printf("%s == %s\n", tempmsgCoords, msgCoords);
     }
 
     return 0;
