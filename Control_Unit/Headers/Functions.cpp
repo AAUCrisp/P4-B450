@@ -188,7 +188,7 @@ void* LTE_command(void* socket) {
         printf("tempMsg: %s\n", tempMsg);
         if (strcmp(tempMsg, coordinate.c_str()) == 0) {
             printf("LTE stepbro23 ????\n");
-            Socket* fixsocket = 
+            Socket* fixsocket = (Socket*)sock;
             printf("Actuator Socket LTE: %d\n", sock->act_LTE);
         } else if (strcmp(tempMsg, coordinate.c_str()) != 0) {
             strcpy(tempMsg, coordinate.c_str());
