@@ -19,7 +19,7 @@
 int localRX_LTE = 0;
 int localRX_WiFi = 0;
 
-void WiFi_command(Sockets sock) {
+void *WiFi_command(Sockets sock) {
     void* message;
     char msgDump[32];
     char tempMsg[32];
