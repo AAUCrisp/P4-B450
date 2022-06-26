@@ -354,16 +354,16 @@ void transmit_GSV_WiFi(void *socket, char *gsv) {
 // Function to transmit command via LTE
 // char tempmsgCoordsLTE[50];
 // char tempmsgCoordsLTE2[50];
-// void *transmit_command_LTE(void *socket, char *message) {
-void *transmit_command_LTE(int socketvalue, int socketlength, struct sockaddr_in *testID, char *message) {
+void *transmit_command_LTE(void *socket, char *message) {
+//void *transmit_command_LTE(int socketvalue, int socketlength, struct sockaddr_in *testID, char *message) {
     Sockets *sock;
     int LenLTE = sizeof(sock->Client_act_LTE);
     char msgID[100];
     char msgCoords[50];
 
-    printf("\n\n  Sending || LTE (Actuator) || Actuator Socket: %d\n", sock->act_LTE);
-    printf("TRANSMIT_COMMAND_LTE socketvalue Actuator Socket: %d\n", socketvalue);
-    printf("Actuator Socket length LTE: %d\n", socketlength);
+    //printf("\n\n  Sending || LTE (Actuator) || Actuator Socket: %d\n", sock->act_LTE);
+    //printf("TRANSMIT_COMMAND_LTE socketvalue Actuator Socket: %d\n", socketvalue);
+    //printf("Actuator Socket length LTE: %d\n", socketlength);
     if (print_act_out == 1) {
     }
     // sscanf((char *)message, "%s %s", msgID, msgCoords);
@@ -439,11 +439,11 @@ void *transmit_command_WiFi(void *socket, char *message) {
 }
 
 // Function to check GSV and transfer via chosen technologies
-// void *transmit_command(void *socket, char *message, int gsv) {
-void *transmit_command(int socketvalue, int socketlength, struct sockaddr_in *testID, char *message, int gsv) {
-    // Sockets *testsock = (Sockets *)socket;
+ void *transmit_command(void *socket, char *message, int gsv) {
+//void *transmit_command(int socketvalue, int socketlength, struct sockaddr_in *testID, char *message, int gsv) {
+     Sockets *sock = (Sockets *)socket;
     // printf("\n\nINSIDE Actuator Socket WiFi: %d\n", testsock->act_WiFi);
-    printf("INSIDE Actuator Socket LTE: %d\n", socketvalue);
+    //printf("INSIDE Actuator Socket LTE: %d\n", socketvalue);
 
     if (print_act_out == 1) {
         // cout << "  ======================\n  ==== SEND COMMAND ====\n  ======= entry ========\n" << endl;
@@ -467,7 +467,8 @@ void *transmit_command(int socketvalue, int socketlength, struct sockaddr_in *te
         if (print_act_out == 1) {
         }
         cout << "  Sending || Transfer command via LTE" << endl;
-        transmit_command_LTE(socketvalue, socketlength, testID, message);
+        transmid_command_LTE(sock, message);
+        //transmit_command_LTE(socketvalue, socketlength, testID, message);
     }
     if (print_act_out == 1) {
         cout << "\n  ======== end ==========\n  ==== SEND COMMAND ====\n  ======================\n"
