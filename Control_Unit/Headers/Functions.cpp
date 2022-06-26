@@ -71,6 +71,7 @@ void *WiFi_command(void *socket) {
                     return 0;
                     sock->STOP_WiFi = 1;
                 }
+                printf("WiFi - STUCK HERE?\n");
             }
         } else {
             sock->STOP_WiFi = 0;
