@@ -43,22 +43,37 @@ void Sockets_GSV(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, uint PO
 
 void Sockets_Actuator(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi);
 
+/* ------------------------------------------------------------------------------------ */
+
 /* ========== RECEIVE INT SENSOR ==========*/
 /* Function to receive LTE packets */
 void *receiveLTE(void *socket);
 
 /* Function to receive WiFi packets */
 void *receiveWiFi(void *socket);
+/* ========== RECEIVE INT SENSOR ==========*/
 
-/* Function to receive WiFi packets */
-void *receive_data();
 
+
+/* ------------------------------------------------------------------------------------ */
+
+
+
+/* ========== TRANSMIT GSV SENSOR ==========*/
 /* Function to transmit LTE packets */
 void transmit_GSV_LTE(void *socket, char *gsv);
 
 /* Function to transmit WiFi packets */
 void transmit_GSV_WiFi(void *socket, char *gsv);
+/* ========== TRANSMIT GSV SENSOR ==========*/
 
+
+
+/* ------------------------------------------------------------------------------------ */
+
+
+
+/* ========== TRANSMIT COMMANDS ACTUATOR ==========*/
 /* Function to transmit LTE packets */
 void *transmit_command_LTE(void *socket, char *message);
 
@@ -67,6 +82,15 @@ void *transmit_command_WiFi(void *socket, char *message);
 
 /* Function to transmit WiFi & LTE packets */
 void *transmit_command(void *socket, char *message, int gsv);
+/* ========== TRANSMIT COMMANDS ACTUATOR ==========*/
+
+
+
+/* ------------------------------------------------------------------------------------ */
+
+
+/* Function to receive WiFi packets */
+void *receive_data();
 
 /* Function to timestamp packets */
 char *Timestamp();
