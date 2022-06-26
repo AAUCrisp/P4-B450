@@ -118,6 +118,17 @@ void* LTE_command(void* socket) {
     const char* GSV_read;
     GSV_read = (char*)shm_read(32, GSV_KEY);
 
+    /* Execution time variables */
+    struct timespec begin, end;
+    unsigned long seconds = 0;
+    unsigned long nanoseconds = 0;
+    double elapsed = 0;
+
+    sock->packet_count_LTE = 0;
+    sock->fail_count_LTE = 0;
+    sock->Execution_Sum_LTE = 0;
+    sock->STOP_LTE = 0;
+
     while (1) {
         message = (void*)receiveLTE((void*)sock);
         if (troubleshooting_print == 1) {

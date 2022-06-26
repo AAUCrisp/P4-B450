@@ -109,6 +109,7 @@ int main() {
         /* Start timing all code */
         clock_gettime(CLOCK_REALTIME, &begin_program);
 
+        /* Receive commands threads */
         pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
         receiveWiFi(&sock);
 
