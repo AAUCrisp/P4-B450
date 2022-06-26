@@ -350,6 +350,7 @@ void transmit_GSV_WiFi(void *socket, char *gsv) {
 }
 
 // Function to transmit command via LTE
+char testDUMP[50];
 void *transmit_command_LTE(void *socket, char *message) {
     Sockets *sock = (Sockets *)socket;
     int LenLTE = sizeof(sock->Client_act_LTE);
@@ -364,11 +365,12 @@ void *transmit_command_LTE(void *socket, char *message) {
     printf("ID: %s\n", msgID);
     printf("data: %s\n", msgCoords);
     printf("tempmsgCoords: %s\n", tempmsgCoords);
+    printf("testDUMP: %s\n", testDUMP);
 
-    if (strcmp(tempmsgCoords, msgCoords) != 0) {
+    if (strcmp(testDUMP, msgCoords) != 0) {
         TX_LTE = sendto(sock->act_LTE, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_LTE, LenLTE);
         send_time = Timestamp();
-        strcpy(tempmsgCoords, msgCoords);
+        strcpy(testDUMP, msgCoords);
         printf("LTE inside if tempmsgCoords: %s\n", tempmsgCoords);
 
         printf("  Sending || LTE (Actuator) || Sending Command to Actuator: %s\n", message);
@@ -380,7 +382,7 @@ void *transmit_command_LTE(void *socket, char *message) {
         printf("%s == %s\n", tempmsgCoords, msgCoords);
     }
 
-    return 1;
+    return 0;
 }
 
 // Function to transmit command via WiFi
@@ -414,7 +416,7 @@ void *transmit_command_WiFi(void *socket, char *message) {
         printf("%s == %s\n", tempmsgCoords, msgCoords);
     }
 
-    return 1;
+    return 0;
 }
 
 // Function to check GSV and transfer via chosen technologies
