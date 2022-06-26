@@ -372,6 +372,7 @@ void *transmit_command_LTE(void *socket, char *message) {
         printf("  Sending || LTE (Actuator) || Message transmitted at: %s\n\n", send_time);
         if (print_act_out == 1 || message_only == 1) {
         }
+        strcpy(tempmsgCoords, msgCoords);
     } else {
         printf("tempmsgCoords == msgCoords\n");
         printf("%s == %s\n", tempmsgCoords, msgCoords);
@@ -403,6 +404,7 @@ void *transmit_command_WiFi(void *socket, char *message) {
         printf("  Sending || WiFi (Actuator) || Message transmitted at: %s\n\n", send_time);
         if (print_act_out == 1 || message_only == 1) {
         }
+        strcpy(tempmsgCoords, msgCoords);
     } else {
         printf("tempmsgCoords == msgCoords\n");
         printf("%s == %s\n", tempmsgCoords, msgCoords);
