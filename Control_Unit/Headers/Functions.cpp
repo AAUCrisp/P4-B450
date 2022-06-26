@@ -83,7 +83,7 @@ void WiFi_command(Sockets sock) {
                                    // printf("converted GSV: %s\n", (char*)GSV_read);
         if (strcmp(tempMsg, coordinate.c_str()) != 0) {
             strcpy(tempMsg, coordinate.c_str());
-            
+
             transmit_command(&sock, WiFimsg, gsv);
             char* timeWiFi = Timestamp();
 
@@ -93,6 +93,7 @@ void WiFi_command(Sockets sock) {
             fclose(fp3);
         } else {
             printf("tempMsg == WiFimsg\n");
+            printf("%s = %s\n", tempMsg, WiFimsg);
         }
     }
 }
