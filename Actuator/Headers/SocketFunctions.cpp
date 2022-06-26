@@ -288,7 +288,7 @@ void *receiveWiFi(void *socket) {
                     sock->STOP_LTE += 1;
                     return 0;
                 } else {
-                    printf("Am I stuck in here?");
+                    printf("Am I stuck in here?\n");
                 }
             }
             // return 0;
