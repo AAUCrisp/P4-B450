@@ -91,7 +91,6 @@ int TX_LTE, TX_WiFi;
 FILE *fp1;
 FILE *fp2;
 
-
 /* Function to timestamp packets */
 char *Timestamp() {
     /* Timestamp format : [hh:mm:ss dd/mm/yy] */
@@ -194,9 +193,11 @@ void *receiveLTE(void *socket) {
     fprintf(fp1, "%s %s\n", message_LTE, "LTE");
     fclose(fp1);
 
-    printf("message_LTE: %s\n", message_LTE);
-    printf("message_LTE: %d\n", message_LTE);
-    return message_LTE;
+    // printf("message_LTE: %s\n", message_LTE);
+    if (message_LTE == "0") {
+    } else {
+        return message_LTE;
+    }
 }
 
 /* Function to receive random integer via WiFi */
@@ -227,9 +228,11 @@ void *receiveWiFi(void *socket) {
     fprintf(fp2, "%s %s\n", message_WiFi, "WiFi");
     fclose(fp2);
 
-    printf("message_WiFi: %s\n", message_WiFi);
-    printf("message_WiFi: %d\n", message_WiFi);
-    return message_WiFi;
+    // printf("message_WiFi: %s\n", message_WiFi);
+    if (message_WiFi == "0") {
+    } else {
+        return message_WiFi;
+    }
 }
 
 void *receive_data() {
@@ -395,7 +398,7 @@ void *transmit_command(void *socket, char *message, int gsv) {
         cout << "\n  Sending || Mutual Transmit Function || Message passed to function: \n"
              << message << endl;
     }
-    //int LenWiFi = sizeof(sock->Client_act_WiFi); Burde ik stå her
+    // int LenWiFi = sizeof(sock->Client_act_WiFi); Burde ik stå her
 
     cout << "  Sending || Global Signal Variable is: " << gsv << endl;
     if (print_act_out == 1) {
