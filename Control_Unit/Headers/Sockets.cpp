@@ -363,6 +363,7 @@ void *transmit_command_LTE(void *socket, char *message) {
     sscanf((char *)message, "%s %s", msgID, msgCoords);
     printf("ID: %s\n", msgID);
     printf("data: %s\n", msgCoords);
+    printf("tempmsgCoords: %s\n", tempmsgCoords);
 
     if (strcmp(tempmsgCoords, msgCoords) != 0) {
         strcpy(tempmsgCoords, msgCoords);
@@ -395,6 +396,7 @@ void *transmit_command_WiFi(void *socket, char *message) {
     sscanf((char *)message, "%s %s", msgID, msgCoords);
     printf("ID: %s\n", msgID);
     printf("data: %s\n", msgCoords);
+    printf("tempmsgCoords: %s\n", tempmsgCoords);
 
     if (strcmp(tempmsgCoords, msgCoords) != 0) {
         TX_WiFi = sendto(sock->act_WiFi, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_WiFi, LenWiFi);
