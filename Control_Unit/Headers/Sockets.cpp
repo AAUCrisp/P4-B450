@@ -355,7 +355,7 @@ void transmit_GSV_WiFi(void *socket, char *gsv) {
 // char tempmsgCoordsLTE[50];
 // char tempmsgCoordsLTE2[50];
 // void *transmit_command_LTE(void *socket, char *message) {
-void *transmit_command_LTE(int socketvalue, char *message) {
+void *transmit_command_LTE(int socketvalue, int socketlength, char *message) {
     Sockets *sock;
     int LenLTE = sizeof(sock->Client_act_LTE);
     char msgID[100];
@@ -363,7 +363,7 @@ void *transmit_command_LTE(int socketvalue, char *message) {
 
     printf("\n\n  Sending || LTE (Actuator) || Actuator Socket: %d\n", sock->act_LTE);
     printf("TRANSMIT_COMMAND_LTE socketvalue Actuator Socket: %d\n", socketvalue);
-    printf("Actuator Socket length LTE: %d\n", sock->len_act_LTE);
+    printf("Actuator Socket length LTE: %d\n", socketlength);
     if (print_act_out == 1) {
     }
     // sscanf((char *)message, "%s %s", msgID, msgCoords);

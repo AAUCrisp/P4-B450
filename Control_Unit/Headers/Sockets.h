@@ -40,7 +40,7 @@ typedef struct _sockets {
 
 } Sockets;
 
-typedef struct _time_struct{
+typedef struct _time_struct {
     int hour;
     int minute;
     int second;
@@ -73,15 +73,15 @@ void transmit_GSV_LTE(void *socket, char *gsv);
 void transmit_GSV_WiFi(void *socket, char *gsv);
 
 /* Function to transmit LTE packets */
-//void *transmit_command_LTE(void *socket, char* message);
-void *transmit_command_LTE(int socketvalue, char* message);
+// void *transmit_command_LTE(void *socket, char* message);
+void *transmit_command_LTE(int socketvalue, int socketlength, char *message);
 
 /* Function to transmit WiFi packets */
-void *transmit_command_WiFi(void *socke, char* message);
+void *transmit_command_WiFi(void *socke, char *message);
 
 /* Function to transmit WiFi & LTE packets */
-//void *transmit_command(void *socket, char* message, int gsv); 
-void *transmit_command(int socketvalue, char* message, int gsv);
+// void *transmit_command(void *socket, char* message, int gsv);
+void *transmit_command(int socketvalue, char *message, int gsv);
 
 /* Function to timestamp packets */
 char *Timestamp();
