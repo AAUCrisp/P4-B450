@@ -278,6 +278,11 @@ void Sockets_GSV(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, uint PO
 }
 
 void Sockets_Actuator(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
+    /* Time struct for socket timeout */
+    struct timeval tv2;
+    tv2.tv_sec = 0;
+    tv2.tv_usec = 500000;
+
     /* Create socket receiver */
     sock->act_LTE = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     sock->act_WiFi = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -285,6 +290,9 @@ void Sockets_Actuator(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, ui
     /* Setting up socket options & specifying interface for receiver */
     setsockopt(sock->act_LTE, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
     setsockopt(sock->act_WiFi, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
+    /* Setting up socket timeout */
+    setsockopt(sock->act_LTE, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
+    setsockopt(sock->act_WiFi, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
 
     /* Error checking */
     if (sock->act_LTE == -1) {
