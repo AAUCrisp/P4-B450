@@ -80,7 +80,7 @@ int main() {
     // const char* LTE = "wwan0";
     // const char* WiFi = "wlan0";
     const char* LTE = "lo";
-    const char* WiFi = "enp0s3";
+    const char* WiFi = "lo";
 
     /* Create sockets */
     Sockets sock;

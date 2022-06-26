@@ -265,6 +265,7 @@ void Sockets_Actuator(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, ui
     /* Setting up socket options & specifying interface for receiver */
     setsockopt(sock->act_LTE, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
     setsockopt(sock->act_WiFi, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
+
     /* Setting up socket timeout */
     // setsockopt(sock->act_LTE, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
     // setsockopt(sock->act_WiFi, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
@@ -326,7 +327,7 @@ void transmit_GSV_WiFi(void *socket, char *gsv) {
 
 // Function to transmit command via LTE
 void *transmit_command_LTE(void *socket, char *message) {
-    Sockets *sock;
+    Sockets *sock = (Sockets *)socket;
     int LenLTE = sizeof(sock->Client_act_LTE);
 
     printf("\n\n  Sending || LTE (Actuator) || Actuator Socket: %d\n", sock->act_LTE);
