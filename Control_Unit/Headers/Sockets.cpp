@@ -353,10 +353,18 @@ void transmit_GSV_WiFi(void *socket, char *gsv) {
 void *transmit_command_LTE(void *socket, char *message) {
     Sockets *sock = (Sockets *)socket;
     int LenLTE = sizeof(sock->Client_act_LTE);
+    int msgDump[1024];
+    int data;
+    int ID;
+
     if (print_act_out == 1) {
         printf("\n\n  Sending || LTE (Actuator) || Actuator Socket: %d\n", sock->act_LTE);
     }
-
+    sscanf((char *)message, "%d: %d %[^\n]", &ID, &data, msgDump);
+    printf("ID: %d\n", ID);
+    printf("data: %d\n", data);
+    printf("msgDump: %s\n", msgDump);
+    
     TX_LTE = sendto(sock->act_LTE, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_LTE, LenLTE);
     send_time = Timestamp();
 
@@ -372,9 +380,17 @@ void *transmit_command_LTE(void *socket, char *message) {
 void *transmit_command_WiFi(void *socket, char *message) {
     Sockets *sock = (Sockets *)socket;
     int LenWiFi = sizeof(sock->Client_act_WiFi);
+    int msgDump[1024];
+    int data;
+    int ID;
     if (print_act_out == 1) {
         printf("\n\n  Sending || WiFi (Actuator) || Actuator Socket: %d\n", sock->act_WiFi);
     }
+    sscanf((char *)message, "%d: %d %[^\n]", &ID, &data, msgDump);
+    printf("ID: %d\n", ID);
+    printf("data: %d\n", data);
+    printf("msgDump: %s\n", msgDump);
+    
     TX_WiFi = sendto(sock->act_WiFi, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_WiFi, LenWiFi);
     send_time = Timestamp();
 
