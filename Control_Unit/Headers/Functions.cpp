@@ -188,6 +188,12 @@ void* LTE_command(void* socket) {
                     sock->STOP_LTE = 1;
                     printf("LTE - Am I stuck here?1\n");
                 }
+                printf("LTE - RX_LTE: %d\n", sock->RX_LTE);
+                printf("LTE - RX_WiFi: %d\n", sock->RX_WiFi);
+                printf("LTE - STOP_LTE: %d\n", sock->STOP_LTE);
+                printf("LTE - STOP_WiFi: %d\n", sock->STOP_WiFi);
+                printf("WiFi - localRX_WiFi: %d\n", localRX_WiFi);
+                sleep(2);
             }
         } else {
             sock->STOP_LTE = 0;
