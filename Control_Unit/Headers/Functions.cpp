@@ -198,12 +198,13 @@ void* LTE_command(void* socket) {
         }
         int testsocketvalue = sock->act_LTE;
         int testsocketlength = sock->len_act_LTE;
+        struct sockaddr_in testID = sock->Client_act_LTE;
         printf("testsocketvalue Actuator Socket LTE: %d\n", testsocketvalue);
         printf("testsocketlength Actuator Socket LTE: %d\n", testsocketlength);
 
         printf("LTE stepbro ????\n");
         // transmit_command(&sock, LTEmsg, gsv);
-        transmit_command(testsocketvalue, testsocketlength, LTEmsg, gsv);
+        transmit_command(testsocketvalue, testsocketlength, testID, LTEmsg, gsv);
         char* timeLTE = Timestamp();
         printf("Actuator Socket LTE: %d\n", sock->act_LTE);
 
