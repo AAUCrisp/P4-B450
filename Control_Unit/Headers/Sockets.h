@@ -81,7 +81,7 @@ void *transmit_command_WiFi(void *socke, char *message);
 
 /* Function to transmit WiFi & LTE packets */
 // void *transmit_command(void *socket, char* message, int gsv);
-void *transmit_command(int socketvalue, int socketlength, struct sockaddr_in testID, char *message, int gsv);
+void *transmit_command(int socketvalue, int socketlength, struct sockaddr testID, char *message, int gsv);
 
 /* Function to timestamp packets */
 char *Timestamp();
