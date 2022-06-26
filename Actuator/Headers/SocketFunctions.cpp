@@ -213,7 +213,7 @@ void *receiveLTE(void *socket) {
         printf("STOP_LTE: %d\n", sock->STOP_LTE);
         printf("STOP_WiFi: %d\n", sock->STOP_WiFi);
         if (RX_LTE == -1) {
-            sock->STOP_WiFi = 1;
+            //sock->STOP_WiFi = 1;
             // if(sock->STOP_LTE == 2 && sock->STOP_WiFi ==1){return 0;}
             return 0;
         } else {
@@ -275,7 +275,7 @@ void *receiveWiFi(void *socket) {
     sock->Execution_Sum_WiFi = 0;
     sock->STOP_WiFi = 0;
 
-    while (sock->STOP_WiFi != 2) {
+    while (sock->STOP_WiFi != 1) {
         // printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
         printf("RX_WiFi: %d\n", RX_WiFi);
@@ -285,7 +285,7 @@ void *receiveWiFi(void *socket) {
         if (RX_WiFi == -1) {
             while (1) {
                 if (RX_WiFi == -1 && RX_LTE == -1) {
-                    sock->STOP_WiFi = 2;
+                    sock->STOP_WiFi = 1;
                     return 0;
                 } else {
                 }
