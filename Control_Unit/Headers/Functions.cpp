@@ -65,9 +65,10 @@ void *WiFi_command(void *socket) {
         printf("WiFi - STOP_LTE: %d\n", sock->STOP_LTE);
         printf("WiFi - STOP_WiFi: %d\n", sock->STOP_WiFi);
         sleep(1);
+        /*
         if (sock->RX_WiFi == -1) {
             while(1) {
-                if (sock->RX_WiFi == -1 && sock->RX_LTE == 1/*localRX_LTE == -1*/){
+                if (sock->RX_WiFi == -1 && sock->RX_LTE == 1){
                     return 0;
                     sock->STOP_WiFi = 1;
                 }
@@ -75,6 +76,7 @@ void *WiFi_command(void *socket) {
         } else {
             sock->STOP_WiFi = 0;
         }
+        */
 
         if (troubleshooting_print == 1) {
             cout << "  WiFi Command Function || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
@@ -185,12 +187,14 @@ void* LTE_command(void* socket) {
         printf("LTE - STOP_LTE: %d\n", sock->STOP_LTE);
         printf("LTE - STOP_WiFi: %d\n", sock->STOP_WiFi);
         sleep(1);
+        /*
         if (sock->RX_LTE == -1) {
             localRX_LTE = sock->RX_LTE;
             pthread_exit(NULL);
         } else {
             sock->STOP_LTE = 0;
         }
+        */
 
         if (troubleshooting_print == 1) {
             cout << "  LTE Command Function || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
