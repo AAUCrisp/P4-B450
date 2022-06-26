@@ -185,7 +185,7 @@ void* LTE_command(void* socket) {
         printf("LTE - STOP_LTE: %d\n", sock->STOP_LTE);
         printf("LTE - STOP_WiFi: %d\n", sock->STOP_WiFi);
         if (sock->RX_LTE == -1) {
-            pthread(exit);
+            pthread_exit(NULL);
         } else {
             sock->STOP_LTE = 0;
         }
