@@ -66,7 +66,7 @@ void WiFi_command(Sockets sock) {
         if (sock.RX_WiFi == -1) {
             while(1) {
                 if (sock.RX_WiFi == -1 && localRX_LTE == -1){
-                    exit(0);
+                    return 0;
                     sock.STOP_WiFi = 1;
                 }
             }
@@ -134,6 +134,7 @@ void WiFi_command(Sockets sock) {
         fclose(fp3);
         printf("==========\nRX_WiFi: %d\n==========\n", sock.RX_WiFi);
     }
+    return 0;
 }
 
 void* LTE_command(void* socket) {
