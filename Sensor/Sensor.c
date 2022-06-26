@@ -222,12 +222,13 @@ int main(int argc, char* argv[]) {
         printf("________________________\n");
         printf("Total Time:  \n            Hours: %ld  \n          Minutes: %ld  \n          Seconds: %ld \n     Milliseconds: %ld\n", hours, minutes, seconds, milliseconds);
         printf("________________________\n\n");
-        printf("Total failed counts:                   %d\n", fail_count);
-        printf("Total packets transmitted via WiFi:    %d\n", packet_count_WiFi);
-        printf("Total packets transmitted via LTE:     %d\n", packet_count_LTE);
-        printf("Loop count LTE:                        %d\n", hvormangegangeerjegherWiFi);
-        printf("Loop count WiFi:                       %d\n", hvormangegangeerjegherWiFi);
-        printf("Total count:                           %d\n", count);
+        printf("Packet Summary:\n");
+        printf("    Total failed counts:                   %d\n", fail_count);
+        printf("    Total counts:                           %d\n", count);
+        printf("    Total packets transmitted via WiFi:    %d\n", packet_count_WiFi);
+        printf("    Total packets transmitted via LTE:     %d\n", packet_count_LTE);
+        printf("    Loop count LTE:                        %d\n", hvormangegangeerjegherWiFi);
+        printf("    Loop count WiFi:                       %d\n", hvormangegangeerjegherWiFi);
         printf("\n===================================\n\n");
     }
 }
