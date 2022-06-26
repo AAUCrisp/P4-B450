@@ -96,10 +96,10 @@ void WiFi_command(Sockets sock) {
         }
         printf("WIFI stepbro ????\n");
         //  transmit_command(sock.act_WiFi, WiFimsg, gsv);
-        char* timeWiFi = Timestamp();
         printf("\n\nActuator Socket WiFi: %d\n", sock.act_WiFi);
         */
         transmit_command(&sock, WiFimsg, gsv);
+        char* timeWiFi = Timestamp();
 
         /* Writing to logging file */
         fp3 = fopen("Logs/commands_log.txt", "a+");
