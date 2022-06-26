@@ -186,6 +186,9 @@ void *receiveWiFi(void *socket) {
     }
 }
 
+/* Transmit random integer via LTE */
+int loop_count_LTE1 = 0;
+int loop_count_LTE2 = 0;
 void *transmitLTE(void *socket, char *message) {
     Sockets *sock = (Sockets *)socket;
     char sendLTE[BUFFER];
@@ -206,8 +209,9 @@ void *transmitLTE(void *socket, char *message) {
     if (print_out == 1) {
         printf("Sensor || LTE || sendLTE: %s\n", sendLTE);
     }
-
+    printf("loop_count_LTE1: %d\n", loop_count_LTE1);
     sendto(sock->sockLTE_TRANSMITTER, sendLTE, BUFFER, 0, (struct sockaddr *)&sock->ClientLTE_TRANSMITTER, sizeof(sock->ClientLTE_TRANSMITTER));
+    printf("loop_count_LTE2: %d\n", loop_count_LTE2);
     if (print_out == 1) {
         printf("Sensor || LTE || Message transmitted at %s\n\n", curr_timeLTE);
     }
@@ -215,6 +219,9 @@ void *transmitLTE(void *socket, char *message) {
     fclose(fp1);
 }
 
+/* Transmit random integer via WiFi */
+int loop_count_WiFi1 = 0;
+int loop_count_WiFi2 = 0;
 void *transmitWiFi(void *socket, char *message) {
     Sockets *sock = (Sockets *)socket;
     char sendWiFi[BUFFER];
@@ -235,8 +242,9 @@ void *transmitWiFi(void *socket, char *message) {
     if (print_out == 1) {
         printf("Sensor || WiFi || sendWiFi: %s\n", sendWiFi);
     }
-
+    printf("loop_count_WiFi1: %d\n", loop_count_WiFi1);
     sendto(sock->sockWiFi_TRANSMITTER, sendWiFi, BUFFER, 0, (struct sockaddr *)&sock->ClientWiFi_TRANSMITTER, sizeof(sock->ClientWiFi_TRANSMITTER));
+    printf("loop_count_WiFi2: %d\n", loop_count_WiFi2);
     if (print_out == 1) {
         printf("Sensor || WiFi || Message transmitted at %s\n\n", curr_timeWiFi);
     }
