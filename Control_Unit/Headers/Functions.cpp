@@ -185,7 +185,7 @@ void* LTE_command(void* socket) {
         printf("\n\nLTEmsg: %s\n", LTEmsg);
         printf("Coordinate: %s\n", coordinate.c_str());
         printf("tempMsg: %s\n", tempMsg);
-        if (strcmp(tempMsg, coordinate.c_str()) == 0) {
+        /*if (strcmp(tempMsg, coordinate.c_str()) == 0) {
             printf("LTE stepbro23 ????\n");
         } else if (strcmp(tempMsg, coordinate.c_str()) != 0) {
             strcpy(tempMsg, coordinate.c_str());
@@ -203,9 +203,10 @@ void* LTE_command(void* socket) {
         printf("testsocketlength Actuator Socket LTE: %d\n", testsocketlength);
 
         printf("LTE stepbro ????\n");
-        // transmit_command(&sock, LTEmsg, gsv);
+        */
+         transmit_command(sock, LTEmsg, gsv);
         //transmit_command(testsocketvalue, testsocketlength, &testID, LTEmsg, gsv);
-        sendto(testsocketvalue, LTEmsg, strlen(LTEmsg), 0, (struct sockaddr*)&testID, testsocketlength);
+        //sendto(testsocketvalue, LTEmsg, strlen(LTEmsg), 0, (struct sockaddr*)&testID, testsocketlength);
         char* timeLTE = Timestamp();
         printf("Actuator Socket LTE: %d\n", sock->act_LTE);
 
