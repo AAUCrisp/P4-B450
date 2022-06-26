@@ -361,7 +361,7 @@ void *transmit_command_LTE(void *socket, char *message) {
     }
     sscanf((char *)message, "%s %s", msgID, msgCoords);
     printf("ID: %s\n", msgID);
-    printf("data: %s\n", dmsgCoords);
+    printf("data: %s\n", msgCoords);
 
     TX_LTE = sendto(sock->act_LTE, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_LTE, LenLTE);
     send_time = Timestamp();
