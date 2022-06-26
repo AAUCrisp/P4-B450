@@ -82,6 +82,7 @@ void WiFi_command(Sockets sock) {
         int gsv = atoi(GSV_read);  // Convert to integer
                                    // printf("converted GSV: %s\n", (char*)GSV_read);
 
+        /*
         printf("\n\nWiFimsg: %s\n", WiFimsg);
         printf("Coordinate: %s\n", coordinate.c_str());
         printf("tempMsg: %s\n", tempMsg);
@@ -94,10 +95,11 @@ void WiFi_command(Sockets sock) {
             printf("%s = %s\n", tempMsg, WiFimsg);
         }
         printf("WIFI stepbro ????\n");
-        // transmit_command(&sock, WiFimsg, gsv);
         //  transmit_command(sock.act_WiFi, WiFimsg, gsv);
         char* timeWiFi = Timestamp();
         printf("\n\nActuator Socket WiFi: %d\n", sock.act_WiFi);
+        */
+        transmit_command(&sock, WiFimsg, gsv);
 
         /* Writing to logging file */
         fp3 = fopen("Logs/commands_log.txt", "a+");
@@ -208,7 +210,7 @@ void* LTE_command(void* socket) {
         //transmit_command(testsocketvalue, testsocketlength, &testID, LTEmsg, gsv);
         //sendto(testsocketvalue, LTEmsg, strlen(LTEmsg), 0, (struct sockaddr*)&testID, testsocketlength);
         char* timeLTE = Timestamp();
-        printf("Actuator Socket LTE: %d\n", sock->act_LTE);
+        //printf("Actuator Socket LTE: %d\n", sock->act_LTE);
 
         /* Writing to logging file */
         fp4 = fopen("Logs/commands_log.txt", "a+");
