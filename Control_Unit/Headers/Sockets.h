@@ -74,14 +74,14 @@ void transmit_GSV_WiFi(void *socket, char *gsv);
 
 /* Function to transmit LTE packets */
 // void *transmit_command_LTE(void *socket, char* message);
-void *transmit_command_LTE(int socketvalue, int socketlength, struct sockaddr *testID, char *message);
+void *transmit_command_LTE(int socketvalue, int socketlength, struct sockaddr_in *testID, char *message);
 
 /* Function to transmit WiFi packets */
 void *transmit_command_WiFi(void *socket, char *message);
 
 /* Function to transmit WiFi & LTE packets */
 // void *transmit_command(void *socket, char* message, int gsv);
-void *transmit_command(int socketvalue, int socketlength, struct sockaddr *testID, char *message, int gsv);
+void *transmit_command(int socketvalue, int socketlength, struct sockaddr_in *testID, char *message, int gsv);
 
 /* Function to timestamp packets */
 char *Timestamp();
