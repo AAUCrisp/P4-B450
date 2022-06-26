@@ -214,6 +214,7 @@ void *receiveLTE(void *socket) {
         printf("STOP_WiFi: %d\n", sock->STOP_WiFi);
 
         if (RX_LTE == -1) {
+            pthread_exit(NULL);
             return 0;
         } else {
             sock->STOP_LTE = 0;
@@ -281,7 +282,7 @@ void *receiveWiFi(void *socket) {
         printf("RX_LTE: %d\n", RX_LTE);
         printf("STOP_WiFi: %d\n", sock->STOP_WiFi);
         printf("STOP_LTE: %d\n", sock->STOP_LTE);
-        
+
         if (RX_WiFi == -1) {
             while (1) {
                 if (RX_WiFi == -1 && RX_LTE == -1) {

@@ -50,24 +50,29 @@ int main(int argc, char* argv[]) {
     uint PORT_WiFi_TRANSMITTER = 9001;
     // const char* LTE = "wwan0";
     // const char* WiFi = "wlan0";
-    // const char* IP_LTE = "10.20.0.16";  // Default: IP of Control Unit
-    // const char* IP_WiFi = "10.42.0.1";  // Default: IP of Control Unit (AP)
-    //   const char* IP_LTE = "10.20.0.13";      // IP of Actuator
-    //   const char* IP_LTE = "10.20.0.10";      // IP of Sensor
+    // const char* IP_LTE = "10.20.0.16";      // Default: IP of Control Unit
+    // const char* IP_WiFi = "10.42.0.1";      // Default: IP of Control Unit (AP)
+    // const char* IP_LTE = "10.20.0.13";      // IP of Actuator
+    // const char* IP_LTE = "10.20.0.10";      // IP of Sensor
     // const char* IP_WiFi = "192.168.1.136";  // Default: IP of Control Unit
-    //  const char* IP_WiFi = "192.168.1.143";  // IP of Actuator
-    //  const char* IP_WiFi = "192.168.1.160";  // IP of Sensor
+    // const char* IP_WiFi = "192.168.1.143";  // IP of Actuator
+    // const char* IP_WiFi = "192.168.1.160";  // IP of Sensor
 
-    const char* LTE = "enp0s3";             // Test loopback
-    const char* WiFi = "enp0s3";            // Test loopback
-    const char* IP_LTE = "192.168.0.134";   // Test loopback
-    const char* IP_WiFi = "192.168.0.134";  // Test loopback
+    const char* LTE = "lo";                    // Test loopback
+    const char* WiFi = "lo";                   // Test loopback
+    const char* IP_LTE = "127.0.0.1";          // Test loopback
+    const char* IP_WiFi = "127.0.0.1";         // Test loopback
+    // const char* LTE = "enp0s3";             // Test loopback
+    // const char* WiFi = "enp0s3";            // Test loopback
+    // const char* IP_LTE = "192.168.0.134";   // Test loopback
+    // const char* IP_WiFi = "192.168.0.134";  // Test loopback
 
     /* misc */
     pthread_t T1;
 
     /* Execution time variables */
-    int count = 0;
+    int packets_sent_LTE = 0;
+    int packets_sent_WiFi = 0;
     int fail_count = 0;
     long double Execution_Sum = 0;
     long double Execution_Average = 0;
@@ -158,10 +163,12 @@ int main(int argc, char* argv[]) {
             // printf("Sensor || Before Transmitting\n");
             if (strcmp(gsv, B) == 0 || strcmp(gsv, L) == 0) {
                 transmitLTE(&sock, (char*)buffer);
+                int packets_sent_LTE++;
             }
 
             if (strcmp(gsv, B) == 0 || strcmp(gsv, W) == 0) {
                 transmitWiFi(&sock, (char*)buffer);
+                int packets_sent_WiFi++;
             }
 
             /* Stop timing code execution of code */
@@ -207,7 +214,9 @@ int main(int argc, char* argv[]) {
         printf("________________________\n");
         printf("Total Time:  \n            Hours: %ld  \n          Minutes: %ld  \n          Seconds: %ld \n     Milliseconds: %ld\n", hours, minutes, seconds, milliseconds);
         printf("________________________\n\n");
-        printf("Total failed counts: %d\n", fail_count);
+        printf("Total failed counts:                   %d\n", fail_count);
+        printf("Total packets transmitted via WiFi:    %d\n", sock.packet_count_WiFi);
+        printf("Total packets transmitted via LTE:     %d\n", sock.packet_count_LTE);
         printf("\n===================================\n\n");
     }
 }
