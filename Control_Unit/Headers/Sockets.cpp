@@ -380,8 +380,8 @@ void *transmit_command_LTE(void *socket, char *message) {
 void *transmit_command_WiFi(void *socket, char *message) {
     Sockets *sock = (Sockets *)socket;
     int LenWiFi = sizeof(sock->Client_act_WiFi);
-    char msgDump[1024];
-    int data;
+    char msgDump;
+    char data;
     int ID;
     if (print_act_out == 1) {
         printf("\n\n  Sending || WiFi (Actuator) || Actuator Socket: %d\n", sock->act_WiFi);
