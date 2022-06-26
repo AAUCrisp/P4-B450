@@ -92,6 +92,8 @@ void WiFi_command(Sockets sock) {
             fp3 = fopen("Logs/commands_log.txt", "a+");
             fprintf(fp3, "%s %s %s\n", WiFimsg, timeWiFi, "WiFi");
             fclose(fp3);
+        } else {
+            printf("tempMsg == WiFimsg\n");
         }
     }
 }
@@ -183,6 +185,8 @@ void* LTE_command(void* socket) {
             fp4 = fopen("Logs/commands_log.txt", "a+");
             fprintf(fp4, "%s %s %s\n", LTEmsg, timeLTE, "LTE");
             fclose(fp4);
+        } else {
+            printf("tempMsg == LTEmsg\n");
         }
     }
 }
