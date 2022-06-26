@@ -63,12 +63,16 @@ void WiFi_command(Sockets sock) {
         printf("WiFi - RX_WiFi: %d\n", sock.RX_WiFi);
         printf("WiFi - STOP_LTE: %d\n", sock.STOP_LTE);
         printf("WiFi - STOP_WiFi: %d\n", sock.STOP_WiFi);
-        localRX_WiFi = sock.RX_WiFi;
-        printf("WiFi - localRX_WiFi: %d\n", localRX_WiFi);
+       
         if (sock.RX_WiFi == -1) {
-            printf("WiFi - Am I stuck here?1\n");
-            pthread_exit(NULL);
-            printf("WiFi - Am I stuck here?2\n");
+            while(1) {
+                if (sock.RX_WiFi == -1 && sock.RX_LTE == -1){
+                    break;
+                    sock.STOP_WiFi = 1;
+                }
+                sleep(2);
+                printf("WiFi - STUCK HERE?\n");
+            }
         } else {
             sock.STOP_WiFi = 0;
         }
@@ -133,6 +137,7 @@ void WiFi_command(Sockets sock) {
         fclose(fp3);
         printf("==========\nRX_WiFi: %d\n==========\n", sock.RX_WiFi);
     }
+    return 0;
 }
 
 void* LTE_command(void* socket) {
@@ -180,24 +185,10 @@ void* LTE_command(void* socket) {
         printf("LTE - RX_WiFi: %d\n", sock->RX_WiFi);
         printf("LTE - STOP_LTE: %d\n", sock->STOP_LTE);
         printf("LTE - STOP_WiFi: %d\n", sock->STOP_WiFi);
-        printf("WiFi - localRX_WiFi: %d\n", localRX_WiFi);
         if (sock->RX_LTE == -1) {
-            while (1) {
-                if (localRX_WiFi == -1 && sock->RX_LTE == -1) {
-                    break;
-                    sock->STOP_LTE = 1;
-                    printf("LTE - Am I stuck here?1\n");
-                }
-                printf("LTE - RX_LTE: %d\n", sock->RX_LTE);
-                printf("LTE - RX_WiFi: %d\n", sock->RX_WiFi);
-                printf("LTE - STOP_LTE: %d\n", sock->STOP_LTE);
-                printf("LTE - STOP_WiFi: %d\n", sock->STOP_WiFi);
-                printf("WiFi - localRX_WiFi: %d\n", localRX_WiFi);
-                sleep(2);
-            }
+            pthread(exit);
         } else {
             sock->STOP_LTE = 0;
-            printf("LTE - Am I stuck here?2\n");
         }
 
         if (troubleshooting_print == 1) {
