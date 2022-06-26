@@ -82,21 +82,24 @@ void WiFi_command(Sockets sock) {
         int gsv = atoi(GSV_read);  // Convert to integer
                                    // printf("converted GSV: %s\n", (char*)GSV_read);
 
-        transmit_command(&sock, WiFimsg, gsv);
+        printf("WiFimsg: %s\n", WiFimsg);
         if (strcmp(tempMsg, coordinate.c_str()) != 0) {
             strcpy(tempMsg, coordinate.c_str());
-            // transmit_command(sock.act_WiFi, WiFimsg, gsv);
-            char* timeWiFi = Timestamp();
-            printf("\n\nActuator Socket WiFi: %d\n", sock.act_WiFi);
 
-            /* Writing to logging file */
-            fp3 = fopen("Logs/commands_log.txt", "a+");
-            fprintf(fp3, "%s %s %s\n", WiFimsg, timeWiFi, "WiFi");
-            fclose(fp3);
         } else {
             // printf("tempMsg == WiFimsg\n");
             // printf("%s = %s\n", tempMsg, WiFimsg);
         }
+
+        transmit_command(&sock, WiFimsg, gsv);
+        // transmit_command(sock.act_WiFi, WiFimsg, gsv);
+        char* timeWiFi = Timestamp();
+        printf("\n\nActuator Socket WiFi: %d\n", sock.act_WiFi);
+
+        /* Writing to logging file */
+        fp3 = fopen("Logs/commands_log.txt", "a+");
+        fprintf(fp3, "%s %s %s\n", WiFimsg, timeWiFi, "WiFi");
+        fclose(fp3);
     }
 }
 
