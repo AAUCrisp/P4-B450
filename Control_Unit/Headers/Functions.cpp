@@ -82,7 +82,7 @@ void WiFi_command(Sockets sock) {
         int gsv = atoi(GSV_read);  // Convert to integer
                                    // printf("converted GSV: %s\n", (char*)GSV_read);
 
-        printf("WiFimsg: %s\n", WiFimsg);
+        printf("\n\nWiFimsg: %s\n", WiFimsg);
         printf("Coordinate: %s\n", coordinate.c_str());
         printf("tempMsg: %s\n", tempMsg);
         if (strcmp(tempMsg, coordinate.c_str()) == 0) {
