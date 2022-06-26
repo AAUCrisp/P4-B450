@@ -104,8 +104,8 @@ char *Timestamp() {
 void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
     /* Time struct for socket timeout */
     struct timeval tv2;
-    tv2.tv_sec = 0;
-    tv2.tv_usec = 500000;
+    tv2.tv_sec = 5;
+    tv2.tv_usec = 0;
 
     /* Create socket receiver */
     sock->sockLTE_RECEIVER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
