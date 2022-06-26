@@ -66,7 +66,7 @@ void WiFi_command(Sockets sock) {
         if (sock.RX_WiFi == -1) {
             while(1) {
                 if (sock.RX_WiFi == -1 && localRX_LTE == -1){
-                    break;
+                    exit(0);
                     sock.STOP_WiFi = 1;
                 }
             }
