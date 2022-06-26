@@ -1,4 +1,3 @@
-
 #include <arpa/inet.h>
 #include <errno.h>
 #include <fcntl.h>
@@ -18,14 +17,50 @@
 #include <time.h>
 #include <unistd.h>
 
-#include "SocketFunctions.h"
-#include "shm_write.c"
+#include <cassert>
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <sstream>
+#include <string>
+
+#include "ActuatorFunctions.h"
+#include "FileDescriptors.h"
+#include "shm_read_write.h"
+
+using namespace std;
+
+typedef struct _sockets {
+    /* Receiver sockets */
+    int sockLTE_RECEIVER;
+    int sockWiFi_RECEIVER;
+    struct sockaddr_in ServerLTE_RECEIVER;
+    struct sockaddr_in ServerWiFi_RECEIVER;
+
+    /* Transmitter sockets */
+    int sockLTE_TRANSMITTER;
+    int sockWiFi_TRANSMITTER;
+    struct sockaddr_in ClientLTE_TRANSMITTER;
+    struct sockaddr_in ClientWiFi_TRANSMITTER;
+
+    /* Execution timing variable */
+    int packet_count_LTE;
+    int packet_count_WiFi;
+    int fail_count_LTE;
+    int fail_count_WiFi;
+    long double Execution_Sum_LTE;
+    long double Execution_Sum_WiFi;
+    int STOP_LTE;
+    int STOP_WiFi;
+
+} Sockets;
 
 /* Troubleshooting Options */
-int print_COMMANDS = 0;
+int print_COMMANDS = 1;
 
 /* Define buffers & PORT number */
 #define BUFFER 1024
+#define SHM_BUFFER 1024
 char message[BUFFER];
 char curr_time[128];
 char *curr_timeLTE;
@@ -37,15 +72,23 @@ int bindLTE, bindWiFi;
 int RX_LTE, RX_WiFi;
 int TX_LTE, TX_WiFi;
 
+char temp_msg[BUFFER];
+
 /* Define threads */
 pthread_t T1, T2;
+
+// std::ofstream File;
+
+// File shit
+FILE *fp1;
+FILE *fp2;
 
 /* Function to create receiver sockets */
 void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
     /* Time struct for socket timeout */
     struct timeval tv2;
-    tv2.tv_sec = 0;
-    tv2.tv_usec = 500000;
+    tv2.tv_sec = 5;
+    tv2.tv_usec = 0;
 
     /* Create socket receiver */
     sock->sockLTE_RECEIVER = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -56,8 +99,10 @@ void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *
     /* Setting up socket options & specifying interface for receiver */
     setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
     setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
-    // setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
-    // setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
+    
+    /* Setting up socket timeout */
+    setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
+    setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
 
     /* Error checking */
     if (sock->sockLTE_RECEIVER == -1) {
@@ -148,14 +193,36 @@ int generate(int Min, int Max) {
 
 /* Function to receive LTE packets */
 void *receiveLTE(void *socket) {
-    while (1) {
-        Sockets *sock = (Sockets *)socket;
-        const char *COMMANDS_KEY = "COMMANDS_KEY";
-        unsigned int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
+    Sockets *sock = (Sockets *)socket;
+    unsigned int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
 
-        printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
+    /* Execution time variables */
+    struct timespec begin, end;
+    unsigned long seconds = 0;
+    unsigned long nanoseconds = 0;
+    double elapsed = 0;
+
+    sock->packet_count_LTE = 0;
+    sock->fail_count_LTE = 0;
+    sock->Execution_Sum_LTE = 0;
+    sock->STOP_LTE = 0;
+
+    while (sock->STOP_LTE != 1) {
+        // printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
         RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
+        // printf("RX_LTE: %d\n", RX_LTE);
+        if (RX_LTE == -1) {
+            sock->STOP_LTE = 1;
+            return 0;
+        } else {
+            sock->STOP_LTE = 0;
+            // printf("Do I reach this if RX_LTE != -1?\n");
+        }
         Timestamp();
+
+        fp1 = fopen("Logs/log.txt", "a+");
+        fprintf(fp1, "%s %s %s\n", message, curr_time, "LTE");
+        fclose(fp1);
 
         if (print_COMMANDS == 1) {
             // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
@@ -163,26 +230,96 @@ void *receiveLTE(void *socket) {
             printf("LTE || Message: %s from Control Unit \n\n", message);
         }
 
-        shm_write(message, 32, COMMANDS_KEY);
+        FileProcess1 = fopen("Logs/processed_commands.txt", "a+");
+
+        /* Start timing code execution of code */
+        clock_gettime(CLOCK_REALTIME, &begin);
+
+        char *Coordinates = processData(message);
+        fprintf(FileProcess1, "%s\n", Coordinates);
+
+        /* Stop timing code execution of code */
+        clock_gettime(CLOCK_REALTIME, &end);
+
+        fclose(FileProcess1);
+
+        seconds = end.tv_sec - begin.tv_sec;
+        nanoseconds = end.tv_nsec - begin.tv_nsec;
+
+        /* Calculation of elapsed time sum */
+        elapsed = seconds + nanoseconds * 1e-9;
+        if (elapsed > 10000) {
+            sock->fail_count_LTE++;
+            elapsed = 0;
+        }
+        sock->Execution_Sum_LTE += elapsed;
+        sock->packet_count_LTE++;
     }
+    return 0;
 }
 
 /* Function to receive WiFi packets */
 void *receiveWiFi(void *socket) {
-    while (1) {
-        Sockets *sock = (Sockets *)socket;
-        const char *COMMANDS_KEY = "COMMANDS_KEY";
-        unsigned int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
+    Sockets *sock = (Sockets *)socket;
+    unsigned int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
 
-        printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
+    /* Execution time variables */
+    struct timespec begin, end;
+    unsigned long seconds = 0;
+    unsigned long nanoseconds = 0;
+    double elapsed = 0;
+
+    sock->packet_count_WiFi = 0;
+    sock->fail_count_WiFi = 0;
+    sock->Execution_Sum_WiFi = 0;
+    sock->STOP_WiFi = 0;
+
+    while (sock->STOP_WiFi != 1) {
+        // printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
+        // printf("RX_WiFi: %d\n", RX_LTE);
+        if (RX_WiFi == -1) {
+            sock->STOP_WiFi = 1;
+            return 0;
+        } else {
+            sock->STOP_WiFi = 0;
+            // printf("Do I reach this if RX_WiFi != -1?\n");
+        }
         Timestamp();
+
+        fp2 = fopen("Logs/log.txt", "a+");
+        fprintf(fp2, "%s %s %s\n", message, curr_time, "WiFi");
+        fclose(fp2);
 
         if (print_COMMANDS == 1) {
             // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
             printf("WiFi || Message from WiFi received at: %s \n", curr_time);
             printf("WiFi || Message: %s from Control Unit \n\n", message);
         }
-        shm_write(message, 32, COMMANDS_KEY);
+
+        FileProcess2 = fopen("Logs/processed_commands.txt", "a+");
+
+        /* Start timing code execution of code */
+        clock_gettime(CLOCK_REALTIME, &begin);
+
+        char *Coordinates = processData(message);
+        fprintf(FileProcess2, "%s\n", Coordinates);
+
+        /* Stop timing code execution of code */
+        clock_gettime(CLOCK_REALTIME, &end);
+        fclose(FileProcess2);
+
+        seconds = end.tv_sec - begin.tv_sec;
+        nanoseconds = end.tv_nsec - begin.tv_nsec;
+
+        /* Calculation of elapsed time sum */
+        elapsed = seconds + nanoseconds * 1e-9;
+        if (elapsed > 10000) {
+            sock->fail_count_WiFi++;
+            elapsed = 0;
+        }
+        sock->Execution_Sum_WiFi += elapsed;
+        sock->packet_count_WiFi++;
     }
+    return 0;
 }

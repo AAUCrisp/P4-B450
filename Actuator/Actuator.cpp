@@ -21,27 +21,29 @@
 #include <cassert>
 #include <fstream>
 #include <iomanip>
-#include <iostream>
 #include <sstream>
 #include <string>
 
-#include "Headers/ActuatorFunctions.cpp"
+//#include "Headers/ActuatorFunctions.cpp"
+#include <iostream>
+
+#include "Headers/ActuatorFunctions.h"
 #include "Headers/SocketFunctions.h"
-#include "Headers/shm_read.c"
+#include "Headers/shm_read_write.h"
 
 using namespace std;
 
+#define SHM_BUFFER 100
+#define BILLION 1000000000.0
+
 // THIS FUNCTION OPENS CHILD PROGRAM!!!
+/*
 template <std::size_t N>
 int execvp(const char* file, const char* const (&argv)[N]) {
     assert((N > 0) && (argv[N - 1] == nullptr));
 
     return execvp(file, const_cast<char* const*>(argv));
-}
-
-void* DoSomething(void* arg) {
-    pthread_exit(NULL);
-}
+}*/
 
 int main() {
     printf("==================\nActuator Process Started\n==================\n\n");
@@ -50,82 +52,97 @@ int main() {
     pthread_t T1, T2;
     char* curr_time;
     int* Processed_Data;
+    int iter = 1000000;
 
     /* Execution time variables */
-    int count = 0;
-    int fail_count = 0;
-    int iter = 100000;
-    long double Execution_Time[iter];
-    long double Execution_Temp = 0;
-    long double Execution_Sum = 0;
+    struct timespec begin_program, end_program;
+    unsigned long seconds = 0;
+    unsigned long nanoseconds = 0;
     long double Execution_Average = 0;
-    clock_t Time_Started;
-    clock_t Time_Ended;
-    clock_t Clock_Start;
-    clock_t Clock_End;
 
     /* Shared memory object variables */
     const char* COMMANDS_KEY = "COMMANDS_KEY";
     char* COMMANDS;
     char msg[1024];
 
-    /* Create child process */
-    pid_t Actuator_monitor;     // Prepare the process ID for monitoring
-    Actuator_monitor = fork();  // Starts new process
+    const char* stop_key = "STOP_KEY";
+    char* stopshit;
 
+    /* Initialize PORT & INTERFACE*/
+    uint PORT_LTE_RECEIVER = 9004;
+    uint PORT_WiFi_RECEIVER = 9005;
+    // const char* LTE = "wwan0";
+    // const char* WiFi = "wlan0";
+    const char* LTE = "lo";
+    const char* WiFi = "enp0s3";
+
+    /* Create sockets */
+    Sockets sock;
+    Sockets_Receiver(&sock, PORT_LTE_RECEIVER, PORT_WiFi_RECEIVER, LTE, WiFi);
+    printf("sockLTE_RECEIVER (OUTSIDE): %d\n", sock.sockLTE_RECEIVER);
+    printf("sockWiFi_RECEIVER (OUTSIDE): %d\n\n", sock.sockWiFi_RECEIVER);
+
+    /* Create child process */
+    pid_t Actuator_monitor;  // Prepare the process ID for monitoring
+    // Actuator_monitor = fork();  // Starts new process
+
+    /* Checks if child process is running */
     if (Actuator_monitor == 0) {
         printf("Parent process ID: %d \n", getppid());
         printf("Actuator monitoring process ID is: %d \n", getpid());
         char path[] = "./ActuatorMonitoring";
         const char* args[] = {"./ActuatorMonitoring", NULL};
-        // execvp(path, args);
+        // execvp(path, (char* const*)args);
 
     } else {
-        Time_Started = clock();
-        while (1) {
-            
-            pthread_create(&T1, NULL, DoSomething, NULL);       // Start a Thread that closes a Thread... and just that...
+        sock.packet_count_LTE = 0;
+        sock.packet_count_WiFi = 0;
+        cout << "packet count LTE: " << sock.packet_count_LTE << endl;
+        cout << "packet count WiFi: " << sock.packet_count_WiFi << endl;
 
-            COMMANDS = (char*)shm_read(32, COMMANDS_KEY);
-            //printf("COMMANDS from shared memory: %s\n", COMMANDS);
+        /* Start timing all code */
+        clock_gettime(CLOCK_REALTIME, &begin_program);
 
-            snprintf(msg, sizeof(msg), "%s", COMMANDS);
+        /* Receive commands threads */
+        pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
+        receiveWiFi(&sock);
 
-            Clock_Start = clock();
-            processData(COMMANDS);
-            Clock_End = clock();
-            Execution_Time[count] = (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
-
-            if (Execution_Time[count] > 10000) {
-                fail_count++;
-                //printf("Execution_Time[%d]: %f\n", count, (double)Execution_Time[count]);
-                Execution_Time[count] = 0;
-            } else {
-                //printf("Execution_Time[%d]\n", count);
-                // printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
-                Execution_Sum += Execution_Time[count];
-                count++;
-            }
-            //printf("count: %d\n", count);
-            if (count == iter) {
-                break;
-            }
-        }
-        Time_Ended = clock();
-
-        long timestamp = (long)(Time_Ended - Time_Started);
-        long milliseconds = (long)(timestamp / 1000) % 1000;
-        long seconds = (((long)(timestamp / 1000) - milliseconds) / 1000) % 60;
-        long minutes = (((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) % 60;
-        long hours = ((((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) - minutes) / 60;
-
-        Execution_Average = Execution_Sum / iter;
-        printf("\n\n===================================\n\n");
-        printf("Execution_Sum: %Lf\n", Execution_Sum);
-        printf("Execution average: %Lf s\n", Execution_Average);
-        printf("Total time: %ld\n", (Time_Ended - Time_Started));
-        printf("Total_Time_Elapsed [HH:MM:SS.MS]: %ld:%ld:%ld.%ld\n", hours, minutes, seconds, milliseconds);
-        printf("Total failed counts: %d\n", fail_count);
-        printf("\n===================================\n\n");
+        cout << "NEW packet count LTE: " << sock.packet_count_LTE << endl;
+        cout << "NEW packet count WiFi: " << sock.packet_count_WiFi << endl;
     }
+
+    /* Stop timing all code */
+    clock_gettime(CLOCK_REALTIME, &end_program);
+
+    /* Calculation of total time execution */
+    double time_spent = ((end_program.tv_sec - begin_program.tv_sec) +
+                         (end_program.tv_nsec - begin_program.tv_nsec) / BILLION) -
+                        5;
+
+    /* Conversion of time spent to HH:MM:SS.MS */
+    long hours = (long)time_spent / 3600;
+    long minutes = ((long)time_spent / 60) % 60;
+    long seconds2 = (long)time_spent % 60;
+    long milliseconds = (long)(time_spent * 1000) % 1000;
+
+    /* Calculation of execution average */
+    Execution_Average = (sock.Execution_Sum_WiFi + sock.Execution_Sum_LTE) / (sock.packet_count_WiFi + sock.packet_count_LTE);
+
+    printf("\n\n===================================\n\n");
+    printf("Execution time sums:\n");
+    printf("    Total Execution Sum:     %Lf sec\n", (sock.Execution_Sum_LTE+sock.Execution_Sum_WiFi));
+    printf("     WiFi Execution Sum:     %Lf sec\n", sock.Execution_Sum_WiFi);
+    printf("      LTE Execution Sum:     %Lf sec\n\n", sock.Execution_Sum_LTE);
+    printf("Execution time average: \n");
+    printf("    Total Execution average: %Lf sec\n\n", Execution_Average);
+    printf("Total program time: \n");
+    printf("    Total time: %f sec\n", time_spent);
+    printf("________________________\n\n");
+    printf("Total Time:  \n            Hours: %ld  \n          Minutes: %ld  \n          Seconds: %ld \n     Milliseconds: %ld\n", hours, minutes, seconds2, milliseconds);
+    printf("________________________\n\n");
+    printf("Total failed counts via WiFi:       %d\n", sock.fail_count_WiFi);
+    printf("Total failed counts via LTE:        %d\n", sock.fail_count_LTE);
+    printf("Total packets received via WiFi:    %d\n", sock.packet_count_WiFi);
+    printf("Total packets received via LTE:     %d\n", sock.packet_count_LTE);
+    printf("\n===================================\n\n");
 }

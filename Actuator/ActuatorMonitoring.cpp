@@ -17,8 +17,9 @@
 #include <time.h>
 #include <unistd.h>
 
+#include <iostream>
+
 #include "Headers/SocketFunctions.h"
-#include "Headers/shm_write_read.h"
 
 int main() {
     printf("==================\nActuator Monitoring Process Started\n==================\n\n");
@@ -28,9 +29,11 @@ int main() {
     uint PORT_WiFi_RECEIVER = 9005;
     const char* LTE = "wwan0";
     const char* WiFi = "wlan0";
+    //const char* LTE = "lo";
+    //const char* WiFi = "lo";
 
     /* Misc */
-    pthread_t T1, T2;
+    pthread_t T1;
 
     /* Message char */
     char* msg[32];

@@ -11,6 +11,8 @@ typedef struct _sockets {
     int sockWiFi_RECEIVER;
     struct sockaddr_in ServerLTE_RECEIVER;
     struct sockaddr_in ServerWiFi_RECEIVER;
+    int RX_LTE;
+    int RX_WiFi;
 
     /* Transmitter sockets*/
     int sockLTE_TRANSMITTER;
@@ -23,6 +25,17 @@ typedef struct _sockets {
     int act_WiFi;
     struct sockaddr_in Client_act_LTE;
     struct sockaddr_in Client_act_WiFi;
+
+    /* Execution timing variable */
+    int packet_count_LTE;
+    int packet_count_WiFi;
+    int fail_count_LTE;
+    int fail_count_WiFi;
+    long double Execution_Sum_LTE;
+    long double Execution_Sum_WiFi;
+    int STOP_LTE;
+    int STOP_WiFi;
+
 } Sockets;
 
 typedef struct _time_struct{
@@ -52,10 +65,10 @@ void *receiveWiFi(void *socket);
 void *receive_data();
 
 /* Function to transmit LTE packets */
-void *transmit_GSV_LTE(void *socket);
+void transmit_GSV_LTE(void *socket, char *gsv);
 
 /* Function to transmit WiFi packets */
-void *transmit_GSV_WiFi(void *socket);
+void transmit_GSV_WiFi(void *socket, char *gsv);
 
 /* Function to transmit LTE packets */
 void *transmit_command_LTE(void *socket, char* message);
@@ -64,7 +77,7 @@ void *transmit_command_LTE(void *socket, char* message);
 void *transmit_command_WiFi(void *socke, char* message);
 
 /* Function to transmit WiFi packets */
-void *transmit_command(void *socket, char* message);
+void *transmit_command(void *socket, char* message, int gsv);
 
 /* Function to timestamp packets */
 char *Timestamp();

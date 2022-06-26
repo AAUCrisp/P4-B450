@@ -1,24 +1,3 @@
-// #include <arpa/inet.h>
-// #include <errno.h>
-// #include <fcntl.h>
-// #include <math.h>
-// #include <netinet/in.h>
-// #include <pthread.h>
-// #include <stdio.h>
-// #include <stdlib.h>
-// #include <string.h>
-// #include <sys/ipc.h>  //IPC thing
-// #include <sys/mman.h>
-// #include <sys/sem.h>
-// #include <sys/shm.h>  //SHM thing
-// #include <sys/socket.h>
-// #include <sys/stat.h>
-// #include <sys/time.h>
-// #include <sys/types.h>
-// #include <sys/wait.h>
-// #include <time.h>
-// #include <unistd.h>
-
 #ifndef LIBRARIES
 #define LIBRARIES
 #include "Libraries.c"  // File with all our includes
@@ -27,18 +6,19 @@
 #define FUNCTIONS
 #include "Headers/Functions.c"
 #endif
-// #include "Headers/Functions.c"
+
 #include "Headers/SocketFunctions.h"
-#include "Headers/shm_write_read.h"
+#include "Headers/shm_read_write.h"
 
 #define BUFFER 64
+#define BILLION 1000000000.0
 
 int main(int argc, char* argv[]) {
     // int both_tech = 0;
     // int monitor = 1;
     // int iter = 10000;
 
-    printf("\n==================\nSensor Program Started\n==================\n\n");
+    printf("\n=======================\nSensor Program Started\n=======================\n\n");
 
     // if (argc <= 1) {}
 
@@ -68,32 +48,31 @@ int main(int argc, char* argv[]) {
     /* Initialize PORT & INTERFACE*/
     uint PORT_LTE_TRANSMITTER = 9000;
     uint PORT_WiFi_TRANSMITTER = 9001;
-    const char* LTE = "wwan0";
-    const char* WiFi = "wlan0";
-    const char* IP_LTE = "10.20.0.16";  // Default: IP of Control Unit
-    // const char* IP_LTE = "10.20.0.13";      // IP of Actuator
-    // const char* IP_LTE = "10.20.0.10";      // IP of Sensor
-    const char* IP_WiFi = "192.168.1.136";  // Default: IP of Control Unit
-    // const char* IP_WiFi = "192.168.1.143";  // IP of Actuator
-    // const char* IP_WiFi = "192.168.1.160";  // IP of Sensor
+    // const char* LTE = "wwan0";
+    // const char* WiFi = "wlan0";
+    // const char* IP_LTE = "10.20.0.16";  // Default: IP of Control Unit
+    // const char* IP_WiFi = "10.42.0.1";  // Default: IP of Control Unit (AP)
+    //   const char* IP_LTE = "10.20.0.13";      // IP of Actuator
+    //   const char* IP_LTE = "10.20.0.10";      // IP of Sensor
+    // const char* IP_WiFi = "192.168.1.136";  // Default: IP of Control Unit
+    //  const char* IP_WiFi = "192.168.1.143";  // IP of Actuator
+    //  const char* IP_WiFi = "192.168.1.160";  // IP of Sensor
 
-    /* Misc */
-    pthread_t T1, T2;
-    FILE* file;
-    char* curr_time;
+    const char* LTE = "lo";             // Test loopback
+    const char* WiFi = "lo";            // Test loopback
+    const char* IP_LTE = "127.0.0.1";   // Test loopback
+    const char* IP_WiFi = "127.0.0.1";  // Test loopback
+
+    /* misc */
+    pthread_t T1;
 
     /* Execution time variables */
+    int count = 0;
     int fail_count = 0;
-    long double Execution_Time[iter];
-    long double Execution_Temp = 0;
     long double Execution_Sum = 0;
     long double Execution_Average = 0;
-    clock_t Time_Started;
-    clock_t Time_Ended;
-    clock_t Clock_Start;
-    clock_t Clock_End;
 
-    struct timespec begin, end;
+    struct timespec begin, end, begin_program, end_program;
     unsigned long seconds = 0;
     unsigned long nanoseconds = 0;
     double elapsed = 0;
@@ -106,45 +85,70 @@ int main(int argc, char* argv[]) {
 
     /* Shared memory object variables */
     const char* GSV_KEY = "GSV_KEY";
-    const char* msg;
-    int SHM_BUFFER = 100000;
-
+    int* SHM_BUFFER[BUFFER];
     char buffer[BUFFER];
 
-    int GSV;
-    int B = 0;
-    int W = 1;
-    int L = 2;
+    char* gsv;
+    char* B = "0";
+    char* W = "1";
+    char* L = "2";
+
+    /* Check status of global variables */
+    printf("\n===================================\n");
+    printf("\nboth_tech: %d\n", both_tech);
+    printf("monitor: %d\n", monitor);
+    printf("iter: %d\n", iter);
+    printf("delay: %d\n", delay);
+    printf("GSV_default: %s\n", GSV_default);
+    printf("\n===================================\n\n");
 
     /* Create child process */
-    pid_t sensor_monitor;     // Prepare the process ID for monitoring
-    sensor_monitor = fork();  // Starts new process
+    // printf("both_tech: %d\n", both_tech);
+    pid_t sensor_monitor;  // Prepare the process ID for monitoring
+    printf("sensor_monitor default value:%d\n", sensor_monitor);
 
-    if (sensor_monitor == 0) {
+    if (monitor == 1) {
+        sensor_monitor = fork();  // Starts new process
+    }
+    printf("sensor_monitor value after fork():%d\n", sensor_monitor);
+
+    /* Checks if child process is running */
+    if (sensor_monitor == 0 && monitor == 1) {
+        printf("sensor_monitor value if child process is running:%d\n", sensor_monitor);
         printf("Parent process ID: %d \n", getppid());
         printf("Sensor monitoring process ID is: %d \n", getpid());
         char path[] = "./SensorMonitoring";
         char* args[] = {"./SensorMonitoring", NULL};
-        if (monitor == 1) {
-            execv(path, args);
-        }
-    } else {
-        // while (1) {
-        Time_Started = clock();
-        for (int i = 0; i < iter; i++) {
-            // Clock_Start = clock();
-            msg = shm_read(SHM_BUFFER, GSV_KEY);
-            GSV = atoi(msg);
+        // if (monitor == 1) {
+        execv(path, args);
+        printf("  ERROR: DIDN'T START THE MONITORING PROCESS!!\n");  // Should never get this far!
+        // }
 
-            // printf("\nSensor || GSV from shared memory: %s\n", msg);
+    } else {
+        // pthread_create(&T1, NULL, dummy, NULL);
+
+        /* Initialize SHM object reading */
+        gsv = shm_read(BUFFER, GSV_KEY);
+
+        /* Start timing all code */
+        clock_gettime(CLOCK_REALTIME, &begin_program);
+
+        while (1) {
+            // printf("\nSensor || GSV from shared memory: %s\n", (char*)gsv);
 
             // printf("\nGSV converted: %d\n", GSV);
             /*if (monitor == 1) {
             }*/
 
+            /* Start timing code execution of code */
             clock_gettime(CLOCK_REALTIME, &begin);
-            sprintf(buffer, "%d", generate(1, 25000000));
-            // printf("\nSensor || After Random Int Generation\n");
+
+            // With packet ID :
+            sprintf(buffer, "%d: %d", count, generate(1, 25000000));
+            // Without packet ID :
+            // sprintf(buffer, "%d", generate(1, 25000000));
+
+            printf("Packet ID + random int: %s\n", buffer);
 
             /*if (both_tech == 1) {
                 printf("\nSensor || Troubleshooting for Both Technologies\n");
@@ -152,123 +156,58 @@ int main(int argc, char* argv[]) {
             }*/
 
             // printf("Sensor || Before Transmitting\n");
-            usleep(1000);
-            if (GSV == B || GSV == L) {
+            if (strcmp(gsv, B) == 0 || strcmp(gsv, L) == 0) {
                 transmitLTE(&sock, (char*)buffer);
             }
 
-            if (GSV == B || GSV == W) {
+            if (strcmp(gsv, B) == 0 || strcmp(gsv, W) == 0) {
                 transmitWiFi(&sock, (char*)buffer);
             }
 
+            /* Stop timing code execution of code */
             clock_gettime(CLOCK_REALTIME, &end);
-            // Clock_End = clock();
 
             seconds = end.tv_sec - begin.tv_sec;
             nanoseconds = end.tv_nsec - begin.tv_nsec;
 
+            /* Calculation of elapsed time sum */
             elapsed = seconds + nanoseconds * 1e-9;
             if (elapsed > 10000) {
                 fail_count++;
+                elapsed = 0;
             }
-            Execution_Time[i] = elapsed;
-            if (Execution_Time[i] > 10000) {
-                Execution_Time[i] = 0;
-            } else {
-                Execution_Sum += Execution_Time[i];
+            Execution_Sum += elapsed;
+            count++;
+
+            if (count == iter) {
+                break;
             }
-
-            /* NEW WORKS
-                Execution_Time[i] = (double)(Clock_End - Clock_Start) / CLOCKS_PER_SEC;
-
-            if (Execution_Time[i] > 10000) {
-                fail_count++;
-                // printf("Execution_Time[%d]: %f\n", i, (double)Execution_Time[i]);
-                Execution_Time[i] = 0;
-            } else {
-                // printf("Execution_Time[%d]\n", i);
-                // printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
-                Execution_Sum += Execution_Time[i];
-            } */
-
-            /* Works */
-            /*
-            //clock_gettime(CLOCK_REALTIME, &end);
-
-            seconds = end.tv_sec - begin.tv_sec;
-            nanoseconds = end.tv_nsec - begin.tv_nsec;
-
-            elapsed = seconds + nanoseconds * 1e-9;
-            if (elapsed > 10000) {
-                fail_count++;
-               // printf("fail count: %d\n", fail_count);
-               // printf("Failed elapsed time: %f\n", elapsed);
-            } else {
-               // printf("\nelapsed time: %f\n", elapsed);
-            }
-            // sleep(5);
-            Execution_Time[i] = elapsed;
-            if (Execution_Time[i] > 10000) {
-               // printf("Failed Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
-                //sleep(1);
-                Execution_Time[i] = 0;
-               // printf("Forced Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
-                sleep(1);
-            } else {
-                printf("Execution_Time[%d]\n", i);
-                //printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
-            }
-            // sleep(5);
-            Execution_Sum += Execution_Time[i];
-            if (Execution_Sum > 10000) {
-                fail_count++;
-               // printf("fail count: %d\n", fail_count);
-               // printf("Failed Execution_Sum: %Lf\n", Execution_Sum);
-                //sleep(5);
-            } else {
-                //printf("Execution_Sum: %Lf\n", Execution_Sum);
-            }*/
+            usleep(delay);
         }
-        Time_Ended = clock();
+        /* Stop timing all code */
+        clock_gettime(CLOCK_REALTIME, &end_program);
 
-        long timestamp = (long)(Time_Ended - Time_Started);
-        long milliseconds = (long)(timestamp / 1000) % 1000;
-        long seconds = (((long)(timestamp / 1000) - milliseconds) / 1000) % 60;
-        long minutes = (((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) % 60;
-        long hours = ((((((long)(timestamp / 1000) - milliseconds) / 1000) - seconds) / 60) - minutes) / 60;
+        /* Calculation of total time execution */
+        double time_spent = (end_program.tv_sec - begin_program.tv_sec) +
+                            (end_program.tv_nsec - begin_program.tv_nsec) / BILLION;
 
+        /* Conversion of time spent to HH:MM:SS.MS */
+        long hours = (long)time_spent / 3600;
+        long minutes = ((long)time_spent / 60) % 60;
+        long seconds = (long)time_spent % 60;
+        long milliseconds = (long)(time_spent * 1000) % 1000;
+
+        /* Calculation of execution average */
         Execution_Average = Execution_Sum / iter;
+
         printf("\n\n===================================\n\n");
-        printf("Execution_Sum: %Lf\n", Execution_Sum);
-        printf("Execution average: %Lf s\n", Execution_Average);
-        printf("Total time: %ld\n", (Time_Ended - Time_Started));
-        printf("Total_Time_Elapsed [HH:MM:SS.MS]: %ld:%ld:%ld.%ld\n", hours, minutes, seconds, milliseconds);
+        printf("Execution Sum:     %Lf sec\n", Execution_Sum);
+        printf("Execution average: %Lf sec\n\n", Execution_Average);
+        printf("Total time: %f sec\n", time_spent);
+        printf("________________________\n");
+        printf("Total Time:  \n            Hours: %ld  \n          Minutes: %ld  \n          Seconds: %ld \n     Milliseconds: %ld\n", hours, minutes, seconds, milliseconds);
+        printf("________________________\n\n");
         printf("Total failed counts: %d\n", fail_count);
         printf("\n===================================\n\n");
-
-        //}
-        // Make a log file with execution time idiot
     }
 }
-
-/*
-            int shit = isnan(Execution_Time[i]);
-            if (shit == 0) {
-                // printf("isnan value: %d\n", isnan(Execution_Time[i]));
-                Execution_Time[i] += Execution_Temp;
-
-                if (Execution_Time[i] >= -1000000.0 || Execution_Time[i] <= 1000000.0) {
-                    Execution_Sum += Execution_Time[i];
-                } else if (Execution_Time[i] >= 10000000000.0000) {
-                    fail_count++;
-                    printf("Fail counter: %d\n", fail_count);
-                    printf("Execution_Time[%d]: %Lf\n", i, Execution_Time[i]);
-                    printf("Execution_Sum: %Lf\n", Execution_Time[i]);
-                    //  printf("Execution_Sum exceeded 10000000\n");
-                }
-            } else {
-                fail_count++;
-                // printf("Fail counter: %d\n", fail_count);
-                //  printf("isnan value: %d\n", isnan(Execution_Time[i]));
-                //  printf("Execution_Time[%d]: %f\n", i, Execution_Time[i]);
-            }*/

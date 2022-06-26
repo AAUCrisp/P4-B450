@@ -1,33 +1,18 @@
-
-#include <arpa/inet.h>
-#include <errno.h>
-#include <fcntl.h>
-#include <netinet/in.h>
-#include <pthread.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/ipc.h>  //IPC thing
-#include <sys/mman.h>
-#include <sys/shm.h>  //SHM thing
-#include <sys/socket.h>
-#include <sys/stat.h>
-#include <sys/time.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <time.h>
-#include <unistd.h>
+#ifndef LIBRARIES
+#define LIBRARIES
+#include "../Libraries.c"  // File with all our includes
+#endif
 
 #include "SocketFunctions.h"
-#include "shm_write_read.h"
+#include "shm_read_write.h"
 
 /* Troubleshooting Options */
-int print_GSV = 0;
+int print_GSV = 1;
 int print_out = 1;
 
 /* Define buffers & PORT number */
 #define BUFFER 1024
-#define SHM_BUFFER 100000
+#define SHM_BUFFER 100
 char message[BUFFER];
 char curr_time[128];
 char *curr_timeLTE;
@@ -41,6 +26,10 @@ int TX_LTE, TX_WiFi;
 
 /* Define threads */
 pthread_t T1, T2;
+
+/* File descriptor */
+FILE *fp1;
+FILE *fp2;
 
 /* Function to create receiver sockets */
 void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
@@ -148,12 +137,15 @@ int generate(int Min, int Max) {
     return number;
 }
 
-/* Function to receive LTE packets */
+/* Function to receive GSV via LTE */
 void *receiveLTE(void *socket) {
+    Sockets *sock = (Sockets *)socket;
+    const char *GSV_KEY = "GSV_KEY";
+    char *writer = shm_write(SHM_BUFFER, GSV_KEY);
+    int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
+    sprintf(writer, "%s", GSV_default);  // Default Value
+
     while (1) {
-        Sockets *sock = (Sockets *)socket;
-        const char *GSV_KEY = "GSV_KEY";
-        int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
         if (print_GSV == 1) {
             printf("GSV || LTE socket: %d\n", sock->sockLTE_RECEIVER);
         }
@@ -165,20 +157,23 @@ void *receiveLTE(void *socket) {
             printf("GSV || LTE || Message from LTE received at: %s\n", curr_time);
             printf("GSV || LTE || Message: %s from Control Unit \n\n", message);
         }
-        shm_write(message, SHM_BUFFER, GSV_KEY);
+        sprintf(writer, "%s", message);
     }
 }
 
-/* Function to receive WiFi packets */
+/* Function to receive GSV via WiFi */
 void *receiveWiFi(void *socket) {
-    while (1) {
-        Sockets *sock = (Sockets *)socket;
-        const char *GSV_KEY = "GSV_KEY";
-        int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
+    Sockets *sock = (Sockets *)socket;
+    const char *GSV_KEY = "GSV_KEY";
+    char *writer = shm_write(SHM_BUFFER, GSV_KEY);
+    int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
 
+    sprintf(writer, "%s", GSV_default);  // Default Value
+    while (1) {
         if (print_GSV == 1) {
             printf("GSV || WiFi socket: %d\n", sock->sockWiFi_RECEIVER);
         }
+
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
         Timestamp();
 
@@ -187,13 +182,16 @@ void *receiveWiFi(void *socket) {
             printf("GSV || WiFi || Message from WiFi received at: %s \n", curr_time);
             printf("GSV || WiFi || Message: %s from Control Unit \n\n", message);
         }
-        shm_write(message, SHM_BUFFER, GSV_KEY);
+        sprintf(writer, "%s", message);
     }
 }
 
 void *transmitLTE(void *socket, char *message) {
     Sockets *sock = (Sockets *)socket;
     char sendLTE[BUFFER];
+
+    /* Open logging file */
+    fp1 = fopen("Logs/log.txt", "a+");
 
     if (print_out == 1) {
         printf("Sensor || LTE socket: %d\n", sock->sockLTE_TRANSMITTER);
@@ -213,11 +211,16 @@ void *transmitLTE(void *socket, char *message) {
     if (print_out == 1) {
         printf("Sensor || LTE || Message transmitted at %s\n\n", curr_timeLTE);
     }
+    fprintf(fp1, "%s %s\n", sendLTE, "LTE");
+    fclose(fp1);
 }
 
 void *transmitWiFi(void *socket, char *message) {
     Sockets *sock = (Sockets *)socket;
     char sendWiFi[BUFFER];
+
+    /* Open logging file */
+    fp2 = fopen("Logs/log.txt", "a+");
 
     if (print_out == 1) {
         printf("Sensor || WiFi socket: %d\n", sock->sockLTE_TRANSMITTER);
@@ -237,4 +240,6 @@ void *transmitWiFi(void *socket, char *message) {
     if (print_out == 1) {
         printf("Sensor || WiFi || Message transmitted at %s\n\n", curr_timeWiFi);
     }
+    fprintf(fp2, "%s %s\n", sendWiFi, "WiFi");
+    fclose(fp2);
 }

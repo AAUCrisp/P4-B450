@@ -8,7 +8,7 @@ void Argument_Setup(int argc, char* argv[]) {
         // Iteration Setup
         if (strcmp(argv[i], (char*)"-i") == 0 || strcmp(argv[i], (char*)"-iterations") == 0) {
             iter = atoi(argv[i + 1]);
-
+            i++;
             printf("\nNumber of Iterations is set to: %d\n", iter);
         }
         if (strcmp(argv[i], (char*)"-b") == 0 || strcmp(argv[i], (char*)"-both") == 0) {
@@ -18,6 +18,18 @@ void Argument_Setup(int argc, char* argv[]) {
         if (strcmp(argv[i], (char*)"-m") == 0 || strcmp(argv[i], (char*)"-monitor") == 0 || strcmp(argv[i], (char*)"-monitoring") == 0) {
             monitor = 0;
             printf("\nMonitoring Disabled\n");
+        }
+        if (strcmp(argv[i], (char*)"-d") == 0 || strcmp(argv[i], (char*)"-delay") == 0 || strcmp(argv[i], (char*)"-monitoring") == 0) {
+            if(argv[i+1]) {
+                delay = atoi(argv[i + 1]);
+                printf("\nDelay Changed to %d ms\n", delay);
+                i++;
+            }
+            else {
+                printf("\nInvalid/Missing Argument for Delay\n");
+
+            }
+            
         }
     }
 }
