@@ -176,6 +176,9 @@ void *receiveLTE(void *socket) {
         printf("\n\n  Incoming || LTE (Sensor) || Receive Socket: %d\n", sock->sockLTE_RECEIVER);
     }
     sock->RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message_LTE, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
+    if (sock->RX_LTE == -1) {
+        return 0;
+    }
     Timestamp();
 
     /* Open logging file */
@@ -190,8 +193,6 @@ void *receiveLTE(void *socket) {
     }
     sscanf((const char *)message_LTE, "%d %[^\n]", &sensor_int, msg_time);
 
-
-
     return message_LTE;
 }
 
@@ -200,11 +201,13 @@ void *receiveWiFi(void *socket) {
     Sockets *sock = (Sockets *)socket;
     unsigned int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
 
-
     if (print_sen_in == 1) {
         printf("\n\n  Incoming || WiFi (Sensor) || Receive Socket: %d\n", sock->sockWiFi_RECEIVER);
     }
     sock->RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message_WiFi, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
+    if (sock->RX_WiFi == -1) {
+        return 0;
+    }
     Timestamp();
 
     /* Open logging file */
@@ -217,7 +220,6 @@ void *receiveWiFi(void *socket) {
         printf("  Incoming || WiFi (Sensor) || Message received at: %s \n\n", curr_time);
     }
     sscanf((const char *)message_WiFi, "%d %[^\n]", &sensor_int, msg_time);
-
 
     return message_WiFi;
 }
