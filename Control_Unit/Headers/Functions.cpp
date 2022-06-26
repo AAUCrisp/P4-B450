@@ -85,7 +85,7 @@ void WiFi_command(Sockets sock) {
         fp3 = fopen("Logs/commands_log.txt", "a+");
         fprintf(fp3, "%s %s %s\n", WiFimsg, timeWiFi, "WiFi");
         fclose(fp3);
-        printf("==========\nRX_WiFi: %d\n==========\n", sock->RX_WiFi);
+        printf("==========\nRX_WiFi: %d\n==========\n", sock.RX_WiFi);
     }
 }
 
