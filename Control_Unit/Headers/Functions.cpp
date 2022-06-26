@@ -108,6 +108,7 @@ void WiFi_command(Sockets sock) {
 
 void* LTE_command(void* socket) {
     Sockets* sock = (Sockets*)socket;
+    printf("LTE_command socket: %d\n", sock->act_LTE);
     void* message;
     char msgDump[32];
     char tempMsg[32];
@@ -187,6 +188,7 @@ void* LTE_command(void* socket) {
         printf("tempMsg: %s\n", tempMsg);
         if (strcmp(tempMsg, coordinate.c_str()) == 0) {
             printf("LTE stepbro23 ????\n");
+            Socket* fixsocket = 
             printf("Actuator Socket LTE: %d\n", sock->act_LTE);
         } else if (strcmp(tempMsg, coordinate.c_str()) != 0) {
             strcpy(tempMsg, coordinate.c_str());
