@@ -360,8 +360,8 @@ void *transmit_command_LTE(void *socket, char *message) {
         printf("\n\n  Sending || LTE (Actuator) || Actuator Socket: %d\n", sock->act_LTE);
     }
     sscanf((char *)message, "%s %s", msgID, msgCoords);
-    printf("ID: %d\n", msgID);
-    printf("data: %d\n", dmsgCoords);
+    printf("ID: %s\n", msgID);
+    printf("data: %s\n", dmsgCoords);
 
     TX_LTE = sendto(sock->act_LTE, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_LTE, LenLTE);
     send_time = Timestamp();
@@ -385,8 +385,8 @@ void *transmit_command_WiFi(void *socket, char *message) {
         printf("\n\n  Sending || WiFi (Actuator) || Actuator Socket: %d\n", sock->act_WiFi);
     }
     sscanf((char *)message, "%s %s", msgID, msgCoords);
-    printf("ID: %d\n", msgID);
-    printf("data: %d\n", dmsgCoords);
+    printf("ID: %s\n", msgID);
+    printf("data: %s\n", dmsgCoords);
 
     TX_WiFi = sendto(sock->act_WiFi, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_WiFi, LenWiFi);
     send_time = Timestamp();
