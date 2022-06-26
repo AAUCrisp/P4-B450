@@ -386,7 +386,7 @@ void *transmit_command_WiFi(void *socket, char *message) {
     }
     sscanf((char *)message, "%s %s", msgID, msgCoords);
     printf("ID: %s\n", msgID);
-    printf("data: %s\n", dmsgCoords);
+    printf("data: %s\n", msgCoords);
 
     TX_WiFi = sendto(sock->act_WiFi, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_WiFi, LenWiFi);
     send_time = Timestamp();
