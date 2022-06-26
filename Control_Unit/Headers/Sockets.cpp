@@ -49,6 +49,8 @@ typedef struct _sockets {
     int act_WiFi;
     struct sockaddr_in Client_act_LTE;
     struct sockaddr_in Client_act_WiFi;
+    int len_act_LTE = sizeof(Client_act_LTE);
+    int len_act_WiFi = sizeof(Client_act_WiFi);
 
     /* Execution timing variable */
     int packet_count_LTE;
@@ -371,7 +373,7 @@ void *transmit_command_LTE(int socketvalue, char *message) {
     //  strcpy(tempmsgCoordsLTE2, msgCoords);
 
     // if (strcmp(tempmsgCoordsLTE, msgCoords) != 0 || strcmp(tempmsgCoordsLTE2, msgCoords) != 0) {
-    TX_LTE = sendto(socketvalue, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_LTE, sizeof(sock->Client_act_LTE));
+    TX_LTE = sendto(socketvalue, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_LTE, sock->len_act_LTE);
     send_time = Timestamp();
     // strcpy(tempmsgCoordsLTE, msgCoords);
     // printf("INSIDE tempmsgCoordsLTE: %s\n", tempmsgCoordsLTE);
