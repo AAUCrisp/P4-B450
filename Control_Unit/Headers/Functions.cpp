@@ -91,18 +91,17 @@ void WiFi_command(Sockets sock) {
             printf("WIFI Am I stuck in here?\n");
             printf("tempMsg == WiFimsg\n");
             printf("%s = %s\n", tempMsg, WiFimsg);
-        } else {
-            printf("WIFI stepbro ????\n");
-            transmit_command(&sock, WiFimsg, gsv);
-            // transmit_command(sock.act_WiFi, WiFimsg, gsv);
-            char* timeWiFi = Timestamp();
-            printf("\n\nActuator Socket WiFi: %d\n", sock.act_WiFi);
-
-            /* Writing to logging file */
-            fp3 = fopen("Logs/commands_log.txt", "a+");
-            fprintf(fp3, "%s %s %s\n", WiFimsg, timeWiFi, "WiFi");
-            fclose(fp3);
         }
+        printf("WIFI stepbro ????\n");
+        transmit_command(&sock, WiFimsg, gsv);
+        // transmit_command(sock.act_WiFi, WiFimsg, gsv);
+        char* timeWiFi = Timestamp();
+        printf("\n\nActuator Socket WiFi: %d\n", sock.act_WiFi);
+
+        /* Writing to logging file */
+        fp3 = fopen("Logs/commands_log.txt", "a+");
+        fprintf(fp3, "%s %s %s\n", WiFimsg, timeWiFi, "WiFi");
+        fclose(fp3);
     }
 }
 
@@ -191,18 +190,17 @@ void* LTE_command(void* socket) {
             printf("LTE Am I stuck in here?\n");
             printf("tempMsg == LTEmsg\n");
             printf("%s = %s\n", tempMsg, LTEmsg);
-        } else {
-            printf("LTE stepbro ????\n");
-            transmit_command(&sock, LTEmsg, gsv);
-            // transmit_command(sock->act_LTE, LTEmsg, gsv);
-            char* timeLTE = Timestamp();
-            printf("\n\nActuator Socket LTE: %d\n", sock->act_LTE);
-
-            /* Writing to logging file */
-            fp4 = fopen("Logs/commands_log.txt", "a+");
-            fprintf(fp4, "%s %s %s\n", LTEmsg, timeLTE, "LTE");
-            fclose(fp4);
         }
+        printf("LTE stepbro ????\n");
+        transmit_command(&sock, LTEmsg, gsv);
+        // transmit_command(sock->act_LTE, LTEmsg, gsv);
+        char* timeLTE = Timestamp();
+        printf("\n\nActuator Socket LTE: %d\n", sock->act_LTE);
+
+        /* Writing to logging file */
+        fp4 = fopen("Logs/commands_log.txt", "a+");
+        fprintf(fp4, "%s %s %s\n", LTEmsg, timeLTE, "LTE");
+        fclose(fp4);
     }
 }
 
