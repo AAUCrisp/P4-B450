@@ -190,8 +190,11 @@ void* LTE_command(void* socket) {
         } else if (strcmp(tempMsg, coordinate.c_str()) != 0) {
             strcpy(tempMsg, coordinate.c_str());
             printf("LTE Am I stuck in here?\n");
-            printf("Actuator Socket LTE: %d\n", sock->act_LTE);
-            printf("tempMsg == LTEmsg\n");
+            printf("\nActuator Socket LTE: %d\n", sock->act_LTE);
+            printf("Actuator Socket length LTE: %d\n", sock->len_act_LTE);
+            cout << "struct sockaddr_in Client_act_LTE:" << sock->Client_act_LTE << endl;
+            cout << "int act_LTE:" << sock->act_LTE << endl;
+            printf("\ntempMsg == LTEmsg\n");
             printf("%s = %s\n", tempMsg, LTEmsg);
         }
             int testsocketvalue = sock->act_LTE;
