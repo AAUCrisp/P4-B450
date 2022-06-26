@@ -443,8 +443,8 @@ void *transmit_command_WiFi(void *socket, char *message) {
     if (print_act_out == 1) {
         cout << "  ======================\n  ==== SEND COMMAND ====\n  ======= entry ========\n"
              << endl;
-        printf("\n\n  Sending || WiFi (Actuator) || Sockets in Transmit Command: %d\n", sock->act_WiFi);
-        printf("\n  Sending || LTE (Actuator) || Sockets in Transmit Command: %d\n", sock->act_LTE);
+        printf("\n\n  Sending || WiFi (Actuator) || Sockets in Transmit Command: %d\n", testsock->act_WiFi);
+        printf("\n  Sending || LTE (Actuator) || Sockets in Transmit Command: %d\n", testsock->act_LTE);
         cout << "\n  Sending || Mutual Transmit Function || Message passed to function: \n"
              << message << endl;
     }
@@ -458,13 +458,13 @@ void *transmit_command_WiFi(void *socket, char *message) {
         if (print_act_out == 1) {
         }
         cout << "  Sending || Transfer command via WiFi" << endl;
-        transmit_command_WiFi(sock, message);
+        transmit_command_WiFi(&testsock, message);
     }
     if ((gsv == 0) || (gsv == 2)) {
         if (print_act_out == 1) {
         }
         cout << "  Sending || Transfer command via LTE" << endl;
-        transmit_command_LTE(sock, message);
+        transmit_command_LTE(&testsock, message);
     }
     if (print_act_out == 1) {
         cout << "\n  ======== end ==========\n  ==== SEND COMMAND ====\n  ======================\n"
