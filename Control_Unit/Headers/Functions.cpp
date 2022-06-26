@@ -92,7 +92,7 @@ void WiFi_command(Sockets sock) {
             printf("tempMsg == WiFimsg\n");
             printf("%s = %s\n", tempMsg, WiFimsg);
         } else {
-            printf("WIFI Am I stuck here????\n");
+            printf("WIFI stepbro ????\n");
             transmit_command(&sock, WiFimsg, gsv);
             // transmit_command(sock.act_WiFi, WiFimsg, gsv);
             char* timeWiFi = Timestamp();
@@ -192,7 +192,7 @@ void* LTE_command(void* socket) {
             printf("tempMsg == LTEmsg\n");
             printf("%s = %s\n", tempMsg, LTEmsg);
         } else {
-            printf("LTE Am I stuck here????\n");
+            printf("LTE stepbro ????\n");
             transmit_command(&sock, LTEmsg, gsv);
             // transmit_command(sock->act_LTE, LTEmsg, gsv);
             char* timeLTE = Timestamp();
