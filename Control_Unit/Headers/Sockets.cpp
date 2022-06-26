@@ -440,7 +440,7 @@ void *transmit_command_WiFi(void *socket, char *message) {
 
 // Function to check GSV and transfer via chosen technologies
 // void *transmit_command(void *socket, char *message, int gsv) {
-void *transmit_command(int socketvalue, char *message, int gsv) {
+void *transmit_command(int socketvalue, int socketlength, char *message, int gsv) {
     // Sockets *testsock = (Sockets *)socket;
     // printf("\n\nINSIDE Actuator Socket WiFi: %d\n", testsock->act_WiFi);
     printf("INSIDE Actuator Socket LTE: %d\n", socketvalue);
@@ -467,7 +467,7 @@ void *transmit_command(int socketvalue, char *message, int gsv) {
         if (print_act_out == 1) {
         }
         cout << "  Sending || Transfer command via LTE" << endl;
-        transmit_command_LTE(socketvalue, message);
+        transmit_command_LTE(socketvalue, socketlength, message);
     }
     if (print_act_out == 1) {
         cout << "\n  ======== end ==========\n  ==== SEND COMMAND ====\n  ======================\n"
