@@ -355,7 +355,7 @@ void transmit_GSV_WiFi(void *socket, char *gsv) {
 // char tempmsgCoordsLTE[50];
 // char tempmsgCoordsLTE2[50];
 // void *transmit_command_LTE(void *socket, char *message) {
-void *transmit_command_LTE(int socketvalue, int socketlength, struct sockaddr *testID, char *message) {
+void *transmit_command_LTE(int socketvalue, int socketlength, struct sockaddr testID, char *message) {
     Sockets *sock;
     int LenLTE = sizeof(sock->Client_act_LTE);
     char msgID[100];
@@ -440,7 +440,7 @@ void *transmit_command_WiFi(void *socket, char *message) {
 
 // Function to check GSV and transfer via chosen technologies
 // void *transmit_command(void *socket, char *message, int gsv) {
-void *transmit_command(int socketvalue, int socketlength, struct sockaddr *testID, char *message, int gsv) {
+void *transmit_command(int socketvalue, int socketlength, struct sockaddr testID, char *message, int gsv) {
     // Sockets *testsock = (Sockets *)socket;
     // printf("\n\nINSIDE Actuator Socket WiFi: %d\n", testsock->act_WiFi);
     printf("INSIDE Actuator Socket LTE: %d\n", socketvalue);
