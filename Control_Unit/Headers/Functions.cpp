@@ -83,6 +83,8 @@ void WiFi_command(Sockets sock) {
                                    // printf("converted GSV: %s\n", (char*)GSV_read);
         if (strcmp(tempMsg, coordinate.c_str()) != 0) {
             strcpy(tempMsg, coordinate.c_str());
+            
+            transmit_command(&sock, WiFimsg, gsv);
             char* timeWiFi = Timestamp();
 
             /* Writing to logging file */
@@ -90,7 +92,6 @@ void WiFi_command(Sockets sock) {
             fprintf(fp3, "%s %s %s\n", WiFimsg, timeWiFi, "WiFi");
             fclose(fp3);
         } else {
-            transmit_command(&sock, WiFimsg, gsv);
             printf("tempMsg == WiFimsg\n");
         }
     }
@@ -173,6 +174,8 @@ void* LTE_command(void* socket) {
                                    // printf("converted GSV: %s\n", (char*)GSV_read);
         if (strcmp(tempMsg, coordinate.c_str()) != 0) {
             strcpy(tempMsg, coordinate.c_str());
+
+            transmit_command(&sock, LTEmsg, gsv);
             char* timeLTE = Timestamp();
 
             /* Writing to logging file */
@@ -180,7 +183,6 @@ void* LTE_command(void* socket) {
             fprintf(fp4, "%s %s %s\n", LTEmsg, timeLTE, "LTE");
             fclose(fp4);
         } else {
-            transmit_command(&sock, LTEmsg, gsv);
             printf("tempMsg == LTEmsg\n");
         }
     }
