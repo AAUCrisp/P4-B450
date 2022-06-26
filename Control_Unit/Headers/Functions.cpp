@@ -61,7 +61,9 @@ void WiFi_command(Sockets sock) {
         printf("WiFi - STOP_LTE: %d\n", sock.STOP_LTE);
         printf("WiFi - STOP_WiFi: %d\n", sock.STOP_WiFi);
         if (sock.RX_WiFi == -1) {
+            printf("LTE - Am I stuck here?1\n");
             pthread_exit(NULL);
+            printf("LTE - Am I stuck here?2\n");
         } else {
             sock.STOP_WiFi = 0;
         }
@@ -178,6 +180,7 @@ void* LTE_command(void* socket) {
                 if (sock->RX_WiFi == -1 && sock->RX_LTE == -1) {
                     break;
                     sock->STOP_LTE = 1;
+                    printf("LTE - Am I stuck here?\n");
                 }
             }
         } else {
