@@ -467,7 +467,7 @@ void *transmit_command(int socketvalue, int socketlength, struct sockaddr *testI
         if (print_act_out == 1) {
         }
         cout << "  Sending || Transfer command via LTE" << endl;
-        transmit_command_LTE(socketvalue, socketlength, &testID, message);
+        transmit_command_LTE(socketvalue, socketlength, testID, message);
     }
     if (print_act_out == 1) {
         cout << "\n  ======== end ==========\n  ==== SEND COMMAND ====\n  ======================\n"
