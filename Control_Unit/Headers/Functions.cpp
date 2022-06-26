@@ -94,7 +94,7 @@ void WiFi_command(Sockets sock) {
             printf("%s = %s\n", tempMsg, WiFimsg);
         }
         printf("WIFI stepbro ????\n");
-        transmit_command(&sock, WiFimsg, gsv);
+        //transmit_command(&sock, WiFimsg, gsv);
         // transmit_command(sock.act_WiFi, WiFimsg, gsv);
         char* timeWiFi = Timestamp();
         printf("\n\nActuator Socket WiFi: %d\n", sock.act_WiFi);
