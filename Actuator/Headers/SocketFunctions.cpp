@@ -284,7 +284,7 @@ void *receiveWiFi(void *socket) {
         printf("STOP_LTE: %d\n", sock->STOP_LTE);
         if (RX_WiFi == -1) {
             //sock->STOP_WiFi = 1;
-            sock->STOP_LTE++;
+            sock->STOP_LTE += 1;
             //return 0;
         } else {
             sock->STOP_WiFi = 0;
