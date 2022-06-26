@@ -191,16 +191,10 @@ void *receiveLTE(void *socket) {
     }
     sscanf((const char *)message_LTE, "%d %[^\n]", &sensor_int, msg_time);
 
-    // PRØV AT FJERNE LOGGING
-    // File.open("log.txt", std::ofstream::out | std::ofstream::app);
-    // File << "\n\n"
-    //     << sensor_int << ";" << msg_time << ";"
-    //     << "LTE Sensor: Received at time: " << curr_time << "\n";
-    // File.close();
-
     fprintf(fp1, "%s %s\n", message_LTE, "LTE");
     fclose(fp1);
 
+    printf("message_LTE: %s\n", message_LTE);
     return message_LTE;
 }
 
@@ -229,16 +223,10 @@ void *receiveWiFi(void *socket) {
     }
     sscanf((const char *)message_WiFi, "%d %[^\n]", &sensor_int, msg_time);
 
-    // PRØV AT FJERNE LOGGING
-    // File.open("log.txt", std::ofstream::out | std::ofstream::app);
-    // File << "\n\n"
-    //      << sensor_int << ";" << msg_time << ";"
-    //      << "WiFi Sensor: Received at Time" << curr_time << "\n";
-    // File.close();
-
     fprintf(fp2, "%s %s\n", message_WiFi, "WiFi");
     fclose(fp2);
 
+    printf("message_WiFi: %s\n", message_WiFi);
     return message_WiFi;
 }
 
