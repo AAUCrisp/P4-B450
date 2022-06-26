@@ -154,6 +154,7 @@ int main(int argc, char* argv[]) {
 
             // With packet ID :
             sprintf(buffer, "%d: %d", count, generate(1, 25000000));
+            count++;
             // Without packet ID :
             // sprintf(buffer, "%d", generate(1, 25000000));
 
@@ -192,7 +193,6 @@ int main(int argc, char* argv[]) {
                 elapsed = 0;
             }
             Execution_Sum += elapsed;
-            count++;
 
             if (count == iter) {
                 break;
