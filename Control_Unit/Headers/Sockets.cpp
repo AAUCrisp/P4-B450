@@ -380,7 +380,7 @@ void *transmit_command_LTE(void *socket, char *message) {
         printf("%s == %s\n", tempmsgCoords, msgCoords);
     }
 
-    return 0;
+    return 1;
 }
 
 // Function to transmit command via WiFi
@@ -414,7 +414,7 @@ void *transmit_command_WiFi(void *socket, char *message) {
         printf("%s == %s\n", tempmsgCoords, msgCoords);
     }
 
-    return 0;
+    return 1;
 }
 
 // Function to check GSV and transfer via chosen technologies
