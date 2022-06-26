@@ -193,7 +193,7 @@ void *receiveLTE(void *socket) {
     fprintf(fp1, "%s %s\n", message_LTE, "LTE");
     fclose(fp1);
 
-    if (message_LTE == "0") {
+    if (message_LTE == 0) {
         printf("message_LTE: %s\n", message_LTE);
     } else {
         return message_LTE;
@@ -228,7 +228,7 @@ void *receiveWiFi(void *socket) {
     fprintf(fp2, "%s %s\n", message_WiFi, "WiFi");
     fclose(fp2);
 
-    if (message_WiFi == "0") {
+    if (message_WiFi == 0) {
         printf("message_WiFi: %s\n", message_WiFi);
     } else {
         return message_WiFi;
