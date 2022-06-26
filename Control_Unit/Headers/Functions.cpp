@@ -56,19 +56,12 @@ void WiFi_command(Sockets sock) {
 
     while (sock.STOP_WiFi != 1) {
         message = (void*)receiveWiFi((void*)&sock);
-        printf("RX_LTE: %d\n", sock.RX_LTE);
-        printf("RX_WiFi: %d\n", sock.RX_WiFi);
-        printf("STOP_LTE: %d\n", sock.STOP_LTE);
-        printf("STOP_WiFi: %d\n", sock.STOP_WiFi);
+        printf("WiFi - RX_LTE: %d\n", sock.RX_LTE);
+        printf("WiFi - RX_WiFi: %d\n", sock.RX_WiFi);
+        printf("WiFi - STOP_LTE: %d\n", sock.STOP_LTE);
+        printf("WiFi - STOP_WiFi: %d\n", sock.STOP_WiFi);
         if (sock.RX_WiFi == -1) {
             pthread_exit(NULL);
-            /*
-            while (1) {
-                if (sock.RX_WiFi == -1 && sock.RX_LTE == -1) {
-                    pthread_exit(NULL);
-                    sock.STOP_WiFi = 1;
-                }
-            */
         } else {
             sock.STOP_WiFi = 0;
         }
@@ -176,13 +169,13 @@ void* LTE_command(void* socket) {
 
     while (sock->STOP_LTE != 1) {
         message = (void*)receiveLTE((void*)sock);
-        printf("RX_LTE: %d\n", sock->RX_LTE);
-        printf("RX_WiFi: %d\n", sock->RX_WiFi);
-        printf("STOP_LTE: %d\n", sock->STOP_LTE);
-        printf("STOP_WiFi: %d\n", sock->STOP_WiFi);
+        printf("LTE - RX_LTE: %d\n", sock->RX_LTE);
+        printf("LTE - RX_WiFi: %d\n", sock->RX_WiFi);
+        printf("LTE - STOP_LTE: %d\n", sock->STOP_LTE);
+        printf("LTE - STOP_WiFi: %d\n", sock->STOP_WiFi);
         if (sock->RX_LTE == -1) {
             while(1) {
-                if (RX_WiFi == -1 && RX_LTE == -1) {
+                if (sock->RX_WiFi == -1 && sock->RX_LTE == -1) {
                     break;
                     sock->STOP_LTE = 1;
                 }
