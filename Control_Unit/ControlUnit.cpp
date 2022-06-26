@@ -52,9 +52,9 @@ int main(int argc, char* argv[]) {
     //  const char* Actuator_IP_WiFi = "192.168.1.136";     // Control IP
     //  const char* Actuator_IP_WiFi = "192.168.1.160";     // Sensor IP
 
-    const char* Actuator_IP_LTE = "127.0.0.1";   // test loopback
+    const char* Actuator_IP_LTE = "192.168.0.134";   // test loopback
     const char* Actuator_IP_WiFi = "192.168.0.134";  // test loopback
-    const char* LTE = "lo";                      // test loopback
+    const char* LTE = "enp0s3";                      // test loopback
     const char* WiFi = "enp0s3";                 // test loopback
 
     /* Misc */

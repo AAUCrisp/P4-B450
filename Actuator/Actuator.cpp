@@ -79,7 +79,7 @@ int main() {
     uint PORT_WiFi_RECEIVER = 9005;
     // const char* LTE = "wwan0";
     // const char* WiFi = "wlan0";
-    const char* LTE = "lo";
+    const char* LTE = "enp0s3";
     const char* WiFi = "enp0s3";
 
     /* Create sockets */
