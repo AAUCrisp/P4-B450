@@ -195,6 +195,7 @@ void *receiveLTE(void *socket) {
     fclose(fp1);
 
     printf("message_LTE: %s\n", message_LTE);
+    printf("message_LTE: %d\n", message_LTE);
     return message_LTE;
 }
 
@@ -227,6 +228,7 @@ void *receiveWiFi(void *socket) {
     fclose(fp2);
 
     printf("message_WiFi: %s\n", message_WiFi);
+    printf("message_WiFi: %d\n", message_WiFi);
     return message_WiFi;
 }
 
