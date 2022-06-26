@@ -191,7 +191,7 @@ void* LTE_command(void* socket) {
         } else if (strcmp(tempMsg, coordinate.c_str()) != 0) {
             strcpy(tempMsg, coordinate.c_str());
             printf("LTE Am I stuck in here?\n");
-            printf("\n\nActuator Socket LTE: %d\n", sock->act_LTE);
+            printf("Actuator Socket LTE: %d\n", sock->act_LTE);
             printf("tempMsg == LTEmsg\n");
             printf("%s = %s\n", tempMsg, LTEmsg);
         }
@@ -199,7 +199,7 @@ void* LTE_command(void* socket) {
         transmit_command(&sock, LTEmsg, gsv);
         // transmit_command(sock->act_LTE, LTEmsg, gsv);
         char* timeLTE = Timestamp();
-        printf("\n\nActuator Socket LTE: %d\n", sock->act_LTE);
+        printf("Actuator Socket LTE: %d\n", sock->act_LTE);
 
         /* Writing to logging file */
         fp4 = fopen("Logs/commands_log.txt", "a+");
