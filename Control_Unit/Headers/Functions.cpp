@@ -82,22 +82,6 @@ void WiFi_command(Sockets sock) {
         int gsv = atoi(GSV_read);  // Convert to integer
                                    // printf("converted GSV: %s\n", (char*)GSV_read);
 
-        /*
-        printf("\n\nWiFimsg: %s\n", WiFimsg);
-        printf("Coordinate: %s\n", coordinate.c_str());
-        printf("tempMsg: %s\n", tempMsg);
-        if (strcmp(tempMsg, coordinate.c_str()) != 0) {
-            strcpy(tempMsg, coordinate.c_str());
-            printf("WIFI stepbro 23????\n");
-        } else if (strcmp(tempMsg, coordinate.c_str()) == 0) {
-            printf("WIFI Am I stuck in here?\n");
-            printf("tempMsg == WiFimsg\n");
-            printf("%s = %s\n", tempMsg, WiFimsg);
-        }
-        printf("WIFI stepbro ????\n");
-        //  transmit_command(sock.act_WiFi, WiFimsg, gsv);
-        printf("\n\nActuator Socket WiFi: %d\n", sock.act_WiFi);
-        */
         transmit_command(&sock, WiFimsg, gsv);
         char* timeWiFi = Timestamp();
 
@@ -136,17 +120,6 @@ void* LTE_command(void* socket) {
     const char* GSV_read;
     GSV_read = (char*)shm_read(32, GSV_KEY);
 
-    /* Execution time variables */
-    struct timespec begin, end;
-    unsigned long seconds = 0;
-    unsigned long nanoseconds = 0;
-    double elapsed = 0;
-
-    sock->packet_count_LTE = 0;
-    sock->fail_count_LTE = 0;
-    sock->Execution_Sum_LTE = 0;
-    sock->STOP_LTE = 0;
-
     while (1) {
         message = (void*)receiveLTE((void*)sock);
         if (troubleshooting_print == 1) {
@@ -184,33 +157,8 @@ void* LTE_command(void* socket) {
         int gsv = atoi(GSV_read);  // Convert to integer
                                    // printf("converted GSV: %s\n", (char*)GSV_read);
 
-        printf("\n\nLTEmsg: %s\n", LTEmsg);
-        printf("Coordinate: %s\n", coordinate.c_str());
-        printf("tempMsg: %s\n", tempMsg);
-        /*if (strcmp(tempMsg, coordinate.c_str()) == 0) {
-            printf("LTE stepbro23 ????\n");
-        } else if (strcmp(tempMsg, coordinate.c_str()) != 0) {
-            strcpy(tempMsg, coordinate.c_str());
-            printf("LTE Am I stuck in here?\n");
-            printf("\nActuator Socket LTE: %d\n", sock->act_LTE);
-            printf("Actuator Socket length LTE: %d\n", sock->len_act_LTE);
-            cout << "int act_LTE:" << sock->act_LTE << endl;
-            printf("\ntempMsg == LTEmsg\n");
-            printf("%s = %s\n", tempMsg, LTEmsg);
-        }
-        int testsocketvalue = sock->act_LTE;
-        int testsocketlength = sock->len_act_LTE;
-        struct sockaddr_in testID = sock->Client_act_LTE;
-        printf("testsocketvalue Actuator Socket LTE: %d\n", testsocketvalue);
-        printf("testsocketlength Actuator Socket LTE: %d\n", testsocketlength);
-
-        printf("LTE stepbro ????\n");
-        */
-         transmit_command(sock, LTEmsg, gsv);
-        //transmit_command(testsocketvalue, testsocketlength, &testID, LTEmsg, gsv);
-        //sendto(testsocketvalue, LTEmsg, strlen(LTEmsg), 0, (struct sockaddr*)&testID, testsocketlength);
+        transmit_command(sock, LTEmsg, gsv);
         char* timeLTE = Timestamp();
-        //printf("Actuator Socket LTE: %d\n", sock->act_LTE);
 
         /* Writing to logging file */
         fp4 = fopen("Logs/commands_log.txt", "a+");
