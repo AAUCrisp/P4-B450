@@ -58,7 +58,7 @@ void *WiFi_command(void *socket) {
     sock->Execution_Sum_WiFi = 0;
     sock->STOP_WiFi = 0;
 
-    while (sock.STOP_WiFi != 1) {
+    while (sock->STOP_WiFi != 1) {
         message = (void*)receiveWiFi((void*)&sock);
         printf("WiFi - RX_LTE: %d\n", sock->RX_LTE);
         printf("WiFi - RX_WiFi: %d\n", sock->RX_WiFi);
