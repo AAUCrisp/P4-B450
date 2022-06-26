@@ -210,7 +210,7 @@ void *receiveLTE(void *socket) {
         RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
         printf("RX_LTE: %d\n", RX_LTE);
         printf("RX_WiFi: %d\n", RX_WiFi);
-        if (RX_LTE == -1) {
+        if (RX_LTE == -1 && RX_WiFi == -1) {
             sock->STOP_LTE = 1;
             return 0;
         } else {
