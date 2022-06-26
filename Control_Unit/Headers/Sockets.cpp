@@ -360,7 +360,7 @@ void *transmit_command_LTE(void *socket, char *message) {
     if (print_act_out == 1) {
         printf("\n\n  Sending || LTE (Actuator) || Actuator Socket: %d\n", sock->act_LTE);
     }
-    sscanf((char *)message, "%d: %s:%s", &ID, &data, msgDump);
+    sscanf((char *)message, "%d: %s:%s", &ID, &data, &msgDump);
     printf("ID: %d\n", ID);
     printf("data: %s\n", data);
     printf("msgDump: %s\n", msgDump);
@@ -386,7 +386,7 @@ void *transmit_command_WiFi(void *socket, char *message) {
     if (print_act_out == 1) {
         printf("\n\n  Sending || WiFi (Actuator) || Actuator Socket: %d\n", sock->act_WiFi);
     }
-    sscanf((char *)message, "%d: %s:%s", &ID, &data, msgDump);
+    sscanf((char *)message, "%d: %s:%s", &ID, &data, &msgDump);
     printf("ID: %d\n", ID);
     printf("data: %s\n", data);
     printf("msgDump: %s\n", msgDump);
