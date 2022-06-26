@@ -291,8 +291,8 @@ void Sockets_Actuator(Sockets *sock, const char *IP_LTE, const char *IP_WiFi, ui
     setsockopt(sock->act_LTE, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
     setsockopt(sock->act_WiFi, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
     /* Setting up socket timeout */
-    //setsockopt(sock->act_LTE, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
-    //setsockopt(sock->act_WiFi, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
+    // setsockopt(sock->act_LTE, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
+    // setsockopt(sock->act_WiFi, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
 
     /* Error checking */
     if (sock->act_LTE == -1) {
@@ -350,13 +350,12 @@ void transmit_GSV_WiFi(void *socket, char *gsv) {
 }
 
 // Function to transmit command via LTE
-char testDUMP[50];
+char tempmsgCoords[50];
 void *transmit_command_LTE(void *socket, char *message) {
     Sockets *sock = (Sockets *)socket;
     int LenLTE = sizeof(sock->Client_act_LTE);
     char msgID[100];
     char msgCoords[50];
-    char tempmsgCoords[50];
 
     if (print_act_out == 1) {
         printf("\n\n  Sending || LTE (Actuator) || Actuator Socket: %d\n", sock->act_LTE);
@@ -364,14 +363,11 @@ void *transmit_command_LTE(void *socket, char *message) {
     sscanf((char *)message, "%s %s", msgID, msgCoords);
     printf("ID: %s\n", msgID);
     printf("data: %s\n", msgCoords);
-    printf("tempmsgCoords: %s\n", tempmsgCoords);
-    printf("testDUMP: %s\n", testDUMP);
 
-    if (strcmp(testDUMP, msgCoords) != 0) {
+    if (strcmp(tempmsgCoords, msgCoords) != 0) {
         TX_LTE = sendto(sock->act_LTE, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_LTE, LenLTE);
         send_time = Timestamp();
-        strcpy(testDUMP, msgCoords);
-        printf("LTE inside if tempmsgCoords: %s\n", tempmsgCoords);
+        strcpy(tempmsgCoords, msgCoords);
 
         printf("  Sending || LTE (Actuator) || Sending Command to Actuator: %s\n", message);
         printf("  Sending || LTE (Actuator) || Message transmitted at: %s\n\n", send_time);
@@ -386,12 +382,12 @@ void *transmit_command_LTE(void *socket, char *message) {
 }
 
 // Function to transmit command via WiFi
+char tempmsgCoords[50];
 void *transmit_command_WiFi(void *socket, char *message) {
     Sockets *sock = (Sockets *)socket;
     int LenWiFi = sizeof(sock->Client_act_WiFi);
     char msgID[100];
     char msgCoords[50];
-    char tempmsgCoords[50];
 
     if (print_act_out == 1) {
         printf("\n\n  Sending || WiFi (Actuator) || Actuator Socket: %d\n", sock->act_WiFi);
@@ -399,13 +395,11 @@ void *transmit_command_WiFi(void *socket, char *message) {
     sscanf((char *)message, "%s %s", msgID, msgCoords);
     printf("ID: %s\n", msgID);
     printf("data: %s\n", msgCoords);
-    printf("WIFI inside if tempmsgCoords: %s\n", tempmsgCoords);
 
     if (strcmp(tempmsgCoords, msgCoords) != 0) {
         TX_WiFi = sendto(sock->act_WiFi, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_WiFi, LenWiFi);
         send_time = Timestamp();
         strcpy(tempmsgCoords, msgCoords);
-        printf("tempmsgCoords: %s\n", tempmsgCoords);
 
         printf("  Sending || WiFi (Actuator) || Sending Command to Actuator: %s\n", message);
         printf("  Sending || WiFi (Actuator) || Message transmitted at: %s\n\n", send_time);
