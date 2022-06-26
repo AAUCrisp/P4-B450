@@ -35,6 +35,8 @@ typedef struct _sockets {
     int sockWiFi_RECEIVER;
     struct sockaddr_in ServerLTE_RECEIVER;
     struct sockaddr_in ServerWiFi_RECEIVER;
+    int RX_LTE;
+    int RX_WiFi;
 
     /* Transmitter sockets*/
     int sockLTE_TRANSMITTER;
@@ -73,7 +75,6 @@ int sensor_int;
 
 /* Misc */
 int bindLTE, bindWiFi;
-int RX_LTE, RX_WiFi;
 int TX_LTE, TX_WiFi;
 
 /* File descriptor */
@@ -113,6 +114,12 @@ void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *
     /* Setting up socket options & specifying interface for receiver */
     setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
     setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
+
+    /* Setting up socket options & specifying interface for receiver */
+    setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
+    setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
+    setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
+    setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
 
     /* Error checking */
     if (sock->sockLTE_RECEIVER == -1) {
@@ -161,7 +168,7 @@ void *receiveLTE(void *socket) {
     if (print_sen_in == 1) {
         printf("\n\n  Incoming || LTE (Sensor) || Receive Socket: %d\n", sock->sockLTE_RECEIVER);
     }
-    RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message_LTE, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, (unsigned int *)&LenLTE);
+    sock->RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message_LTE, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, (unsigned int *)&LenLTE);
     Timestamp();
 
     if (print_sen_in == 1 || message_only == 1) {
@@ -187,7 +194,7 @@ void *receiveWiFi(void *socket) {
     if (print_sen_in == 1) {
         printf("\n\n  Incoming || WiFi (Sensor) || Receive Socket: %d\n", sock->sockWiFi_RECEIVER);
     }
-    RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message_WiFi, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, (unsigned int *)&LenWiFi);
+    sock->RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message_WiFi, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, (unsigned int *)&LenWiFi);
     Timestamp();
 
     if (print_sen_in == 1 || message_only == 1) {

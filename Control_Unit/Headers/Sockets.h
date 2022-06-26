@@ -11,6 +11,8 @@ typedef struct _sockets {
     int sockWiFi_RECEIVER;
     struct sockaddr_in ServerLTE_RECEIVER;
     struct sockaddr_in ServerWiFi_RECEIVER;
+    int RX_LTE;
+    int RX_WiFi;
 
     /* Transmitter sockets*/
     int sockLTE_TRANSMITTER;
