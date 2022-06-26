@@ -42,12 +42,12 @@ int main(int argc, char* argv[]) {
     uint PORT_WiFi_RECEIVER = 9001;
     uint PORT_LTE_ACTUATOR = 9004;
     uint PORT_WiFi_ACTUATOR = 9005;
-    //const char* LTE = "wwan0";
-    //const char* WiFi = "wlan0";
-    //const char* Actuator_IP_LTE = "10.20.0.13";    // Default: Actuator IP
-    //const char* Actuator_IP_WiFi = "10.42.0.118";  // Default: Actuator IP (AP)
-                                                   //  const char* Actuator_IP_LTE = "10.20.0.16";     // Control IP
-                                                   //  const char* Actuator_IP_LTE = "10.20.0.10";     // Sensor IP
+    // const char* LTE = "wwan0";
+    // const char* WiFi = "wlan0";
+    // const char* Actuator_IP_LTE = "10.20.0.13";    // Default: Actuator IP
+    // const char* Actuator_IP_WiFi = "10.42.0.118";  // Default: Actuator IP (AP)
+    //   const char* Actuator_IP_LTE = "10.20.0.16";     // Control IP
+    //   const char* Actuator_IP_LTE = "10.20.0.10";     // Sensor IP
     // const char* Actuator_IP_WiFi = "192.168.1.143";     //Default: Actuator IP
     //  const char* Actuator_IP_WiFi = "192.168.1.136";     // Control IP
     //  const char* Actuator_IP_WiFi = "192.168.1.160";     // Sensor IP
@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
     const char* Actuator_IP_LTE = "192.168.0.134";   // test loopback
     const char* Actuator_IP_WiFi = "192.168.0.134";  // test loopback
     const char* LTE = "enp0s3";                      // test loopback
-    const char* WiFi = "enp0s3";                 // test loopback
+    const char* WiFi = "enp0s3";                     // test loopback
 
     /* Misc */
     pthread_t T1;
@@ -101,9 +101,53 @@ int main(int argc, char* argv[]) {
 
     /* -- Main loop for command processing and forwarding -- */
     else {
+        sock.packet_count_LTE = 0;
+        sock.packet_count_WiFi = 0;
+        cout << "packet count LTE: " << sock.packet_count_LTE << endl;
+        cout << "packet count WiFi: " << sock.packet_count_WiFi << endl;
+
+        /* Start timing all code */
+        clock_gettime(CLOCK_REALTIME, &begin_program);
+
         pthread_create(&T1, NULL, LTE_command, (void*)&sock);
         WiFi_command(sock);
 
-        printf("\n!! -- !! -- !! -- !! -- !! -- !! -- !! -- !!\n!! -- !!  THIS SHOULD NEVER PRINT   !! -- !!\n!! -- !! -- !! -- !! -- !! -- !! -- !! -- !!");
+        cout << "NEW packet count LTE: " << sock.packet_count_LTE << endl;
+        cout << "NEW packet count WiFi: " << sock.packet_count_WiFi << endl;
     }
+
+    /* Stop timing all code */
+    clock_gettime(CLOCK_REALTIME, &end_program);
+
+    /* Calculation of total time execution */
+    double time_spent = ((end_program.tv_sec - begin_program.tv_sec) +
+                         (end_program.tv_nsec - begin_program.tv_nsec) / BILLION) -
+                        5;
+
+    /* Conversion of time spent to HH:MM:SS.MS */
+    long hours = (long)time_spent / 3600;
+    long minutes = ((long)time_spent / 60) % 60;
+    long seconds2 = (long)time_spent % 60;
+    long milliseconds = (long)(time_spent * 1000) % 1000;
+
+    /* Calculation of execution average */
+    Execution_Average = (sock.Execution_Sum_WiFi + sock.Execution_Sum_LTE) / (sock.packet_count_WiFi + sock.packet_count_LTE);
+
+    printf("\n\n===================================\n\n");
+    printf("Execution time sums:\n");
+    printf("    Total Execution Sum:     %Lf sec\n", (sock.Execution_Sum_LTE + sock.Execution_Sum_WiFi));
+    printf("     WiFi Execution Sum:     %Lf sec\n", sock.Execution_Sum_WiFi);
+    printf("      LTE Execution Sum:     %Lf sec\n\n", sock.Execution_Sum_LTE);
+    printf("Execution time average: \n");
+    printf("    Total Execution average: %Lf sec\n\n", Execution_Average);
+    printf("Total program time: \n");
+    printf("    Total time: %f sec\n", time_spent);
+    printf("________________________\n\n");
+    printf("Total Time:  \n            Hours: %ld  \n          Minutes: %ld  \n          Seconds: %ld \n     Milliseconds: %ld\n", hours, minutes, seconds2, milliseconds);
+    printf("________________________\n\n");
+    printf("Total failed counts via WiFi:       %d\n", sock.fail_count_WiFi);
+    printf("Total failed counts via LTE:        %d\n", sock.fail_count_LTE);
+    printf("Total packets received via WiFi:    %d\n", sock.packet_count_WiFi);
+    printf("Total packets received via LTE:     %d\n", sock.packet_count_LTE);
+    printf("\n===================================\n\n");
 }

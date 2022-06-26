@@ -60,11 +60,13 @@ int main() {
     unsigned long nanoseconds = 0;
     long double Execution_Average = 0;
 
+    /*
     int packet_count_LTE = 0;
     int packet_count_WiFi = 0;
     int fail_count = 0;
     long double Execution_Sum = 0;
     int STOP = 0;
+    */
 
     /* Shared memory object variables */
     const char* COMMANDS_KEY = "COMMANDS_KEY";
@@ -135,7 +137,7 @@ int main() {
 
     printf("\n\n===================================\n\n");
     printf("Execution time sums:\n");
-    printf("    Total Execution Sum:     %Lf sec\n", (sock.Execution_Sum_LTE+sock.Execution_Sum_WiFi));
+    printf("    Total Execution Sum:     %Lf sec\n", (sock.Execution_Sum_LTE + sock.Execution_Sum_WiFi));
     printf("     WiFi Execution Sum:     %Lf sec\n", sock.Execution_Sum_WiFi);
     printf("      LTE Execution Sum:     %Lf sec\n\n", sock.Execution_Sum_LTE);
     printf("Execution time average: \n");

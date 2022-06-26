@@ -43,14 +43,44 @@ void WiFi_command(Sockets sock) {
     const char* GSV_read;
     GSV_read = (char*)shm_read(32, GSV_KEY);
 
-    while (1) {
+    /* Execution time variables */
+    struct timespec begin, end;
+    unsigned long seconds = 0;
+    unsigned long nanoseconds = 0;
+    double elapsed = 0;
+
+    sock->packet_count_WiFi = 0;
+    sock->fail_count_WiFi = 0;
+    sock->Execution_Sum_WiFi = 0;
+    sock->STOP_WiFi = 0;
+
+    while (sock->STOP_WiFi != 1) {
         message = (void*)receiveWiFi((void*)&sock);
+        printf("RX_LTE: %d\n", RX_LTE);
+        printf("RX_WiFi: %d\n", RX_WiFi);
+        printf("STOP_LTE: %d\n", sock->STOP_LTE);
+        printf("STOP_WiFi: %d\n", sock->STOP_WiFi);
+        if (RX_WiFi == -1) {
+            while (1) {
+                if (RX_WiFi == -1 && RX_LTE == -1) {
+                    return 0;
+                    sock->STOP_WiFi = 1;
+                }
+            }
+            // return 0;
+        } else {
+            sock->STOP_WiFi = 0;
+        }
+
         if (troubleshooting_print == 1) {
             cout << "  WiFi Command Function || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
         }
         // with packet ID :
         sscanf((const char*)message, "%d: %d %[^\n]", &ID, &data, msgDump);
         // sscanf((const char*)message, "%d %[^\n]", &data, msgDump); // Without packet ID
+
+        /* Start timing code execution of code */
+        clock_gettime(CLOCK_REALTIME, &begin);
 
         if (use_grid == 1) {
             coordinate = grid[data];
@@ -80,6 +110,21 @@ void WiFi_command(Sockets sock) {
 
         transmit_command(&sock, WiFimsg, gsv);
         char* timeWiFi = Timestamp();
+
+        /* Stop timing code execution of code */
+        clock_gettime(CLOCK_REALTIME, &end);
+
+        seconds = end.tv_sec - begin.tv_sec;
+        nanoseconds = end.tv_nsec - begin.tv_nsec;
+
+        /* Calculation of elapsed time sum */
+        elapsed = seconds + nanoseconds * 1e-9;
+        if (elapsed > 10000) {
+            sock->fail_count_WiFi++;
+            elapsed = 0;
+        }
+        sock->Execution_Sum_WiFi += elapsed;
+        sock->packet_count_WiFi++;
 
         /* Writing to logging file */
         fp3 = fopen("Logs/commands_log.txt", "a+");
@@ -117,14 +162,41 @@ void* LTE_command(void* socket) {
     const char* GSV_read;
     GSV_read = (char*)shm_read(32, GSV_KEY);
 
-    while (1) {
+    /* Execution time variables */
+    struct timespec begin, end;
+    unsigned long seconds = 0;
+    unsigned long nanoseconds = 0;
+    double elapsed = 0;
+
+    sock->packet_count_LTE = 0;
+    sock->fail_count_LTE = 0;
+    sock->Execution_Sum_LTE = 0;
+    sock->STOP_LTE = 0;
+
+    while (sock->STOP_LTE != 1) {
         message = (void*)receiveLTE((void*)sock);
+        printf("RX_LTE: %d\n", RX_LTE);
+        printf("RX_WiFi: %d\n", RX_WiFi);
+        printf("STOP_LTE: %d\n", sock->STOP_LTE);
+        printf("STOP_WiFi: %d\n", sock->STOP_WiFi);
+        if (RX_LTE == -1) {
+            // sock->STOP_WiFi = 1;
+            //  if(sock->STOP_LTE == 2 && sock->STOP_WiFi ==1){return 0;}
+            return 0;
+        } else {
+            sock->STOP_LTE = 0;
+        }
+
         if (troubleshooting_print == 1) {
             cout << "  LTE Command Function || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
         }
         // With packet ID :
         sscanf((const char*)message, "%d: %d %[^\n]", &ID, &data, msgDump);
         // sscanf((const char*)message, "%d %[^\n]", &data, msgDump);  // Without packet ID
+
+        /* Start timing code execution of code */
+        clock_gettime(CLOCK_REALTIME, &begin);
+
         if (use_grid == 1) {
             coordinate = grid[data];  // VIRKER MÅSKE
         } else {
@@ -153,6 +225,9 @@ void* LTE_command(void* socket) {
 
         transmit_command(sock, LTEmsg, gsv);
         char* timeLTE = Timestamp();
+
+        /* Stop timing code execution of code */
+        clock_gettime(CLOCK_REALTIME, &end);
 
         /* Writing to logging file */
         fp4 = fopen("Logs/commands_log.txt", "a+");
