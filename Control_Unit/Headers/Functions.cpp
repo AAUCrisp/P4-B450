@@ -84,7 +84,7 @@ void WiFi_command(Sockets sock) {
         if (data == 0) {
             printf("Data is 0\n");
         } else if (strcmp(tempMsg, coordinate.c_str()) != 0) {
-            transmit_command(&sock, WiFimsg, gsv);
+            transmit_command(sock, WiFimsg, gsv);
             strcpy(tempMsg, coordinate.c_str());
             char* timeWiFi = Timestamp();
 
@@ -176,7 +176,7 @@ void* LTE_command(void* socket) {
         if (data == 0) {
             printf("Data is 0\n");
         } else if (strcmp(tempMsg, coordinate.c_str()) != 0) {
-            transmit_command(&sock, LTEmsg, gsv);
+            transmit_command(sock, LTEmsg, gsv);
             strcpy(tempMsg, coordinate.c_str());
             char* timeLTE = Timestamp();
 
