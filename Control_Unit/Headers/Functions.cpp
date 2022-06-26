@@ -49,27 +49,27 @@ void WiFi_command(Sockets sock) {
     unsigned long nanoseconds = 0;
     double elapsed = 0;
 
-    sock->packet_count_WiFi = 0;
-    sock->fail_count_WiFi = 0;
-    sock->Execution_Sum_WiFi = 0;
-    sock->STOP_WiFi = 0;
+    sock.packet_count_WiFi = 0;
+    sock.fail_count_WiFi = 0;
+    sock.Execution_Sum_WiFi = 0;
+    sock.STOP_WiFi = 0;
 
     while (sock->STOP_WiFi != 1) {
         message = (void*)receiveWiFi((void*)&sock);
         printf("RX_LTE: %d\n", RX_LTE);
         printf("RX_WiFi: %d\n", RX_WiFi);
-        printf("STOP_LTE: %d\n", sock->STOP_LTE);
-        printf("STOP_WiFi: %d\n", sock->STOP_WiFi);
+        printf("STOP_LTE: %d\n", sock.STOP_LTE);
+        printf("STOP_WiFi: %d\n", sock.STOP_WiFi);
         if (RX_WiFi == -1) {
             while (1) {
                 if (RX_WiFi == -1 && RX_LTE == -1) {
                     return 0;
-                    sock->STOP_WiFi = 1;
+                    sock.STOP_WiFi = 1;
                 }
             }
             // return 0;
         } else {
-            sock->STOP_WiFi = 0;
+            sock.STOP_WiFi = 0;
         }
 
         if (troubleshooting_print == 1) {
@@ -120,11 +120,11 @@ void WiFi_command(Sockets sock) {
         /* Calculation of elapsed time sum */
         elapsed = seconds + nanoseconds * 1e-9;
         if (elapsed > 10000) {
-            sock->fail_count_WiFi++;
+            sock.fail_count_WiFi++;
             elapsed = 0;
         }
-        sock->Execution_Sum_WiFi += elapsed;
-        sock->packet_count_WiFi++;
+        sock.Execution_Sum_WiFi += elapsed;
+        sock.packet_count_WiFi++;
 
         /* Writing to logging file */
         fp3 = fopen("Logs/commands_log.txt", "a+");
