@@ -50,13 +50,12 @@ void WiFi_command(Sockets sock) {
         }
         // with packet ID :
         sscanf((const char*)message, "%d: %d %[^\n]", &ID, &data, msgDump);
-        // sscanf((const char*)message, "%d %[^\n]", &data, msgDump); //VIRKER MÅSKE
-        //  printf("Do I reach this?1\n");
+        // sscanf((const char*)message, "%d %[^\n]", &data, msgDump); // Without packet ID
+
         if (use_grid == 1) {
-            coordinate = grid[data];  // VIRKER MÅSKE
+            coordinate = grid[data];
         } else {
-            // printf("Do I reach this?2\n");
-            coordinate = convert_to_coordinate(data, use_hex);  // VIRKER MÅSKE
+            coordinate = convert_to_coordinate(data, use_hex);
 
             packet_ID = to_string(count);
             packet_ID.append(": ");
@@ -65,18 +64,15 @@ void WiFi_command(Sockets sock) {
         }
         if (message_only == 1) {
             cout << "  WiFi Command Function || Message Parsed from Sockets as INT is: " << data << endl;
-            // cout << "  WiFi Command Function || Coordinate for Actuator is: " << coordinate << "\n\n\n" //Without packet ID
+            // cout << "  WiFi Command Function || Coordinate for Actuator is: " << coordinate << "\n\n\n" // Without packet ID
             cout << "  WiFi Command Function || Coordinate for Actuator is: " << packet_ID << "\n\n\n"
                  << endl;
         }
-        char WiFimsg[packet_ID.size() + 1];  // with packet ID;
-                                             // char* WiFimsg = (char*)malloc(99);
-                                             // char WiFimsg[coordinate.size() + 1];
-        strcpy(WiFimsg, packet_ID.c_str());  // with packet ID
+        char WiFimsg[packet_ID.size() + 1];  // With packet ID
+        strcpy(WiFimsg, packet_ID.c_str());  // With packet ID
 
-        // strcpy(WiFimsg, coordinate.c_str());  // DEN HER VIRKER (MÅSKE)
-
-        // std::cout << "is this WiFimsg? " << WiFimsg;
+        // char WiFimsg[coordinate.size() + 1]; // Without packet ID
+        // strcpy(WiFimsg, coordinate.c_str());  // Without packet ID
 
         /* Read from shared memory, pass to transmit function */
         int gsv = atoi(GSV_read);  // Convert to integer
@@ -127,11 +123,11 @@ void* LTE_command(void* socket) {
         }
         // With packet ID :
         sscanf((const char*)message, "%d: %d %[^\n]", &ID, &data, msgDump);
-        // sscanf((const char*)message, "%d %[^\n]", &data, msgDump);  // VIRKER MÅSKE
+        // sscanf((const char*)message, "%d %[^\n]", &data, msgDump);  // Without packet ID
         if (use_grid == 1) {
             coordinate = grid[data];  // VIRKER MÅSKE
         } else {
-            coordinate = convert_to_coordinate(data, use_hex);  // VIRKER MÅSKE
+            coordinate = convert_to_coordinate(data, use_hex);
 
             packet_ID = to_string(count);
             packet_ID.append(": ");
@@ -140,18 +136,15 @@ void* LTE_command(void* socket) {
         }
         if (message_only == 1) {
             cout << "  LTE Command Function || Message Parsed from Sockets as INT is: " << data << endl;
-            // cout << "  LTE Command Function || Coordinate for Actuator is: " << coordinate << "\n\n\n" //Without packet ID
+            // cout << "  LTE Command Function || Coordinate for Actuator is: " << coordinate << "\n\n\n" // Without packet ID
             cout << "  LTE Command Function || Coordinate for Actuator is: " << packet_ID << "\n\n\n"
                  << endl;
         }
-        char LTEmsg[packet_ID.size() + 1];  // med packet ID
-                                            // char* LTEmsg = (char*)malloc(99);
-                                            // char LTEmsg[coordinate.size() + 1];
-        strcpy(LTEmsg, packet_ID.c_str());  // med packet ID
+        char LTEmsg[packet_ID.size() + 1];  // With packet ID
+        strcpy(LTEmsg, packet_ID.c_str());  // With packet ID
 
-        // strcpy(LTEmsg, coordinate.c_str());  // DEN HER VIRKER (MÅSKE)
-
-        // std::cout << "is this LTEmsg? " << LTEmsg;
+        // char LTEmsg[coordinate.size() + 1]; // Without packet ID
+        // strcpy(LTEmsg, coordinate.c_str());  // Without packet ID
 
         /* Read from shared memory, pass to transmit function */
         int gsv = atoi(GSV_read);  // Convert to integer

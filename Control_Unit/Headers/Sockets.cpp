@@ -47,6 +47,7 @@ typedef struct _sockets {
     int act_WiFi;
     struct sockaddr_in Client_act_LTE;
     struct sockaddr_in Client_act_WiFi;
+
 } Sockets;
 
 typedef struct _time_struct {
