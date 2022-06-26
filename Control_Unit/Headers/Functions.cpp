@@ -238,6 +238,18 @@ void* LTE_command(void* socket) {
         /* Stop timing code execution of code */
         clock_gettime(CLOCK_REALTIME, &end);
 
+        seconds = end.tv_sec - begin.tv_sec;
+        nanoseconds = end.tv_nsec - begin.tv_nsec;
+
+        /* Calculation of elapsed time sum */
+        elapsed = seconds + nanoseconds * 1e-9;
+        if (elapsed > 10000) {
+            sock->fail_count_LTE++;
+            elapsed = 0;
+        }
+        sock->Execution_Sum_LTE += elapsed;
+        sock->packet_count_LTE++;
+
         /* Writing to logging file */
         fp4 = fopen("Logs/commands_log.txt", "a+");
         fprintf(fp4, "%s %s %s\n", LTEmsg, timeLTE, "LTE");
