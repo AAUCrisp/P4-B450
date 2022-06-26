@@ -235,6 +235,7 @@ void* LTE_command(void* socket) {
         fclose(fp4);
         printf("==========\nRX_LTE: %d\n==========\n", sock->RX_LTE);
     }
+    return 0;
 }
 
 void help() {
