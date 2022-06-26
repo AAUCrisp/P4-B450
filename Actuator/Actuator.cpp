@@ -110,7 +110,7 @@ int main() {
         clock_gettime(CLOCK_REALTIME, &begin_program);
 
         pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
-        pthread_create(&T2, NULL, receiveWiFi, (void*)&sock);
+        receiveWiFi(&sock);
 
         cout << "NEW packet count LTE: " << sock.packet_count_LTE << endl;
         cout << "NEW packet count WiFi: " << sock.packet_count_WiFi << endl;
@@ -135,7 +135,7 @@ int main() {
 
     printf("\n\n===================================\n\n");
     printf("Execution time sums:\n");
-    printf("    Total Execution Sum:     %Lf sec\n", (sock.Execution_Sum_LTE + sock.Execution_Sum_WiFi));
+    printf("    Total Execution Sum:     %Lf sec\n", (sock.Execution_Sum_LTE+sock.Execution_Sum_WiFi));
     printf("     WiFi Execution Sum:     %Lf sec\n", sock.Execution_Sum_WiFi);
     printf("      LTE Execution Sum:     %Lf sec\n\n", sock.Execution_Sum_LTE);
     printf("Execution time average: \n");
