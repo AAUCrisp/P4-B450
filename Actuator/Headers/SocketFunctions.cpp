@@ -286,6 +286,7 @@ void *receiveWiFi(void *socket) {
             // sock->STOP_WiFi = 1;
             if (RX_WiFi == -1 && RX_LTE == -1) {
                     sock->STOP_LTE += 1;
+                    return 0;
                 }
             // return 0;
         } else {
