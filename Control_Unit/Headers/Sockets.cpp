@@ -365,6 +365,7 @@ void *transmit_command_LTE(void *socket, char *message) {
     printf("data: %s\n", msgCoords);
 
     if (strcmp(tempmsgCoords, msgCoords) != 0) {
+        strcpy(tempmsgCoords, msgCoords);
         TX_LTE = sendto(sock->act_LTE, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_LTE, LenLTE);
         send_time = Timestamp();
 
@@ -372,7 +373,6 @@ void *transmit_command_LTE(void *socket, char *message) {
         printf("  Sending || LTE (Actuator) || Message transmitted at: %s\n\n", send_time);
         if (print_act_out == 1 || message_only == 1) {
         }
-        strcpy(tempmsgCoords, msgCoords);
     } else {
         printf("tempmsgCoords == msgCoords\n");
         printf("%s == %s\n", tempmsgCoords, msgCoords);
