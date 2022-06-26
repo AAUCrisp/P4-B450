@@ -19,7 +19,8 @@
 int localRX_LTE = 0;
 int localRX_WiFi = 0;
 
-void *WiFi_command(Sockets sock) {
+void *WiFi_command(void *socket) {
+    Sockets* sock = (Sockets*)socket;
     void* message;
     char msgDump[32];
     char tempMsg[32];
@@ -35,9 +36,9 @@ void *WiFi_command(Sockets sock) {
     printf("\n\n  =======================\n   WiFi Listener Started\n  =======================\n\n");
 
     if (troubleshooting_print == 1) {
-        cout << "  WiFi Command Function || WiFi Sensor Socket: " << sock.sockWiFi_RECEIVER << endl;
-        cout << "  WiFi Command Function || WiFi Actuator Socket: " << sock.act_WiFi << endl;
-        cout << "  WiFi Command Function || LTE Actuator Socket: " << sock.act_LTE << endl;
+        cout << "  WiFi Command Function || WiFi Sensor Socket: " << sock->sockWiFi_RECEIVER << endl;
+        cout << "  WiFi Command Function || WiFi Actuator Socket: " << sock->act_WiFi << endl;
+        cout << "  WiFi Command Function || LTE Actuator Socket: " << sock->act_LTE << endl;
         usleep(1);
     }
 
@@ -52,26 +53,26 @@ void *WiFi_command(Sockets sock) {
     unsigned long nanoseconds = 0;
     double elapsed = 0;
 
-    sock.packet_count_WiFi = 0;
-    sock.fail_count_WiFi = 0;
-    sock.Execution_Sum_WiFi = 0;
-    sock.STOP_WiFi = 0;
+    sock->packet_count_WiFi = 0;
+    sock->fail_count_WiFi = 0;
+    sock->Execution_Sum_WiFi = 0;
+    sock->STOP_WiFi = 0;
 
     while (sock.STOP_WiFi != 1) {
         message = (void*)receiveWiFi((void*)&sock);
-        printf("WiFi - RX_LTE: %d\n", sock.RX_LTE);
-        printf("WiFi - RX_WiFi: %d\n", sock.RX_WiFi);
-        printf("WiFi - STOP_LTE: %d\n", sock.STOP_LTE);
-        printf("WiFi - STOP_WiFi: %d\n", sock.STOP_WiFi);
-        if (sock.RX_WiFi == -1) {
+        printf("WiFi - RX_LTE: %d\n", sock->RX_LTE);
+        printf("WiFi - RX_WiFi: %d\n", sock->RX_WiFi);
+        printf("WiFi - STOP_LTE: %d\n", sock->STOP_LTE);
+        printf("WiFi - STOP_WiFi: %d\n", sock->STOP_WiFi);
+        if (sock->RX_WiFi == -1) {
             while(1) {
-                if (sock.RX_WiFi == -1 && localRX_LTE == -1){
+                if (sock->RX_WiFi == -1 && sock->RX_LTE == 1/*localRX_LTE == -1*/){
                     return 0;
-                    sock.STOP_WiFi = 1;
+                    sock->STOP_WiFi = 1;
                 }
             }
         } else {
-            sock.STOP_WiFi = 0;
+            sock->STOP_WiFi = 0;
         }
 
         if (troubleshooting_print == 1) {
@@ -110,7 +111,7 @@ void *WiFi_command(Sockets sock) {
         int gsv = atoi(GSV_read);  // Convert to integer
         // printf("WiFi converted GSV: %s\n", (char*)GSV_read);
 
-        transmit_command(&sock, WiFimsg, gsv);
+        transmit_command(sock, WiFimsg, gsv);
         char* timeWiFi = Timestamp();
 
         /* Stop timing code execution of code */
@@ -122,17 +123,17 @@ void *WiFi_command(Sockets sock) {
         /* Calculation of elapsed time sum */
         elapsed = seconds + nanoseconds * 1e-9;
         if (elapsed > 10000) {
-            sock.fail_count_WiFi++;
+            sock->fail_count_WiFi++;
             elapsed = 0;
         }
-        sock.Execution_Sum_WiFi += elapsed;
-        sock.packet_count_WiFi++;
+        sock->Execution_Sum_WiFi += elapsed;
+        sock->packet_count_WiFi++;
 
         /* Writing to logging file */
         fp3 = fopen("Logs/commands_log.txt", "a+");
         fprintf(fp3, "%s %s %s\n", WiFimsg, timeWiFi, "WiFi");
         fclose(fp3);
-        printf("==========\nRX_WiFi: %d\n==========\n", sock.RX_WiFi);
+        printf("==========\nRX_WiFi: %d\n==========\n", sock->RX_WiFi);
     }
     return 0;
 }

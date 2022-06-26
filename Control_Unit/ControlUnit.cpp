@@ -110,7 +110,7 @@ int main(int argc, char* argv[]) {
         clock_gettime(CLOCK_REALTIME, &begin_program);
 
         pthread_create(&T1, NULL, LTE_command, (void*)&sock);
-        WiFi_command(sock);
+        WiFi_command(&sock);
 
         cout << "NEW packet count LTE: " << sock.packet_count_LTE << endl;
         cout << "NEW packet count WiFi: " << sock.packet_count_WiFi << endl;
