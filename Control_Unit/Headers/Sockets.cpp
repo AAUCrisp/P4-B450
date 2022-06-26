@@ -374,7 +374,7 @@ void *transmit_command_LTE(int socketvalue, int socketlength, struct sockaddr_in
     //  strcpy(tempmsgCoordsLTE2, msgCoords);
 
     // if (strcmp(tempmsgCoordsLTE, msgCoords) != 0 || strcmp(tempmsgCoordsLTE2, msgCoords) != 0) {
-    TX_LTE = sendto(socketvalue, message, BUFFER, 0, (struct sockaddr*)&testID, socketlength);
+    //TX_LTE = sendto(socketvalue, message, BUFFER, 0, (struct sockaddr*)&testID, socketlength);
     send_time = Timestamp();
     // strcpy(tempmsgCoordsLTE, msgCoords);
     // printf("INSIDE tempmsgCoordsLTE: %s\n", tempmsgCoordsLTE);
