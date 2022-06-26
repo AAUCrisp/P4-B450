@@ -93,6 +93,7 @@ void WiFi_command(Sockets sock) {
             // printf("%s = %s\n", tempMsg, WiFimsg);
         }
 
+        printf("Am I stuck here????\n");
         transmit_command(&sock, WiFimsg, gsv);
         // transmit_command(sock.act_WiFi, WiFimsg, gsv);
         char* timeWiFi = Timestamp();
