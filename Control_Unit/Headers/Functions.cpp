@@ -177,7 +177,7 @@ void* LTE_command(void* socket) {
 
         if (strcmp(tempMsg, coordinate.c_str()) != 0) {
             strcpy(tempMsg, coordinate.c_str());
-            transmit_command(&sock, LTEmsg, gsv);
+            transmit_command(sock->act_LTE, LTEmsg, gsv);
             char* timeLTE = Timestamp();
             printf("\n\nActuator Socket LTE: %d\n", sock->act_LTE);
 
