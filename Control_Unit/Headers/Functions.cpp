@@ -19,6 +19,7 @@
 void WiFi_command(Sockets sock) {
     void* message;
     char msgDump[32];
+    char tempMsg[32];
     int data;
     int ID;
     int count = 0;
@@ -82,15 +83,16 @@ void WiFi_command(Sockets sock) {
         // printf("converted GSV: %s\n", (char*)GSV_read);
         if (data == 0) {
             printf("Data is 0\n");
-        } else {
+        } else if (strcmp(tempMsg, WiFimsg) != 0) {
             transmit_command(&sock, WiFimsg, gsv);
-        }
-        char* timeWiFi = Timestamp();
+            strcpy(tempMsg, WiFimsg);
+            char* timeWiFi = Timestamp();
 
-        /* Writing to logging file */
-        fp3 = fopen("Logs/commands_log.txt", "a+");
-        fprintf(fp3, "%s %s %s\n", WiFimsg, timeWiFi, "WiFi");
-        fclose(fp3);
+            /* Writing to logging file */
+            fp3 = fopen("Logs/commands_log.txt", "a+");
+            fprintf(fp3, "%s %s %s\n", WiFimsg, timeWiFi, "WiFi");
+            fclose(fp3);
+        }
     }
 }
 
@@ -98,6 +100,7 @@ void* LTE_command(void* socket) {
     Sockets* sock = (Sockets*)socket;
     void* message;
     char msgDump[32];
+    char tempMsg[32];
     int data;
     int ID;
     int count = 0;
@@ -170,15 +173,17 @@ void* LTE_command(void* socket) {
         // printf("converted GSV: %s\n", (char*)GSV_read);
         if (data == 0) {
             printf("Data is 0\n");
-        } else {
+        } else if (strcmp(tempMsg, WiFimsg) != 0) {
             transmit_command(sock, LTEmsg, gsv);
-        }
-        char* timeLTE = Timestamp();
+            transmit_command(&sock, LTEmsg, gsv);
+            strcpy(tempMsg, LTEmsg);
+            char* timeLTE = Timestamp();
 
-        /* Writing to logging file */
-        fp4 = fopen("Logs/commands_log.txt", "a+");
-        fprintf(fp4, "%s %s %s\n", LTEmsg, timeLTE, "LTE");
-        fclose(fp4);
+            /* Writing to logging file */
+            fp4 = fopen("Logs/commands_log.txt", "a+");
+            fprintf(fp4, "%s %s %s\n", LTEmsg, timeLTE, "LTE");
+            fclose(fp4);
+        }
     }
 }
 
