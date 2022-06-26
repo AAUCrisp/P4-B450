@@ -225,8 +225,9 @@ int main(int argc, char* argv[]) {
         printf("Total failed counts:                   %d\n", fail_count);
         printf("Total packets transmitted via WiFi:    %d\n", packet_count_WiFi);
         printf("Total packets transmitted via LTE:     %d\n", packet_count_LTE);
-        printf("Loop count LTE: %d\n", hvormangegangeerjegherWiFi);
-        printf("Loop count WiFi: %d\n", hvormangegangeerjegherWiFi);
+        printf("Loop count LTE:                        %d\n", hvormangegangeerjegherWiFi);
+        printf("Loop count WiFi:                       %d\n", hvormangegangeerjegherWiFi);
+        printf("Total count:                           %d\n", count;);
         printf("\n===================================\n\n");
     }
 }
