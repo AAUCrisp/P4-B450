@@ -87,6 +87,7 @@ void WiFi_command(Sockets sock) {
         printf("tempMsg: %s\n", tempMsg);
         if (strcmp(tempMsg, coordinate.c_str()) != 0) {
             strcpy(tempMsg, coordinate.c_str());
+            printf("WIFI stepbro 23????\n");
         } else if (strcmp(tempMsg, coordinate.c_str()) == 0) {
             printf("WIFI Am I stuck in here?\n");
             printf("tempMsg == WiFimsg\n");
@@ -186,6 +187,7 @@ void* LTE_command(void* socket) {
         printf("tempMsg: %s\n", tempMsg);
         if (strcmp(tempMsg, coordinate.c_str()) != 0) {
             strcpy(tempMsg, coordinate.c_str());
+            printf("WIFI stepbro23 ????\n");
         } else if (strcmp(tempMsg, coordinate.c_str()) == 0) {
             printf("LTE Am I stuck in here?\n");
             printf("tempMsg == LTEmsg\n");
