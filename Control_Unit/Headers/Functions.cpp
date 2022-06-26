@@ -185,10 +185,10 @@ void* LTE_command(void* socket) {
         printf("\n\nLTEmsg: %s\n", LTEmsg);
         printf("Coordinate: %s\n", coordinate.c_str());
         printf("tempMsg: %s\n", tempMsg);
-        if (strcmp(tempMsg, coordinate.c_str()) != 0) {
-            strcpy(tempMsg, coordinate.c_str());
+        if (strcmp(tempMsg, coordinate.c_str()) == 0) {
             printf("WIFI stepbro23 ????\n");
-        } else if (strcmp(tempMsg, coordinate.c_str()) == 0) {
+        } else if (strcmp(tempMsg, coordinate.c_str()) != 0) {
+            strcpy(tempMsg, coordinate.c_str());
             printf("LTE Am I stuck in here?\n");
             printf("tempMsg == LTEmsg\n");
             printf("%s = %s\n", tempMsg, LTEmsg);
