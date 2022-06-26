@@ -82,7 +82,6 @@ void WiFi_command(Sockets sock) {
         int gsv = atoi(GSV_read);  // Convert to integer
                                    // printf("converted GSV: %s\n", (char*)GSV_read);
         if (strcmp(tempMsg, coordinate.c_str()) != 0) {
-            Sockets* sock = (Sockets*)socket;
             transmit_command(&sock, WiFimsg, gsv);
             strcpy(tempMsg, coordinate.c_str());
             char* timeWiFi = Timestamp();
