@@ -356,8 +356,6 @@ void *transmit_command_WiFi(void *socket, char *message) {
     if (print_act_out == 1) {
     }
     
-
-    
     TX_WiFi = sendto(sock->act_WiFi, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_WiFi, LenWiFi);
     send_time = Timestamp();
     // printf("  Sending || WiFi (Actuator) || Sending Command to Actuator: %s\n", message);
