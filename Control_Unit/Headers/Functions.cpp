@@ -92,8 +92,8 @@ void WiFi_command(Sockets sock) {
             fprintf(fp3, "%s %s %s\n", WiFimsg, timeWiFi, "WiFi");
             fclose(fp3);
         } else {
-            printf("tempMsg == WiFimsg\n");
-            printf("%s = %s\n", tempMsg, WiFimsg);
+            //printf("tempMsg == WiFimsg\n");
+            //printf("%s = %s\n", tempMsg, WiFimsg);
         }
     }
 }
@@ -184,8 +184,8 @@ void* LTE_command(void* socket) {
             fprintf(fp4, "%s %s %s\n", LTEmsg, timeLTE, "LTE");
             fclose(fp4);
         } else {
-            printf("tempMsg == LTEmsg\n");
-            printf("%s = %s\n", tempMsg, LTEmsg);
+            //printf("tempMsg == LTEmsg\n");
+            //printf("%s = %s\n", tempMsg, LTEmsg);
         }
     }
 }

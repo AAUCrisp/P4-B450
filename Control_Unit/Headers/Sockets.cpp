@@ -369,8 +369,10 @@ void *transmit_command_LTE(void *socket, char *message) {
         send_time = Timestamp();
         strcpy(tempmsgCoordsLTE, msgCoords);
 
-        printf("  Sending || LTE (Actuator) || Sending Command to Actuator: %s\n", message);
-        printf("  Sending || LTE (Actuator) || Message transmitted at: %s\n\n", send_time);
+       // printf("  Sending || LTE (Actuator) || Sending Command to Actuator: %s\n", message);
+       // printf("  Sending || LTE (Actuator) || Message transmitted at: %s\n\n", send_time);
+       printf("I am sending via LTE\n");
+       
         if (print_act_out == 1 || message_only == 1) {
         }
     } else {
@@ -401,8 +403,10 @@ void *transmit_command_WiFi(void *socket, char *message) {
         send_time = Timestamp();
         strcpy(tempmsgCoordsWiFi, msgCoords);
 
-        printf("  Sending || WiFi (Actuator) || Sending Command to Actuator: %s\n", message);
-        printf("  Sending || WiFi (Actuator) || Message transmitted at: %s\n\n", send_time);
+       // printf("  Sending || WiFi (Actuator) || Sending Command to Actuator: %s\n", message);
+       // printf("  Sending || WiFi (Actuator) || Message transmitted at: %s\n\n", send_time);
+        printf("I am sending via WiFi\n");
+
         if (print_act_out == 1 || message_only == 1) {
         }
     } else {
