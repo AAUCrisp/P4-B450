@@ -54,16 +54,7 @@ int main() {
     int* Processed_Data;
     int iter = 1000000;
 
-    /* Execution time variables */
-    struct timespec begin_program, end_program;
-    unsigned long seconds = 0;
-    unsigned long nanoseconds = 0;
-    long double Execution_Average = 0;
-
-    sock.Execution_Sum_WiFi = 0;
-    sock.Execution_Sum_LTE = 0;
-    sock.packet_count_WiFi = 0;
-    sock.packet_count_LTE = 0;
+   
 
     /* Shared memory object variables */
     const char* COMMANDS_KEY = "COMMANDS_KEY";
@@ -89,6 +80,17 @@ int main() {
     Sockets_Receiver(&sock, PORT_LTE_RECEIVER, PORT_WiFi_RECEIVER, LTE, WiFi);
     printf("sockLTE_RECEIVER (OUTSIDE): %d\n", sock.sockLTE_RECEIVER);
     printf("sockWiFi_RECEIVER (OUTSIDE): %d\n\n", sock.sockWiFi_RECEIVER);
+
+    /* Execution time variables */
+    struct timespec begin_program, end_program;
+    unsigned long seconds = 0;
+    unsigned long nanoseconds = 0;
+    long double Execution_Average = 0;
+
+    sock.Execution_Sum_WiFi = 0;
+    sock.Execution_Sum_LTE = 0;
+    sock.packet_count_WiFi = 0;
+    sock.packet_count_LTE = 0;
 
     /* Create child process */
     pid_t Actuator_monitor;  // Prepare the process ID for monitoring

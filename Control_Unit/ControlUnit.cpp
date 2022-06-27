@@ -67,6 +67,11 @@ int main(int argc, char* argv[]) {
     /* Struct for message & buffer size */
     char* msg;
 
+    /* Create sockets */
+    Sockets sock;
+    Sockets_Receiver(&sock, PORT_LTE_RECEIVER, PORT_WiFi_RECEIVER, LTE, WiFi);
+    Sockets_Actuator(&sock, Actuator_IP_LTE, Actuator_IP_WiFi, PORT_LTE_ACTUATOR, PORT_WiFi_ACTUATOR, LTE, WiFi);
+    
     /* Execution time variables */
     struct timespec begin_program, end_program;
     unsigned long seconds = 0;
@@ -78,10 +83,6 @@ int main(int argc, char* argv[]) {
     sock.packet_count_WiFi = 0;
     sock.packet_count_LTE = 0;
 
-    /* Create sockets */
-    Sockets sock;
-    Sockets_Receiver(&sock, PORT_LTE_RECEIVER, PORT_WiFi_RECEIVER, LTE, WiFi);
-    Sockets_Actuator(&sock, Actuator_IP_LTE, Actuator_IP_WiFi, PORT_LTE_ACTUATOR, PORT_WiFi_ACTUATOR, LTE, WiFi);
 
     if (troubleshooting_print == 1) {
         printf("  Sensor LTE socket from Main(): %d\n", sock.sockLTE_RECEIVER);
