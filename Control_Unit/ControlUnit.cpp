@@ -56,8 +56,8 @@ int main(int argc, char* argv[]) {
     const char* WiFi = "lo";                            // Test loopback
     const char* Actuator_IP_LTE = "127.0.0.1";          // Test loopback
     const char* Actuator_IP_WiFi = "127.0.0.1";         // Test loopback
-    // const char* LTE = "enp0s3";             // Test loopback
-    // const char* WiFi = "enp0s3";            // Test loopback
+    // const char* LTE = "enp0s3";                      // Test loopback
+    // const char* WiFi = "enp0s3";                     // Test loopback
     // const char* Actuator_IP_LTE = "192.168.0.134";   // test loopback
     // const char* Actuator_IP_WiFi = "192.168.0.134";  // test loopback
 
@@ -72,6 +72,11 @@ int main(int argc, char* argv[]) {
     unsigned long seconds = 0;
     unsigned long nanoseconds = 0;
     long double Execution_Average = 0;
+
+    sock.Execution_Sum_WiFi = 0;
+    sock.Execution_Sum_LTE = 0;
+    sock.packet_count_WiFi = 0;
+    sock.packet_count_LTE = 0;
 
     /* Create sockets */
     Sockets sock;

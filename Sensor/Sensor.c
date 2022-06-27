@@ -168,16 +168,16 @@ int main(int argc, char* argv[]) {
             // printf("Sensor || Before Transmitting\n");
             if (strcmp(gsv, B) == 0 || strcmp(gsv, L) == 0) {
                 transmitLTE(&sock, (char*)buffer);
-                hvormangegangeerjegherLTE++;
+                // hvormangegangeerjegherLTE++;
                 // printf("Loop count LTE: %d\n", hvormangegangeerjegherWiFi);
-                // packet_count_LTE++;
+                packet_count_LTE++;
             }
 
             if (strcmp(gsv, B) == 0 || strcmp(gsv, W) == 0) {
                 transmitWiFi(&sock, (char*)buffer);
-                hvormangegangeerjegherWiFi++;
+                // hvormangegangeerjegherWiFi++;
                 // printf("Loop count WiFi: %d\n", hvormangegangeerjegherWiFi);
-                // packet_count_WiFi++;
+                packet_count_WiFi++;
             }
 
             /* Stop timing code execution of code */

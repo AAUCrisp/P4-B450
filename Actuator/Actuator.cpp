@@ -60,13 +60,10 @@ int main() {
     unsigned long nanoseconds = 0;
     long double Execution_Average = 0;
 
-    /*
-    int packet_count_LTE = 0;
-    int packet_count_WiFi = 0;
-    int fail_count = 0;
-    long double Execution_Sum = 0;
-    int STOP = 0;
-    */
+    sock.Execution_Sum_WiFi = 0;
+    sock.Execution_Sum_LTE = 0;
+    sock.packet_count_WiFi = 0;
+    sock.packet_count_LTE = 0;
 
     /* Shared memory object variables */
     const char* COMMANDS_KEY = "COMMANDS_KEY";
