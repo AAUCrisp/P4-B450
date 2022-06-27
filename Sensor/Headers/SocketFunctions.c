@@ -205,7 +205,7 @@ void *transmitLTE(void *socket, char *message) {
     }
 
     curr_timeLTE = Timestamp();
-    sprintf(sendLTE, "%s    %s", message, curr_timeLTE);
+    sprintf(sendLTE, "%s %s", message, curr_timeLTE);
     if (print_out == 1) {
         printf("Sensor || LTE || sendLTE: %s\n", sendLTE);
     }
@@ -238,7 +238,7 @@ void *transmitWiFi(void *socket, char *message) {
     }
 
     curr_timeWiFi = Timestamp();
-    sprintf(sendWiFi, "%s    %s", message, curr_timeWiFi);
+    sprintf(sendWiFi, "%s %s", message, curr_timeWiFi);
     if (print_out == 1) {
         printf("Sensor || WiFi || sendWiFi: %s\n", sendWiFi);
     }
