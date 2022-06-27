@@ -117,7 +117,7 @@ int main() {
         pthread_create(&T1, NULL, receiveLTE, (void*)&sock);
         receiveWiFi(&sock);
 
-        cout << "NEW packet count LTE: " << sock.packet_count_LTE << endl;
+        cout << "\n\nNEW packet count LTE: " << sock.packet_count_LTE << endl;
         cout << "NEW packet count WiFi: " << sock.packet_count_WiFi << endl;
     }
 
