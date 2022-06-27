@@ -223,7 +223,7 @@ void *receiveLTE(void *socket) {
         sock->packet_count_LTE++;
 
         fp1 = fopen("Logs/log.txt", "a+");
-        fprintf(fp1, "%s %s %s%s\n", message, curr_time, "LTE");
+        fprintf(fp1, "%s %s %s\n", message, curr_time, "LTE");
         fclose(fp1);
 
         if (print_COMMANDS == 1) {
