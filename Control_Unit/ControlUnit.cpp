@@ -116,7 +116,7 @@ int main(int argc, char* argv[]) {
         pthread_create(&T1, NULL, LTE_command, (void*)&sock);
         WiFi_command(&sock);
 
-        cout << "NEW packet count LTE: " << sock.packet_count_LTE << endl;
+        cout << "\n\nNEW packet count LTE: " << sock.packet_count_LTE << endl;
         cout << "NEW packet count WiFi: " << sock.packet_count_WiFi << endl;
     }
 

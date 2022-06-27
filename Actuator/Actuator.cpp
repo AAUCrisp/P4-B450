@@ -81,7 +81,7 @@ int main() {
     uint PORT_WiFi_RECEIVER = 9005;
     // const char* LTE = "wwan0";
     // const char* WiFi = "wlan0";
-    
+
     //const char* LTE = "enp0s3";         // Test loopback
     //const char* WiFi = "enp0s3";        // Test loopback
     const char* LTE = "lo";             // Test loopback
@@ -108,7 +108,7 @@ int main() {
     } else {
         sock.packet_count_LTE = 0;
         sock.packet_count_WiFi = 0;
-        cout << "packet count LTE: " << sock.packet_count_LTE << endl;
+        cout << "\n\npacket count LTE: " << sock.packet_count_LTE << endl;
         cout << "packet count WiFi: " << sock.packet_count_WiFi << endl;
 
         /* Start timing all code */
