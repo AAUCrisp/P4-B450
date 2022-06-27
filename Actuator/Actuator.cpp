@@ -71,9 +71,9 @@ int main() {
     // const char* WiFi = "wlan0";
 
     //const char* LTE = "enp0s3";         // Test loopback
-    //const char* WiFi = "enp0s3";        // Test loopback
+    const char* WiFi = "enp0s3";        // Test loopback
     const char* LTE = "lo";             // Test loopback
-    const char* WiFi = "lo";            // Test loopback
+    //const char* WiFi = "lo";            // Test loopback
 
     /* Create sockets */
     Sockets sock;

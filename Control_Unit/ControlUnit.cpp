@@ -53,13 +53,13 @@ int main(int argc, char* argv[]) {
     // const char* Actuator_IP_WiFi = "192.168.1.160";  // Sensor IP
 
     const char* LTE = "lo";                             // Test loopback
-    const char* WiFi = "lo";                            // Test loopback
+    //const char* WiFi = "lo";                            // Test loopback
     const char* Actuator_IP_LTE = "127.0.0.1";          // Test loopback
-    const char* Actuator_IP_WiFi = "127.0.0.1";         // Test loopback
+    //const char* Actuator_IP_WiFi = "127.0.0.1";         // Test loopback
     // const char* LTE = "enp0s3";                      // Test loopback
-    // const char* WiFi = "enp0s3";                     // Test loopback
+    const char* WiFi = "enp0s3";                     // Test loopback
     // const char* Actuator_IP_LTE = "192.168.0.134";   // test loopback
-    // const char* Actuator_IP_WiFi = "192.168.0.134";  // test loopback
+    const char* Actuator_IP_WiFi = "192.168.0.134";  // test loopback
 
     /* Misc */
     pthread_t T1;
