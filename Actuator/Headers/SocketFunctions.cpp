@@ -208,10 +208,10 @@ void *receiveLTE(void *socket) {
     while (sock->STOP_LTE != 1) {
         // printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
         RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
-        printf("RX_LTE: %d\n", RX_LTE);
-        printf("RX_WiFi: %d\n", RX_WiFi);
-        printf("STOP_LTE: %d\n", sock->STOP_LTE);
-        printf("STOP_WiFi: %d\n", sock->STOP_WiFi);
+        //printf("RX_LTE: %d\n", RX_LTE);
+        //printf("RX_WiFi: %d\n", RX_WiFi);
+        //printf("STOP_LTE: %d\n", sock->STOP_LTE);
+        //printf("STOP_WiFi: %d\n", sock->STOP_WiFi);
 
         if (RX_LTE == -1) {
             pthread_exit(NULL);
@@ -228,8 +228,8 @@ void *receiveLTE(void *socket) {
 
         if (print_COMMANDS == 1) {
             // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
-            printf("LTE || Message from LTE received at: %s\n", curr_time);
-            printf("LTE || Message: %s from Control Unit \n\n", message);
+            //printf("LTE || Message from LTE received at: %s\n", curr_time);
+            //printf("LTE || Message: %s from Control Unit \n\n", message);
         }
 
         FileProcess1 = fopen("Logs/processed_commands.txt", "a+");
@@ -278,10 +278,10 @@ void *receiveWiFi(void *socket) {
     while (sock->STOP_WiFi != 1) {
         // printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
-        printf("RX_WiFi: %d\n", RX_WiFi);
-        printf("RX_LTE: %d\n", RX_LTE);
-        printf("STOP_WiFi: %d\n", sock->STOP_WiFi);
-        printf("STOP_LTE: %d\n", sock->STOP_LTE);
+        //printf("RX_WiFi: %d\n", RX_WiFi);
+        //printf("RX_LTE: %d\n", RX_LTE);
+        //printf("STOP_WiFi: %d\n", sock->STOP_WiFi);
+        //printf("STOP_LTE: %d\n", sock->STOP_LTE);
 
         if (RX_WiFi == -1) {
             while (1) {
@@ -304,8 +304,8 @@ void *receiveWiFi(void *socket) {
 
         if (print_COMMANDS == 1) {
             // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
-            printf("WiFi || Message from WiFi received at: %s \n", curr_time);
-            printf("WiFi || Message: %s from Control Unit \n\n", message);
+            //printf("WiFi || Message from WiFi received at: %s \n", curr_time);
+            //printf("WiFi || Message: %s from Control Unit \n\n", message);
         }
 
         FileProcess2 = fopen("Logs/processed_commands.txt", "a+");

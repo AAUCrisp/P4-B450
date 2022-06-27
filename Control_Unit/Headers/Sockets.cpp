@@ -359,7 +359,7 @@ void *transmit_command_LTE(void *socket, char *message) {
     Sockets *sock = (Sockets *)socket;
     int LenLTE = sizeof(sock->Client_act_LTE);
 
-    printf("\n\n  Sending || LTE (Actuator) || Actuator Socket: %d\n", sock->act_LTE);
+    // printf("\n\n  Sending || LTE (Actuator) || Actuator Socket: %d\n", sock->act_LTE);
 
     if (print_act_out == 1) {
     }
@@ -367,9 +367,9 @@ void *transmit_command_LTE(void *socket, char *message) {
     TX_LTE = sendto(sock->act_LTE, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_LTE, LenLTE);
     send_time = Timestamp();
 
-    printf("  Sending || LTE (Actuator) || Sending Command to Actuator: %s %s\n", message, send_time);
-    // printf("  Sending || LTE (Actuator) || Message transmitted at: %s\n\n", send_time);
-    printf("I am sending via LTE\n");
+    // printf("  Sending || LTE (Actuator) || Sending Command to Actuator: %s %s\n", message, send_time);
+    //  printf("  Sending || LTE (Actuator) || Message transmitted at: %s\n\n", send_time);
+    //  printf("I am sending via LTE\n");
 
     if (print_act_out == 1 || message_only == 1) {
     }
@@ -382,16 +382,16 @@ void *transmit_command_WiFi(void *socket, char *message) {
     Sockets *sock = (Sockets *)socket;
     int LenWiFi = sizeof(sock->Client_act_WiFi);
 
-    printf("\n\n  Sending || WiFi (Actuator) || Actuator Socket: %d\n", sock->act_WiFi);
+    // printf("\n\n  Sending || WiFi (Actuator) || Actuator Socket: %d\n", sock->act_WiFi);
 
     if (print_act_out == 1) {
     }
 
     TX_WiFi = sendto(sock->act_WiFi, message, BUFFER, 0, (struct sockaddr *)&sock->Client_act_WiFi, LenWiFi);
     send_time = Timestamp();
-    printf("  Sending || WiFi (Actuator) || Sending Command to Actuator: %s %s\n", message, send_time);
-    // printf("  Sending || WiFi (Actuator) || Message transmitted at: %s\n\n", send_time);
-    printf("I am sending via WiFi\n");
+    // printf("  Sending || WiFi (Actuator) || Sending Command to Actuator: %s %s\n", message, send_time);
+    //  printf("  Sending || WiFi (Actuator) || Message transmitted at: %s\n\n", send_time);
+    //  printf("I am sending via WiFi\n");
 
     if (print_act_out == 1 || message_only == 1) {
     }
@@ -411,20 +411,20 @@ void *transmit_command(void *socket, char *message, int gsv) {
     }
     // int LenWiFi = sizeof(sock->Client_act_WiFi); Burde ik stå her
 
-    cout << "  Sending || Global Signal Variable is: " << gsv << endl;
+    // cout << "  Sending || Global Signal Variable is: " << gsv << endl;
     if (print_act_out == 1) {
     }
 
     if ((gsv == 0) || (gsv == 1)) {
         if (print_act_out == 1) {
         }
-        cout << "  Sending || Transfer command via WiFi" << endl;
+        //cout << "  Sending || Transfer command via WiFi" << endl;
         transmit_command_WiFi(sock, message);
     }
     if ((gsv == 0) || (gsv == 2)) {
         if (print_act_out == 1) {
         }
-        cout << "  Sending || Transfer command via LTE" << endl;
+        //cout << "  Sending || Transfer command via LTE" << endl;
         transmit_command_LTE(sock, message);
     }
     if (print_act_out == 1) {
