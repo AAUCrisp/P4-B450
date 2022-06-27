@@ -237,7 +237,8 @@ void* LTE_command(void* socket) {
             pthread_exit(NULL);
             return 0;
         }
-        transmit_command(sock, LTEmsg, gsv);
+        // transmit_command(sock, LTEmsg, gsv); // Original function to use
+        transmit_command_test(sock, LTEmsg, gsv);
         char* timeLTE = Timestamp();
         sock->packet_sent_LTE++;
         printf("packets sent LTE: %d\n", sock->packet_sent_LTE);

@@ -96,6 +96,9 @@ void *transmit_command_WiFi(void *socket, char *message);
 
 /* Function to transmit WiFi & LTE packets */
 void *transmit_command(void *socket, char *message, int gsv);
+
+/* Test Function to transmit WiFi & LTE packets */
+void *transmit_command_test(void *socket, char *message, int gsv);
 /* ========== TRANSMIT COMMANDS ACTUATOR ==========*/
 
 

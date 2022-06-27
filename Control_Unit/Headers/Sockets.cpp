@@ -178,7 +178,6 @@ void *receiveLTE(void *socket) {
         printf("\n\n  Incoming || LTE (Sensor) || Receive Socket: %d\n", sock->sockLTE_RECEIVER);
     }
 
-
     sock->RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message_LTE, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
     if (sock->RX_LTE == -1) {
         return 0;
@@ -208,7 +207,6 @@ void *receiveWiFi(void *socket) {
     if (print_sen_in == 1) {
         printf("\n\n  Incoming || WiFi (Sensor) || Receive Socket: %d\n", sock->sockWiFi_RECEIVER);
     }
-
 
     sock->RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message_WiFi, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
     if (sock->RX_WiFi == -1) {
@@ -418,13 +416,55 @@ void *transmit_command(void *socket, char *message, int gsv) {
     if ((gsv == 0) || (gsv == 1)) {
         if (print_act_out == 1) {
         }
-        //cout << "  Sending || Transfer command via WiFi" << endl;
+        // cout << "  Sending || Transfer command via WiFi" << endl;
         transmit_command_WiFi(sock, message);
     }
     if ((gsv == 0) || (gsv == 2)) {
         if (print_act_out == 1) {
         }
-        //cout << "  Sending || Transfer command via LTE" << endl;
+        // cout << "  Sending || Transfer command via LTE" << endl;
+        transmit_command_LTE(sock, message);
+    }
+    if (print_act_out == 1) {
+        cout << "\n  ======== end ==========\n  ==== SEND COMMAND ====\n  ======================\n"
+             << endl;
+    }
+
+    return 0;
+}
+
+/**
+ * @brief Test function of the same function as transmit_command( ); 
+ * @param socket
+ * @param message
+ * @param gsv
+ * @return void*
+ */
+void *transmit_command_test(void *socket, char *message, int gsv) {
+    Sockets *sock = (Sockets *)socket;
+
+    if (print_act_out == 1) {
+        // cout << "  ======================\n  ==== SEND COMMAND ====\n  ======= entry ========\n" << endl;
+        // printf("\n\n  Sending || WiFi (Actuator) || Sockets in Transmit Command: %d\n", testsock->act_WiFi);
+        // printf("\n  Sending || LTE (Actuator) || Sockets in Transmit Command: %d\n", testsock->act_LTE);
+        // cout << "\n  Sending || Mutual Transmit Function || Message passed to function: \n"<< message << endl;
+    }
+    // int LenWiFi = sizeof(sock->Client_act_WiFi); Burde ik stå her
+
+    // cout << "  Sending || Global Signal Variable is: " << gsv << endl;
+    if (print_act_out == 1) {
+    }
+
+    if ((gsv == 0) || (gsv == 1)) {
+        if (print_act_out == 1) {
+        }
+        // cout << "  Sending || Transfer command via WiFi" << endl;
+        transmit_command_WiFi(sock, message);
+    }
+    if ((gsv == 0) || (gsv == 2)) {
+        if (print_act_out == 1) {
+        }
+        // cout << "  Sending || Transfer command via LTE" << endl;
         transmit_command_LTE(sock, message);
     }
     if (print_act_out == 1) {
