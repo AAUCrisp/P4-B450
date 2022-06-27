@@ -61,7 +61,6 @@ void* WiFi_command(void* socket) {
 
     while (sock->STOP_WiFi != 1) {
         message = (void*)receiveWiFi((void*)sock);
-        sock->packet_sent_WiFi++;
         printf("WiFi - RX_LTE: %d\n", sock->RX_LTE);
         printf("WiFi - RX_WiFi: %d\n", sock->RX_WiFi);
         printf("WiFi - STOP_LTE: %d\n", sock->STOP_LTE);
@@ -119,6 +118,8 @@ void* WiFi_command(void* socket) {
         }
         transmit_command(sock, WiFimsg, gsv);
         char* timeWiFi = Timestamp();
+        sock->packet_sent_WiFi++;
+        printf("packets sent WiFi: %d\n", sock->packet_sent_WiFi);
 
         /* Stop timing code execution of code */
         clock_gettime(CLOCK_REALTIME, &end);
@@ -186,7 +187,6 @@ void* LTE_command(void* socket) {
 
     while (sock->STOP_LTE != 1) {
         message = (void*)receiveLTE((void*)sock);
-        sock->packet_sent_LTE++;
         printf("LTE - RX_LTE: %d\n", sock->RX_LTE);
         printf("LTE - RX_WiFi: %d\n", sock->RX_WiFi);
         printf("LTE - STOP_LTE: %d\n", sock->STOP_LTE);
@@ -240,6 +240,8 @@ void* LTE_command(void* socket) {
         }
         transmit_command(sock, LTEmsg, gsv);
         char* timeLTE = Timestamp();
+        sock->packet_sent_LTE++;
+        printf("packets sent LTE: %d\n", sock->packet_sent_LTE);
 
         /* Stop timing code execution of code */
         clock_gettime(CLOCK_REALTIME, &end);
