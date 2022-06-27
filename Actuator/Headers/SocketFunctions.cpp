@@ -212,12 +212,6 @@ void *receiveLTE(void *socket) {
         printf("RX_WiFi: %d\n", RX_WiFi);
         printf("STOP_LTE: %d\n", sock->STOP_LTE);
         printf("STOP_WiFi: %d\n", sock->STOP_WiFi);
-        Timestamp();
-        sock->packet_count_LTE++;
-
-        fp1 = fopen("Logs/log.txt", "a+");
-        fprintf(fp1, "%s %s %s\n", message, curr_time, "LTE");
-        fclose(fp1);
 
         if (RX_LTE == -1) {
             pthread_exit(NULL);
@@ -225,6 +219,12 @@ void *receiveLTE(void *socket) {
         } else {
             sock->STOP_LTE = 0;
         }
+        Timestamp();
+        sock->packet_count_LTE++;
+
+        fp1 = fopen("Logs/log.txt", "a+");
+        fprintf(fp1, "%s %s %s\n", message, curr_time, "LTE");
+        fclose(fp1);
 
         if (print_COMMANDS == 1) {
             // printf("LTE || LTE-Thread id = %ld\n", pthread_self());
@@ -282,12 +282,6 @@ void *receiveWiFi(void *socket) {
         printf("RX_LTE: %d\n", RX_LTE);
         printf("STOP_WiFi: %d\n", sock->STOP_WiFi);
         printf("STOP_LTE: %d\n", sock->STOP_LTE);
-        Timestamp();
-        sock->packet_count_WiFi++;
-
-        fp2 = fopen("Logs/log.txt", "a+");
-        fprintf(fp2, "%s %s %s\n", message, curr_time, "WiFi");
-        fclose(fp2);
 
         if (RX_WiFi == -1) {
             while (1) {
@@ -300,6 +294,12 @@ void *receiveWiFi(void *socket) {
         } else {
             sock->STOP_WiFi = 0;
         }
+        Timestamp();
+        sock->packet_count_WiFi++;
+
+        fp2 = fopen("Logs/log.txt", "a+");
+        fprintf(fp2, "%s %s %s\n", message, curr_time, "WiFi");
+        fclose(fp2);
 
         if (print_COMMANDS == 1) {
             // printf("WiFi || WiFi-Thread id = %ld\n", pthread_self());
