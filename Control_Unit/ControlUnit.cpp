@@ -154,7 +154,7 @@ int main(int argc, char* argv[]) {
     printf("    Total failed counts via LTE:           %d\n", sock.fail_count_LTE);
     printf("    Total packets received via WiFi:       %d\n", sock.packet_count_WiFi);
     printf("    Total packets received via LTE:        %d\n", sock.packet_count_LTE);
-    printf("    Total packets transmitted via WiFi:    %d\n", sock.packet_count_WiFi);
-    printf("    Total packets transmitted via LTE:     %d\n", sock.packet_count_LTE);
+    printf("    Total packets transmitted via WiFi:    %d\n", sock.packet_sent_WiFi);
+    printf("    Total packets transmitted via LTE:     %d\n", sock.packet_sent_LTE);
     printf("\n===================================\n\n");
 }

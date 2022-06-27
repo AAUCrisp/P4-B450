@@ -224,7 +224,7 @@ int main(int argc, char* argv[]) {
         printf("________________________\n\n");
         printf("Packet Summary:\n");
         printf("    Total failed counts:                   %d\n", fail_count);
-        printf("    Total counts:                           %d\n", count);
+        printf("    Total counts:                          %d\n", count);
         printf("    Total packets transmitted via WiFi:    %d\n", packet_count_WiFi);
         printf("    Total packets transmitted via LTE:     %d\n", packet_count_LTE);
         printf("    Loop count LTE:                        %d\n", hvormangegangeerjegherWiFi);
