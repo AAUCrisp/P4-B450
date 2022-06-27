@@ -221,7 +221,10 @@ void *receiveLTE(void *socket) {
             sock->STOP_LTE = 0;
         }
         Timestamp();
-
+        if (RX_LTE == -1) {
+            pthread_exit(NULL);
+            return 0;
+        }
         fp1 = fopen("Logs/log.txt", "a+");
         fprintf(fp1, "%s %s %s\n", message, curr_time, "LTE");
         fclose(fp1);
@@ -255,7 +258,6 @@ void *receiveLTE(void *socket) {
             elapsed = 0;
         }
         sock->Execution_Sum_LTE += elapsed;
-        
     }
     return 0;
 }
@@ -290,7 +292,7 @@ void *receiveWiFi(void *socket) {
                 if (RX_WiFi == -1 && RX_LTE == -1) {
                     return 0;
                     sock->STOP_WiFi = 1;
-                } 
+                }
             }
             // return 0;
         } else {
@@ -298,6 +300,9 @@ void *receiveWiFi(void *socket) {
         }
         Timestamp();
 
+        if (RX_WiFi == -1) {
+            return 0;
+        }
         fp2 = fopen("Logs/log.txt", "a+");
         fprintf(fp2, "%s %s %s\n", message, curr_time, "WiFi");
         fclose(fp2);
@@ -330,7 +335,6 @@ void *receiveWiFi(void *socket) {
             elapsed = 0;
         }
         sock->Execution_Sum_WiFi += elapsed;
-        
     }
     return 0;
 }

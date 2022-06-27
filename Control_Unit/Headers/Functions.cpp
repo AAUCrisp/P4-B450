@@ -93,6 +93,7 @@ void* WiFi_command(void* socket) {
         } else {
             coordinate = convert_to_coordinate(data, use_hex);
 
+            sock->packet_sent_WiFi++;
             packet_ID = to_string(sock->packet_sent_WiFi);
             packet_ID.append(": ");
             packet_ID.append(coordinate);
@@ -118,7 +119,6 @@ void* WiFi_command(void* socket) {
         }
         transmit_command(sock, WiFimsg, gsv);
         char* timeWiFi = Timestamp();
-        sock->packet_sent_WiFi++;
         printf("packets sent WiFi: %d\n", sock->packet_sent_WiFi);
 
         /* Stop timing code execution of code */
@@ -134,13 +134,12 @@ void* WiFi_command(void* socket) {
             elapsed = 0;
         }
         sock->Execution_Sum_WiFi += elapsed;
-        //sock->packet_count_WiFi++;
+        // sock->packet_count_WiFi++;
 
         /* Writing to logging file */
         fp3 = fopen("Logs/commands_log.txt", "a+");
         fprintf(fp3, "%s %s %s\n", WiFimsg, timeWiFi, "WiFi");
         fclose(fp3);
-        printf("==========\nRX_WiFi: %d\n==========\n", sock->RX_WiFi);
     }
     return 0;
 }
@@ -256,7 +255,7 @@ void* LTE_command(void* socket) {
             elapsed = 0;
         }
         sock->Execution_Sum_LTE += elapsed;
-        //sock->packet_count_LTE++;
+        // sock->packet_count_LTE++;
 
         /* Writing to logging file */
         fp4 = fopen("Logs/commands_log.txt", "a+");
