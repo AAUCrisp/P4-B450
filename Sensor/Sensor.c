@@ -169,14 +169,14 @@ int main(int argc, char* argv[]) {
             if (strcmp(gsv, B) == 0 || strcmp(gsv, L) == 0) {
                 transmitLTE(&sock, (char*)buffer);
                 hvormangegangeerjegherLTE++;
-                printf("Loop count LTE: %d\n", hvormangegangeerjegherWiFi);
+                //printf("Loop count LTE: %d\n", hvormangegangeerjegherWiFi);
                 packet_count_LTE++;
             }
 
             if (strcmp(gsv, B) == 0 || strcmp(gsv, W) == 0) {
                 transmitWiFi(&sock, (char*)buffer);
                 hvormangegangeerjegherWiFi++;
-                printf("Loop count WiFi: %d\n", hvormangegangeerjegherWiFi);
+                //printf("Loop count WiFi: %d\n", hvormangegangeerjegherWiFi);
                 packet_count_WiFi++;
             }
 
