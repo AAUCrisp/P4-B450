@@ -58,10 +58,10 @@ int main(int argc, char* argv[]) {
     // const char* IP_WiFi = "192.168.1.143";  // IP of Actuator
     // const char* IP_WiFi = "192.168.1.160";  // IP of Sensor
 
-    const char* LTE = "lo";                    // Test loopback
-    const char* WiFi = "lo";                   // Test loopback
-    const char* IP_LTE = "127.0.0.1";          // Test loopback
-    const char* IP_WiFi = "127.0.0.1";         // Test loopback
+    const char* LTE = "lo";             // Test loopback
+    const char* WiFi = "lo";            // Test loopback
+    const char* IP_LTE = "127.0.0.1";   // Test loopback
+    const char* IP_WiFi = "127.0.0.1";  // Test loopback
     // const char* LTE = "enp0s3";             // Test loopback
     // const char* WiFi = "enp0s3";            // Test loopback
     // const char* IP_LTE = "192.168.0.134";   // Test loopback
@@ -169,15 +169,15 @@ int main(int argc, char* argv[]) {
             if (strcmp(gsv, B) == 0 || strcmp(gsv, L) == 0) {
                 transmitLTE(&sock, (char*)buffer);
                 hvormangegangeerjegherLTE++;
-                //printf("Loop count LTE: %d\n", hvormangegangeerjegherWiFi);
-                packet_count_LTE++;
+                // printf("Loop count LTE: %d\n", hvormangegangeerjegherWiFi);
+                // packet_count_LTE++;
             }
 
             if (strcmp(gsv, B) == 0 || strcmp(gsv, W) == 0) {
                 transmitWiFi(&sock, (char*)buffer);
                 hvormangegangeerjegherWiFi++;
-                //printf("Loop count WiFi: %d\n", hvormangegangeerjegherWiFi);
-                packet_count_WiFi++;
+                // printf("Loop count WiFi: %d\n", hvormangegangeerjegherWiFi);
+                // packet_count_WiFi++;
             }
 
             /* Stop timing code execution of code */
@@ -227,8 +227,8 @@ int main(int argc, char* argv[]) {
         printf("    Total counts:                          %d\n", count);
         printf("    Total packets transmitted via WiFi:    %d\n", packet_count_WiFi);
         printf("    Total packets transmitted via LTE:     %d\n", packet_count_LTE);
-        printf("    Loop count LTE:                        %d\n", hvormangegangeerjegherWiFi);
-        printf("    Loop count WiFi:                       %d\n", hvormangegangeerjegherWiFi);
+        // printf("    Loop count LTE:                        %d\n", hvormangegangeerjegherWiFi);
+        // printf("    Loop count WiFi:                       %d\n", hvormangegangeerjegherWiFi);
         printf("\n===================================\n\n");
     }
 }
