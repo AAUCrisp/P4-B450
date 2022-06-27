@@ -35,6 +35,8 @@ typedef struct _sockets {
     long double Execution_Sum_WiFi;
     int STOP_LTE;
     int STOP_WiFi;
+    int packet_sent_LTE;
+    int packet_sent_WiFi;
 
 } Sockets;
 

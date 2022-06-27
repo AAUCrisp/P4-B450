@@ -59,6 +59,8 @@ typedef struct _sockets {
     long double Execution_Sum_WiFi;
     int STOP_LTE;
     int STOP_WiFi;
+    int packet_sent_LTE;
+    int packet_sent_WiFi;
 
 } Sockets;
 
@@ -182,6 +184,7 @@ void *receiveLTE(void *socket) {
         return 0;
     }
     Timestamp();
+    sock->packet_count_LTE++;
 
     /* Open logging file */
     fp1 = fopen("Logs/log.txt", "a+");
@@ -212,6 +215,7 @@ void *receiveWiFi(void *socket) {
         return 0;
     }
     Timestamp();
+    sock->packet_count_WiFi++;
 
     /* Open logging file */
     fp2 = fopen("Logs/log.txt", "a+");

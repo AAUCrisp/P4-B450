@@ -57,9 +57,11 @@ void* WiFi_command(void* socket) {
     sock->fail_count_WiFi = 0;
     sock->Execution_Sum_WiFi = 0;
     sock->STOP_WiFi = 0;
+    sock->packet_sent_LTE = 0;
 
     while (sock->STOP_WiFi != 1) {
         message = (void*)receiveWiFi((void*)sock);
+        sock->packet_sent_WiFi++;
         printf("WiFi - RX_LTE: %d\n", sock->RX_LTE);
         printf("WiFi - RX_WiFi: %d\n", sock->RX_WiFi);
         printf("WiFi - STOP_LTE: %d\n", sock->STOP_LTE);
@@ -92,10 +94,9 @@ void* WiFi_command(void* socket) {
         } else {
             coordinate = convert_to_coordinate(data, use_hex);
 
-            packet_ID = to_string(count);
+            packet_ID = to_string(sock->packet_sent_WiFi);
             packet_ID.append(": ");
             packet_ID.append(coordinate);
-            count++;
         }
         if (message_only == 1) {
             cout << "  WiFi Command Function || Message Parsed from Sockets as INT is: " << data << endl;
@@ -112,7 +113,7 @@ void* WiFi_command(void* socket) {
         /* Read from shared memory, pass to transmit function */
         int gsv = atoi(GSV_read);  // Convert to integer
         // printf("WiFi converted GSV: %s\n", (char*)GSV_read);
-        
+
         if (sock->RX_WiFi == -1) {
             return 0;
         }
@@ -132,7 +133,7 @@ void* WiFi_command(void* socket) {
             elapsed = 0;
         }
         sock->Execution_Sum_WiFi += elapsed;
-        sock->packet_count_WiFi++;
+        //sock->packet_count_WiFi++;
 
         /* Writing to logging file */
         fp3 = fopen("Logs/commands_log.txt", "a+");
@@ -181,9 +182,11 @@ void* LTE_command(void* socket) {
     sock->fail_count_LTE = 0;
     sock->Execution_Sum_LTE = 0;
     sock->STOP_LTE = 0;
+    sock->packet_sent_LTE = 0;
 
     while (sock->STOP_LTE != 1) {
         message = (void*)receiveLTE((void*)sock);
+        sock->packet_sent_LTE++;
         printf("LTE - RX_LTE: %d\n", sock->RX_LTE);
         printf("LTE - RX_WiFi: %d\n", sock->RX_WiFi);
         printf("LTE - STOP_LTE: %d\n", sock->STOP_LTE);
@@ -211,10 +214,9 @@ void* LTE_command(void* socket) {
         } else {
             coordinate = convert_to_coordinate(data, use_hex);
 
-            packet_ID = to_string(count);
+            packet_ID = to_string(sock->packet_sent_LTE);
             packet_ID.append(": ");
             packet_ID.append(coordinate);
-            count++;
         }
         if (message_only == 1) {
             cout << "  LTE Command Function || Message Parsed from Sockets as INT is: " << data << endl;
@@ -252,13 +254,12 @@ void* LTE_command(void* socket) {
             elapsed = 0;
         }
         sock->Execution_Sum_LTE += elapsed;
-        sock->packet_count_LTE++;
+        //sock->packet_count_LTE++;
 
         /* Writing to logging file */
         fp4 = fopen("Logs/commands_log.txt", "a+");
         fprintf(fp4, "%s %s %s\n", LTEmsg, timeLTE, "LTE");
         fclose(fp4);
-        printf("==========\nRX_LTE: %d\n==========\n", sock->RX_LTE);
     }
     return 0;
 }

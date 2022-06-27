@@ -149,9 +149,12 @@ int main(int argc, char* argv[]) {
     printf("________________________\n\n");
     printf("Total Time:  \n            Hours: %ld  \n          Minutes: %ld  \n          Seconds: %ld \n     Milliseconds: %ld\n", hours, minutes, seconds2, milliseconds);
     printf("________________________\n\n");
-    printf("Total failed counts via WiFi:       %d\n", sock.fail_count_WiFi);
-    printf("Total failed counts via LTE:        %d\n", sock.fail_count_LTE);
-    printf("Total packets received via WiFi:    %d\n", sock.packet_count_WiFi);
-    printf("Total packets received via LTE:     %d\n", sock.packet_count_LTE);
+    printf("Packet Summary:\n");
+    printf("    Total failed counts via WiFi:          %d\n", sock.fail_count_WiFi);
+    printf("    Total failed counts via LTE:           %d\n", sock.fail_count_LTE);
+    printf("    Total packets received via WiFi:       %d\n", sock.packet_count_WiFi);
+    printf("    Total packets received via LTE:        %d\n", sock.packet_count_LTE);
+    printf("    Total packets transmitted via WiFi:    %d\n", sock.packet_count_WiFi);
+    printf("    Total packets transmitted via LTE:     %d\n", sock.packet_count_LTE);
     printf("\n===================================\n\n");
 }
