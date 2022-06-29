@@ -179,11 +179,11 @@ void *receiveLTE(void *socket) {
     }
 
     sock->RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message_LTE, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
-    sock->packet_count_LTE++;
     if (sock->RX_LTE == -1) {
         return 0;
     }
     Timestamp();
+    sock->packet_count_LTE++;
 
     /* Open logging file */
     fp1 = fopen("Logs/log.txt", "a+");

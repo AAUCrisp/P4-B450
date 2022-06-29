@@ -7,8 +7,8 @@
 #include "shm_read_write.h"
 
 /* Troubleshooting Options */
-int print_GSV = 0;
-int print_out = 0;
+int print_GSV = 1;
+int print_out = 1;
 
 /* Define buffers & PORT number */
 #define BUFFER 1024
