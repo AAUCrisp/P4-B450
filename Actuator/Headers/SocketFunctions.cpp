@@ -209,6 +209,7 @@ void *receiveLTE(void *socket) {
     sock->fail_count_LTE = 0;
     sock->Execution_Sum_LTE = 0;
     sock->STOP_LTE = 0;
+    printf("\n");
 
     while (sock->STOP_LTE != 1) {
         // printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
@@ -226,7 +227,6 @@ void *receiveLTE(void *socket) {
         }
         Timestamp();
         sock->packet_count_LTE++;
-        printf("\r\n \r");
         printf("\rtotal packets LTE: %d", sock->packet_count_LTE);
         fflush(stdout);
         fp1 = fopen("Logs/log.txt", "a+");
