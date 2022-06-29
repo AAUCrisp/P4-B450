@@ -61,10 +61,10 @@ void* WiFi_command(void* socket) {
 
     while (sock->STOP_WiFi != 1) {
         message = (void*)receiveWiFi((void*)sock);
-        //printf("WiFi - RX_LTE: %d\n", sock->RX_LTE);
-        //printf("WiFi - RX_WiFi: %d\n", sock->RX_WiFi);
-        //printf("WiFi - STOP_LTE: %d\n", sock->STOP_LTE);
-        //printf("WiFi - STOP_WiFi: %d\n", sock->STOP_WiFi);
+        // printf("WiFi - RX_LTE: %d\n", sock->RX_LTE);
+        // printf("WiFi - RX_WiFi: %d\n", sock->RX_WiFi);
+        // printf("WiFi - STOP_LTE: %d\n", sock->STOP_LTE);
+        // printf("WiFi - STOP_WiFi: %d\n", sock->STOP_WiFi);
 
         if (sock->RX_WiFi == -1) {
             while (1) {
@@ -185,10 +185,10 @@ void* LTE_command(void* socket) {
 
     while (sock->STOP_LTE != 1) {
         message = (void*)receiveLTE((void*)sock);
-        //printf("LTE - RX_LTE: %d\n", sock->RX_LTE);
-        //printf("LTE - RX_WiFi: %d\n", sock->RX_WiFi);
-        //printf("LTE - STOP_LTE: %d\n", sock->STOP_LTE);
-        //printf("LTE - STOP_WiFi: %d\n", sock->STOP_WiFi);
+        // printf("LTE - RX_LTE: %d\n", sock->RX_LTE);
+        // printf("LTE - RX_WiFi: %d\n", sock->RX_WiFi);
+        // printf("LTE - STOP_LTE: %d\n", sock->STOP_LTE);
+        // printf("LTE - STOP_WiFi: %d\n", sock->STOP_WiFi);
 
         if (sock->RX_LTE == -1) {
             pthread_exit(NULL);
@@ -212,6 +212,7 @@ void* LTE_command(void* socket) {
         } else {
             coordinate = convert_to_coordinate(data, use_hex);
 
+            sock->packet_sent_LTE++;
             packet_ID = to_string(sock->packet_sent_LTE);
             packet_ID.append(": ");
             packet_ID.append(coordinate);
@@ -236,10 +237,9 @@ void* LTE_command(void* socket) {
             pthread_exit(NULL);
             return 0;
         }
-        //transmit_command(sock, LTEmsg, gsv); // Original function to use
+        // transmit_command(sock, LTEmsg, gsv); // Original function to use
         transmit_command_test(sock, LTEmsg, gsv);
         char* timeLTE = Timestamp();
-        sock->packet_sent_LTE++;
         printf("packets sent LTE: %d\n", sock->packet_sent_LTE);
 
         /* Stop timing code execution of code */

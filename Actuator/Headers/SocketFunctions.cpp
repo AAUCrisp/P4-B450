@@ -211,6 +211,8 @@ void *receiveLTE(void *socket) {
     sock->Execution_Sum_LTE = 0;
     sock->STOP_LTE = 0;
 
+    char testcountLTE[1024];
+
     while (sock->STOP_LTE != 1) {
         // printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
         RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
@@ -226,6 +228,9 @@ void *receiveLTE(void *socket) {
             sock->STOP_LTE = 0;
         }
         Timestamp();
+        strcpy(testcountLTE, message);
+        sscanf(message, "%[^:]", testcountLTE);
+        printf("testcountLTE: %s\n", testcountLTE);
         sock->packet_count_LTE++;
         printf("total packets LTE: %d\n", sock->packet_count_LTE);
         fflush(stdout);
@@ -282,6 +287,8 @@ void *receiveWiFi(void *socket) {
     sock->Execution_Sum_WiFi = 0;
     sock->STOP_WiFi = 0;
 
+    char testcountWiFi[1024];
+
     while (sock->STOP_WiFi != 1) {
         // printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
         RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message2, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
@@ -302,6 +309,9 @@ void *receiveWiFi(void *socket) {
             sock->STOP_WiFi = 0;
         }
         Timestamp();
+        strcpy(testcountWiFi, message2);
+        sscanf(message2, "%[^:]", testcountWiFi);
+        printf("testcountLTE: %s\n", testcountWiFi);
         sock->packet_count_WiFi++;
         printf("total packets WiFi: %d\n", sock->packet_count_WiFi);
         fflush(stdout);
