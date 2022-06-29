@@ -24,8 +24,8 @@ typedef struct _sockets {
     int STOP_LTE;
     int STOP_WiFi;
 
-    char test1LTE;
-    char test2WiFi;
+    char test1LTE[1024];
+    char test2WiFi[1024];
 
 } Sockets;
 
