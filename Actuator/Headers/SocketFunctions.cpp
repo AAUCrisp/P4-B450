@@ -53,6 +53,9 @@ typedef struct _sockets {
     int STOP_LTE;
     int STOP_WiFi;
 
+    char test1LTE;
+    char test2WiFi;
+
 } Sockets;
 
 /* Troubleshooting Options */
@@ -229,8 +232,8 @@ void *receiveLTE(void *socket) {
         }
         Timestamp();
         strcpy(testcountLTE, message);
-        sscanf(message, "%[^:]", testcountLTE);
-        printf("testcountLTE: %s\n", testcountLTE);
+        sscanf(message, "%[^:]", sock->test1LTE);
+        printf("testcountLTE: %s\n", sock->test1LTE);
         // sock->packet_count_LTE++;
         // printf("total packets LTE: %d\n", sock->packet_count_LTE);
         fflush(stdout);
