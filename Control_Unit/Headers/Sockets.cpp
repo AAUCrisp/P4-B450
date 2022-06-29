@@ -175,6 +175,7 @@ void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *
 }
 
 /* Function to receive random integer via LTE */
+char lolcountLTE[1024];
 void *receiveLTE(void *socket) {
     Sockets *sock = (Sockets *)socket;
     unsigned int LenLTE = sizeof(sock->ServerLTE_RECEIVER);
@@ -188,7 +189,11 @@ void *receiveLTE(void *socket) {
         return 0;
     }
     Timestamp();
-    sock->packet_count_LTE++;
+    sscanf(message, "%[^:]", lolcountLTE);
+    sock->packet_count_LTE = atoi(lolcountLTE);
+    printf("Packets LTE: %d\n", sock->packet_count_LTE);
+
+    // sock->packet_count_LTE++;
 
     /* Open logging file */
     fp1 = fopen("Logs/log.txt", "a+");
@@ -205,6 +210,7 @@ void *receiveLTE(void *socket) {
 }
 
 /* Function to receive random integer via WiFi */
+char lolcountWiFi[1024];
 void *receiveWiFi(void *socket) {
     Sockets *sock = (Sockets *)socket;
     unsigned int LenWiFi = sizeof(sock->ServerWiFi_RECEIVER);
@@ -218,7 +224,10 @@ void *receiveWiFi(void *socket) {
         return 0;
     }
     Timestamp();
-    sock->packet_count_WiFi++;
+    sscanf(message2, "%[^:]", lolcountWiFi);
+    sock->packet_count_WiFi = atoi(lolcountWiFi);
+    printf("Packets WiFi: %d\n", sock->packet_count_WiFi);
+    // sock->packet_count_WiFi++;
 
     /* Open logging file */
     fp2 = fopen("Logs/log.txt", "a+");

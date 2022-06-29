@@ -59,6 +59,8 @@ void* WiFi_command(void* socket) {
     sock->STOP_WiFi = 0;
     sock->packet_sent_WiFi = 0;
 
+    char lol2countWiFi[1024];
+
     while (sock->STOP_WiFi != 1) {
         message = (void*)receiveWiFi((void*)sock);
         // printf("WiFi - RX_LTE: %d\n", sock->RX_LTE);
@@ -92,7 +94,7 @@ void* WiFi_command(void* socket) {
         } else {
             coordinate = convert_to_coordinate(data, use_hex);
 
-            sock->packet_sent_WiFi++;
+            //sock->packet_sent_WiFi++;
             packet_ID = to_string(sock->packet_sent_WiFi);
             packet_ID.append(": ");
             packet_ID.append(coordinate);
@@ -118,7 +120,6 @@ void* WiFi_command(void* socket) {
         }
         transmit_command(sock, WiFimsg, gsv);
         char* timeWiFi = Timestamp();
-        printf("packets sent WiFi: %d\n", sock->packet_sent_WiFi);
 
         /* Stop timing code execution of code */
         clock_gettime(CLOCK_REALTIME, &end);
@@ -139,6 +140,10 @@ void* WiFi_command(void* socket) {
         fp3 = fopen("Logs/commands_log.txt", "a+");
         fprintf(fp3, "%s %s %s\n", WiFimsg, timeWiFi, "WiFi");
         fclose(fp3);
+        sscanf(timeWiFi, "%[^:]", lol2countWiFi);
+        sock->packet_count_WiFi = atoi(lol2countWiFi);
+        printf("packets sent WiFi: %d\n", sock->packet_sent_WiFi);
+        
     }
     return 0;
 }
@@ -183,6 +188,8 @@ void* LTE_command(void* socket) {
     sock->STOP_LTE = 0;
     sock->packet_sent_LTE = 0;
 
+    char lol2countLTE[1024];
+
     while (sock->STOP_LTE != 1) {
         message = (void*)receiveLTE((void*)sock);
         // printf("LTE - RX_LTE: %d\n", sock->RX_LTE);
@@ -212,7 +219,7 @@ void* LTE_command(void* socket) {
         } else {
             coordinate = convert_to_coordinate(data, use_hex);
 
-            sock->packet_sent_LTE++;
+            //sock->packet_sent_LTE++;
             packet_ID = to_string(sock->packet_sent_LTE);
             packet_ID.append(": ");
             packet_ID.append(coordinate);
@@ -240,7 +247,6 @@ void* LTE_command(void* socket) {
         // transmit_command(sock, LTEmsg, gsv); // Original function to use
         transmit_command_test(sock, LTEmsg, gsv);
         char* timeLTE = Timestamp();
-        printf("packets sent LTE: %d\n", sock->packet_sent_LTE);
 
         /* Stop timing code execution of code */
         clock_gettime(CLOCK_REALTIME, &end);
@@ -261,6 +267,9 @@ void* LTE_command(void* socket) {
         fp4 = fopen("Logs/commands_log.txt", "a+");
         fprintf(fp4, "%s %s %s\n", LTEmsg, timeLTE, "LTE");
         fclose(fp4);
+        sscanf(LTEmsg, "%[^:]", lol2countLTE);
+        sock->packet_count_LTE = atoi(lol2countLTE);
+        printf("packets sent LTE: %d\n", sock->packet_sent_LTE);
     }
     return 0;
 }
