@@ -141,7 +141,7 @@ void* WiFi_command(void* socket) {
         fprintf(fp3, "%s %s %s\n", WiFimsg, timeWiFi, "WiFi");
         fclose(fp3);
         sscanf(WiFimsg, "%[^:]", lol2countWiFi);
-        sock->packet_count_WiFi = atoi(lol2countWiFi);
+        sock->packet_sent_WiFi = atoi(lol2countWiFi);
         printf("packets sent WiFi: %d\n", sock->packet_sent_WiFi);
         
     }
@@ -268,7 +268,7 @@ void* LTE_command(void* socket) {
         fprintf(fp4, "%s %s %s\n", LTEmsg, timeLTE, "LTE");
         fclose(fp4);
         sscanf(LTEmsg, "%[^:]", lol2countLTE);
-        sock->packet_count_LTE = atoi(lol2countLTE);
+        sock->packet_sent_LTE = atoi(lol2countLTE);
         printf("packets sent LTE: %d\n", sock->packet_sent_LTE);
     }
     return 0;
