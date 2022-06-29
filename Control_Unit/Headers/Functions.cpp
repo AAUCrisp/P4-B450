@@ -143,7 +143,6 @@ void* WiFi_command(void* socket) {
         sscanf(WiFimsg, "%[^:]", lol2countWiFi);
         sock->packet_sent_WiFi = atoi(lol2countWiFi);
         printf("packets sent WiFi: %d\n", sock->packet_sent_WiFi);
-        
     }
     return 0;
 }
@@ -197,12 +196,12 @@ void* LTE_command(void* socket) {
         // printf("LTE - STOP_LTE: %d\n", sock->STOP_LTE);
         // printf("LTE - STOP_WiFi: %d\n", sock->STOP_WiFi);
 
-        if (sock->RX_LTE == -1) {
+        /*if (sock->RX_LTE == -1) {
             pthread_exit(NULL);
             return 0;
         } else {
             sock->STOP_LTE = 0;
-        }
+        }*/
 
         if (troubleshooting_print == 1) {
             cout << "  LTE Command Function || Message Parsed from Sockets (data & timestamp) is: " << (const char*)message << endl;
@@ -261,7 +260,7 @@ void* LTE_command(void* socket) {
             elapsed = 0;
         }
         sock->Execution_Sum_LTE += elapsed;
-        //sock->packet_count_LTE++;
+        // sock->packet_count_LTE++;
 
         /* Writing to logging file */
         fp4 = fopen("Logs/commands_log.txt", "a+");
@@ -270,6 +269,12 @@ void* LTE_command(void* socket) {
         sscanf(LTEmsg, "%[^:]", lol2countLTE);
         sock->packet_sent_LTE = atoi(lol2countLTE);
         printf("packets sent LTE: %d\n", sock->packet_sent_LTE);
+        if (sock->RX_LTE == -1) {
+            pthread_exit(NULL);
+            return 0;
+        } else {
+            sock->STOP_LTE = 0;
+        }
     }
     return 0;
 }
