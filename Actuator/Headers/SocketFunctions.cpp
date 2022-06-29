@@ -311,7 +311,7 @@ void *receiveWiFi(void *socket) {
         Timestamp();
         strcpy(testcountWiFi, message2);
         sscanf(message2, "%[^:]", testcountWiFi);
-        printf("testcountLTE: %s\n", testcountWiFi);
+        printf("testcountWiFi: %s\n", testcountWiFi);
         sock->packet_count_WiFi++;
         printf("total packets WiFi: %d\n", sock->packet_count_WiFi);
         fflush(stdout);
