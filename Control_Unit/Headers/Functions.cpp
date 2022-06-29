@@ -57,7 +57,7 @@ void* WiFi_command(void* socket) {
     sock->fail_count_WiFi = 0;
     sock->Execution_Sum_WiFi = 0;
     sock->STOP_WiFi = 0;
-    sock->packet_sent_LTE = 0;
+    sock->packet_sent_WiFi = 0;
 
     while (sock->STOP_WiFi != 1) {
         message = (void*)receiveWiFi((void*)sock);
