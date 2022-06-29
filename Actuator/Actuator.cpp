@@ -86,6 +86,8 @@ int main() {
     unsigned long seconds = 0;
     unsigned long nanoseconds = 0;
     long double Execution_Average = 0;
+    long double Execution_AverageLTE = 0;
+    long double Execution_AverageWiFi = 0;
 
     sock.Execution_Sum_WiFi = 0;
     sock.Execution_Sum_LTE = 0;
@@ -136,14 +138,18 @@ int main() {
 
     /* Calculation of execution average */
     Execution_Average = (sock.Execution_Sum_WiFi + sock.Execution_Sum_LTE) / (sock.packet_count_WiFi + sock.packet_count_LTE);
+    Execution_AverageLTE = (sock.Execution_Sum_LTE) / (sock.packet_count_LTE);
+    Execution_AverageWiFi = (sock.Execution_Sum_WiFi) / (sock.packet_count_WiFi);
 
     printf("\n\n===================================\n\n");
     printf("Execution time sums:\n");
     printf("    Total Execution Sum:     %Lf sec\n", (sock.Execution_Sum_LTE + sock.Execution_Sum_WiFi));
     printf("     WiFi Execution Sum:     %Lf sec\n", sock.Execution_Sum_WiFi);
     printf("      LTE Execution Sum:     %Lf sec\n\n", sock.Execution_Sum_LTE);
-    printf("Execution time average: \n");
+    printf("Execution time averages: \n");
     printf("    Total Execution average: %Lf sec\n\n", Execution_Average);
+    printf("    Total Execution average: %Lf sec\n\n", Execution_AverageWiFi);
+    printf("    Total Execution average: %Lf sec\n\n", Execution_AverageLTE);
     printf("Total program time: \n");
     printf("    Total time: %f sec\n", time_spent);
     printf("________________________\n\n");
