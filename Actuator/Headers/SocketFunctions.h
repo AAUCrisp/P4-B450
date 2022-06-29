@@ -15,8 +15,8 @@ typedef struct _sockets {
     struct sockaddr_in ClientWiFi_TRANSMITTER;
 
     /* Execution timing variable */
-    int packet_count_LTE;
-    int packet_count_WiFi;
+    char packet_count_LTE[1024];
+    char packet_count_WiFi[1024];
     int fail_count_LTE;
     int fail_count_WiFi;
     long double Execution_Sum_LTE;
