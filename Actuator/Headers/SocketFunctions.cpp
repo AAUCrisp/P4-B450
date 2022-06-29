@@ -232,8 +232,8 @@ void *receiveLTE(void *socket) {
         }
         Timestamp();
         //strcpy(sock->test1LTE, message);
-        sscanf(message, "%[^:]", sock->test1LTE);
-        printf("testcountLTE: %s\n", sock->test1LTE);
+        //sscanf(message, "%[^:]", sock->test1LTE);
+        //printf("testcountLTE: %s\n", sock->test1LTE);
         // sock->packet_count_LTE++;
         // printf("total packets LTE: %d\n", sock->packet_count_LTE);
         fflush(stdout);
