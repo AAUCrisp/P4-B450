@@ -133,8 +133,8 @@ int main(int argc, char *argv[]) {
     const char* LTE = "wwan0"; // Interface for 4G
     const char* WiFi = "wlan0"; // Interface for WiFi
     const char* IP_LTE = "10.20.0.10"; // IP of server
-    //const char* IP_WiFi = "192.168.1.160"; // IP of server
     const char* IP_WiFi = "10.42.0.119"; // IP of Sensor (AP)
+    //const char* IP_WiFi = "192.168.1.160"; // IP of server
 
     //const char* LTE = "lo";              // test loopback
     //const char* WiFi = "lo";             // test loopback
