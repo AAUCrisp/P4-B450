@@ -209,7 +209,7 @@ void *receiveLTE(void *socket) {
     sock->fail_count_LTE = 0;
     sock->Execution_Sum_LTE = 0;
     sock->STOP_LTE = 0;
-    printf("\n");
+    printf("\n ");
 
     while (sock->STOP_LTE != 1) {
         // printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
@@ -281,6 +281,8 @@ void *receiveWiFi(void *socket) {
     sock->fail_count_WiFi = 0;
     sock->Execution_Sum_WiFi = 0;
     sock->STOP_WiFi = 0;
+
+    printf("\n ");
 
     while (sock->STOP_WiFi != 1) {
         // printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
