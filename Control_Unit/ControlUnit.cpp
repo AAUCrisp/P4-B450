@@ -153,9 +153,9 @@ int main(int argc, char* argv[]) {
     printf("     WiFi Execution Sum:     %Lf sec\n", sock.Execution_Sum_WiFi);
     printf("      LTE Execution Sum:     %Lf sec\n\n", sock.Execution_Sum_LTE);
     printf("Execution time average: \n");
-    printf("    Total Execution average: %Lf sec\n", Execution_Average);
-    printf("    Total Execution average WiFi: %Lf sec\n", Execution_AverageWiFi);
-    printf("    Total Execution average LTE: %Lf sec\n\n", Execution_AverageLTE);
+    printf("    Total Execution average:        %Lf sec\n", Execution_Average);
+    printf("    Total Execution average WiFi:   %Lf sec\n", Execution_AverageWiFi);
+    printf("    Total Execution average LTE:    %Lf sec\n\n", Execution_AverageLTE);
     printf("Total program time: \n");
     printf("    Total time: %f sec\n", time_spent);
     printf("________________________\n\n");
