@@ -231,8 +231,8 @@ void *receiveLTE(void *socket) {
         strcpy(testcountLTE, message);
         sscanf(message, "%[^:]", testcountLTE);
         printf("testcountLTE: %s\n", testcountLTE);
-        sock->packet_count_LTE++;
-        printf("total packets LTE: %d\n", sock->packet_count_LTE);
+        // sock->packet_count_LTE++;
+        // printf("total packets LTE: %d\n", sock->packet_count_LTE);
         fflush(stdout);
         fp1 = fopen("Logs/log.txt", "a+");
         fprintf(fp1, "%s %s %s\n", message, curr_time, "LTE");
@@ -312,8 +312,8 @@ void *receiveWiFi(void *socket) {
         strcpy(testcountWiFi, message2);
         sscanf(message2, "%[^:]", testcountWiFi);
         printf("testcountWiFi: %s\n", testcountWiFi);
-        sock->packet_count_WiFi++;
-        printf("total packets WiFi: %d\n", sock->packet_count_WiFi);
+        // sock->packet_count_WiFi++;
+        // printf("total packets WiFi: %d\n", sock->packet_count_WiFi);
         fflush(stdout);
         fp2 = fopen("Logs/log.txt", "a+");
         fprintf(fp2, "%s %s %s\n", message2, curr_time, "WiFi");
