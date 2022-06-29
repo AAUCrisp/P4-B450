@@ -52,10 +52,6 @@ typedef struct _sockets {
     long double Execution_Sum_WiFi;
     int STOP_LTE;
     int STOP_WiFi;
-
-    char *test1LTE;
-    char *test2WiFi;
-
 } Sockets;
 
 /* Troubleshooting Options */
