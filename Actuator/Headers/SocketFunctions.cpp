@@ -226,7 +226,7 @@ void *receiveLTE(void *socket) {
             sock->STOP_LTE = 0;
         }
         Timestamp();
-        sscanf(messageLTE, "%[^:]", socket->packet_count_LTE);
+        sscanf(messageLTE, "%[^:]", sock->packet_count_LTE);
         // sock->packet_count_LTE++;
         printf("total packets LTE: %s\n", sock->packet_count_LTE);
         fflush(stdout);
@@ -303,7 +303,7 @@ void *receiveWiFi(void *socket) {
             sock->STOP_WiFi = 0;
         }
         Timestamp();
-        sscanf(messageWiFi, "%[^:]", socket->packet_count_WiFi);
+        sscanf(messageWiFi, "%[^:]", sock->packet_count_WiFi);
         //sock->packet_count_WiFi++;
         printf("total packets WiFi: %s\n", sock->packet_count_WiFi);
         fflush(stdout);
