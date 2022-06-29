@@ -86,8 +86,6 @@ int main() {
     unsigned long seconds = 0;
     unsigned long nanoseconds = 0;
     long double Execution_Average = 0;
-    long AverageLTE = 0;
-    long AverageWiFi = 0;
 
     sock.Execution_Sum_WiFi = 0;
     sock.Execution_Sum_LTE = 0;
