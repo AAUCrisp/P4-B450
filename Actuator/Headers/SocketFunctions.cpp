@@ -62,6 +62,7 @@ int print_COMMANDS = 1;
 #define BUFFER 1024
 #define SHM_BUFFER 1024
 char message[BUFFER];
+char message2[BUFFER];
 char curr_time[128];
 char *curr_timeLTE;
 char *curr_timeWiFi;
@@ -283,7 +284,7 @@ void *receiveWiFi(void *socket) {
 
     while (sock->STOP_WiFi != 1) {
         // printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
-        RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
+        RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message2, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
         // printf("RX_WiFi: %d\n", RX_WiFi);
         // printf("RX_LTE: %d\n", RX_LTE);
         // printf("STOP_WiFi: %d\n", sock->STOP_WiFi);
@@ -305,7 +306,7 @@ void *receiveWiFi(void *socket) {
         printf("total packets WiFi: %d\n", sock->packet_count_WiFi);
         fflush(stdout);
         fp2 = fopen("Logs/log.txt", "a+");
-        fprintf(fp2, "%s %s %s\n", message, curr_time, "WiFi");
+        fprintf(fp2, "%s %s %s\n", message2, curr_time, "WiFi");
         fclose(fp2);
 
         if (print_COMMANDS == 1) {
@@ -319,7 +320,7 @@ void *receiveWiFi(void *socket) {
         /* Start timing code execution of code */
         clock_gettime(CLOCK_REALTIME, &begin);
 
-        char *Coordinates = processData(message);
+        char *Coordinates = processData(message2);
         fprintf(FileProcess2, "%s\n", Coordinates);
 
         /* Stop timing code execution of code */
