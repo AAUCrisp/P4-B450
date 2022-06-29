@@ -190,9 +190,9 @@ void *receiveLTE(void *socket) {
     fprintf(fp1, "%s %s %s %s\n", message_LTE, "LTE", " : Received at ", curr_time);
     fclose(fp1);
 
+    printf("\n\n  Incoming || LTE (Sensor) || Message is: %s\n", message_LTE);
+    printf("  Incoming || LTE (Sensor) || Message received at: %s\n\n", curr_time);
     if (print_sen_in == 1 || message_only == 1) {
-        printf("\n\n  Incoming || LTE (Sensor) || Message is: %s\n", message_LTE);
-        printf("  Incoming || LTE (Sensor) || Message received at: %s\n\n", curr_time);
     }
     sscanf((const char *)message_LTE, "%d %[^\n]", &sensor_int, msg_time);
 
@@ -220,9 +220,9 @@ void *receiveWiFi(void *socket) {
     fprintf(fp2, "%s %s %s%s\n", message_WiFi, "WiFi", ": Received at ", curr_time);
     fclose(fp2);
 
+    printf("\n\n  Incoming || WiFi (Sensor) || Message is: %s\n", message_WiFi);
+    printf("  Incoming || WiFi (Sensor) || Message received at: %s \n\n", curr_time);
     if (print_sen_in == 1 || message_only == 1) {
-        printf("\n\n  Incoming || WiFi (Sensor) || Message is: %s\n", message_WiFi);
-        printf("  Incoming || WiFi (Sensor) || Message received at: %s \n\n", curr_time);
     }
     sscanf((const char *)message_WiFi, "%d %[^\n]", &sensor_int, msg_time);
 
@@ -423,7 +423,7 @@ void *transmit_command(void *socket, char *message, int gsv) {
         if (print_act_out == 1) {
         }
         // cout << "  Sending || Transfer command via LTE" << endl;
-        //transmit_command_LTE(sock, message); // Original function
+        // transmit_command_LTE(sock, message); // Original function
     }
     if (print_act_out == 1) {
         cout << "\n  ======== end ==========\n  ==== SEND COMMAND ====\n  ======================\n"
@@ -434,7 +434,7 @@ void *transmit_command(void *socket, char *message, int gsv) {
 }
 
 /**
- * @brief Test function of the same function as transmit_command( ); 
+ * @brief Test function of the same function as transmit_command( );
  * @param socket
  * @param message
  * @param gsv
@@ -459,7 +459,7 @@ void *transmit_command_test(void *socket, char *message, int gsv) {
         if (print_act_out == 1) {
         }
         // cout << "  Sending || Transfer command via WiFi" << endl;
-        //transmit_command_WiFi(sock, message);
+        // transmit_command_WiFi(sock, message);
     }
     if ((gsv == 0) || (gsv == 2)) {
         if (print_act_out == 1) {
