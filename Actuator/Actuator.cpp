@@ -105,8 +105,8 @@ int main() {
         // execvp(path, (char* const*)args);
 
     } else {
-        sock.packet_count_LTE = 0;
-        sock.packet_count_WiFi = 0;
+        //sock.packet_count_LTE = 0;
+        //sock.packet_count_WiFi = 0;
         cout << "\n\npacket count LTE: " << sock.packet_count_LTE << endl;
         cout << "packet count WiFi: " << sock.packet_count_WiFi << endl;
 
@@ -135,7 +135,7 @@ int main() {
     long milliseconds = (long)(time_spent * 1000) % 1000;
 
     /* Calculation of execution average */
-    Execution_Average = (sock.Execution_Sum_WiFi + sock.Execution_Sum_LTE) / (sock.packet_count_WiFi + sock.packet_count_LTE);
+    //Execution_Average = (sock.Execution_Sum_WiFi + sock.Execution_Sum_LTE) / (sock.packet_count_WiFi + sock.packet_count_LTE);
 
     printf("\n\n===================================\n\n");
     printf("Execution time sums:\n");
@@ -151,7 +151,7 @@ int main() {
     printf("________________________\n\n");
     printf("Total failed counts via WiFi:       %d\n", sock.fail_count_WiFi);
     printf("Total failed counts via LTE:        %d\n", sock.fail_count_LTE);
-    printf("Total packets received via WiFi:    %d\n", sock.packet_count_WiFi);
-    printf("Total packets received via LTE:     %d\n", sock.packet_count_LTE);
+    printf("Total packets received via WiFi:    %s\n", sock.packet_count_WiFi);
+    printf("Total packets received via LTE:     %s\n", sock.packet_count_LTE);
     printf("\n===================================\n\n");
 }
