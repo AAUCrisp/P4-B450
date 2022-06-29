@@ -138,8 +138,8 @@ int main() {
 
     /* Calculation of execution average */
     Execution_Average = (sock.Execution_Sum_WiFi + sock.Execution_Sum_LTE) / (sock.packet_count_WiFi + sock.packet_count_LTE);
-    Execution_AverageLTE = (sock.Execution_Sum_LTE) / (sock.packet_count_LTE);
-    Execution_AverageWiFi = (sock.Execution_Sum_WiFi) / (sock.packet_count_WiFi);
+    Execution_AverageLTE = (sock.Execution_Sum_LTE / sock.packet_count_LTE);
+    Execution_AverageWiFi = (sock.Execution_Sum_WiFi / sock.packet_count_WiFi);
 
     printf("\n\n===================================\n\n");
     printf("Execution time sums:\n");
