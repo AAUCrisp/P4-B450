@@ -153,7 +153,7 @@ int main() {
     printf("Total failed counts via LTE:        %d\n", sock.fail_count_LTE);
     printf("Total packets received via WiFi:    %d\n", sock.packet_count_WiFi);
     printf("Total packets received via LTE:     %d\n", sock.packet_count_LTE);
-    printf("Total packets received via testcountWiFi:     %d\n", sock.testcountWiFi);
-    printf("Total packets received via testcountLTE:     %d\n", sock.testcountLTE);
+    //printf("Total packets received via testcountWiFi:     %d\n", sock.testcountWiFi);
+    //printf("Total packets received via testcountLTE:     %d\n", sock.testcountLTE);
     printf("\n===================================\n\n");
 }

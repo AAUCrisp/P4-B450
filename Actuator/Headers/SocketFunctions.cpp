@@ -233,8 +233,8 @@ void *receiveLTE(void *socket) {
         Timestamp();
         //strcpy(sock->test1LTE, message);
         sscanf(message, "%[^:]", lolcountLTE);
-        sock->testcountLTE = atoi(lolcountLTE);
-        printf("testcountLTE: %d\n", sock->testcountLTE);
+        sock->packet_count_LTE = atoi(lolcountLTE);
+        printf("Packets LTE: %d\n", sock->packet_count_LTE);
         // sock->packet_count_LTE++;
         // printf("total packets LTE: %d\n", sock->packet_count_LTE);
         fflush(stdout);
@@ -314,8 +314,8 @@ void *receiveWiFi(void *socket) {
         }
         Timestamp();
         sscanf(message2, "%[^:]", lolcountWiFi);
-        sock->testcountWiFi = atoi(lolcountWiFi);
-        printf("testcountWiFi: %d\n", sock->testcountWiFi);
+        sock->packet_count_WiFi = atoi(lolcountWiFi);
+        printf("Packets WiFi: %d\n", packet_count_WiFi);
         // sock->packet_count_WiFi++;
         // printf("total packets WiFi: %d\n", sock->packet_count_WiFi);
         fflush(stdout);
