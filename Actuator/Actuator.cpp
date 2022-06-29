@@ -89,8 +89,8 @@ int main() {
 
     sock.Execution_Sum_WiFi = 0;
     sock.Execution_Sum_LTE = 0;
-    sock.packet_count_WiFi = 0;
-    sock.packet_count_LTE = 0;
+    //sock.packet_count_WiFi = 0;
+    //sock.packet_count_LTE = 0;
 
     /* Create child process */
     pid_t Actuator_monitor;  // Prepare the process ID for monitoring
