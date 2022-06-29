@@ -143,7 +143,7 @@ int main() {
     printf("     WiFi Execution Sum:     %Lf sec\n", sock.Execution_Sum_WiFi);
     printf("      LTE Execution Sum:     %Lf sec\n\n", sock.Execution_Sum_LTE);
     printf("Execution time average: \n");
-    printf("    Total Execution average: %Lf sec\n\n", Execution_Average);
+    //printf("    Total Execution average: %Lf sec\n\n", Execution_Average);
     printf("Total program time: \n");
     printf("    Total time: %f sec\n", time_spent);
     printf("________________________\n\n");
@@ -151,7 +151,7 @@ int main() {
     printf("________________________\n\n");
     printf("Total failed counts via WiFi:       %d\n", sock.fail_count_WiFi);
     printf("Total failed counts via LTE:        %d\n", sock.fail_count_LTE);
-    printf("Total packets received via WiFi:    %s\n", sock.packet_count_WiFi);
-    printf("Total packets received via LTE:     %s\n", sock.packet_count_LTE);
+    //printf("Total packets received via WiFi:    %s\n", sock.packet_count_WiFi);
+    //printf("Total packets received via LTE:     %s\n", sock.packet_count_LTE);
     printf("\n===================================\n\n");
 }
