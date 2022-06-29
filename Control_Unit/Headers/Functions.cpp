@@ -140,7 +140,7 @@ void* WiFi_command(void* socket) {
         fp3 = fopen("Logs/commands_log.txt", "a+");
         fprintf(fp3, "%s %s %s\n", WiFimsg, timeWiFi, "WiFi");
         fclose(fp3);
-        sscanf(timeWiFi, "%[^:]", lol2countWiFi);
+        sscanf(WiFimsg, "%[^:]", lol2countWiFi);
         sock->packet_count_WiFi = atoi(lol2countWiFi);
         printf("packets sent WiFi: %d\n", sock->packet_sent_WiFi);
         
