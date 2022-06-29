@@ -52,6 +52,10 @@ typedef struct _sockets {
     long double Execution_Sum_WiFi;
     int STOP_LTE;
     int STOP_WiFi;
+
+    int testcountWiFi;
+    int testcountLTE;
+
 } Sockets;
 
 /* Troubleshooting Options */
@@ -210,7 +214,7 @@ void *receiveLTE(void *socket) {
     sock->Execution_Sum_LTE = 0;
     sock->STOP_LTE = 0;
 
-    char testcountLTE[1024];
+    char 1testcountLTE[1024];
 
     while (sock->STOP_LTE != 1) {
         // printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
@@ -228,8 +232,9 @@ void *receiveLTE(void *socket) {
         }
         Timestamp();
         //strcpy(sock->test1LTE, message);
-        //sscanf(message, "%[^:]", sock->test1LTE);
-        //printf("testcountLTE: %s\n", sock->test1LTE);
+        sscanf(message, "%[^:]", 1testcountLTE);
+        sock->testcountLTE = atoi(1testcountLTE);
+        printf("testcountLTE: %d\n", sock->testcountLTE);
         // sock->packet_count_LTE++;
         // printf("total packets LTE: %d\n", sock->packet_count_LTE);
         fflush(stdout);
@@ -286,7 +291,7 @@ void *receiveWiFi(void *socket) {
     sock->Execution_Sum_WiFi = 0;
     sock->STOP_WiFi = 0;
 
-    char testcountWiFi[1024];
+    char 1testcountWiFi[1024];
 
     while (sock->STOP_WiFi != 1) {
         // printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);

@@ -23,6 +23,10 @@ typedef struct _sockets {
     long double Execution_Sum_WiFi;
     int STOP_LTE;
     int STOP_WiFi;
+
+    int testcountWiFi;
+    int testcountLTE;
+
 } Sockets;
 
 /* Function to create receiver socket */
