@@ -94,7 +94,7 @@ void* WiFi_command(void* socket) {
         } else {
             coordinate = convert_to_coordinate(data, use_hex);
 
-            //sock->packet_sent_WiFi++;
+            sock->packet_sent_WiFi++;
             packet_ID = to_string(sock->packet_sent_WiFi);
             packet_ID.append(": ");
             packet_ID.append(coordinate);
@@ -219,7 +219,7 @@ void* LTE_command(void* socket) {
         } else {
             coordinate = convert_to_coordinate(data, use_hex);
 
-            //sock->packet_sent_LTE++;
+            sock->packet_sent_LTE++;
             packet_ID = to_string(sock->packet_sent_LTE);
             packet_ID.append(": ");
             packet_ID.append(coordinate);
@@ -261,7 +261,7 @@ void* LTE_command(void* socket) {
             elapsed = 0;
         }
         sock->Execution_Sum_LTE += elapsed;
-        // sock->packet_count_LTE++;
+        //sock->packet_count_LTE++;
 
         /* Writing to logging file */
         fp4 = fopen("Logs/commands_log.txt", "a+");
