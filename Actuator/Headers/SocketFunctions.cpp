@@ -44,8 +44,8 @@ typedef struct _sockets {
     struct sockaddr_in ClientWiFi_TRANSMITTER;
 
     /* Execution timing variable */
-    char packet_count_LTE[1024];
-    char packet_count_WiFi[1024];
+    int packet_count_LTE;
+    int packet_count_WiFi;
     int fail_count_LTE;
     int fail_count_WiFi;
     long double Execution_Sum_LTE;
@@ -61,8 +61,7 @@ int print_COMMANDS = 1;
 /* Define buffers & PORT number */
 #define BUFFER 1024
 #define SHM_BUFFER 1024
-char messageLTE[BUFFER];
-char messageWiFi[BUFFER];
+char message[BUFFER];
 char curr_time[128];
 char *curr_timeLTE;
 char *curr_timeWiFi;
@@ -206,14 +205,14 @@ void *receiveLTE(void *socket) {
     unsigned long nanoseconds = 0;
     double elapsed = 0;
 
-    //sock->packet_count_LTE = 0;
+    sock->packet_count_LTE = 0;
     sock->fail_count_LTE = 0;
     sock->Execution_Sum_LTE = 0;
     sock->STOP_LTE = 0;
 
     while (sock->STOP_LTE != 1) {
         // printf("receiveLTE socket: %d\n", sock->sockLTE_RECEIVER);
-        RX_LTE = recvfrom(sock->sockLTE_RECEIVER, messageLTE, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
+        RX_LTE = recvfrom(sock->sockLTE_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerLTE_RECEIVER, &LenLTE);
         // printf("RX_LTE: %d\n", RX_LTE);
         // printf("RX_WiFi: %d\n", RX_WiFi);
         // printf("STOP_LTE: %d\n", sock->STOP_LTE);
@@ -226,12 +225,11 @@ void *receiveLTE(void *socket) {
             sock->STOP_LTE = 0;
         }
         Timestamp();
-        //sscanf(messageLTE, "%[^:]", sock->packet_count_LTE);
-        // sock->packet_count_LTE++;
-        //printf("total packets LTE: %s\n", sock->packet_count_LTE);
-        //fflush(stdout);
+        sock->packet_count_LTE++;
+        printf("total packets LTE: %d\n", sock->packet_count_LTE);
+        fflush(stdout);
         fp1 = fopen("Logs/log.txt", "a+");
-        fprintf(fp1, "%s %s %s\n", messageLTE, curr_time, "LTE");
+        fprintf(fp1, "%s %s %s\n", message, curr_time, "LTE");
         fclose(fp1);
 
         if (print_COMMANDS == 1) {
@@ -245,7 +243,7 @@ void *receiveLTE(void *socket) {
         /* Start timing code execution of code */
         clock_gettime(CLOCK_REALTIME, &begin);
 
-        char *Coordinates = processData(messageLTE);
+        char *Coordinates = processData(message);
         fprintf(FileProcess1, "%s\n", Coordinates);
 
         /* Stop timing code execution of code */
@@ -278,14 +276,14 @@ void *receiveWiFi(void *socket) {
     unsigned long nanoseconds = 0;
     double elapsed = 0;
 
-    //sock->packet_count_WiFi = 0;
+    sock->packet_count_WiFi = 0;
     sock->fail_count_WiFi = 0;
     sock->Execution_Sum_WiFi = 0;
     sock->STOP_WiFi = 0;
 
     while (sock->STOP_WiFi != 1) {
         // printf("receiveWiFi socket: %d\n", sock->sockWiFi_RECEIVER);
-        RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, messageWiFi, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
+        RX_WiFi = recvfrom(sock->sockWiFi_RECEIVER, message, BUFFER, 0, (struct sockaddr *)&sock->ServerWiFi_RECEIVER, &LenWiFi);
         // printf("RX_WiFi: %d\n", RX_WiFi);
         // printf("RX_LTE: %d\n", RX_LTE);
         // printf("STOP_WiFi: %d\n", sock->STOP_WiFi);
@@ -303,12 +301,11 @@ void *receiveWiFi(void *socket) {
             sock->STOP_WiFi = 0;
         }
         Timestamp();
-        //sscanf(messageWiFi, "%[^:]", sock->packet_count_WiFi);
-        //sock->packet_count_WiFi++;
-        //printf("total packets WiFi: %s\n", sock->packet_count_WiFi);
-        //fflush(stdout);
+        sock->packet_count_WiFi++;
+        printf("total packets WiFi: %d\n", sock->packet_count_WiFi);
+        fflush(stdout);
         fp2 = fopen("Logs/log.txt", "a+");
-        fprintf(fp2, "%s %s %s\n", messageWiFi, curr_time, "WiFi");
+        fprintf(fp2, "%s %s %s\n", message, curr_time, "WiFi");
         fclose(fp2);
 
         if (print_COMMANDS == 1) {
@@ -322,7 +319,7 @@ void *receiveWiFi(void *socket) {
         /* Start timing code execution of code */
         clock_gettime(CLOCK_REALTIME, &begin);
 
-        char *Coordinates = processData(messageWiFi);
+        char *Coordinates = processData(message);
         fprintf(FileProcess2, "%s\n", Coordinates);
 
         /* Stop timing code execution of code */
