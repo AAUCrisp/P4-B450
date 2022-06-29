@@ -114,8 +114,13 @@ char *Timestamp() {
 ---------- start ---------*/
 
 void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
-    /* Time struct for socket timeout */
+    /* Time struct for socket timeout LTE */
     struct timeval tv2;
+    tv2.tv_sec = 10;
+    tv2.tv_usec = 0;
+
+    /* Time struct for socket timeout WiFi */
+    struct timeval tv3;
     tv2.tv_sec = 5;
     tv2.tv_usec = 0;
 
@@ -131,7 +136,7 @@ void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *
     setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, LTE, strlen(LTE));
     setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_BINDTODEVICE, WiFi, strlen(WiFi));
     setsockopt(sock->sockLTE_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
-    setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv2, sizeof(tv2));
+    setsockopt(sock->sockWiFi_RECEIVER, SOL_SOCKET, SO_RCVTIMEO, &tv3, sizeof(tv3));
 
     /* Error checking */
     if (sock->sockLTE_RECEIVER == -1) {
