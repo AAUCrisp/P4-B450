@@ -116,7 +116,7 @@ char *Timestamp() {
 void Sockets_Receiver(Sockets *sock, uint PORT_LTE, uint PORT_WiFi, const char *LTE, const char *WiFi) {
     /* Time struct for socket timeout LTE */
     struct timeval tv2;
-    tv2.tv_sec = 10;
+    tv2.tv_sec = 5;
     tv2.tv_usec = 0;
 
     /* Time struct for socket timeout WiFi */
