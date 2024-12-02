@@ -1,28 +1,33 @@
-all: Actuator ActuatorMonitoring
+all: Actuator.out
 
+git:
+	git pull
+	make
+	rm Logs/log.txt Logs/processed_commands.txt
 
-Actuator: Actuator.cpp 
-	g++ -pthread Actuator.cpp -o Actuator -lrt
-	touch Actuator
+Actuator.out: Actuator.o shm_read_write.o ActuatorFunctions.o SocketFunctions.o
+	g++ -pthread Actuator.o shm_read_write.o ActuatorFunctions.o SocketFunctions.o -o Actuator.out -lrt
 
-ActuatorMonitoring: ActuatorMonitoring.c  SocketFunctions.o
-	g++ -pthread ActuatorMonitoring.c  SocketFunctions.o -o ActuatorMonitoring -lrt
-	touch ActuatorMonitoring
+Actuator.o: Actuator.cpp
+	g++ -c -g -pthread Actuator.cpp -lrt
+#	touch Actuator
 
-SocketFunctions.o: Headers/SocketFunctions.c Headers/SocketFunctions.h Headers/shm_write_read.h
-	g++ -c Headers/SocketFunctions.c -lrt
-	touch Headers/SocketFunctions.c
+shm_read_write.o: Headers/shm_read_write.cpp Headers/shm_read_write.h
+	g++ -c -g Headers/shm_read_write.cpp -lrt
+#	touch Headers/shm_read_write
 
-shm_write.o: Headers/shm_write.c Headers/shm_write_read.h
-	g++ -c Headers/shm_write.c -lrt
-	touch Headers/shm_write.c 
+ActuatorFunctions.o: Headers/ActuatorFunctions.cpp Headers/ActuatorFunctions.h
+	g++ -c -g Headers/ActuatorFunctions.cpp -lrt
+#	touch Headers/ActuatorFunctions
 
-shm_read.o: Headers/shm_read.c Headers/shm_write_read.h
-	g++ -c Headers/shm_read.c -lrt
-	touch Headers/shm_read.c 
+SocketFunctions.o: Headers/SocketFunctions.cpp Headers/SocketFunctions.h
+	g++ -c -g Headers/SocketFunctions.cpp -lrt
+#	touch Headers/SocketFunctions
 
 clean:
-	rm -f Actuator ActuatorMonitoring
+	rm -f Actuator 
 	rm *.o
-	rm *.txt
+	rm *.out
+#	rm -f Headers/ActuatorFunctions Headers/shm_read_write Headers/SocketFunctions
+#	rm *.txt
 	@echo "clean completed!"

@@ -1,0 +1,8 @@
+#ifndef SHM_WRITE_READ_H
+#define SHM_WRITE_READ_H
+
+void* shm_write(const int SIZE, const char* name);
+
+void* shm_read(const int SIZE, const char* name);
+
+#endif
